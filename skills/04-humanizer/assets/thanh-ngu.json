@@ -1,0 +1,678 @@
+{
+ "schema_version": "1.0",
+ "updated": "2026-08-30",
+ "purpose": "Tập con có chọn lọc, dùng cho trục 4 khi bản thảo cần một cụm cố định thay cho một câu giải thích dài. KHÔNG phải danh sách phải dùng, và tuyệt đối không phải danh sách rắc vào bài cho 'giống người viết hơn'.",
+ "attribution": {
+  "source_repo": "https://github.com/ReML-AI/VIVID",
+  "license": "MIT",
+  "copyright_notice": "Copyright (c) 2026 ReML-AI",
+  "license_notice": "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+  "license_notice_note": "MIT yêu cầu giữ notice này khi phân phối dữ liệu: hai trường trên là văn bản pháp lý của giấy phép, giữ nguyên văn tiếng Anh, không dịch và không rút gọn. Xoá chúng đi là phân phối dữ liệu của người khác mà bỏ điều kiện duy nhất họ đặt ra.",
+  "repo_commit": "634320b8e5d2e470f55391fe8036378d951c7c21",
+  "source_file": "dataset/VIVID_Dataset.csv",
+  "source_file_blob_sha": "9d114a4e99baa2cc87d56eea511c57912a8c6704",
+  "checked": "2026-08-30",
+  "note": "Chỉ mượn DANH SÁCH thành ngữ. Cột nghĩa, ngữ cảnh dùng và thể loại phù hợp trong file này do repo này tự soạn, không chép nguyên văn cột Meaning của bộ dữ liệu."
+ },
+ "selection": {
+  "source_total": 1636,
+  "selected": 58,
+  "criteria_keep": [
+   "Từ vựng còn dùng trong tiếng Việt hôm nay, người đọc phổ thông hiểu không cần chú thích dài",
+   "Nghĩa nói được về công việc, tổ chức, chính sách, học thuật hoặc cách viết",
+   "Đứng được trong một câu văn trang trọng mà không tụt giọng xuống khẩu ngữ"
+  ],
+  "criteria_drop": [
+   "Cần kiến thức nhà nông, nghề cũ hoặc phong tục cũ mới hiểu (phần lớn bộ dữ liệu rơi vào đây)",
+   "Từ vựng cổ hoặc phương ngữ hẹp",
+   "Hạ thấp người theo giới, tuổi, nghề nghiệp hoặc ngoại hình",
+   "Nói về tình duyên, ma chay, cỗ bàn, rượu chè — lệch chủ đề của repo",
+   "Trùng nghĩa với một mục đã chọn"
+  ],
+  "honest_note": "Bộ dữ liệu nguồn là kho thành ngữ hiếm và cổ, dựng cho bài toán đo độ khó ngôn ngữ, không phải kho thành ngữ thông dụng. Vì vậy tỷ lệ dùng được cho văn học thuật và blog rất thấp: giữ 58 trên 1.636. Con số này là kết quả thật của phép lọc, không phải hạn ngạch. Không nới tiêu chí để đạt một con số đẹp hơn."
+ },
+ "usage_rules": [
+  "Chỉ dùng khi thành ngữ THAY THẾ được một câu giải thích dài hơn. Thêm vào một câu đã đủ nghĩa là làm câu nặng thêm.",
+  "Tối đa một thành ngữ cho mỗi phần lớn của bài. Rắc dày là một dáng văn máy khác, không phải giọng người.",
+  "KHÔNG dùng ở thể loại research và de-cuong-nghien-cuu: §4 của research.md cấm thêm sắc thái đánh giá vào Kết quả và Phương pháp.",
+  "KHÔNG dùng thành ngữ để thay cho một con số hoặc một nguồn còn thiếu.",
+  "Thành ngữ do trục 4 thêm vào là một nhát sửa: phải có dòng trong polish.diff.json với reason nói rõ nó thay thế điều gì.",
+  "Writer profile thắng file này. Người viết không dùng thành ngữ bao giờ thì đừng thêm thành ngữ cho họ."
+ ],
+ "the_loai_hop_le": [
+  "essay",
+  "blog",
+  "journalism",
+  "chinh-luan",
+  "bao-cao-thuc-tap",
+  "sang-kien-kinh-nghiem"
+ ],
+ "entries": [
+  {
+   "id": "TN001",
+   "thanh_ngu": "dây cà ra dây muống",
+   "nghia": "Nói dài dòng, chuyện này bắt sang chuyện khác, không về đích.",
+   "ngu_canh": "Nhận xét một đoạn văn hoặc một phần trình bày lan man; dùng khi đang nói về cách viết.",
+   "the_loai": [
+    "essay",
+    "blog"
+   ]
+  },
+  {
+   "id": "TN002",
+   "thanh_ngu": "có ít xít ra nhiều",
+   "nghia": "Thổi phồng một sự việc nhỏ thành lớn.",
+   "ngu_canh": "Phê phán cách trưng số liệu hoặc kết quả vượt quá điều dữ liệu đỡ được.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "journalism",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN003",
+   "thanh_ngu": "cả vú lấp miệng em",
+   "nghia": "Dùng thế mạnh của mình át tiếng người yếu thế hơn.",
+   "ngu_canh": "Bàn về tranh luận không cân sức, về cách một bên áp đảo diễn đàn.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN004",
+   "thanh_ngu": "cò kè bớt một thêm hai",
+   "nghia": "Mặc cả đi mặc cả lại từng chút một.",
+   "ngu_canh": "Mô tả quá trình thương lượng kéo dài; hợp với bài kể lại đàm phán, dự toán, hợp đồng.",
+   "the_loai": [
+    "blog",
+    "journalism"
+   ]
+  },
+  {
+   "id": "TN005",
+   "thanh_ngu": "cái quan định luận",
+   "nghia": "Đậy nắp quan tài rồi mới định được công tội; chỉ khi việc đã xong mới đánh giá được.",
+   "ngu_canh": "Nhắc rằng đánh giá quá sớm là đánh giá thiếu dữ kiện; hợp với bài bàn về tổng kết, di sản, hậu thế.",
+   "the_loai": [
+    "essay",
+    "chinh-luan"
+   ],
+   "canh_bao": "Điển Hán Việt nặng. Ở blog phổ thông nên diễn giải kèm."
+  },
+  {
+   "id": "TN006",
+   "thanh_ngu": "đan gàu tát biển",
+   "nghia": "Bỏ công vào một việc không thể đạt kết quả.",
+   "ngu_canh": "Chỉ ra sự chênh lệch giữa nguồn lực bỏ ra và quy mô vấn đề.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN007",
+   "thanh_ngu": "con kiến kiện củ khoai",
+   "nghia": "Người yếu thế theo đuổi một vụ việc mà mình không có cửa thắng.",
+   "ngu_canh": "Bàn về khoảng cách quyền lực trong khiếu nại, tố tụng, khiếu kiện hành chính.",
+   "the_loai": [
+    "essay",
+    "journalism",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN008",
+   "thanh_ngu": "bảo hoàng hơn nhà vua",
+   "nghia": "Nhiệt tình bảo vệ một chủ trương còn hơn cả người đề ra nó.",
+   "ngu_canh": "Phê phán việc thi hành cứng nhắc quá mức yêu cầu; rất hợp khi bàn về triển khai chính sách.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "journalism",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN009",
+   "thanh_ngu": "dân sinh quốc kế",
+   "nghia": "Việc làm ăn của dân và việc lo tính của Nhà nước.",
+   "ngu_canh": "Cụm Hán Việt trang trọng, dùng khi nêu phạm vi ảnh hưởng của một chính sách.",
+   "the_loai": [
+    "chinh-luan",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN010",
+   "thanh_ngu": "ba mũi giáp công",
+   "nghia": "Đánh vào một mục tiêu từ ba hướng cùng lúc.",
+   "ngu_canh": "Mô tả một giải pháp có ba nhánh phối hợp; chỉ dùng khi thật sự có đúng ba nhánh.",
+   "the_loai": [
+    "chinh-luan",
+    "sang-kien-kinh-nghiem",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN011",
+   "thanh_ngu": "Bạt núi ngăn sông",
+   "nghia": "Sức mạnh và khí thế phi thường; việc lớn lao.",
+   "ngu_canh": "Chỉ dùng khi quy mô thật sự lớn. Đây là cụm dễ thành lời nói quá — xem cảnh báo.",
+   "the_loai": [
+    "chinh-luan"
+   ],
+   "canh_bao": "Cụm nói quá. Dùng cho một việc quy mô vừa là rơi thẳng vào T01 (thổi phồng tầm quan trọng)."
+  },
+  {
+   "id": "TN012",
+   "thanh_ngu": "chưa qua cầu đã cất nhịp",
+   "nghia": "Cản người ta ngay khi việc của họ còn dang dở.",
+   "ngu_canh": "Bàn về việc rút hỗ trợ giữa chừng, cắt nguồn lực khi dự án chưa xong.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "journalism"
+   ]
+  },
+  {
+   "id": "TN013",
+   "thanh_ngu": "Té nước theo mưa",
+   "nghia": "Nhân lúc có biến mà kiếm lợi cho mình.",
+   "ngu_canh": "Phê phán hành vi ăn theo một sự kiện; hợp với bài bình luận thị trường, truyền thông.",
+   "the_loai": [
+    "blog",
+    "journalism",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN014",
+   "thanh_ngu": "Mềm nắn rắn buông",
+   "nghia": "Đối xử tuỳ đối tượng: lấn người yếu, nhường người cứng.",
+   "ngu_canh": "Chỉ ra sự thiếu nhất quán trong thực thi quy định.",
+   "the_loai": [
+    "essay",
+    "journalism",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN015",
+   "thanh_ngu": "Thuốc đắng dã tật",
+   "nghia": "Biện pháp khó chịu nhưng chữa được gốc bệnh.",
+   "ngu_canh": "Mở đường cho một đề xuất bị phản đối vì khó thực hiện.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "chinh-luan",
+    "sang-kien-kinh-nghiem"
+   ]
+  },
+  {
+   "id": "TN016",
+   "thanh_ngu": "Chín bỏ làm mười",
+   "nghia": "Xuê xoa, bỏ qua cho nhau để giữ hoà khí.",
+   "ngu_canh": "Phê phán việc nới tiêu chuẩn vì nể nang; hợp với bài về đánh giá, nghiệm thu, chấm điểm.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "bao-cao-thuc-tap"
+   ],
+   "canh_bao": "Sắc thái phê phán. Ở báo cáo nội bộ có thể bị đọc thành chỉ trích đồng nghiệp."
+  },
+  {
+   "id": "TN017",
+   "thanh_ngu": "Sống lâu lên lão làng",
+   "nghia": "Được cất nhắc nhờ thâm niên chứ không nhờ năng lực.",
+   "ngu_canh": "Bàn về tiêu chí đề bạt, về cơ chế đánh giá cán bộ.",
+   "the_loai": [
+    "essay",
+    "journalism",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN018",
+   "thanh_ngu": "Mua danh ba vạn, bán danh ba đồng",
+   "nghia": "Gây dựng uy tín rất tốn, đánh mất thì rất nhanh.",
+   "ngu_canh": "Nói về rủi ro danh tiếng của một tổ chức hoặc một nghề.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "journalism"
+   ]
+  },
+  {
+   "id": "TN019",
+   "thanh_ngu": "Lao tâm khổ tứ",
+   "nghia": "Lo nghĩ nhiều, dốc sức suy tính.",
+   "ngu_canh": "Ghi nhận công sức bỏ ra; cụm trang trọng, hợp phần cảm ơn hoặc phần nhìn lại.",
+   "the_loai": [
+    "essay",
+    "bao-cao-thuc-tap",
+    "sang-kien-kinh-nghiem"
+   ]
+  },
+  {
+   "id": "TN020",
+   "thanh_ngu": "ăn cơm nhà, thổi tù và hàng tổng",
+   "nghia": "Bỏ công sức và chi phí của mình để làm việc chung.",
+   "ngu_canh": "Nói về công việc kiêm nhiệm không thù lao, về người vác tù và hàng tổng ở cơ sở.",
+   "the_loai": [
+    "blog",
+    "journalism",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN021",
+   "thanh_ngu": "cửa Khổng, sân Trình",
+   "nghia": "Cửa nhà Nho, chỉ nền học vấn Nho giáo.",
+   "ngu_canh": "Chỉ dùng khi thật sự bàn về truyền thống khoa cử, không dùng thay cho chữ 'nhà trường'.",
+   "the_loai": [
+    "essay",
+    "chinh-luan"
+   ],
+   "canh_bao": "Điển cố. Người đọc không biết điển thì câu mất nghĩa; chỉ dùng khi ngữ cảnh đã nói về Nho học."
+  },
+  {
+   "id": "TN022",
+   "thanh_ngu": "Hạ bút thành chương",
+   "nghia": "Đặt bút xuống là ra bài, viết rất nhanh và rất trôi.",
+   "ngu_canh": "Khen năng lực viết; cũng dùng ngược để nói về văn trôi mà rỗng.",
+   "the_loai": [
+    "essay",
+    "blog"
+   ]
+  },
+  {
+   "id": "TN023",
+   "thanh_ngu": "Dương dương đắc ý",
+   "nghia": "Vênh váo, ra vẻ đắc thắng.",
+   "ngu_canh": "Mô tả thái độ của một bên sau khi thắng thế; giọng phê phán rõ, cân nhắc ở văn trang trọng.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "journalism"
+   ],
+   "canh_bao": "Gán thái độ cho người khác. Phải có câu trích hoặc hành vi quan sát được đỡ, nếu không là quy chụp."
+  },
+  {
+   "id": "TN024",
+   "thanh_ngu": "Bần thanh hơn phú trọc",
+   "nghia": "Nghèo mà trong sạch hơn giàu mà đục.",
+   "ngu_canh": "Nêu một lựa chọn giá trị; hợp bài bàn về liêm chính.",
+   "the_loai": [
+    "essay",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN025",
+   "thanh_ngu": "Chen vai thích cánh",
+   "nghia": "Chen chúc, đua nhau giành phần.",
+   "ngu_canh": "Mô tả cảnh cạnh tranh đông đúc: tuyển sinh, xin việc, giành suất.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "journalism"
+   ]
+  },
+  {
+   "id": "TN026",
+   "thanh_ngu": "Ngang tai chướng mắt",
+   "nghia": "Khó chịu vì lời nói hoặc việc làm trái lẽ thường.",
+   "ngu_canh": "Nêu phản ứng của người trong cuộc trước một quyết định; là nhận định chủ quan, cần kèm dữ kiện.",
+   "the_loai": [
+    "blog",
+    "journalism"
+   ]
+  },
+  {
+   "id": "TN027",
+   "thanh_ngu": "bẻ đũa cả nắm",
+   "nghia": "Chống lại cả một số đông cùng lúc, không biết phân biệt.",
+   "ngu_canh": "Phê phán cách quy kết cả nhóm; gần với lỗi vơ đũa cả nắm trong lập luận.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN028",
+   "thanh_ngu": "ba mươi sáu chước",
+   "nghia": "Trong ba mươi sáu kế thì rút lui là hơn cả.",
+   "ngu_canh": "Nói về quyết định dừng lại, rút khỏi một cuộc chơi không có lợi.",
+   "the_loai": [
+    "blog",
+    "journalism"
+   ],
+   "canh_bao": "Nghĩa gốc là 'chạy đi là hơn cả'. Dùng sai thành 'nhiều mưu kế' là lệch nghĩa."
+  },
+  {
+   "id": "TN029",
+   "thanh_ngu": "ba tấc lưỡi",
+   "nghia": "Chỉ tài dùng lời nói để thuyết phục.",
+   "ngu_canh": "Bàn về sức mạnh và giới hạn của diễn ngôn; thường mang sắc thái cảnh giác.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN030",
+   "thanh_ngu": "cây nhà lá vườn",
+   "nghia": "Thứ sẵn có trong nhà, tự làm lấy, không mua ngoài.",
+   "ngu_canh": "Nói về giải pháp tự làm, nguồn lực tại chỗ; giọng khiêm nhường.",
+   "the_loai": [
+    "blog",
+    "bao-cao-thuc-tap",
+    "sang-kien-kinh-nghiem"
+   ]
+  },
+  {
+   "id": "TN031",
+   "thanh_ngu": "Rán sành ra mỡ",
+   "nghia": "Đòi kết quả từ chỗ không thể có; cũng chỉ người hà tiện quá mức.",
+   "ngu_canh": "Phê phán yêu cầu vượt quá năng lực nguồn lực đã cấp.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN032",
+   "thanh_ngu": "Chạy long tóc gáy",
+   "nghia": "Chạy ngược chạy xuôi lo cho xong việc gấp.",
+   "ngu_canh": "Kể lại giai đoạn gấp rút; giọng đời thường, hợp blog và phần kể trong báo cáo.",
+   "the_loai": [
+    "blog",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN033",
+   "thanh_ngu": "Chạy thầy chạy thợ",
+   "nghia": "Tìm mọi nơi, mọi cách để chữa hoặc gỡ một việc.",
+   "ngu_canh": "Mô tả nỗ lực tuyệt vọng trước một sự cố.",
+   "the_loai": [
+    "blog",
+    "journalism"
+   ]
+  },
+  {
+   "id": "TN034",
+   "thanh_ngu": "của một đồng, công một nén",
+   "nghia": "Giá trị món đồ thì nhỏ, công sức bỏ ra thì lớn.",
+   "ngu_canh": "Nói về chi phí ẩn, về công sức không hiện trong dự toán.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN035",
+   "thanh_ngu": "Ra tấm ra miếng",
+   "nghia": "Rành mạch, đâu ra đấy, đủ lớn để dùng được.",
+   "ngu_canh": "Đặt chuẩn cho một kết quả: phải đủ tầm chứ không phải làm cho có.",
+   "the_loai": [
+    "blog",
+    "bao-cao-thuc-tap",
+    "sang-kien-kinh-nghiem"
+   ]
+  },
+  {
+   "id": "TN036",
+   "thanh_ngu": "Quen ăn bén mùi",
+   "nghia": "Được lợi một lần rồi quen, lặp lại thủ đoạn cũ.",
+   "ngu_canh": "Chỉ ra tính lặp của một hành vi trục lợi.",
+   "the_loai": [
+    "journalism",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN037",
+   "thanh_ngu": "Người ba đấng, của ba loài",
+   "nghia": "Người có tốt có xấu, của có thứ hay thứ dở.",
+   "ngu_canh": "Chặn lối khái quát cả một nhóm từ vài trường hợp; dùng khi phản bác quy chụp.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN038",
+   "thanh_ngu": "Chim khôn thử tiếng, người ngoan thử lời",
+   "nghia": "Qua lời ăn tiếng nói biết được người.",
+   "ngu_canh": "Mở một đoạn bàn về vai trò của ngôn ngữ trong đánh giá con người.",
+   "the_loai": [
+    "essay",
+    "blog"
+   ]
+  },
+  {
+   "id": "TN039",
+   "thanh_ngu": "Dao sắc không bằng chắc kê",
+   "nghia": "Dụng cụ tốt không bằng chỗ tựa vững.",
+   "ngu_canh": "Nói rằng nền tảng quan trọng hơn công cụ; hợp bài về hạ tầng, quy trình, dữ liệu nền.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "sang-kien-kinh-nghiem"
+   ]
+  },
+  {
+   "id": "TN040",
+   "thanh_ngu": "Không tuần chay nào thiếu nước mắt",
+   "nghia": "Việc gì cũng có mặt, chỗ nào cũng góp phần.",
+   "ngu_canh": "Nhận xét một cái tên xuất hiện ở mọi hồ sơ, mọi gói thầu, mọi hội đồng.",
+   "the_loai": [
+    "journalism",
+    "chinh-luan"
+   ],
+   "canh_bao": "Ám chỉ trục lợi. Ở bài báo chí phải có bằng chứng, không dùng như một câu bóng gió."
+  },
+  {
+   "id": "TN041",
+   "thanh_ngu": "Nước sông công lính",
+   "nghia": "Thứ sẵn có và công sức người khác thì bị dùng tuỳ tiện.",
+   "ngu_canh": "Phê phán việc tiêu nguồn lực chung như thể nó vô hạn.",
+   "the_loai": [
+    "essay",
+    "journalism",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN042",
+   "thanh_ngu": "Đá đưa đầu lưỡi",
+   "nghia": "Nói năng đong đưa, khôn khéo mà không thật.",
+   "ngu_canh": "Mô tả cách trả lời né tránh; là nhận định về thái độ, phải kèm câu trích.",
+   "the_loai": [
+    "journalism",
+    "chinh-luan"
+   ],
+   "canh_bao": "Gán động cơ xảo trá. Cần câu trích cụ thể, nếu không thì đây là công kích cá nhân."
+  },
+  {
+   "id": "TN043",
+   "thanh_ngu": "Bút Nam Tào, dao thày thuốc",
+   "nghia": "Ngòi bút và con dao đều định đoạt số phận người khác.",
+   "ngu_canh": "Nói về trách nhiệm của người cầm bút và người có quyền quyết định.",
+   "the_loai": [
+    "essay",
+    "journalism",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN044",
+   "thanh_ngu": "Sơn ăn tuỳ mặt, ma bắt tuỳ người",
+   "nghia": "Cùng một thứ nhưng tác động khác nhau tuỳ người.",
+   "ngu_canh": "Giải thích vì sao một chính sách chung lại có kết quả rất khác giữa các nhóm.",
+   "the_loai": [
+    "essay",
+    "chinh-luan",
+    "sang-kien-kinh-nghiem"
+   ]
+  },
+  {
+   "id": "TN045",
+   "thanh_ngu": "có thủy có chung",
+   "nghia": "Trước sau như một, giữ trọn tình nghĩa.",
+   "ngu_canh": "Ghi nhận sự nhất quán, thường ở phần cảm ơn hoặc phần nhìn lại.",
+   "the_loai": [
+    "essay",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN046",
+   "thanh_ngu": "bán đồ nhi phế",
+   "nghia": "Nửa đường bỏ dở.",
+   "ngu_canh": "Cụm Hán Việt trang trọng cho việc dừng giữa chừng; hợp phần đánh giá dự án.",
+   "the_loai": [
+    "essay",
+    "chinh-luan",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN047",
+   "thanh_ngu": "Ngậm ngải tìm trầm",
+   "nghia": "Chịu gian khổ và rủi ro lớn để tìm một thứ quý hiếm.",
+   "ngu_canh": "Mô tả một hành trình theo đuổi dài và bấp bênh.",
+   "the_loai": [
+    "essay",
+    "blog"
+   ]
+  },
+  {
+   "id": "TN048",
+   "thanh_ngu": "Tiếng bấc tiếng chì",
+   "nghia": "Lời qua tiếng lại, khi nhẹ khi nặng.",
+   "ngu_canh": "Mô tả một cuộc tranh cãi kéo dài giữa hai bên.",
+   "the_loai": [
+    "blog",
+    "journalism"
+   ]
+  },
+  {
+   "id": "TN049",
+   "thanh_ngu": "Trăm kẻ bán, vạn người mua",
+   "nghia": "Người bán đông thì người mua cũng đông.",
+   "ngu_canh": "Nói về một thị trường có đủ hai phía, không lo ế.",
+   "the_loai": [
+    "blog",
+    "journalism"
+   ]
+  },
+  {
+   "id": "TN050",
+   "thanh_ngu": "Của trọng người khinh",
+   "nghia": "Coi tiền bạc nặng hơn tình nghĩa và con người.",
+   "ngu_canh": "Phê phán một cách sắp thứ tự ưu tiên.",
+   "the_loai": [
+    "essay",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN051",
+   "thanh_ngu": "Lời hay lẽ phải",
+   "nghia": "Lời khuyên đúng, phân tích rõ phải trái.",
+   "ngu_canh": "Cụm trung tính, dùng khi nhắc tới việc thuyết phục bằng lý lẽ.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN052",
+   "thanh_ngu": "Kén chọn lọc lừa",
+   "nghia": "Chọn quá kỹ, cầu kỳ đến mức bỏ lỡ.",
+   "ngu_canh": "Nói về khâu tuyển chọn quá chặt so với nguồn ứng viên thực có.",
+   "the_loai": [
+    "blog",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN053",
+   "thanh_ngu": "Miệng ông cai, vai đầy tớ",
+   "nghia": "Nói thì như người có quyền, làm thì như người làm thuê.",
+   "ngu_canh": "Chỉ ra khoảng cách giữa lời tuyên bố và vị thế thực tế.",
+   "the_loai": [
+    "essay",
+    "journalism",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN054",
+   "thanh_ngu": "Sóng trước bổ sao, sóng sau bổ vậy",
+   "nghia": "Người trước làm thế nào thì người sau theo thế ấy.",
+   "ngu_canh": "Nói về sức nặng của tiền lệ và của việc nêu gương.",
+   "the_loai": [
+    "essay",
+    "chinh-luan",
+    "sang-kien-kinh-nghiem"
+   ]
+  },
+  {
+   "id": "TN055",
+   "thanh_ngu": "Vắng sao Hôm, có sao Mai",
+   "nghia": "Thiếu người này thì có người khác thay.",
+   "ngu_canh": "Nói về khả năng thay thế trong một hệ thống; cũng dùng ngược để chỉ sự lệ thuộc vào cá nhân.",
+   "the_loai": [
+    "blog",
+    "journalism",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN056",
+   "thanh_ngu": "Xôi giả vạ thật",
+   "nghia": "Lợi thì hão mà hoạ thì có thật.",
+   "ngu_canh": "Cân nhắc rủi ro so với lợi ích của một phương án.",
+   "the_loai": [
+    "essay",
+    "blog",
+    "chinh-luan"
+   ]
+  },
+  {
+   "id": "TN057",
+   "thanh_ngu": "Cá kể đầu, rau kể mớ",
+   "nghia": "Đếm cho đủ số, không phân biệt lớn nhỏ, không chọn lọc.",
+   "ngu_canh": "Phê phán việc chạy theo số lượng trong báo cáo thành tích.",
+   "the_loai": [
+    "essay",
+    "journalism",
+    "bao-cao-thuc-tap"
+   ]
+  },
+  {
+   "id": "TN058",
+   "thanh_ngu": "Đếm bụt đóng oản",
+   "nghia": "Liệu đúng số người mà làm, không thừa không thiếu.",
+   "ngu_canh": "Nói về việc lập kế hoạch bám sát nhu cầu thực.",
+   "the_loai": [
+    "blog",
+    "bao-cao-thuc-tap",
+    "sang-kien-kinh-nghiem"
+   ]
+  }
+ ]
+}
