@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-writing-studio/shared/schemas/draft.schema.json",
+  "title": "draft.meta.json — bản tự khai nguồn gốc đi kèm draft.md",
+  "description": "Trục 2 phải tự khai phần nào do máy viết. Đây là phép thử liêm chính của chính studio: nếu trục 5 giám định mù mà không khớp bản tự khai này, con số đó là dữ liệu hiệu chỉnh, không phải lỗi của tác giả.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "genre",
+    "structure_id",
+    "outline_approved",
+    "machine_written_spans",
+    "model",
+    "profile_used"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "created_at": { "type": "string" },
+    "context_ref": {
+      "type": "string",
+      "description": "Đường dẫn tới context.json đã dùng. Trục 2 từ chối viết nếu không có."
+    },
+    "genre": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "structure_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "id của khung đã dùng, phải có trong structures[] ở §2 của hồ sơ thể loại."
+    },
+    "outline_approved": {
+      "type": "boolean",
+      "description": "true = người dùng đã duyệt outline đủ outline_depth tầng TRƯỚC khi viết prose. false = bản nháp thăm dò, không được nộp."
+    },
+    "outline_depth_reached": { "type": "integer", "minimum": 0 },
+    "machine_written_spans": {
+      "type": "array",
+      "description": "BẮT BUỘC CÓ MẶT, được phép rỗng. Rỗng nghĩa là 'không câu nào do máy viết' — một khẳng định, không phải một chỗ trống.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sentence_id", "origin"],
+        "properties": {
+          "sentence_id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Khớp id trong sentences.json do extract.py sinh."
+          },
+          "quote": {
+            "type": "string",
+            "minLength": 1,
+            "description": "TUỲ CHỌN nhưng nên có: vài chữ nguyên văn của chính câu đó. sentence_id một mình chỉ neo được vào một index; index sinh lại mà số câu đổi thì mọi id dịch đi và bản tự khai vẫn 'hợp lệ' trong khi trỏ sang câu bên cạnh. Có quote thì shared/scripts/check_spans.py đối chiếu được nội dung, không chỉ ID."
+          },
+          "origin": {
+            "enum": ["machine", "machine_edited_by_human", "human_edited_by_machine"],
+            "description": "machine = máy viết, người không sửa. Hai giá trị còn lại ghi rõ ai chạm sau cùng."
+          },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string" },
+        "settings": { "type": "object" }
+      }
+    },
+    "profile_used": {
+      "type": ["string", "null"],
+      "description": "Slug writer profile đã dùng, hoặc null nếu viết theo giọng mặc định thể loại."
+    },
+    "self_checks": {
+      "type": "array",
+      "description": "Tự kiểm trước khi trả bài: counters.py và 1–2 lăng kính của trục 3.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "passed"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "passed": { "type": "boolean" },
+          "detail": { "type": "string" }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "outline_approved": { "const": true } },
+        "required": ["outline_approved"]
+      },
+      "then": {
+        "properties": { "outline_depth_reached": { "minimum": 1 } },
+        "required": ["outline_depth_reached"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-writing-studio/shared/writers/writer.schema.json",
+  "title": "profile.yaml — hồ sơ vân tay người viết",
+  "description": "Hồ sơ giọng của MỘT người viết, dựng từ bài chính chủ. File thật nằm ở shared/writers/<slug>/profile.yaml và bị .gitignore bỏ qua vì có thể nhận diện cá nhân; chỉ schema này được commit. Bốn trục cùng đọc: trục 1 nạp làm persona người viết, trục 2 viết đúng giọng, trục 4 đánh bóng VỀ PHÍA giọng tác giả, trục 5 dùng làm baseline chống báo oan. Hồ sơ KHÔNG chứa nguyên văn bài mẫu.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile_version",
+    "name",
+    "language",
+    "built_from",
+    "status",
+    "fingerprint",
+    "provenance"
+  ],
+  "properties": {
+    "profile_version": {
+      "const": "1.0"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Slug thư mục, không phải họ tên. Không ghi tên thật, email hay tổ chức vào hồ sơ."
+    },
+    "language": {
+      "type": "string",
+      "description": "Mã ngôn ngữ của bài mẫu, ví dụ vi. Một hồ sơ chỉ nói về một ngôn ngữ."
+    },
+    "genre": {
+      "type": ["string", "null"],
+      "description": "Thể loại của bộ bài mẫu, khớp slug trong shared/genres/. null = trộn nhiều thể loại; khi đó fingerprint chỉ đọc được ở mức tham khảo."
+    },
+    "built_from": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Số bài mốc đã xác nhận chính chủ. Dưới 3 bài thì status phải là draft: một hai bài không tách được thói quen của người ra khỏi đặc thù của bài."
+    },
+    "status": {
+      "enum": ["draft", "ready"],
+      "description": "draft = chưa đủ bài, CHỈ được dùng để tham khảo, KHÔNG được dùng để hạ finding ở trục 5. ready = đủ từ 3 bài trở lên."
+    },
+    "fingerprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sentence_len", "gloss_per_1000", "nominal_per_1000", "tone_style"],
+      "description": "Số đo, không phải nhận xét. Mỗi chỉ số là TRUNG VỊ của từng bài, không phải số đo trên văn bản đã nối; nối bài lại rồi đo sẽ trộn mất khác biệt giữa các bài.",
+      "properties": {
+        "sentence_len": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mean", "cv"],
+          "properties": {
+            "mean": {
+              "type": ["number", "null"],
+              "minimum": 0,
+              "description": "Trung vị của độ dài câu trung bình từng bài, tính bằng âm tiết chính tả (vi_segment.count_orthographic_syllables)."
+            },
+            "cv": {
+              "type": ["number", "null"],
+              "minimum": 0,
+              "description": "Trung vị hệ số biến thiên độ dài câu. CV thấp = câu đều đặn; đây là chỗ trục 4 dễ bơm burstiness giả nhất nên nó là số phải có baseline."
+            },
+            "median_per_sample": {
+              "type": "array",
+              "description": "Tuỳ chọn: mean của từng bài, để thấy độ tản. Không kèm nội dung bài.",
+              "items": { "type": ["number", "null"] }
+            }
+          }
+        },
+        "gloss_per_1000": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "description": "Trung vị số lần chú thuật ngữ tiếng Anh trong ngoặc trên 1000 âm tiết (counters.find_gloss). Người quen làm nghề kỹ thuật có số này cao một cách hợp pháp."
+        },
+        "nominal_per_1000": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "description": "Trung vị mật độ danh từ hoá trên 1000 âm tiết (counters.find_nominalisations). Cao là đặc trưng văn hành chính - học thuật Việt, không phải bằng chứng máy viết."
+        },
+        "tone_style": {
+          "enum": ["old", "new", "mixed", "unknown"],
+          "description": "Kiểu bỏ dấu quen dùng: old = hoà, khoẻ, thuý; new = hòa, khỏe, thúy. Trục 4 phải giữ nguyên kiểu của tác giả; đổi kiểu bỏ dấu là sửa oan."
+        },
+        "tone_style_evidence": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Số lần đếm được của từng kiểu, để người đọc hồ sơ kiểm lại kết luận tone_style.",
+          "properties": {
+            "old": { "type": "integer", "minimum": 0 },
+            "new": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "pet_templates": {
+      "type": "array",
+      "description": "Khuôn tu từ tác giả DÙNG QUEN. Đây là cơ chế chống báo oan của trục 5: người mê phép đối có hồ sơ chứng minh mình mê phép đối từ trước, nên khuôn ấy xuất hiện trong bài nghi vấn không còn là tín hiệu. Điều kiện vào danh sách: xuất hiện ở ít nhất 2 bài mẫu khác nhau — một bài chỉ là thói quen của bài đó.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "seen_in_samples", "total_hits"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-zA-Z0-9_]*$",
+            "description": "Tên khuôn, khớp khoá trong counters.TEMPLATES khi khuôn do script đo (vd vua_X_vua_Y); khuôn do người thêm tay thì đặt tên cùng quy ước."
+          },
+          "seen_in_samples": {
+            "type": "integer",
+            "minimum": 2,
+            "description": "Số bài mẫu KHÁC NHAU có khuôn này. Tối thiểu 2."
+          },
+          "total_hits": {
+            "type": "integer",
+            "minimum": 2,
+            "description": "Tổng số lần xuất hiện trên toàn bộ bài mẫu."
+          },
+          "example": {
+            "type": "string",
+            "maxLength": 120,
+            "description": "TUỲ CHỌN và mặc định KHÔNG ghi. Đây là nguyên văn trích từ bài của người thật; chỉ bật khi chủ hồ sơ đồng ý, tối đa 120 ký tự."
+          },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "necessary_english_terms": {
+      "type": "array",
+      "description": "Thuật ngữ tiếng Anh tác giả buộc phải dùng vì nghề nghiệp. Trục 4 không được dịch hay bỏ; trục 5 không được tính là tín hiệu G2. Điều kiện: xuất hiện ở ít nhất 2 bài mẫu.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "known_typos": {
+      "type": "array",
+      "description": "Lỗi chính tả hoặc cách viết riêng LẶP LẠI của tác giả, dạng 'sai/đúng'. Script không tự dựng được mục này — cần từ điển và mắt người; để rỗng còn hơn đoán. Giá trị: lỗi lặp là dấu vết người, trục 5 không được coi việc bài sạch lỗi là bằng chứng máy viết, và trục 4 không được lặng lẽ sửa hết dấu vết ấy.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["wrong", "right"],
+        "properties": {
+          "wrong": { "type": "string", "minLength": 1 },
+          "right": { "type": "string", "minLength": 1 },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "voice_notes": {
+      "type": "string",
+      "description": "Vài câu người viết tự mô tả giọng mình, hoặc người dựng hồ sơ ghi sau khi đọc bài mẫu: cách mở bài, chỗ hay xuống dòng, thói quen nêu ví dụ trước kết luận. Đây là phần script KHÔNG đo được và cũng không được bịa."
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["built_at", "built_by", "samples"],
+      "description": "Bài mẫu đến từ đâu và ai đã xác nhận chính chủ. Không ghi tên file, không ghi đường dẫn tuyệt đối, không ghi nội dung — chỉ mã băm rút gọn để đối chiếu về sau.",
+      "properties": {
+        "built_at": { "type": "string", "minLength": 1 },
+        "built_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Tên và phiên bản công cụ, vd profile_build.py 1.0."
+        },
+        "ownership_confirmed_by": {
+          "type": ["string", "null"],
+          "description": "Ai xác nhận các bài này là của chính tác giả. null = CHƯA ai xác nhận, hồ sơ không được dùng để hạ finding."
+        },
+        "samples": {
+          "type": "array",
+          "description": "Mỗi bài mẫu một mục. Không tên file vì tên file cũng có thể lộ danh tính.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "sha256_12", "chars"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^s[0-9]{2,3}$",
+                "description": "Số thứ tự trong lần dựng này, vd s01."
+              },
+              "sha256_12": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{12}$",
+                "description": "12 ký tự đầu của SHA-256 nội dung, đủ để phát hiện bài bị đổi mà không lộ gì."
+              },
+              "chars": { "type": "integer", "minimum": 1 },
+              "sentences": { "type": "integer", "minimum": 0 },
+              "syllables": { "type": "integer", "minimum": 0 },
+              "format": { "enum": ["txt", "md", "docx"] }
+            }
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "description": "Điều hồ sơ này KHÔNG nói được: ít bài, một thể loại, bài đã qua biên tập, thiếu tokenizer. Rỗng gần như luôn là dấu hiệu người dựng chưa nghĩ đủ.",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "built_from": { "maximum": 2 } },
+        "required": ["built_from"]
+      },
+      "then": {
+        "properties": { "status": { "const": "draft" } },
+        "$comment": "Dưới 3 bài mốc thì hồ sơ chỉ ở trạng thái draft — luật của shared/writers/README.md và ARCHITECTURE_v2 §2.2."
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "ready" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": { "built_from": { "minimum": 3 } }
+      }
+    }
+  ]
+}

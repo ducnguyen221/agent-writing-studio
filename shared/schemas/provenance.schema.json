@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-writing-studio/shared/schemas/provenance.schema.json",
+  "title": "polished.provenance.json — bản tự khai ĐI THEO bản giao",
+  "description": "draft.meta.json khai từng câu và nằm lại trong thư mục ca; polish.diff.json ghi từng nhát sửa và cũng nằm lại. Người nhận bản giao chỉ cầm file văn bản, nên không quan sát được gì về nguồn gốc — phép thử cột B (docs/results/self-audit-cot-B.md mục 4) đo được đúng điều đó: sau trục 4, văn bản không mang một dấu nào cho biết nó đã qua biên tập máy, ranh giới đạo đức chỉ tồn tại trong sidecar mà người chấm không được xem. File này là bản tóm tắt tự khai BẮT BUỘC đi kèm mỗi lần xuất bản đã sửa: đủ để người nhận biết tỷ lệ nguồn gốc và truy ngược về draft.meta.json, không chứa nội dung văn bản.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "genre",
+    "origin",
+    "model",
+    "stylometric_polish",
+    "draft_meta_sha256"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "generated_at": { "type": "string" },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Bản giao mà file này đi kèm. Chỉ tên file và hash — không chép nội dung.",
+      "properties": {
+        "file": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "genre": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sentences_total", "machine_pct", "machine_edited_pct", "human_pct"],
+      "description": "Tổng hợp theo CÂU, cộng lại phải xấp xỉ 100%. Đây là con số tổng; chi tiết từng câu vẫn ở draft.meta.json.",
+      "properties": {
+        "sentences_total": { "type": "integer", "minimum": 0 },
+        "machine_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "machine_edited_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Câu có cả máy lẫn người chạm: machine_edited_by_human và human_edited_by_machine gộp lại."
+        },
+        "human_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Câu KHÔNG có trong machine_written_spans[]. Suy ra từ phần còn lại, nên nó chỉ đúng khi sentences.json phủ 100% văn bản — chạy shared/scripts/check_spans.py trước khi ghi con số này."
+        },
+        "counted_from": {
+          "type": "string",
+          "description": "File index đã dùng để đếm, ví dụ sentences.json. Ghi để người đọc biết con số này đếm trên bản nào."
+        },
+        "undeclared_sentences": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Số câu không được draft.meta.json nói tới. Khác 0 mà bài lại là bài máy viết thì con số phần trăm bên trên đang lạc quan hơn sự thật; ghi ra chứ không làm tròn cho đẹp."
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string" },
+        "role": {
+          "type": "string",
+          "description": "Ví dụ \"viết (trục 2) và biên tập (trục 4)\". Một mô hình làm cả hai việc là điều người nhận nên biết."
+        }
+      }
+    },
+    "stylometric_polish": {
+      "const": true,
+      "description": "BẮT BUỘC true. Bản đi kèm file này đã qua trục 4. Giấu đi là biến biên tập thành che giấu."
+    },
+    "forensics_score_seen": {
+      "const": false,
+      "description": "Trục 4 không được xem điểm trục 5 của chính bài đang sửa."
+    },
+    "draft_meta_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "sha256 của draft.meta.json tại lúc xuất bản. Đây là sợi dây duy nhất nối con số tổng ở đây với bản tự khai từng câu: đổi meta mà không xuất lại thì hash không khớp và người nhận biết ngay."
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Điều người nhận cần biết mà con số không nói được, ví dụ 'cùng một mô hình vừa viết vừa tự chấm' hoặc 'còn N câu chưa khai'."
+    }
+  }
+}

@@ -1,0 +1,26 @@
+# DỮ LIỆU BÀI ĐƯỢC GIÁM ĐỊNH — TUYỆT ĐỐI KHÔNG COMMIT
+# Chứa nguyên văn bài của người thật + metadata định danh.
+.work/
+*.docx
+*.pdf
+evidence.json
+report.md
+
+# fixtures chứa bài thật của học viên — chỉ commit khi đã ẩn danh hoá
+fixtures/**
+!fixtures/README.md
+!fixtures/.gitkeep
+!fixtures/manifest.schema.json
+
+# Writer baseline có thể nhận diện cá nhân; chỉ commit hướng dẫn và schema,
+# KHÔNG commit profile.yaml lẫn samples/. Ngoại lệ chỉ ở mức file ngay trong
+# shared/writers/; mọi thứ trong shared/writers/<slug>/ vẫn bị bỏ qua.
+shared/writers/**
+!shared/writers/README.md
+!shared/writers/.gitkeep
+!shared/writers/writer.schema.json
+!shared/writers/audience.schema.json
+
+.venv/
+__pycache__/
+*.pyc

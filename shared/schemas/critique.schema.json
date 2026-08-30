@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-writing-studio/shared/schemas/critique.schema.json",
+  "title": "critique.json — đầu ra của trục 3 (03-critique)",
+  "description": "MỘT schema cho MỌI thể loại. Bài luận và tiểu thuyết cho ra cùng hình dạng file; chỉ nội dung criteria_scores[] và lenses_run[] khác nhau. Nếu phải thêm khoá cho một thể loại thì ranh giới dữ liệu/logic đã bị phá.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "genre",
+    "blind_referee",
+    "criteria_scores",
+    "lenses_run",
+    "findings",
+    "must_fix",
+    "limitations"
+  ],
+  "$defs": {
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["section", "paragraph_index", "sentence_id"],
+      "description": "Quy ước định vị dùng chung cho mọi finding. Ba trường trỏ tới CÙNG MỘT chỗ ở ba mức thô dần; người đọc báo cáo phải tìm lại được câu mà không cần hỏi người chấm.",
+      "properties": {
+        "section": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Heading gần nhất phía TRÊN câu, chép NGUYÊN VĂN kể cả số mục (ví dụ \"3. Phương pháp\"). Không tóm tắt, không dịch, không tự đặt tên mục. Văn bản không có heading nào phía trên thì ghi \"(không có heading)\"."
+        },
+        "paragraph_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Số thứ tự đoạn ĐẾM TỪ 0 và đếm TRONG PHẠM VI section, không đếm từ đầu bài. Đoạn = khối văn bản giữa hai dòng trống; dòng heading không tính là đoạn; mỗi mục danh sách tính là một đoạn."
+        },
+        "sentence_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "id trong sentences.json do extract.py sinh (dạng s0046). Đây là neo chính xác nhất; section và paragraph_index chỉ để người đọc định hướng."
+        },
+        "quote_anchor": { "type": "string", "minLength": 1 }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "description": "Kế thừa hợp đồng finding của skills/05-forensics/assets/result.schema.json: có vị trí, có câu trích, có PHẢN CHỨNG. Khác ở chỗ finding của trục 3 nói về CHẤT LƯỢNG, không nói về nguồn gốc văn bản.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "criterion_id",
+        "lens",
+        "location",
+        "quoted_text",
+        "severity",
+        "evidence",
+        "counterevidence",
+        "suggested_fix",
+        "verification_question"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "criterion_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Phải khớp một id trong criteria_scores[]."
+        },
+        "lens": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Lăng kính đã sinh ra finding này; phải có trong lenses_run[]."
+        },
+        "location": { "$ref": "#/$defs/location" },
+        "quoted_text": { "type": "string", "minLength": 1 },
+        "severity": { "enum": ["low", "medium", "high"] },
+        "evidence": { "type": "string", "minLength": 1 },
+        "counterevidence": {
+          "type": "string",
+          "minLength": 1,
+          "description": "BẮT BUỘC. Cách đọc rộng lượng nhất của đoạn này. Không nghĩ ra được thì bỏ finding."
+        },
+        "suggested_fix": { "type": "string", "minLength": 1 },
+        "verification_question": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Câu hỏi cho tác giả để họ giải thích lựa chọn, không phải lời buộc tội."
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "created_at": { "type": "string" },
+    "genre": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "rubric_source": {
+      "type": "string",
+      "description": "Barem thật đã dùng nếu có (đề bài, band descriptor, hướng dẫn chấm). Barem của nhiệm vụ thắng hồ sơ thể loại."
+    },
+    "blind_referee": {
+      "type": "boolean",
+      "description": "true = người chấm chưa xem draft.meta.json và chưa nhận câu hỏi mớm trước khi chấm xong."
+    },
+    "criteria_scores": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Chấm RIÊNG từng tiêu chí của §3 hồ sơ thể loại. Không có điểm tổng: cộng gộp che mất việc văn trơn tru đang gánh cho lập luận yếu.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "score", "evidence", "question"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Thang 0–100 cho RIÊNG tiêu chí này."
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Bằng chứng trưng ra được, theo trường evidence của criteria[] trong §3."
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Câu hỏi của tiêu chí và câu trả lời của người chấm."
+          },
+          "confidence": { "enum": ["low", "medium", "high"] }
+        }
+      }
+    },
+    "lenses_run": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Đúng các lăng kính mà lenses[] của §3 bật. Chạy thừa hay thiếu đều phải ghi ở limitations.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/finding" }
+    },
+    "must_fix": {
+      "type": "array",
+      "description": "Việc phải sửa trước khi nộp, xếp theo mức thiệt hại. Trỏ tới finding, không lặp lại nội dung finding.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["finding_id", "why_it_matters"],
+        "properties": {
+          "finding_id": { "type": "string", "minLength": 1 },
+          "why_it_matters": { "type": "string", "minLength": 1 },
+          "blocking": { "type": "boolean" },
+          "owner": {
+            "enum": ["02-cowriter", "04-humanizer", "author"],
+            "description": "Trục nào được phép THI HÀNH việc này; mặc định khi vắng mặt là 04-humanizer. Mọi must_fix đòi ĐỔI MỨC MẠNH CỦA KHẲNG ĐỊNH — hạ 'dẫn tới' xuống 'có liên hệ với', rút một khái quát hoá, thêm điều kiện chưa có trong bài — PHẢI ghi owner: 02-cowriter và đi vòng viết lại, vì đó là đổi ĐIỀU ĐƯỢC NÓI chứ không phải đổi cách nói. Trục 4 gặp loại này thì không thi hành, chỉ ghi warnings[] với route_to: 02-cowriter:round2. Lý do: docs/results/self-audit-cot-B.md mục 6 — một nhát sửa chính đáng theo must_fix loại này đã xoá đúng câu mà người chấm mù lẽ ra gắn NOTE, nên 'tốt cho người đọc' và 'ít bị cờ' trùng nhau ở ranh và diff không tách được hai thứ."
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "description": "BẮT BUỘC không rỗng. Người chấm phải nói rõ mình KHÔNG thấy được gì.",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

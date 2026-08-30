@@ -1,0 +1,31 @@
+{
+  "schema_version": "3.0",
+  "group_caps": {
+    "G1": 30,
+    "G2": 20,
+    "G3": 25,
+    "G4": 25
+  },
+  "form_vocabulary_only_multiplier": 0.6,
+  "sentence_weights": {
+    "PLAIN": 0.0,
+    "NOTE": 0.4,
+    "FLAG": 1.0
+  },
+  "label_bands": [
+    {"minimum": 0, "maximum": 29, "label": "low_signal"},
+    {"minimum": 30, "maximum": 59, "label": "worth_reviewing"},
+    {"minimum": 60, "maximum": 100, "label": "priority_check"}
+  ],
+  "uncalibrated_margin": {
+    "review_priority": 25,
+    "coverage_percent": 10
+  },
+  "conflict_thresholds": {
+    "marked_sentence_ratio": 0.25,
+    "document_level_score": 60,
+    "document_level_coverage": 10,
+    "weak_distributed_score": 30,
+    "weak_distributed_coverage": 30
+  }
+}

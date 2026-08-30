@@ -1,0 +1,625 @@
+{
+  "schema_version": "1.0",
+  "updated": "2026-08-30",
+  "purpose": "Một danh mục, hai chiều. Trục 4 (04-humanizer) đọc `fix` + `vi_example` để NHẬN RA và SỬA. Trục 5 (05-forensics) đọc `vi_counterexample` + `genre_baseline` để HẠ finding. Chiều buộc tội bị khoá: chỉ mục `calibrated` mới được dùng để TẠO finding, và đợt này không mục nào là `calibrated`.",
+  "provenance": "Ý tưởng phân họ lấy từ blader/humanizer (MIT, pin e2e92e7b4b8229253ed5c8e81dc65463fdeddda5). MỌI ví dụ và phản chứng trong file này do người soạn tự viết bằng tiếng Việt — không dịch câu nào từ bản gốc tiếng Anh.",
+  "families": {
+    "G1": "Khuôn hình thức — cấu trúc câu, đoạn, tiêu đề, danh sách dựng sẵn",
+    "G2": "Từ vựng và cú pháp — cụm đệm, danh từ hoá, rào đón",
+    "G3": "Dẫn chứng — nguồn, phản đối, phương án thay thế",
+    "G4": "Giọng và lập trường — thổi phồng, nịnh, hứa hẹn, giả thẳng thắn"
+  },
+  "status_meaning": {
+    "candidate": "Đã có ví dụ và phản chứng tiếng Việt, dùng được cho trục 4. KHÔNG được dùng để tạo finding ở trục 5.",
+    "calibrated": "Đã qua 05d-calibration với corpus tiếng Việt có provenance. Chỉ khi đó trục 5 mới được dùng để tạo finding.",
+    "needs_corpus": "Chưa đủ cơ sở để viết ví dụ. Ba trường vi_example / vi_counterexample / fix bắt buộc để RỖNG — chỗ trống là câu trả lời trung thực, không phải thiếu sót."
+  },
+  "usage_rules": [
+    "Đây KHÔNG phải danh sách từ cấm. Mỗi mục là một HỌ tín hiệu kèm phản chứng.",
+    "`genre_baseline` liệt kê thể loại mà tín hiệu này là VĂN PHONG CHUẨN. Với các thể loại đó, tín hiệu không được tính là dấu hiệu nguồn gốc và trục 4 chỉ được bơm nội dung, không được phá khung.",
+    "Trục 4 sửa vì bản sau tốt hơn cho người đọc, không phải vì bản sau ít giống máy hơn.",
+    "Trục 5 dùng file này để HẠ nghi vấn. Muốn dùng để nâng, phải hiệu chỉnh trước — xem skills/05d-calibration.",
+    "Mọi slug trong `genre_baseline` PHẢI có hồ sơ `shared/genres/<slug>.md`. Baseline trỏ tới một thể loại không có hồ sơ thì trục 5 không tìm được §5 để hạ tín hiệu — tests/genres/test_genre_schema.py canh điều này.",
+    "`genre_baseline` ở đây và `genre_baseline.normal_signals` ở §5 hồ sơ thể loại là HAI KHUNG NHÌN của cùng một luật, hợp nhất bằng phép HỢP: file này khai theo tell, hồ sơ khai theo thể loại. polish_check.py đọc cả hai. Xem shared/genres/_schema.md mục 5."
+  ],
+  "excluded_patterns": [
+    {
+      "source": "blader/humanizer#14",
+      "name": "em dash / en dash",
+      "why": "Tín hiệu tiếng Anh. Đo trong ca giám định thật: 0 lần ở cả bài người lẫn bài máy tiếng Việt. Xem 03-chong-bao-oan §6."
+    },
+    {
+      "source": "blader/humanizer#15",
+      "name": "in đậm quá tay",
+      "why": "Đã gộp vào T16 ở dạng có nghĩa (danh sách tiêu đề đậm thay cho đoạn văn). Riêng mật độ chữ đậm không phân biệt được người với máy."
+    },
+    {
+      "source": "blader/humanizer#17",
+      "name": "Title Case",
+      "why": "Tiếng Việt không có khái niệm Title Case. Không chuyển được."
+    },
+    {
+      "source": "blader/humanizer#19",
+      "name": "ngoặc kép cong",
+      "why": "Word tự chuẩn hoá dấu nháy khi lưu. Đã bị bác bằng thực đo, xem 03-chong-bao-oan §6."
+    },
+    {
+      "source": "blader/humanizer#26",
+      "name": "cặp gạch nối",
+      "why": "Không có tương đương trong chính tả tiếng Việt."
+    }
+  ],
+  "entries": [
+    {
+      "id": "T01",
+      "family": "G4",
+      "name": "thoi_phong_tam_quan_trong",
+      "label": "Thổi phồng tầm quan trọng",
+      "what": "Gán tầm vóc thời đại hoặc quốc gia cho chủ đề ngay câu đầu, thay cho một lý do cụ thể vì sao chủ đề đáng bàn.",
+      "warning": "'Trong bối cảnh…' là câu mở CHUẨN được dạy cho báo cáo, đề cương, sáng kiến kinh nghiệm (03-chong-bao-oan §2 liệt kê đích danh) và cho bài nghị luận trong nhà trường. Ở các thể loại trong genre_baseline, câu mở toàn cảnh không phải tín hiệu; trục 4 chỉ được bơm lý do cụ thể vào SAU câu mở, không xoá câu mở. LƯU Ý về `essay`: baseline này chỉ có nghĩa 'không tính là dấu hiệu nguồn gốc, không phá khung' — essay.md §2 vẫn CẤM SINH ra câu mở toàn cảnh. Cấm-khi-sinh (§2) và hạ-tín-hiệu (§5) là hai việc khác nhau, xem 02-cowriter/references/04-chong-khuon-llm.md mục 5.",
+      "vi_example": "Trong bối cảnh cuộc cách mạng công nghiệp lần thứ tư đang diễn ra mạnh mẽ, kỹ năng đọc dữ liệu đã trở thành yếu tố sống còn quyết định vị thế của mỗi quốc gia.",
+      "vi_counterexample": "Năm nay 7 trong 12 tin tuyển dụng của phòng kinh doanh yêu cầu đọc được báo cáo trên hệ thống, ba năm trước chưa tin nào yêu cầu. — Cũng là khẳng định tầm quan trọng, nhưng đỡ bằng một phép đếm tác giả kiểm được.",
+      "genre_baseline": [
+        "chinh-luan",
+        "bao-cao-thuc-tap",
+        "sang-kien-kinh-nghiem",
+        "de-cuong-nghien-cuu",
+        "essay"
+      ],
+      "fix": "Cắt mệnh đề toàn cảnh, thay bằng phạm vi cụ thể tác giả kiểm được. Không có phạm vi nào thì hạ giọng xuống mức 'ở đơn vị tôi'.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#1"
+      ]
+    },
+    {
+      "id": "T02",
+      "family": "G3",
+      "name": "ten_nguon_thay_cho_nguon",
+      "label": "Mượn danh thay cho dẫn nguồn",
+      "what": "Nhắc tên báo lớn hoặc tổ chức uy tín để mượn sức nặng, nhưng không có bài, số, ngày hay trang nào tra được.",
+      "vi_example": "Nhiều tờ báo lớn trong nước và quốc tế đã nhiều lần khẳng định trí tuệ nhân tạo đang thay đổi căn bản ngành giáo dục.",
+      "vi_counterexample": "Báo cáo GEM 2023 của UNESCO, chương 4, khuyến nghị các nước hạn chế điện thoại trong lớp. — Nêu tổ chức KÈM điểm tra được là trích dẫn học thuật bình thường, không phải mượn danh.",
+      "genre_baseline": [],
+      "fix": "Đòi tên bài, số, ngày hoặc trang. Không có thì KHÔNG sửa câu và tuyệt đối không bịa nguồn: chuyển câu sang danh sách 'khẳng định chưa có nguồn' để tác giả tự trưng.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#2"
+      ]
+    },
+    {
+      "id": "T03",
+      "family": "G2",
+      "name": "phan_tich_nong_bang_cum_dem",
+      "label": "Phân tích nông bằng cụm đệm",
+      "what": "Tuyên bố chủ đề 'phức tạp / đa chiều / cần toàn diện' rồi dừng, không nêu cái phức tạp là gì.",
+      "vi_example": "Việc đưa trí tuệ nhân tạo vào lớp học là một vấn đề phức tạp, có nhiều khía cạnh cần được xem xét một cách toàn diện từ nhiều phía.",
+      "vi_counterexample": "Việc đưa trí tuệ nhân tạo vào lớp học phức tạp ở đúng một chỗ: giáo viên phải phân biệt phần nào của bài do học sinh viết, mà chưa có cách nào làm việc đó đủ chắc. — Vẫn dùng chữ 'phức tạp', nhưng câu nói thẳng ra cái khó.",
+      "genre_baseline": [],
+      "fix": "Xoá câu đệm, giữ lại câu nói đúng cái khó. Tác giả không nêu được cái khó thì đó là lỗ hổng nội dung — ghi finding cho trục 3, đừng vá câu.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#3"
+      ]
+    },
+    {
+      "id": "T04",
+      "family": "G4",
+      "name": "giong_quang_cao",
+      "label": "Giọng quảng cáo",
+      "what": "Giọng chào hàng: tính từ khen thay cho mô tả, hứa lợi ích mà không kèm điều kiện nào.",
+      "vi_example": "Công cụ được thiết kế thông minh với giao diện thân thiện, giúp người dùng dễ dàng làm chủ mọi thao tác chỉ sau vài phút.",
+      "vi_counterexample": "Cài xong chạy được ngay, nhưng muốn nối vào cơ sở dữ liệu của trường thì phải xin khoá từ phòng công nghệ thông tin, thường mất hai đến ba ngày. — Vẫn là bài giới thiệu sản phẩm, nhưng nói cả chỗ vướng.",
+      "genre_baseline": [
+        "blog"
+      ],
+      "fix": "Đổi tính từ khen thành mô tả kiểm được, và thêm đúng một điều kiện làm lời hứa đó không đúng.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#4"
+      ]
+    },
+    {
+      "id": "T05",
+      "family": "G3",
+      "name": "nguon_mo_ho",
+      "label": "Nguồn mơ hồ",
+      "what": "Nguồn tồn tại ở dạng số nhiều vô danh: 'theo các nghiên cứu gần đây', 'các chuyên gia cho rằng', 'nhiều báo cáo chỉ ra'.",
+      "vi_example": "Theo các nghiên cứu gần đây, học sinh dùng công cụ sinh văn bản để làm bài tập có kết quả thi cuối kỳ thấp hơn.",
+      "vi_counterexample": "Theo khảo sát của phòng đào tạo trên 214 sinh viên khoá 2024, nhóm khai có dùng công cụ sinh văn bản đạt điểm cuối kỳ thấp hơn 0,4 điểm. — Cũng mở bằng 'theo', nhưng nêu ai khảo sát và bao nhiêu người.",
+      "genre_baseline": [],
+      "fix": "Nêu tên nghiên cứu và năm, hoặc hạ khẳng định xuống mức tác giả thật sự đỡ được. Tuyệt đối không bịa một nguồn cho vừa câu.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#5",
+        "counters.py:VAGUE_SRC"
+      ]
+    },
+    {
+      "id": "T06",
+      "family": "G1",
+      "name": "muc_thach_thuc_trien_vong_cong_thuc",
+      "label": "Mục thách thức và triển vọng công thức",
+      "what": "Mục cuối bài theo khuôn 'bên cạnh kết quả đạt được vẫn còn tồn tại… trong thời gian tới cần…', trong đó cả hạn chế lẫn phương hướng đều rỗng.",
+      "warning": "ĐÂY LÀ BỐ CỤC BẮT BUỘC của báo cáo, tờ trình và sáng kiến kinh nghiệm ở Việt Nam, có trước khi có mô hình ngôn ngữ. Sự hiện diện của mục này KHÔNG BAO GIỜ là tín hiệu; chỉ nội dung rỗng bên trong mới đáng nói. Xem 03-chong-bao-oan §2.",
+      "vi_example": "Bên cạnh những kết quả đạt được, vẫn còn tồn tại một số hạn chế nhất định. Trong thời gian tới, cần tiếp tục đẩy mạnh và nâng cao hơn nữa hiệu quả của công tác này.",
+      "vi_counterexample": "Bên cạnh kết quả đạt được, hai lớp thí điểm vẫn thiếu máy chiếu nên phải học chay ba buổi. Học kỳ tới, phòng thiết bị đã xếp lịch mua bổ sung trong tháng 10. — Cùng khung, nhưng hạn chế và phương hướng đều cụ thể và kiểm được.",
+      "genre_baseline": [
+        "bao-cao-thuc-tap",
+        "sang-kien-kinh-nghiem",
+        "chinh-luan"
+      ],
+      "fix": "Giữ nguyên khung nếu thể loại đòi hỏi. Chỉ bơm nội dung: mỗi 'hạn chế' phải chỉ ra được một việc cụ thể, mỗi 'phương hướng' phải có người làm và mốc thời gian.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#6"
+      ]
+    },
+    {
+      "id": "T07",
+      "family": "G2",
+      "name": "tu_ai_dung_qua_tay",
+      "label": "Nhóm từ mô hình dùng quá tay",
+      "what": "Nhóm từ mà mô hình ngôn ngữ dùng dày hơn hẳn người viết tiếng Việt. CHƯA XÁC ĐỊNH ĐƯỢC.",
+      "vi_example": "",
+      "vi_counterexample": "",
+      "genre_baseline": [],
+      "fix": "",
+      "status": "needs_corpus",
+      "source": [
+        "blader/humanizer#7"
+      ],
+      "blocked_reason": "Danh sách từ tiếng Anh của upstream không chuyển sang tiếng Việt được. Dịch nó chính là thứ 05d-calibration cấm: một blacklist dịch máy sẽ phạt đúng văn hành chính chuẩn. Thực đo trong ca 2026-08-29: bài Tạp chí Cộng sản do người viết có mật độ cliché GẤP ĐÔI bài nghi vấn.",
+      "corpus_requirement": "Cần corpus tiếng Việt có provenance (tối thiểu 100 bài người và 100 bài máy, cùng thể loại, cùng độ dài) để rút chênh lệch tần suất. Trước khi có corpus đó, mục này không tạo finding và không được dùng để sửa."
+    },
+    {
+      "id": "T08",
+      "family": "G2",
+      "name": "dong_vai_tro_la_so_huu",
+      "label": "Cụm rỗng thay cho động từ thật",
+      "what": "Cụm rỗng đứng thay động từ: 'đóng vai trò là', 'sở hữu', 'mang trong mình'. LƯU Ý: trong tiếng Việt việc lược chữ 'là' là ngữ pháp bình thường — không được áp luật 'tránh động từ to be' của tiếng Anh.",
+      "warning": "'Đóng vai trò quan trọng' là cụm chuẩn của văn hành chính–học thuật Việt Nam (03-chong-bao-oan §2). Ở các thể loại trong genre_baseline chỉ sửa khi cụm đứng thay cho một động từ cụ thể có sẵn trong câu; không sửa vì 'nghe giống máy'.",
+      "vi_example": "Nền tảng này sở hữu một hệ thống báo cáo mạnh mẽ và đóng vai trò là cầu nối giữa dữ liệu và người ra quyết định.",
+      "vi_counterexample": "Ông Nam sở hữu hai cửa hàng ở quận 7. — 'Sở hữu' đúng nghĩa pháp lý là dùng chuẩn; chỉ cụm 'sở hữu + tính chất trừu tượng' mới rỗng.",
+      "genre_baseline": [
+        "chinh-luan",
+        "bao-cao-thuc-tap",
+        "sang-kien-kinh-nghiem",
+        "de-cuong-nghien-cuu"
+      ],
+      "fix": "Thay bằng động từ thật, KHÔNG đổi nghĩa tính từ: 'sở hữu một hệ thống báo cáo mạnh mẽ' thành 'có hệ thống báo cáo mạnh'; 'đóng vai trò là cầu nối giữa A và B' thành 'nối A với B'.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#8"
+      ]
+    },
+    {
+      "id": "T09",
+      "family": "G1",
+      "name": "khong_chi_ma_con",
+      "label": "Khuôn tương phản dựng sẵn",
+      "what": "Khuôn 'không chỉ X mà còn Y', 'không những… mà còn', 'vừa… vừa…', trong đó vế sau không thêm thông tin gì so với vế trước.",
+      "vi_example": "Kỹ năng này không chỉ giúp sinh viên học tốt hơn mà còn giúp các em phát triển toàn diện hơn trong tương lai.",
+      "vi_counterexample": "Bản đồ này không chỉ sai tên phường mà còn vẽ ranh giới lấn sang xã bên cạnh. — Cùng khuôn, nhưng hai vế là hai lỗi khác nhau và vế sau nặng hơn vế trước.",
+      "genre_baseline": [],
+      "fix": "Hỏi vế sau có thêm thông tin không. Không thì xoá vế sau. Có thì tách thành hai câu để vế nặng hơn được đứng riêng.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#9",
+        "counters.py:TEMPLATES.khong_chi_X_ma_con",
+        "counters.py:TEMPLATES.vua_X_vua_Y"
+      ],
+      "note": "Gộp với TEMPLATES sẵn có trong counters.py thay vì tạo họ trùng. counters.py đếm; mục này giải thích và nêu cách sửa."
+    },
+    {
+      "id": "T10",
+      "family": "G1",
+      "name": "bo_ba_guong_ep",
+      "label": "Bộ ba gượng ép",
+      "what": "Bộ ba danh từ hoặc tính từ song hành đặt cho đủ nhịp, phần tử thứ ba không thêm nghĩa.",
+      "warning": "Bộ ba song hành là phép tu từ ĐƯỢC DẠY trong văn nghị luận và diễn văn tiếng Việt. Ở các thể loại trong genre_baseline, đây là chuẩn mực, không phải dấu vết máy.",
+      "vi_example": "Chuyển đổi số đòi hỏi sự quyết tâm, đồng lòng và chung sức của toàn thể cán bộ, giảng viên và sinh viên.",
+      "vi_counterexample": "Đề án cần ba thứ: 1,2 tỷ đồng, một phòng máy 40 chỗ, và một kỹ thuật viên toàn thời gian. — Cũng là bộ ba, nhưng ba phần tử là ba nguồn lực khác loại; thiếu một là không chạy được.",
+      "genre_baseline": [
+        "chinh-luan",
+        "bao-cao-thuc-tap",
+        "sang-kien-kinh-nghiem"
+      ],
+      "fix": "Thử xoá phần tử thứ ba. Câu không nghèo đi thì bỏ hẳn; câu nghèo đi thì giữ và đó không phải tell.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#10"
+      ]
+    },
+    {
+      "id": "T11",
+      "family": "G1",
+      "name": "doi_ten_lap_mo_cau",
+      "label": "Đổi tên và lặp kiểu mở câu",
+      "what": "Nhiều đoạn liên tiếp mở bằng cùng một kiểu cấu trúc, hoặc gọi cùng một thứ bằng ba tên khác nhau chỉ để tránh lặp.",
+      "vi_example": "Việc ứng dụng công nghệ giúp… Việc triển khai giải pháp giúp… Việc áp dụng nền tảng giúp… (ba đoạn liên tiếp, ba tên cho cùng một thứ)",
+      "vi_counterexample": "Chúng ta cần đọc. Chúng ta cần hỏi. Chúng ta cần kiểm. — Lặp mở câu CÓ CHỦ Ý làm phép nhấn; đây là tu từ, không phải khuôn máy, và trục 4 không được xoá.",
+      "warning": "Lặp kiểu mở câu qua nhiều đoạn liền là PHÉP ĐIỆP, một kỹ thuật của văn hư cấu. Ở `novel`, mật độ lặp mở câu không được tính là tín hiệu nguồn gốc và trục 4 không được san phẳng (novel.md §4 xếp 'lặp có chủ ý' vào vùng preserve). Phần 'gọi một thứ bằng ba tên khác nhau' vẫn áp bình thường ở mọi thể loại.",
+      "genre_baseline": [
+        "novel"
+      ],
+      "fix": "Chọn một tên và giữ nguyên xuyên bài. Chỉ đổi kiểu mở đoạn khi hai đoạn thật sự có quan hệ khác nhau. Không đụng vào lặp có chủ ý.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#11"
+      ]
+    },
+    {
+      "id": "T12",
+      "family": "G1",
+      "name": "tu_x_den_y_gia",
+      "label": "Phổ giả 'từ X đến Y'",
+      "what": "Khuôn 'từ X đến Y' CHỈ là tín hiệu khi nó giả vờ đo một phổ: hai đầu được đặt như hai cực của một trục, trong khi không có trục nào đo được và bản thân X, Y chỉ là cụm khái quát co giãn. Câu liệt kê 'từ A, B đến C, D' — kể ra vài thứ đại diện cho một tập rộng — là cách nói thường ngày của tiếng Việt, không thuộc mục này.",
+      "warning": "Đây là chỗ dễ báo oan nhất của họ G1. 'Từ y tế, giáo dục đến nông nghiệp' là LIỆT KÊ bao quát: quen thuộc trong báo chí, văn nghị luận và văn hành chính Việt, và người viết nào cũng dùng. Phép thử trước khi ghi finding: thay khuôn bằng dấu phẩy mà câu vẫn đủ nghĩa thì đó là liệt kê, không phải phổ giả; chỉ khi hai đầu được dựng thành hai cực (nhỏ nhất ↔ lớn nhất, tầm thường ↔ trọng đại) mà không đo được bằng gì thì mới tính.",
+      "vi_example": "Dữ liệu chi phối mọi quyết định của doanh nghiệp, từ những điều nhỏ nhặt nhất đến những quyết định mang tính bước ngoặt.",
+      "vi_counterexample": "Giá thuê một chỗ ngồi dao động từ 800 nghìn ở vùng ven đến 3,5 triệu ở quận trung tâm. — X và Y là hai đầu thật của một trục đo được. 'Trí tuệ nhân tạo đã vào nhiều ngành, từ y tế, giáo dục đến nông nghiệp' cũng KHÔNG phải lỗi: đó là liệt kê vài ngành đại diện, không phải phổ. Thành ngữ quen 'từ già đến trẻ', 'từ thành thị đến nông thôn' là trục thật (tuổi, địa lý) và là cách nói thường ngày, không sửa.",
+      "genre_baseline": [],
+      "fix": "Chỉ sửa khi câu dựng phổ giả: bỏ khuôn và nói thẳng cái định nói — 'Dữ liệu chi phối cả những quyết định mua văn phòng phẩm lẫn quyết định mở chi nhánh mới.' Không đụng câu liệt kê, cũng không đụng thành ngữ liệt kê quen thuộc của tiếng Việt.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#12"
+      ]
+    },
+    {
+      "id": "T13",
+      "family": "G2",
+      "name": "thieu_chu_the_danh_tu_hoa",
+      "label": "Mất chủ thể do danh từ hoá",
+      "what": "Danh từ hoá làm biến mất người hành động: cụm 'việc / sự / quá trình / khả năng + động từ' đứng làm chủ ngữ.",
+      "warning": "Danh từ hoá + bị động ('Việc … cần được đẩy mạnh') là văn phong CHUẨN của văn bản hành chính, tờ trình, nghị quyết. Ở các thể loại trong genre_baseline, mật độ NOMINAL không được tính là tín hiệu nguồn gốc; trục 4 chỉ đưa chủ thể vào khi người viết thật sự có người làm cụ thể để nêu.",
+      "vi_example": "Việc nâng cao nhận thức về an toàn thông tin cần được đẩy mạnh trong thời gian tới.",
+      "vi_counterexample": "Quá trình quang hợp diễn ra ở lục lạp. — 'Quá trình' ở đây là thuật ngữ khoa học chỉ đúng một hiện tượng, không phải cách giấu chủ thể.",
+      "genre_baseline": [
+        "chinh-luan",
+        "bao-cao-thuc-tap",
+        "sang-kien-kinh-nghiem",
+        "de-cuong-nghien-cuu",
+        "research"
+      ],
+      "fix": "Hỏi 'ai làm?' rồi đưa người đó lên làm chủ ngữ: 'Phòng công nghệ thông tin sẽ tập huấn an toàn thông tin cho toàn trường trong quý 4.'",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#13",
+        "counters.py:NOMINAL"
+      ],
+      "note": "Gộp với NOMINAL sẵn có trong counters.py thay vì tạo họ trùng. counters.py đếm mật độ; mục này giải thích và nêu cách sửa."
+    },
+    {
+      "id": "T16",
+      "family": "G1",
+      "name": "list_tieu_de_dam_thay_doan_van",
+      "label": "Danh sách tiêu đề đậm thay đoạn văn",
+      "what": "Chuyển lập luận thành danh sách gạch đầu dòng, mỗi dòng mở bằng một cụm in đậm rồi dấu hai chấm, mất hết quan hệ nhân quả giữa các ý.",
+      "vi_example": "**Tính hiệu quả:** giúp tiết kiệm thời gian. **Tính linh hoạt:** dễ tuỳ chỉnh. **Tính bền vững:** dùng được lâu dài.",
+      "vi_counterexample": "Danh mục kiểm trước khi nộp: **Bìa** — đúng mẫu khoa; **Mục lục** — đánh số tự động; **Trích dẫn** — theo chuẩn khoa quy định. — Danh sách kiểm vốn là danh sách; ép nó thành đoạn văn mới là sai.",
+      "genre_baseline": [],
+      "fix": "Đổi ba dòng thành một đoạn có quan hệ nhân quả giữa các ý. Giữ nguyên danh sách khi nội dung thật sự là danh sách: bước, vật tư, tiêu chí kiểm.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#16",
+        "blader/humanizer#15"
+      ]
+    },
+    {
+      "id": "T18",
+      "family": "G1",
+      "name": "emoji_trang_tri",
+      "label": "Emoji trang trí",
+      "what": "Emoji chèn vào tiêu đề hoặc đầu dòng như dấu trang trí, không mang thông tin nào.",
+      "vi_example": "🚀 Kết luận và kiến nghị · 📌 Ba đề xuất trọng tâm ✨",
+      "vi_counterexample": "Trạng thái: ✅ chạy được · ❌ hỏng · ⏳ đang chờ. — Emoji làm ký hiệu trạng thái trong bảng, mang thông tin và tra được.",
+      "genre_baseline": [
+        "blog"
+      ],
+      "fix": "Xoá emoji khỏi tiêu đề và đầu dòng ở văn bản trang trọng. Giữ lại khi emoji là ký hiệu có nghĩa trong một bảng hoặc chú giải.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#18"
+      ]
+    },
+    {
+      "id": "T20",
+      "family": "G1",
+      "name": "rac_chatbot",
+      "label": "Rác hội thoại lọt vào văn bản",
+      "what": "Mảnh vụn của cuộc trò chuyện còn sót lại: 'Chắc chắn rồi!', 'Dưới đây là bản đã chỉnh sửa', 'Bạn có muốn tôi…', khối chú thích tự xưng ở cuối bài.",
+      "vi_example": "Chắc chắn rồi! Dưới đây là phần mở bài đã được chỉnh sửa cho bài luận của bạn.",
+      "vi_counterexample": "Dưới đây là ba tiêu chí chấm của khoa. — 'Dưới đây là' đứng trước một danh sách có thật là câu dẫn bình thường của tiếng Việt.",
+      "genre_baseline": [],
+      "fix": "Xoá thẳng. Đây là lỗi lắp ráp, không phải lỗi văn phong — sửa không cần cân nhắc gì thêm.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#20"
+      ]
+    },
+    {
+      "id": "T21",
+      "family": "G4",
+      "name": "rao_don_kien_thuc",
+      "label": "Rào đón về giới hạn hiểu biết",
+      "what": "Câu rào chung chung về giới hạn hiểu biết, đặt sai chỗ trong một văn bản đã có tác giả chịu trách nhiệm.",
+      "vi_example": "Cần lưu ý rằng thông tin trong bài có thể chưa được cập nhật đầy đủ và người đọc nên tự kiểm chứng thêm.",
+      "vi_counterexample": "Số liệu dừng ở tháng 6/2026; báo cáo quý 3 chưa công bố nên phần dự báo chỉ mang tính tham khảo. — Cũng là rào, nhưng nêu đúng mốc và đúng chỗ thiếu.",
+      "genre_baseline": [],
+      "fix": "Đổi câu rào chung thành một giới hạn cụ thể có mốc thời gian hoặc phạm vi. Không có giới hạn cụ thể nào thì xoá.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#21"
+      ]
+    },
+    {
+      "id": "T22",
+      "family": "G4",
+      "name": "ninh_nguoi_hoi",
+      "label": "Nịnh người hỏi",
+      "what": "Khen câu hỏi hoặc khen người đọc trước khi vào nội dung.",
+      "vi_example": "Đây là một câu hỏi rất hay và cho thấy anh chị đã suy nghĩ rất sâu về vấn đề này.",
+      "vi_counterexample": "Cảm ơn anh Minh đã gửi bảng số liệu tháng 7, nhờ đó phần 3 mới kiểm chéo được. — Lời cảm ơn có nội dung, gắn với một việc cụ thể.",
+      "genre_baseline": [],
+      "fix": "Xoá câu khen. Muốn giữ phép lịch sự thì thay bằng lời cảm ơn gắn với một việc cụ thể.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#22"
+      ]
+    },
+    {
+      "id": "T23",
+      "family": "G2",
+      "name": "cum_dem_rong",
+      "label": "Cụm đệm rỗng",
+      "what": "Cụm mở đầu không thêm gì: 'điều quan trọng cần lưu ý là', 'có thể nói rằng', 'trên thực tế thì', 'nhìn chung mà nói'.",
+      "warning": "'Có thể nói rằng', 'tóm lại', 'nhìn chung' là cụm dẫn được dạy trong văn nghị luận (03-chong-bao-oan §2). Bài Tạp chí Cộng sản do người viết có mật độ cliché gấp đôi bài AI — mật độ cụm đệm đo thể loại, không đo nguồn gốc. `essay` và `research` có trong baseline vì cùng lý do: cụm dẫn quy ước là đăng ký ngôn ngữ của hai thể loại đó (essay.md §5, research.md §5 khai đích danh). Baseline KHÔNG có nghĩa 'cấm sửa': trục 4 vẫn được xoá cụm đệm khi nó không tạo phép đối lập nào, chỉ không được coi mật độ cụm đệm là dấu hiệu nguồn gốc.",
+      "vi_example": "Trên thực tế, có thể nói rằng điều quan trọng cần lưu ý ở đây là dữ liệu phải sạch trước khi phân tích.",
+      "vi_counterexample": "Trên lý thuyết mô hình chạy 2 giây; trên thực tế 40 giây vì phải chờ khoá cơ sở dữ liệu. — 'Trên thực tế' đối lập với 'trên lý thuyết', nên nó mang nghĩa.",
+      "genre_baseline": [
+        "chinh-luan",
+        "sang-kien-kinh-nghiem",
+        "essay",
+        "research"
+      ],
+      "fix": "Xoá cụm đệm, giữ mệnh đề chính. Giữ lại khi cụm đó tạo một phép đối lập thật.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#23"
+      ]
+    },
+    {
+      "id": "T24",
+      "family": "G2",
+      "name": "chong_chat_rao_don",
+      "label": "Chồng chất rào đón",
+      "what": "Nhiều lớp rào chồng nhau khiến câu không còn khẳng định gì: 'có thể trong một số trường hợp nhất định phần nào sẽ…'.",
+      "vi_example": "Trong một số trường hợp nhất định, việc này có thể sẽ phần nào góp phần giúp cải thiện đôi chút hiệu quả học tập.",
+      "vi_counterexample": "Với lớp dưới 25 học sinh, cách này rút được khoảng 10 phút mỗi buổi; lớp đông hơn thì chưa thử. — Vẫn dè dặt, nhưng nói rõ điều kiện và mức độ.",
+      "genre_baseline": [],
+      "fix": "Giữ ĐÚNG MỘT lớp rào và biến nó thành điều kiện cụ thể. Không được đổi mức mạnh của khẳng định gốc, chỉ được làm nó rõ hơn.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#24"
+      ]
+    },
+    {
+      "id": "T25",
+      "family": "G4",
+      "name": "ket_lac_quan_chung",
+      "label": "Kết lạc quan chung chung",
+      "what": "Kết bài quay về lời hứa tương lai tươi sáng không gắn với bất kỳ luận điểm nào phía trên.",
+      "vi_example": "Với sự chung tay của toàn xã hội, chúng ta hoàn toàn có thể tin tưởng vào một tương lai tươi sáng phía trước.",
+      "vi_counterexample": "Nếu phòng đào tạo chốt được lịch máy trước 15/9, lớp thí điểm kịp chạy trong học kỳ này; không kịp thì phải dời sang học kỳ sau. — Kết bằng một điều kiện kiểm được, có mốc thời gian.",
+      "genre_baseline": [
+        "chinh-luan",
+        "bao-cao-thuc-tap",
+        "sang-kien-kinh-nghiem",
+        "essay"
+      ],
+      "warning": "Kết bài nhắc lại luận đề và khép bằng một câu hướng tới tương lai là YÊU CẦU của bài nghị luận trong nhà trường (essay.md §5 khai đích danh), và là mục bắt buộc của báo cáo, sáng kiến, chính luận. Ở các thể loại trong genre_baseline: GIỮ MỤC, chỉ thay nội dung rỗng; sự hiện diện của kết bài lạc quan không phải tín hiệu nguồn gốc. Riêng với `essay`, essay.md §2 vẫn cấm SINH ra lời kêu gọi chung chung không gắn với luận đề — cấm-khi-sinh khác hạ-tín-hiệu.",
+      "fix": "Đổi lời hứa thành một điều kiện có mốc thời gian và người chịu trách nhiệm. Thể loại bắt buộc có mục phương hướng thì GIỮ MỤC, chỉ thay nội dung.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#25"
+      ]
+    },
+    {
+      "id": "T27",
+      "family": "G4",
+      "name": "gia_vo_lo_chan_ly",
+      "label": "Giả vờ tiết lộ chân lý",
+      "what": "Dựng ra một 'sự thật ít ai dám nói' rồi tiết lộ một điều hiển nhiên.",
+      "vi_example": "Sự thật ít người dám thừa nhận là: công nghệ chỉ là công cụ, con người mới là yếu tố quyết định.",
+      "vi_counterexample": "Điều ít ai nói ra ở các buổi tập huấn: 70% giáo viên trong khảo sát nội bộ chưa từng đăng nhập lại cổng học liệu sau buổi đầu. — Cũng hứa tiết lộ, nhưng thứ tiết lộ ra là một con số cụ thể.",
+      "genre_baseline": [],
+      "fix": "Bỏ lời dẫn 'sự thật là'. Phần còn lại là mệnh đề hiển nhiên thì xoá luôn; là điều bất ngờ thật thì để nó tự đứng.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#27"
+      ]
+    },
+    {
+      "id": "T28",
+      "family": "G1",
+      "name": "bao_truoc_y_ke",
+      "label": "Báo trước ý kế tiếp",
+      "what": "Câu chỉ để báo mình sắp nói gì, không mang nội dung.",
+      "vi_example": "Tiếp theo, chúng ta sẽ cùng tìm hiểu về ba thách thức lớn nhất trong quá trình triển khai.",
+      "vi_counterexample": "Ba thách thức dưới đây xếp theo mức tốn tiền, không theo thứ tự thời gian. — Cũng đứng ở vị trí dẫn, nhưng nói cho người đọc một quy tắc đọc mà tiêu đề không nói được.",
+      "genre_baseline": [],
+      "fix": "Xoá câu báo trước, để tiêu đề mục làm việc đó. Chỉ giữ khi câu dẫn nêu một quy tắc đọc mà tiêu đề không nêu được.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#28"
+      ]
+    },
+    {
+      "id": "T29",
+      "family": "G1",
+      "name": "lap_tieu_de_o_cau_dau",
+      "label": "Câu đầu mục chép lại tiêu đề",
+      "what": "Câu đầu mỗi mục nhắc lại tiêu đề mục bằng lời khác, chưa nói gì mới.",
+      "vi_example": "Mục 'Thách thức về hạ tầng' mở bằng: Một trong những thách thức lớn nhất hiện nay chính là vấn đề hạ tầng.",
+      "vi_counterexample": "Mục 'Thách thức về hạ tầng' mở bằng: Hai phòng máy dùng chung một đường truyền 100 Mbps, và lịch thi trắc nghiệm lại xếp trùng giờ. — Câu đầu đi thẳng vào nội dung mục.",
+      "genre_baseline": [],
+      "fix": "Xoá câu chép lại, bắt đầu mục bằng dữ kiện hoặc luận điểm đầu tiên.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#29"
+      ]
+    },
+    {
+      "id": "T30",
+      "family": "G3",
+      "name": "viet_ve_phien_ban_cu",
+      "label": "Mô tả theo phiên bản đã lỗi thời",
+      "what": "Mô tả công cụ hoặc quy định theo phiên bản cũ so với thời điểm viết, mà không ghi rõ đang nói về bản nào. Chỉ áp cho tài liệu kỹ thuật và hướng dẫn.",
+      "vi_example": "Muốn chia sẻ báo cáo, người dùng phải xuất ra tệp rồi gửi qua thư điện tử, vì công cụ chưa hỗ trợ chia sẻ trực tuyến.",
+      "vi_counterexample": "Bản 2019 chưa có nút chia sẻ, nên quy trình cũ của khoa vẫn ghi bước xuất tệp. — Nói về bản cũ nhưng GHI RÕ phiên bản là mô tả lịch sử, không phải kiến thức lạc hậu.",
+      "genre_baseline": [],
+      "fix": "Kiểm lại phiên bản hiện hành và ghi rõ 'tính đến ngày…'. Nếu cố ý nói về bản cũ thì nêu số hiệu bản đó.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#30"
+      ]
+    },
+    {
+      "id": "T31",
+      "family": "G1",
+      "name": "cau_chot_guong",
+      "label": "Câu chốt đoạn gượng",
+      "what": "Câu cuối đoạn tổng kết lại chính đoạn đó mà không thêm gì.",
+      "warning": "Khung PEEL (essay.md §2) và bài nghị luận THPT đều đòi câu chốt đoạn. Sự hiện diện của câu chốt không phải tín hiệu; chỉ câu chốt không thêm gì mới đáng nói.",
+      "vi_example": "Như vậy, có thể thấy rằng vai trò của giáo viên trong quá trình này là vô cùng quan trọng.",
+      "vi_counterexample": "Vậy nên phần chấm tay vẫn phải giữ, ít nhất tới khi có barem riêng cho bài có dùng công cụ. — Câu cuối rút ra một hệ quả hành động chứ không nhắc lại.",
+      "genre_baseline": [
+        "chinh-luan"
+      ],
+      "fix": "Xoá nếu chỉ nhắc lại. Giữ nếu câu đó rút ra hệ quả, nêu điều kiện, hoặc bắc cầu sang đoạn sau. ĐỪNG NHẦM với câu Link của khung PEEL mà essay.md §2 bắt buộc: câu chốt nối về luận đề là cấu trúc, chỉ câu chốt nhắc lại nguyên đoạn mới là tell.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#31"
+      ]
+    },
+    {
+      "id": "T32",
+      "family": "G1",
+      "name": "cham_ngon_cong_thuc",
+      "label": "Châm ngôn dựng theo công thức",
+      "what": "Câu kiểu châm ngôn đối xứng dựng bằng phép đối, nghe hay nhưng không kiểm được và không thêm thông tin.",
+      "vi_example": "Dữ liệu là dầu mỏ của thế kỷ 21, còn khả năng đọc dữ liệu là ngọn lửa thắp sáng nó.",
+      "vi_counterexample": "Nhất nước, nhì phân, tam cần, tứ giống. — Tục ngữ có sẵn, được trích như một câu trích chứ không phải câu tác giả tự dựng để lấp chỗ.",
+      "genre_baseline": [],
+      "fix": "Xoá, hoặc thay bằng mệnh đề nói đúng điều tác giả muốn nói. Trích tục ngữ hay danh ngôn có sẵn thì giữ và ghi rõ là trích.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#32"
+      ]
+    },
+    {
+      "id": "T33",
+      "family": "G4",
+      "name": "mo_gia_thang_than",
+      "label": "Mở bài giả thẳng thắn",
+      "what": "Mở bằng 'nói thẳng ra', 'thật lòng mà nói' rồi nói một điều hoàn toàn an toàn.",
+      "vi_example": "Nói thẳng ra thì chuyển đổi số không hề dễ dàng và đòi hỏi rất nhiều nỗ lực.",
+      "vi_counterexample": "Nói thẳng: đề án này sẽ không kịp hạn tháng 12, vì khâu mua sắm chưa được duyệt. — Lời hứa thẳng thắn được trả bằng một điều thật sự khó nói.",
+      "genre_baseline": [],
+      "fix": "Bỏ lời dẫn. Phần sau không có gì khó nói thì xoá cả câu; có thì để nó đứng trần.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#33"
+      ]
+    },
+    {
+      "id": "T34",
+      "family": "G3",
+      "name": "tra_loi_phan_doi_khong_ai_neu",
+      "label": "Bác phản đối không ai nêu",
+      "what": "Dựng một người phản đối tưởng tượng để bác cho oai, thay cho phản biện thật.",
+      "vi_example": "Có ý kiến cho rằng công nghệ sẽ thay thế hoàn toàn giáo viên, nhưng điều đó là hoàn toàn không đúng.",
+      "vi_counterexample": "Người phản đối mạnh nhất sẽ nói lớp 40 học sinh không đủ máy; điều đó đúng với 6 trong 9 phòng, nên đề án chỉ áp cho 3 phòng còn lại. — Phản đề được nêu ở dạng mạnh nhất và được trả lời bằng dữ kiện.",
+      "genre_baseline": [],
+      "fix": "Nêu ai đã phản đối và ở đâu, hoặc nêu phản đề ở dạng mạnh nhất của nó. Không làm được thì xoá cả cặp phản đối và bác bỏ. ĐỪNG NHẦM với bước xử lý phản đề mà §5 của bài luận bắt buộc phải có: phản đề thật thì giữ, chỉ phản đề rơm mới xoá.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#34"
+      ]
+    },
+    {
+      "id": "T35",
+      "family": "G3",
+      "name": "bac_phuong_an_gia",
+      "label": "Bác phương án thay thế giả",
+      "what": "Nêu một phương án thay thế yếu ớt rồi bác, để phương án của tác giả trông tốt hơn thực tế.",
+      "vi_example": "Tất nhiên chúng ta có thể bỏ mặc mọi thứ như cũ và không làm gì cả, nhưng rõ ràng đó không phải là một lựa chọn.",
+      "vi_counterexample": "Phương án B là thuê ngoài: rẻ hơn 30% nhưng dữ liệu học viên phải để ở máy chủ đối tác, nên khoa không chọn. — Phương án thay thế được nêu ở dạng mạnh nhất rồi mới bị loại vì một lý do cụ thể.",
+      "genre_baseline": [],
+      "fix": "Nêu phương án thay thế ở dạng mạnh nhất kèm cái giá thật của nó. Không nêu nổi thì xoá cả cặp.",
+      "status": "candidate",
+      "source": [
+        "blader/humanizer#35"
+      ]
+    },
+    {
+      "id": "T36",
+      "family": "G3",
+      "name": "vi_du_gia_dinh_thay_trai_nghiem",
+      "label": "Ví dụ giả định thay cho trải nghiệm đã sống",
+      "what": "Bài dựng một tình huống RẤT cụ thể — có giờ, có thao tác, có con số — nhưng mở bằng 'Giả sử', 'Hãy tưởng tượng', 'Một học viên nọ', và cả bài không có lấy một quan sát nào tác giả thật sự đã thấy. Đây là tín hiệu ở mức TOÀN BÀI, không phải mức câu: một ví dụ giả định là chuyện thường, cả bài không có gì ngoài ví dụ giả định mới là tín hiệu.",
+      "warning": "Ví dụ giả định được DẠY trong bài nghị luận và trong đề cương nghiên cứu; ở đó nó là phương pháp, không phải dấu vết. Mục này chỉ được nêu khi đã đọc hết bài và không tìm ra một quan sát sống nào; nêu ở mức câu là báo oan. Người chấm mù trong ca cột B đọc chính ví dụ giả định này thành 'ví dụ cụ thể = dấu vết người' — cụ-thể-giả-định và cụ-thể-đã-sống trông giống hệt nhau ở mức câu, và máy sinh cái trước rất giỏi.",
+      "vi_example": "Giả sử tối thứ tư, một học viên ngồi với bài về nhà, dán đoạn công thức sai vào một trợ lý ảo và được chỉ ra chỗ quên bỏ bộ lọc tháng; bài nộp đúng hạn, số liệu đã đúng.",
+      "vi_counterexample": "Tối thứ tư tuần rồi, ba trong sáu học viên lớp K12 nộp bài kèm dòng ghi 'hỏi trợ lý ở bước lọc tháng'; tôi hỏi lại hai bạn ngay trên lớp và cả hai giải thích được vì sao bộ lọc cũ sai. — Cũng là tình huống cụ thể, nhưng có lớp, có số, và có chỗ để người khác hỏi lại.",
+      "genre_baseline": [
+        "novel"
+      ],
+      "fix": "KHÔNG xoá ví dụ giả định. Hỏi tác giả một quan sát thật để thay vào, hoặc để nguyên và ghi rõ trong bài rằng đây là tình huống dựng. Không có quan sát nào để thay thì ghi vào warnings[] với tiền tố 'Chỗ cần tác giả bổ sung' — trục 4 tuyệt đối không tự bịa một trải nghiệm.",
+      "status": "candidate",
+      "source": [
+        "docs/results/self-audit-cot-B.md §5 mục 1"
+      ]
+    },
+    {
+      "id": "T37",
+      "family": "G1",
+      "name": "cau_hoi_tu_tu_mo_doan",
+      "label": "Câu hỏi tu từ ngắn mở đoạn rồi tự trả lời",
+      "what": "Đoạn mở bằng một câu hỏi ba đến năm từ, câu ngay sau đó trả lời luôn. Một lần là nhịp; ba trên sáu đoạn là khuôn dựng đoạn, không phải lựa chọn tu từ.",
+      "warning": "Câu hỏi tu từ là phép tu từ được dạy trong văn nghị luận và là giọng chuẩn của blog. Chỉ đáng nêu khi LẶP qua nhiều đoạn và luôn kèm câu tự trả lời ngay sau. Lưu ý phép đo: câu hỏi loại này thường dưới 15 ký tự, nên bộ tách câu cũ bỏ mất nó và cả người chấm lẫn script đều không thấy — đó là lý do tật này lọt qua hai lớp đo trong ca cột B.",
+      "vi_example": "Cấm thì sao? Lệnh cấm chỉ có nghĩa khi có cách kiểm.",
+      "vi_counterexample": "Vậy nên cấm hay không? Câu hỏi này tôi chưa trả lời được, và phần còn lại của bài là ba lần thử trả lời rồi phải rút lại. — Cũng là câu hỏi mở đoạn, nhưng nó KHÔNG được trả lời ngay và nó tổ chức phần còn lại của bài.",
+      "genre_baseline": [
+        "blog",
+        "chinh-luan"
+      ],
+      "fix": "Giữ lại nhiều nhất một câu hỏi mở đoạn trong bài, ở chỗ câu hỏi thật sự là câu hỏi của người đọc. Các chỗ còn lại: bỏ dấu hỏi, nói thẳng điều câu sau đang nói.",
+      "status": "candidate",
+      "source": [
+        "docs/results/self-audit-cot-B.md §5 mục 2",
+        "counters.py:TEMPLATES.cau_hoi_tu_tu_mo_doan"
+      ],
+      "note": "Gộp vào TEMPLATES của counters.py thay vì tạo họ trùng. counters.py đếm; mục này giải thích và nêu cách sửa."
+    },
+    {
+      "id": "T38",
+      "family": "G1",
+      "name": "phan_doi_doi_xung",
+      "label": "Phân đôi đối xứng lặp lại",
+      "what": "Khuôn 'ai … thì …; ai … thì …' hoặc 'người … thì …, người … thì …': hai vế cân xứng chia thế giới làm đôi. Tín hiệu nằm ở chỗ LẶP cùng một dáng câu nhiều lần trong một bài ngắn, không ở bản thân phép đối.",
+      "warning": "Phép đối là phép tu từ trung tâm của văn chính luận và diễn văn tiếng Việt (đối chiếu T10, bộ ba song hành). Một lượt phân đôi đối xứng không nói gì cả. Kèm theo: phân đôi thường đi cùng lỗi lập luận lưỡng phân giả, nhưng đó là việc của trục 3 — mục này chỉ nói về KHUÔN, không phán về logic.",
+      "vi_example": "Ai viết được dòng đó thì đã học, ai không viết được thì máy đang làm thay.",
+      "vi_counterexample": "Ai đã nộp bản kế hoạch trước ngày 10 thì được xếp lịch bảo vệ đợt một, ai nộp sau thì chờ đợt hai vào tháng sau. — Cùng dáng câu, nhưng hai vế là hai quy định có thật, không phải hai nửa của một thế giới bị chẻ đôi cho gọn.",
+      "genre_baseline": [
+        "chinh-luan"
+      ],
+      "fix": "Đếm số lượt trước đã. Từ ba lượt trở lên trong một bài ngắn thì giữ lượt mạnh nhất, các lượt còn lại viết lại thành câu kể có chủ ngữ. Nếu phân đôi còn che mất trường hợp thứ ba có thật, đó là việc của trục 3 và phải đi qua must_fix, không sửa lặng ở trục 4.",
+      "status": "candidate",
+      "source": [
+        "docs/results/self-audit-cot-B.md §5 mục 3",
+        "counters.py:TEMPLATES.phan_doi_doi_xung"
+      ],
+      "note": "Gộp vào TEMPLATES của counters.py thay vì tạo họ trùng. counters.py đếm; mục này giải thích và nêu cách sửa."
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Private forensic fixture manifest item",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "provenance", "language", "genre", "source_date", "ground_truth_level", "evidence", "split"],
+  "properties": {
+    "id": { "type": "string", "minLength": 3 },
+    "provenance": { "enum": ["human", "ai", "mixed", "adversarial"] },
+    "language": { "type": "string", "minLength": 2 },
+    "genre": { "type": "string", "minLength": 2 },
+    "source_date": { "type": "string", "format": "date" },
+    "ground_truth_level": { "enum": ["pre2022", "supervised", "generated_and_logged", "edit_history_verified", "claimed"] },
+    "evidence": { "type": "array", "minItems": 0, "items": { "type": "string", "minLength": 3 } },
+    "split": { "enum": ["train", "dev", "test"] },
+    "generator": { "type": "string" },
+    "prompt_family": { "type": "string" },
+    "edit_operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["order", "actor", "operation"],
+        "properties": {
+          "order": { "type": "integer", "minimum": 1 },
+          "actor": { "enum": ["human", "ai"] },
+          "operation": { "type": "string", "minLength": 3 }
+        }
+      }
+    },
+    "spans": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["start", "end", "origin"],
+        "properties": {
+          "start": { "type": "integer", "minimum": 0 },
+          "end": { "type": "integer", "minimum": 1 },
+          "origin": { "enum": ["human", "ai", "uncertain"] }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "provenance": { "const": "human" } } },
+      "then": {
+        "properties": {
+          "ground_truth_level": { "enum": ["pre2022", "supervised", "edit_history_verified"] },
+          "evidence": { "minItems": 1 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "provenance": { "enum": ["mixed", "adversarial"] } } },
+      "then": { "required": ["edit_operations", "spans"] }
+    },
+    {
+      "if": { "properties": { "provenance": { "const": "ai" } } },
+      "then": {
+        "required": ["generator", "prompt_family"],
+        "properties": {
+          "ground_truth_level": { "const": "generated_and_logged" },
+          "evidence": { "minItems": 1 }
+        }
+      }
+    }
+  ]
+}

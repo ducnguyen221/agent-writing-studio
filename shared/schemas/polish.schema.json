@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-writing-studio/shared/schemas/polish.schema.json",
+  "title": "polish.diff.json — sổ ghi từng nhát sửa của trục 4 (04-humanizer)",
+  "description": "Trục 4 là con dao hai lưỡi, nên nó phải để lại vết. Mỗi sửa đổi ghi trước/sau và LÝ DO. Hai mảng facts_added và facts_removed BẮT BUỘC RỖNG: biên tập không được thêm hay bớt sự kiện, tên, số, ngày, trích dẫn. Ngoại lệ hư cấu ghi ở §4 của hồ sơ thể loại, không ghi ở đây.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "genre",
+    "source_declared",
+    "edits",
+    "facts_added",
+    "facts_removed",
+    "counters_before",
+    "counters_after",
+    "metadata"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "created_at": { "type": "string" },
+    "genre": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "source_declared": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["how"],
+      "description": "Trục 4 chỉ chạy khi biết bài từ đâu ra: có draft.meta.json, hoặc người dùng tự khai.",
+      "properties": {
+        "how": { "enum": ["draft_meta", "user_declared"] },
+        "draft_meta_ref": { "type": "string" },
+        "user_statement": { "type": "string" }
+      }
+    },
+    "profile_used": { "type": ["string", "null"] },
+    "edits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["location", "tell_id", "before", "after", "reason"],
+        "properties": {
+          "location": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sentence_id"],
+            "properties": {
+              "section": { "type": "string" },
+              "paragraph_index": { "type": "integer", "minimum": 0 },
+              "sentence_id": { "type": "string", "minLength": 1 }
+            }
+          },
+          "tell_id": {
+            "type": ["string", "null"],
+            "pattern": "^T[0-9]{2}$",
+            "description": "id trong shared/rules/vi-ai-tells.json, hoặc null khi sửa vì lý do văn phong thuần tuý — null là hợp lệ và trung thực hơn là gán bừa một tell."
+          },
+          "before": { "type": "string", "minLength": 1 },
+          "after": { "type": "string" },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Vì sao bản sau tốt hơn cho NGƯỜI ĐỌC. Không được viết 'để bớt giống AI'."
+          },
+          "move": {
+            "type": "string",
+            "description": "Phép biên tập đã dùng; phải nằm trong moves_allowed[] của §4 hồ sơ thể loại."
+          }
+        }
+      }
+    },
+    "facts_added": {
+      "type": "array",
+      "maxItems": 0,
+      "description": "PHẢI RỖNG. Có phần tử là fail-closed: dừng, trả bản gốc, báo người dùng.",
+      "items": { "type": "string" }
+    },
+    "facts_removed": {
+      "type": "array",
+      "maxItems": 0,
+      "description": "PHẢI RỖNG. Xoá một con số hay một trích dẫn không phải là biên tập, là làm sai lệch.",
+      "items": { "type": "string" }
+    },
+    "counters_before": {
+      "type": "object",
+      "description": "Kết quả counters.py trên bản gốc. Chỉ để đối chiếu, KHÔNG phải mục tiêu tối ưu."
+    },
+    "counters_after": {
+      "type": "object",
+      "description": "Kết quả counters.py trên bản đã sửa."
+    },
+    "warnings": {
+      "type": "array",
+      "description": "Cảnh báo tự phát hiện, ví dụ CV độ dài câu tăng bất thường = dấu hiệu bơm burstiness giả. Phần tử là chuỗi, HOẶC object khi cảnh báo phải chuyển việc cho trục khác thay vì tự sửa.",
+      "items": {
+        "oneOf": [
+          { "type": "string", "minLength": 1 },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["message", "route_to"],
+            "description": "Việc trục 4 CỐ Ý KHÔNG LÀM, kèm địa chỉ trục phải làm. Dùng cho must_fix đòi đổi mức mạnh của khẳng định: đổi 'dẫn tới' thành 'có liên hệ với' là đổi điều được nói, thuộc vòng viết lại của trục 2.",
+            "properties": {
+              "message": { "type": "string", "minLength": 1 },
+              "route_to": {
+                "enum": ["02-cowriter:round2", "03-critique", "author"],
+                "description": "02-cowriter:round2 = phải quay lại vòng viết, không sửa ở trục 4."
+              },
+              "sentence_id": { "type": "string", "minLength": 1 },
+              "must_fix_ref": { "type": "string", "minLength": 1 }
+            }
+          }
+        ]
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stylometric_polish"],
+      "properties": {
+        "stylometric_polish": {
+          "const": true,
+          "description": "BẮT BUỘC true. Bản đã qua trục 4 phải tự khai điều đó; giấu đi là biến công cụ biên tập thành công cụ né máy chấm."
+        },
+        "tool": { "type": "string" },
+        "forensics_score_seen": {
+          "const": false,
+          "description": "Trục 4 KHÔNG được xem điểm trục 5 của chính bài đang sửa. Xem rồi thì đang tối ưu theo thước đo, không phải biên tập."
+        }
+      }
+    }
+  }
+}

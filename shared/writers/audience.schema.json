@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-writing-studio/shared/writers/audience.schema.json",
+  "title": "audience — chân dung độc giả",
+  "description": "Chân dung MỘT nhóm độc giả. Tự soạn: không có repo nào trên GitHub cho ô này (plan §0 Q3). Đây là object đặt vào khoá `audience` của context.json, nên MỌI GIÁ TRỊ ĐỀU PHẲNG — chuỗi, số, boolean hoặc mảng chuỗi — để cùng lúc hợp lệ theo context.schema.json. Nguyên tắc chọn trường: chỉ giữ thứ làm ĐỔI BÀI VIẾT. Trường nào biết mà không đổi được câu chữ nào thì đó là thông tin cá nhân thừa, không đưa vào.",
+  "type": "object",
+  "required": [
+    "id",
+    "expertise_level",
+    "already_knows",
+    "does_not_know",
+    "pains",
+    "expectations",
+    "drop_off_triggers",
+    "reading_channel"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Slug nhóm độc giả, vd hoi-dong-phan-bien. Không phải tên người thật."
+    },
+    "label": {
+      "type": "string",
+      "description": "Tên gọi ngắn bằng tiếng Việt để người đọc context.json nhận ra ngay."
+    },
+    "role": {
+      "type": "string",
+      "description": "Họ là ai trong tình huống đọc bài này: người chấm, người phản biện, đồng nghiệp, khách hàng, học viên."
+    },
+    "expertise_level": {
+      "enum": ["newcomer", "practitioner", "expert", "mixed"],
+      "description": "TRÌNH ĐỘ. Quyết định trần từ vựng và độ dài phần dẫn nhập. mixed = viết cho nhóm rộng, khi đó phải nói rõ viết cho ai trước trong expertise_note."
+    },
+    "expertise_note": {
+      "type": "string",
+      "description": "Trình độ ở ĐÂU. Người thạo giáo dục có thể mù thống kê; một nhãn không đủ."
+    },
+    "already_knows": {
+      "type": "array",
+      "description": "ĐÃ BIẾT — cấm giải thích lại. Đây là trường chống dài dòng: giải thích thứ họ đã biết là cách nhanh nhất mất người đọc chuyên môn.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "does_not_know": {
+      "type": "array",
+      "description": "CHƯA BIẾT — bắt buộc giải thích hoặc chú thích khi dùng lần đầu. Đây là trường chống mù chuyên môn: người viết luôn quên mình biết nhiều hơn người đọc.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "pains": {
+      "type": "array",
+      "minItems": 1,
+      "description": "NỖI ĐAU — vấn đề có thật khiến họ bỏ thời gian đọc. Viết thành câu về hoàn cảnh của họ, không phải về chủ đề của bài. 'Không biết chọn công cụ nào cho lớp 40 học viên' là nỗi đau; 'quan tâm tới AI trong giáo dục' thì không.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "expectations": {
+      "type": "array",
+      "minItems": 1,
+      "description": "KỲ VỌNG — họ coi bài này là xong khi nào. Đây là định nghĩa 'đạt' theo mắt độc giả, khác với barem của người chấm và khác với ý đồ tác giả.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "drop_off_triggers": {
+      "type": "array",
+      "minItems": 1,
+      "description": "THỨ KHIẾN HỌ BỎ ĐỌC, xếp theo mức sát thương. Phải cụ thể tới mức kiểm được trên bản thảo: 'ba đoạn đầu chưa có số nào', 'thuật ngữ lạ không chú thích ở câu mở', 'nhắc lại điều đã biết quá 200 chữ'. Trường này là đầu vào trực tiếp của reader testing ở trục 1 và của lăng kính retention ở trục 3.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "reading_channel": {
+      "type": "string",
+      "minLength": 1,
+      "description": "KÊNH ĐỌC — đọc ở đâu, trên gì, trong hoàn cảnh nào: bản in A4 trong buổi phản biện, điện thoại lúc chờ họp, PDF gửi kèm email. Kênh quyết định độ dài đoạn, cách đặt tiêu đề, có dùng bảng được không."
+    },
+    "time_budget_minutes": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Thời gian họ thật sự dành cho bài. Số này quyết định giới hạn từ mạnh hơn mọi quy định về giới hạn từ."
+    },
+    "evidence_bar": {
+      "enum": ["trai_nghiem", "vi_du_thuc_te", "so_lieu_co_nguon", "nghien_cuu_binh_duyet", "hon_hop"],
+      "description": "MỨC BẰNG CHỨNG họ chấp nhận. Cùng một luận điểm, hội đồng phản biện đòi nghiên cứu bình duyệt còn người đọc blog nhận một ví dụ thật là đủ. Đây là trường làm hai bản thảo cho hai độc giả khác nhau nhiều nhất."
+    },
+    "evidence_bar_note": {
+      "type": "string",
+      "description": "Bằng chứng nào từng bị nhóm này bác, và vì sao."
+    },
+    "prior_beliefs": {
+      "type": "array",
+      "description": "ĐỊNH KIẾN họ mang sẵn, kể cả định kiến đúng. Không có mục này thì bài sẽ tranh luận với một người đọc tưởng tượng trung lập vốn không tồn tại.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "decision_after_reading": {
+      "type": "string",
+      "description": "Đọc xong họ phải QUYẾT hoặc LÀM gì: duyệt hay trả lại, thử hay bỏ qua, cho điểm nào. Không có hành động nào thì cân nhắc lại có nên viết không."
+    },
+    "vocabulary_ok": {
+      "type": "array",
+      "description": "Thuật ngữ dùng thẳng, không cần chú.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "vocabulary_needs_gloss": {
+      "type": "array",
+      "description": "Thuật ngữ phải chú thích ở lần dùng đầu.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "vocabulary_avoid": {
+      "type": "array",
+      "description": "Từ nhóm này ghét hoặc hiểu sai. Đây là danh sách theo NGƯỜI ĐỌC, không phải danh sách từ cấm chung — không được nhầm với họ tell trong vi-ai-tells.json.",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "not_this_audience": {
+      "type": "string",
+      "description": "Bài này KHÔNG viết cho ai. Một chân dung không loại trừ ai thì chưa phải chân dung."
+    },
+    "source": {
+      "enum": ["user", "document", "interview", "inferred"],
+      "description": "Chân dung này biết được từ đâu. inferred = trục 1 tự suy; phải hỏi lại người dùng trước khi trục 2 dùng, đúng luật của intent.answers[].source."
+    },
+    "unknowns": {
+      "type": "array",
+      "description": "Điều còn chưa biết về độc giả. Rỗng trong khi source là inferred là mâu thuẫn.",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "$comment": "additionalProperties để mở CÓ CHỦ Ý: §1 của hồ sơ thể loại khai audience_fields[] riêng (vd research.md đòi tieu_chi_phan_bien_hoac_barem) và những khoá đó phải đặt được vào cùng object. Ràng buộc bù lại: mọi khoá thêm cũng phải phẳng để còn hợp lệ theo context.schema.json."
+}

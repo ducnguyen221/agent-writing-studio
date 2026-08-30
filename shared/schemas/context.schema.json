@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-writing-studio/shared/schemas/context.schema.json",
+  "title": "context.json — đầu ra của trục 1 (01-context-architect)",
+  "description": "Bối cảnh đã phỏng vấn xong. Trục 2 từ chối viết nếu file này chưa tồn tại hoặc chưa hợp lệ. Không chứa nguyên văn tài liệu riêng tư: Brain chỉ vào đây bằng CON TRỎ.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "genre",
+    "intent",
+    "audience",
+    "brain_pointers",
+    "constraints"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "created_at": { "type": "string" },
+    "genre": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Slug khớp tên file trong shared/genres/. BẮT BUỘC: mọi mục §1–§5 đều tra theo khoá này."
+    },
+    "intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task", "thesis_one_sentence", "answers"],
+      "properties": {
+        "task": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Đề bài hoặc yêu cầu, chép nguyên văn người dùng đưa."
+        },
+        "thesis_one_sentence": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Lõi bài viết lại thành MỘT câu; phép thử do §1 của hồ sơ thể loại khai (lập luận: phản bác được; truyện: muốn gì - cái gì cản - mất gì). Không viết được thì chưa đủ bối cảnh."
+        },
+        "answers": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Trả lời cho intent_questions[] ở §1 của hồ sơ thể loại.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["question", "answer"],
+            "properties": {
+              "question": { "type": "string", "minLength": 1 },
+              "answer": { "type": "string", "minLength": 1 },
+              "source": {
+                "enum": ["user", "document", "inferred"],
+                "description": "inferred = trục 1 tự suy; phải hỏi lại người dùng trước khi trục 2 dùng."
+              }
+            }
+          }
+        },
+        "unresolved": {
+          "type": "array",
+          "description": "Điều kiện stop_if_missing chưa gỡ được. Không rỗng thì trục 2 phải dừng và hỏi.",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "writer_profile_ref": {
+      "type": ["string", "null"],
+      "description": "Đường dẫn tới writer profile (shared/writers/<slug>/profile.yaml). null = viết theo giọng mặc định của thể loại. KHÔNG nhúng nội dung profile vào đây."
+    },
+    "audience": {
+      "type": "object",
+      "description": "Chân dung độc giả. Khoá bắt buộc do audience_fields[] ở §1 của thể loại quy định, nên schema chỉ ràng buộc hình dạng.",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": ["string", "array", "number", "boolean", "null"]
+      }
+    },
+    "brain_pointers": {
+      "type": "array",
+      "description": "CON TRỎ tới tài liệu nền, không phải bản sao. Trích dẫn tối đa 300 ký tự để giữ riêng tư và bản quyền.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "excerpt", "why"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Đường dẫn tương đối tính từ gốc Brain hoặc gốc dự án; không phải đường dẫn tuyệt đối chứa tên người dùng."
+          },
+          "excerpt": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "TỐI ĐA 300 ký tự. Dài hơn nghĩa là đang copy, không phải trỏ."
+          },
+          "why": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Vì sao tài liệu này liên quan tới bài đang viết."
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "description": "Giới hạn cứng: số từ, hạn nộp, chuẩn trích dẫn, điều cấm nói.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "statement": { "type": "string", "minLength": 1 },
+          "hard": {
+            "type": "boolean",
+            "description": "true = vi phạm là hỏng bài, không phải trừ điểm."
+          }
+        }
+      }
+    }
+  }
+}

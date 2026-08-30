@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "rule_ids": [
+    "G1-REPEATED-FRAME",
+    "G1-RIGID-STRUCTURE",
+    "G2-EMPTY-CLAIM",
+    "G2-UNNECESSARY-GLOSS",
+    "G3-UNSOURCED-CLAIM",
+    "G3-VAGUE-SOURCE",
+    "G4-MISSING-CORE",
+    "G4-MISSING-MINOR"
+  ]
+}
