@@ -22,7 +22,7 @@ python shared/scripts/xuat_docx.py <file.md> --out "<thư-mục-người-dùng>"
 Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./.work/<slug>/`):
 
 - `polished.md` — bản đã biên tập; chưa có thì dùng `draft.md` và **nói rõ đang giao bản chưa biên
-  tập**, kèm lệnh `/agent-writing-studio:bien-tap <slug>`;
+  tập**, kèm lệnh `/agent-writing-studio:04-bien-tap <slug>`;
 - `polished.provenance.json` — sidecar tự khai nguồn gốc.
 
 Không có file `.md` nào để giao thì dừng và nói rõ thiếu gì cùng lệnh sinh ra nó. **Không tự viết
@@ -48,7 +48,7 @@ tuyệt đối** của cả hai.
 
 ## Chỉ làm đúng bước này
 
-Chỉ xuất và giao. Không sửa chữ trong bài (đó là `/agent-writing-studio:bien-tap`), không giám định
+Chỉ xuất và giao. Không sửa chữ trong bài (đó là `/agent-writing-studio:04-bien-tap`), không giám định
 lại, không tự chạy lại chuỗi để "cho chắc".
 
 ## Tóm tắt cho `/agent-writing-studio:danh-sach`

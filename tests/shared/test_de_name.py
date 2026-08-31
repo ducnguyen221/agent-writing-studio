@@ -19,8 +19,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 
-# Cây public: thứ được clone/cài. `docs/plans` và `docs/results` là nhật ký làm việc,
-# nằm ngoài hàng rào (chúng ghi lại chính quá trình de-name này).
+# Cây public: thứ được clone/cài. `docs/plans` và `docs/results` là nhật ký làm việc nội bộ —
+# từ v0.1.2 chúng bị `.gitignore` chặn khỏi repo, nhưng vẫn nằm trên đĩa máy tác giả (và chính
+# chúng ghi lại quá trình de-name, nên có tên nguồn). Loại ra để test đo đúng cây public.
 # `commands/` vào hàng rào từ v0.1.1: nó cũng được clone/cài, nên cũng phải sạch tên nguồn.
 PUBLIC_DIRS = ("skills", "shared", "docs", "commands")
 PUBLIC_FILES = ("README.md",)

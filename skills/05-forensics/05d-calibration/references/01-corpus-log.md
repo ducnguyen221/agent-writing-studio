@@ -54,7 +54,7 @@ Kết quả Y5 **mù** (Codex qua bridge, chỉ thấy `polished.md`, `sealed_be
 
 Cả 2 NOTE trùng vùng Y3 đã thấy (F01 = evidence tiêu chí *evidence* không thành finding; F02 = bản sao
 kề của Y3 F2 mà Y4 sửa `s0034` nhưng bỏ sót `s0032`). Y5 mù không tìm ra lỗi mới — nó tìm phần Y3/Y4
-sửa chưa hết. Phân tích đầy đủ: `docs/results/self-audit-cot-B.md`.
+sửa chưa hết. Phân tích đầy đủ nằm ở sổ đo nội bộ của đợt xây.
 
 #### 1.1 Ba chỗ máy-mà-không-cờ (người viết biết, Y5 không thấy) — ứng viên tell cho vòng sau
 

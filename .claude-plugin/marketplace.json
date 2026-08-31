@@ -9,7 +9,7 @@
     {
       "name": "agent-writing-studio",
       "description": "Five-axis Vietnamese writing pipeline: context interview, co-writing with self-declared machine spans, per-criterion critique, voice-preserving edit, and forensic review. Genre knowledge lives in data files; nine genres included.",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "source": "./",
       "license": "MIT",
       "author": {

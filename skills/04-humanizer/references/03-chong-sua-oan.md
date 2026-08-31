@@ -152,7 +152,7 @@ language pack đúng là thứ `05d-calibration` cấm. **Không ai được đi
 **"baseline thể loại"** và **không được coi là chỗ phải sửa**. Con số vẫn hiện, vì che số đi là nói
 dối, nhưng nó là mô tả chứ không phải việc cần làm.
 
-Nguồn của luật này: cổng Phase 0, ghi trong `docs/plans/2026-08-30-skills-1-4-genres/tasks.md`.
+Nguồn của luật này: cổng Phase 0 của đợt dựng bốn trục viết, ghi trong nhật ký cổng nội bộ.
 
 ---
 

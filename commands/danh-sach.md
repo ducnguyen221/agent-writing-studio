@@ -16,8 +16,9 @@ nguồn sự thật, và chúng sẽ lệch nhau ngay lần sửa đầu tiên.
    - `description:` trong frontmatter — mô tả tiếng Anh, dùng để định tuyến;
    - mục **`## Tóm tắt cho /agent-writing-studio:danh-sach`** ở cuối file — bốn dòng
      `Trục` · `Làm gì` · `Cần đầu vào` · `Ra file`.
-3. Sắp theo thứ tự chuỗi công việc: `boi-canh` → `viet-nhap` → `phan-bien` → `bien-tap` →
-   `giam-dinh` → `giao-docx`. File nào không nằm trong thứ tự đó thì xếp cuối theo tên.
+3. Sắp theo thứ tự chuỗi công việc — số đầu tên file chính là số trục: `01-boi-canh` →
+   `02-viet-nhap` → `03-phan-bien` → `04-bien-tap` → `05-giam-dinh` → `giao-docx`. File nào không
+   nằm trong thứ tự đó thì xếp cuối theo tên.
 4. In một bảng Markdown năm cột: **Lệnh · Trục · Làm gì · Cần đầu vào · Ra file gì**. Cột *Lệnh* ghi
    đủ namespace: `/agent-writing-studio:<tên>`.
 

@@ -32,7 +32,7 @@ Tuỳ chọn có thì tốt: hồ sơ giọng người viết `$WRITING_STUDIO_D
 ## Chỉ làm đúng bước này
 
 Xong `context.json` thì **dừng**. Không tự dựng dàn ý, không tự viết nháp — đó là
-`/agent-writing-studio:viet-nhap`, và cổng cứng của trục 1 là *chưa gỡ hết điều kiện thì dừng và
+`/agent-writing-studio:02-viet-nhap`, và cổng cứng của trục 1 là *chưa gỡ hết điều kiện thì dừng và
 hỏi*, không phải *cứ viết rồi tính*. Cuối lượt in đường dẫn tuyệt đối của `context.json` và câu lệnh
 chạy bước kế tiếp.
 

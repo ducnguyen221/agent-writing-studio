@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">agent-writing-studio</title>
+  <desc id="desc">Dòng chảy năm bước: Bối cảnh, Viết nháp, Phản biện, Biên tập và Giám định.</desc>
+
+  <rect width="1200" height="420" fill="#faf8f4"/>
+  <rect x="42" y="36" width="8" height="92" rx="4" fill="#b5483a"/>
+
+  <text x="70" y="75" fill="#1f3a5f" font-family="Segoe UI, sans-serif" font-size="34" font-weight="700">agent-writing-studio</text>
+  <text x="70" y="111" fill="#536170" font-family="Segoe UI, sans-serif" font-size="19">Xưởng viết tiếng Việt cho AI agent — từ trang trắng đến bản giao có nguồn gốc</text>
+
+  <g fill="none" stroke="#1f3a5f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M242 245H278"/>
+    <path d="M268 236L279 245L268 254"/>
+    <path d="M462 245H498"/>
+    <path d="M488 236L499 245L488 254"/>
+    <path d="M682 245H718"/>
+    <path d="M708 236L719 245L708 254"/>
+    <path d="M902 245H938"/>
+    <path d="M928 236L939 245L928 254"/>
+  </g>
+
+  <g font-family="Segoe UI, sans-serif">
+    <g>
+      <rect x="82" y="178" width="160" height="134" rx="28" fill="#fffdf9" stroke="#1f3a5f" stroke-width="3"/>
+      <circle cx="112" cy="202" r="15" fill="#b5483a"/>
+      <text x="112" y="208" fill="#ffffff" font-size="16" font-weight="700" text-anchor="middle">1</text>
+      <g fill="none" stroke="#1f3a5f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="162" cy="230" r="24"/>
+        <path d="M174 216L166 235L147 243L155 224Z" fill="#faf8f4"/>
+        <circle cx="162" cy="230" r="3" fill="#b5483a" stroke="none"/>
+      </g>
+      <text x="162" y="287" fill="#1f3a5f" font-size="20" font-weight="600" text-anchor="middle">Bối cảnh</text>
+    </g>
+
+    <g>
+      <rect x="302" y="178" width="160" height="134" rx="28" fill="#fffdf9" stroke="#1f3a5f" stroke-width="3"/>
+      <circle cx="332" cy="202" r="15" fill="#b5483a"/>
+      <text x="332" y="208" fill="#ffffff" font-size="16" font-weight="700" text-anchor="middle">2</text>
+      <g fill="none" stroke="#1f3a5f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M368 246L397 217L408 228L379 257L365 260Z"/>
+        <path d="M397 217L402 212L413 223L408 228"/>
+        <path d="M368 246L379 257"/>
+        <path d="M365 260L371 253" stroke="#b5483a"/>
+      </g>
+      <text x="382" y="287" fill="#1f3a5f" font-size="20" font-weight="600" text-anchor="middle">Viết nháp</text>
+    </g>
+
+    <g>
+      <rect x="522" y="178" width="160" height="134" rx="28" fill="#fffdf9" stroke="#1f3a5f" stroke-width="3"/>
+      <circle cx="552" cy="202" r="15" fill="#b5483a"/>
+      <text x="552" y="208" fill="#ffffff" font-size="16" font-weight="700" text-anchor="middle">3</text>
+      <g fill="none" stroke="#1f3a5f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="596" cy="232" r="22"/>
+        <path d="M612 248L628 264"/>
+        <path d="M586 227H606"/>
+        <path d="M586 236H600" stroke="#b5483a"/>
+      </g>
+      <text x="602" y="287" fill="#1f3a5f" font-size="20" font-weight="600" text-anchor="middle">Phản biện</text>
+    </g>
+
+    <g>
+      <rect x="742" y="178" width="160" height="134" rx="28" fill="#fffdf9" stroke="#1f3a5f" stroke-width="3"/>
+      <circle cx="772" cy="202" r="15" fill="#b5483a"/>
+      <text x="772" y="208" fill="#ffffff" font-size="16" font-weight="700" text-anchor="middle">4</text>
+      <g fill="none" stroke="#1f3a5f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M800 253L829 224L840 235L811 264L797 267Z"/>
+        <path d="M829 224L834 219L845 230L840 235"/>
+        <path d="M800 253L811 264"/>
+        <path d="M797 218H816" stroke="#b5483a"/>
+        <path d="M797 228H811" stroke="#b5483a"/>
+      </g>
+      <text x="822" y="287" fill="#1f3a5f" font-size="20" font-weight="600" text-anchor="middle">Biên tập</text>
+    </g>
+
+    <g>
+      <rect x="962" y="178" width="160" height="134" rx="28" fill="#fffdf9" stroke="#1f3a5f" stroke-width="3"/>
+      <circle cx="992" cy="202" r="15" fill="#b5483a"/>
+      <text x="992" y="208" fill="#ffffff" font-size="16" font-weight="700" text-anchor="middle">5</text>
+      <g fill="none" stroke="#1f3a5f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1019 247V235C1019 225 1027 217 1037 217H1047C1057 217 1065 225 1065 235V247"/>
+        <rect x="1012" y="247" width="60" height="18" rx="6"/>
+        <path d="M1030 238L1039 246L1054 229" stroke="#b5483a"/>
+      </g>
+      <text x="1042" y="287" fill="#1f3a5f" font-size="20" font-weight="600" text-anchor="middle">Giám định</text>
+    </g>
+  </g>
+
+  <path d="M82 352H1118" stroke="#ddd6cc" stroke-width="2"/>
+  <circle cx="82" cy="352" r="5" fill="#b5483a"/>
+  <circle cx="1118" cy="352" r="5" fill="#1f3a5f"/>
+  <text x="600" y="382" fill="#66717d" font-family="Segoe UI, sans-serif" font-size="16" text-anchor="middle">Rõ ý · chắc chữ · kiểm chứng được</text>
+</svg>

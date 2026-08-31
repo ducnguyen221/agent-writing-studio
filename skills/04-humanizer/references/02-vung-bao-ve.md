@@ -39,7 +39,7 @@ là việc của vòng viết lại (`02-cowriter`, vòng 2), không phải củ
 (`owner: 02-cowriter`). Trục 4 đọc `owner` trước khi đọc nội dung: `owner` khác `04-humanizer` thì
 dừng ở bước 2 bên trên.
 
-**Vì sao nghiêm đến thế.** Ca cột B (`docs/results/self-audit-cot-B.md` mục 3 và 6): trục 3 chấm
+**Vì sao nghiêm đến thế.** Ca cột B (mục 3 và 6 trong sổ đo nội bộ của đợt xây): trục 3 chấm
 đúng một câu khái quát hoá vội, trục 4 hạ mức câu đó theo `must_fix` — nhát sửa **chính đáng**, có
 `reason` cho người đọc — và người chấm mù độc lập, vốn đã gắn `NOTE` cho câu ấy ở lượt trước, thôi
 gắn cờ. Không ai lách gì cả; "tốt cho người đọc" và "ít bị máy chấm để ý" đơn giản là **trùng nhau**

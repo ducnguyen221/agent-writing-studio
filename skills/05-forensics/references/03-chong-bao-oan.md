@@ -111,8 +111,8 @@ Trục 5 vì thế chạy ở một trong hai chế độ, và phải nói rõ m
 > Trên văn đã đi qua chính studio này, `low_signal` ở chế độ mù là **kết quả kỳ vọng, không phải bằng
 > chứng**. Không lấy S/C mù của sản phẩm studio ra phán xét — dùng `audit`.
 
-Cơ sở là số đo, không phải suy luận. Ca `cot-b-ai-baitap` (30/08/2026, chi tiết ở
-`docs/results/self-audit-cot-B.md`): một bài **100 % do máy viết** qua trục 2 và trục 4, chấm mù bởi
+Cơ sở là số đo, không phải suy luận. Ca `cot-b-ai-baitap` (30/08/2026, chi tiết trong sổ đo nội bộ
+của đợt xây): một bài **100 % do máy viết** qua trục 2 và trục 4, chấm mù bởi
 một model khác, cho **S = 2/100 · C = 2,0 % · `low_signal` · 0 FLAG (0 %) · 2 NOTE (2/45 câu = 4,4 %)**,
 và lớp đếm 0-token cho **0 tín hiệu**.
 

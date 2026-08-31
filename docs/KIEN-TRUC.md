@@ -189,7 +189,7 @@ chứa văn của người thật. `.work/` vẫn nằm trong `.gitignore` làm 
 3. **`draft.meta.json` là bắt buộc khi Y2 tham gia**: studio tự khai phần máy viết. Cổng Y5 của chính
    studio mà không có bản tự khai thì mất tư cách nói về liêm chính.
 4. **Y5 có hai chế độ, và chọn nhầm chế độ là đọc nhầm kết quả** *(mới, 30/08 — hệ quả của phép thử
-   cột B, xem `docs/results/self-audit-cot-B.md`)*:
+   cột B; sổ đo nội bộ của đợt xây giữ số liệu thô)*:
    - **`blind`** (mặc định) — chỉ thấy văn bản, kèm `sentences.json` để neo finding, **không** kèm
      `draft.meta.json`. Dùng cho tài liệu từ ngoài, cho hiệu chuẩn, cho đối chứng độc lập.
    - **`audit`** — bật khi thư mục ca có **cả** `draft.meta.json` lẫn `sentences.json`. Đọc hai file
@@ -313,8 +313,8 @@ agent-writing-studio/
 │     └─ scripts/                      # ✅ extract · vi_segment · counters · report
 │                                      # ❌ writing-studio/ — router toàn studio (xây cuối, tuỳ chọn)
 │
-├─ commands/                          # ✅ 7 lệnh chạy lẻ từng bước (v0.1.1)
-├─ tests/                             # ✅ 371 test: forensics/ · genres/ · shared/ · skills/
+├─ commands/                          # ✅ 7 lệnh chạy lẻ từng bước (v0.1.1; đánh số theo trục v0.1.2)
+├─ tests/                             # ✅ 372 test: forensics/ · genres/ · shared/ · skills/
 └─ fixtures/                          # ✅ gitignored trừ README; hiện CÒN RỖNG
 ```
 

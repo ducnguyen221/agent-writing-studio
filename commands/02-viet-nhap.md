@@ -18,7 +18,7 @@ Từ `$WRITING_STUDIO_DATA/work/<slug>/` (không đặt biến thì `./.work/<sl
 - `context.json` — đề bài, luận đề, độc giả, thể loại, ràng buộc.
 
 **Thiếu file này thì DỪNG.** Nói đúng một câu: *"chưa có `context.json` trong `<đường dẫn>`; chạy
-`/agent-writing-studio:boi-canh <đề bài>` để dựng trước"*. **Không** tự phỏng vấn thay trục 1, không
+`/agent-writing-studio:01-boi-canh <đề bài>` để dựng trước"*. **Không** tự phỏng vấn thay trục 1, không
 tự bịa bối cảnh để viết cho xong — một bản nháp dựng trên bối cảnh tự đoán là bản nháp phải bỏ.
 
 ## Cổng cứng giữa lệnh
@@ -37,11 +37,11 @@ không phải nghi thức: trình dàn ý, chờ trả lời, rồi mới viết
 
 ## Chỉ làm đúng bước này
 
-Xong bản nháp thì dừng. Không tự chấm, không tự biên tập — đó là `phan-bien` và `bien-tap`.
+Xong bản nháp thì dừng. Không tự chấm, không tự biên tập — đó là `03-phan-bien` và `04-bien-tap`.
 
 ## Tóm tắt cho `/agent-writing-studio:danh-sach`
 
 - **Trục:** Y2 · Đồng viết
 - **Làm gì:** dàn ý ba tầng → chờ duyệt → viết văn xuôi + tự khai phần máy viết
-- **Cần đầu vào:** `context.json` (từ `/boi-canh`)
+- **Cần đầu vào:** `context.json` (từ `/01-boi-canh`)
 - **Ra file:** `draft.md` · `draft.meta.json` · `sentences.json`

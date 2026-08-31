@@ -1,5 +1,7 @@
 # agent-writing-studio
 
+![agent-writing-studio](assets/banner.svg)
+
 **Một xưởng viết bằng AI agent cho chữ tiếng Việt: từ lúc chưa có chữ nào đến lúc nghiệm thu bản giao.**
 
 Repo này không phải một ứng dụng, không có nút bấm và không chạy trên máy chủ nào. Nó là **một bộ
@@ -66,7 +68,7 @@ mới = thêm **một file**, không sửa dòng code nào. Không skill nào đ
 
 ### Trạng thái từng trục
 
-*(lấy từ nhật ký cổng trong `docs/plans/2026-08-30-skills-1-4-genres/tasks.md`)*
+*(lấy từ nhật ký cổng nội bộ của đợt xây)*
 
 | Trục | Skill | Trạng thái | Đã chạy thật trên ca nào |
 |---|---|---|---|
@@ -130,15 +132,9 @@ cp -r skills/* ~/.codex/skills/
 Copy-Item -Recurse skills\* $HOME\.claude\skills\
 ```
 
-Thư viện Python phụ trợ (**đều tuỳ chọn**, đều nhẹ, đều chạy CPU — không cần card đồ hoạ):
-
-```bash
-pip install underthesea python-docx pymupdf jsonschema pyyaml
-```
-
-`underthesea` quan trọng nhất: tiếng Việt không tách từ bằng khoảng trắng, thiếu nó thì các bộ đếm tự
-hạ độ tin cậy của chính mình. Không cài gì cả thì agent vẫn đọc, vẫn chấm, vẫn báo cáo được — script
-trong repo chỉ là **lớp kiểm chứng**, không phải bộ não.
+Đến đây là dùng được. Có vài thư viện Python phụ trợ giúp xưởng **đo bằng máy** và **xuất file Word**,
+nhưng chúng đều tuỳ chọn: không cài gì cả thì agent vẫn đọc, vẫn chấm, vẫn báo cáo được — script
+trong repo chỉ là **lớp kiểm chứng**, không phải bộ não. Danh sách và lệnh cài ở [mục 9](#9-thư-viện-phụ-trợ-và-chạy-test).
 
 ⚠️ **Repo cần nằm trên máy, không chỉ nằm trong `~/.claude/skills/`.** Các skill đọc dữ liệu dùng
 chung ở `shared/` (hồ sơ thể loại, quy tắc, schema). Hãy nói cho agent biết repo nằm ở đâu, ví dụ:
@@ -168,11 +164,11 @@ bước**: thiếu sản phẩm của bước trước thì nó nói rõ thiếu
 
 | Lệnh | Trục | Làm gì | Cần đầu vào | Ra file |
 |---|---|---|---|---|
-| `/agent-writing-studio:boi-canh` | Y1 | phỏng vấn ý đồ, luận đề, độc giả, ràng buộc | — (bước đầu) | `context.json` |
-| `/agent-writing-studio:viet-nhap` | Y2 | dàn ý ba tầng → chờ duyệt → viết văn xuôi | `context.json` | `draft.md` · `draft.meta.json` · `sentences.json` |
-| `/agent-writing-studio:phan-bien` | Y3 | chấm từng tiêu chí theo barem thể loại | `draft.md` · `sentences.json` | `critique.json` |
-| `/agent-writing-studio:bien-tap` | Y4 | sửa về phía giọng tác giả, 3 chế độ đầu ra | `draft.md` · `sentences.json` | `polished.md` · `polish.diff.json` · sidecar provenance |
-| `/agent-writing-studio:giam-dinh` | Y5 | đọc mù → S/C → báo cáo; mặc định `audit` | văn bản · `sentences.json` | `evidence.json` · `report.md` |
+| `/agent-writing-studio:01-boi-canh` | Y1 | phỏng vấn ý đồ, luận đề, độc giả, ràng buộc | — (bước đầu) | `context.json` |
+| `/agent-writing-studio:02-viet-nhap` | Y2 | dàn ý ba tầng → chờ duyệt → viết văn xuôi | `context.json` | `draft.md` · `draft.meta.json` · `sentences.json` |
+| `/agent-writing-studio:03-phan-bien` | Y3 | chấm từng tiêu chí theo barem thể loại | `draft.md` · `sentences.json` | `critique.json` |
+| `/agent-writing-studio:04-bien-tap` | Y4 | sửa về phía giọng tác giả, 3 chế độ đầu ra | `draft.md` · `sentences.json` | `polished.md` · `polish.diff.json` · sidecar provenance |
+| `/agent-writing-studio:05-giam-dinh` | Y5 | đọc mù → S/C → báo cáo; mặc định `audit` | văn bản · `sentences.json` | `evidence.json` · `report.md` |
 | `/agent-writing-studio:giao-docx` | giao hàng | md → docx đúng quy cách Việt, đặt vào thư mục bạn chọn | `polished.md` | `<tên>.docx` + sidecar |
 | `/agent-writing-studio:danh-sach` | — | in chính bảng này, đọc động từ các file lệnh | — | — |
 
@@ -182,20 +178,16 @@ Bảng trên là bản chép cho người đọc README. **Nguồn thật là b�
 ### Giao bản docx
 
 Bản giao hoàn chỉnh cho người đọc **mặc định là `.docx`**, không phải `.md`: giảng viên và biên tập
-viên nhận bài bằng Word. Script:
-
-```bash
-python shared/scripts/xuat_docx.py polished.md --out "D:/thu-muc-cua-toi" --provenance polished.provenance.json
-```
+viên nhận bài bằng Word. Bảo agent *"giao bản docx vào thư mục D:/thu-muc-cua-toi"*, hoặc gõ lệnh
+`/agent-writing-studio:giao-docx` rồi đưa thư mục bạn muốn nhận bài.
 
 Quy cách mặc định là chuẩn văn bản Việt phổ thông: **Times New Roman 13pt · giãn dòng 1,5 · lề trên
-và dưới 2cm, trái 3cm, phải 2cm · heading đậm cỡ 14–16**. `--out` nhận thư mục (lấy tên theo file
-nguồn) hoặc đường dẫn `.docx` cụ thể; `--provenance` chép sidecar tự khai nguồn gốc sang **cạnh** file
-docx, đúng luật "provenance đi theo bản giao".
+và dưới 2cm, trái 3cm, phải 2cm · heading đậm cỡ 14–16**. Bản tự khai nguồn gốc được chép sang **cạnh**
+file docx, đúng luật "provenance đi theo bản giao".
 
-Cần `python-docx` (`pip install python-docx`); thiếu thì script báo đúng câu lệnh cần chạy chứ không
-lặng lẽ giao bản khác. Giới hạn đã biết: **bảng Markdown không được dựng thành bảng Word** — bài có
-bảng thì dùng pandoc hoặc dựng bảng trong Word sau.
+Bước này cần thư viện `python-docx` ([mục 9](#9-thư-viện-phụ-trợ-và-chạy-test)); thiếu thì script báo
+đúng câu lệnh cần chạy chứ không lặng lẽ giao bản khác. Giới hạn đã biết: **bảng Markdown không được
+dựng thành bảng Word** — bài có bảng thì dựng bảng trong Word sau.
 
 > **Bản giao nằm ở thư mục của bạn, không nằm trong station.** `$WRITING_STUDIO_DATA` (`.writing`) là
 > **xưởng cục bộ của agent**: mọi file làm việc ở lại đó. Bản giao ghi **chính xác vào thư mục bạn
@@ -256,6 +248,8 @@ Ba cổng cứng trong chuỗi, qua được mới đi tiếp:
 ```
 agent-writing-studio/
 ├─ README.md                    file bạn đang đọc — bản triển khai
+├─ LICENSE                      MIT
+├─ CITATION.cff                 định dạng trích dẫn (nút "Cite this repository" trên GitHub)
 ├─ requirements-dev.txt         thư viện để chạy test
 │
 ├─ skills/                      NĂM THƯ MỤC, CHÍN SKILL — thứ được chép sang ~/.claude/skills/
@@ -273,6 +267,7 @@ agent-writing-studio/
 │     (mỗi skill: SKILL.md ≤550 từ + references/ tài liệu dài + scripts/ + assets/)
 │
 ├─ commands/                    BẢY LỆNH chạy lẻ từng bước — /agent-writing-studio:<lệnh>
+│                              số đầu tên lệnh = số trục; giao-docx và danh-sach ngoài trục
 │
 ├─ shared/                      DỮ LIỆU DÙNG CHUNG — nhiều skill cùng đọc một nguồn
 │  ├─ genres/                     9 hồ sơ thể loại + _schema.md (hợp đồng hình dạng file)
@@ -281,7 +276,7 @@ agent-writing-studio/
 │  ├─ scripts/                    script dùng lại: đo, đối chiếu, dựng hồ sơ, xuất docx
 │  └─ writers/                    CHỈ schema + hướng dẫn; hồ sơ người thật ở station ngoài repo
 │
-├─ tests/                       371 test — canh cấu trúc skill, hình dạng dữ liệu, liên kết
+├─ tests/                       372 test — canh cấu trúc skill, hình dạng dữ liệu, liên kết
 │  ├─ forensics/                  hành vi trục 5 (có từ bản v1)
 │  ├─ genres/                     hồ sơ thể loại đúng schema, slug khớp hai chiều
 │  ├─ shared/                     schema, quy tắc, hàng rào de-name
@@ -293,15 +288,20 @@ agent-writing-studio/
 │  ├─ KIEN-TRUC.md                kiến trúc: vì sao 5 skill chứ không 25, ai đọc gì của ai
 │  ├─ CHAM-DIEM.md                thang điểm S và C, cách đo thang đó, mẫu báo cáo giám định
 │  ├─ GENRES.md                   cách soạn một hồ sơ thể loại mới
-│  ├─ agent-writing-studio.md     tầm nhìn gốc của chủ repo (ma trận 5×5)
-│  ├─ results/                    kết quả đo có thật, không phải ví dụ minh hoạ
-│  └─ plans/                      hồ sơ từng đợt làm: spec, task, nhật ký cổng
+│  └─ agent-writing-studio.md     tầm nhìn gốc của chủ repo (ma trận 5×5)
+│
+├─ assets/                      ảnh dùng cho README và trang giới thiệu
 │
 └─ fixtures/                    bộ bài mẫu để hiệu chuẩn — GITIGNORED, hiện còn rỗng
 ```
 
-Thư mục ca (`work/`), hồ sơ người viết và corpus **không có trong cây này** — chúng ở station
-`$WRITING_STUDIO_DATA` ngoài repo, xem mục 3.
+Mỗi thư mục gốc có `README.md` riêng nói nó chứa gì và dùng khi nào.
+
+Hai thứ **không có trong cây này**: thư mục ca (`work/`), hồ sơ người viết và corpus nằm ở station
+`$WRITING_STUDIO_DATA` ngoài repo (xem mục 3); còn nhật ký làm việc của xưởng — spec, danh sách task,
+nhật ký cổng duyệt, sổ đo thô của từng đợt xây — chỉ nằm trên máy tác giả, vì đó là ghi chép quy
+trình chứ không phải tài liệu người dùng. Những kết luận đáng giữ từ đó đã được viết lại vào README
+và `docs/`.
 
 ---
 
@@ -312,7 +312,7 @@ dấu hiệu**. Đó là một xung đột lợi ích có thật, và chúng tô
 
 ### Phép thử: cho studio viết một bài 100% bằng máy, rồi bắt chính studio chấm mù
 
-Ca `cot-b-ai-baitap`, ngày 30/08/2026 — số liệu đầy đủ ở `docs/results/self-audit-cot-B.md`:
+Ca `cot-b-ai-baitap`, ngày 30/08/2026 — số liệu thô đầy đủ ở sổ đo nội bộ của đợt xây:
 
 - Trục 2 viết trọn bài, **không một chữ nào của người**, và tự khai đúng như vậy.
 - Trục 5 chấm **mù**, do một model khác (Codex, không phải model đã viết), chỉ nhìn thấy bản văn chứ
@@ -412,6 +412,18 @@ Một ngoại lệ có nghĩa vụ pháp lý: kho thành ngữ `skills/04-humani
 liệu cấp phép MIT**, nên copyright notice và permission notice của nguồn nằm ngay trong file đó và
 **không được gỡ**.
 
+### License & trích dẫn
+
+Repo này phát hành theo **giấy phép MIT** — nguyên văn ở file [`LICENSE`](LICENSE), *Copyright 2026
+Nguyễn Quang Đức*. Nói bằng tiếng Việt thường: bạn được **dùng, sửa, phân phối lại và bán** phần mềm
+này cho mục đích gì cũng được, kể cả thương mại, không phải xin phép và không phải trả tiền. Ràng
+buộc **duy nhất**: mọi bản sao hay bản phái sinh phải **giữ nguyên copyright notice và permission
+notice** — đừng gỡ chúng khỏi file `LICENSE` cũng như khỏi `thanh-ngu.json`.
+
+Ngoài nghĩa vụ đó, tác giả **đề nghị nhưng không ràng buộc**: nếu công trình của bạn dựa trên repo
+này, xin dẫn về nó. Định dạng trích dẫn có sẵn ở [`CITATION.cff`](CITATION.cff) — trên GitHub bạn bấm
+nút *Cite this repository* ở cột phải là ra sẵn bản APA và BibTeX.
+
 ---
 
 ## 8. Trạng thái trung thực — những gì repo này CHƯA làm được
@@ -444,16 +456,31 @@ bất cứ con số nào** ở trên.
 
 ---
 
-## 9. Chạy test
+## 9. Thư viện phụ trợ và chạy test
+
+Xưởng chạy được khi không cài gì thêm. Cài mấy thư viện dưới đây thì có thêm **lớp đo bằng máy** và
+**xuất file Word** — đều nhẹ, đều chạy CPU, không cần card đồ hoạ:
 
 ```bash
+pip install underthesea python-docx pymupdf jsonschema pyyaml
+```
+
+`underthesea` đáng cài nhất: tiếng Việt không tách từ bằng khoảng trắng, thiếu nó thì các bộ đếm tự
+hạ độ tin cậy của chính mình. `python-docx` là thứ cần cho bước giao bản `.docx`.
+
+Test thì dành cho người sửa repo, không dành cho người dùng:
+
+```bash
+pip install -r requirements-dev.txt
 python -m pytest tests/ -q
 python -m unittest discover -s tests -t .
 ```
 
-Cả hai cùng cho **371 passed**. Test không kiểm "văn hay"; nó kiểm những thứ hỏng thì im lặng: skill
-có đúng tên và ≤550 từ không, hồ sơ thể loại có đủ mục không, slug thể loại có khớp hai chiều không,
-liên kết nội bộ có gãy không, nguồn ngoài có bị ghi sai license không.
+Hai runner phải cho **cùng một con số** (bản v0.1.2: 372 passed — con số đổi mỗi lần thêm luật, cứ
+chạy để biết số hiện tại). Test không kiểm "văn hay"; nó kiểm những thứ hỏng thì im lặng: skill có
+đúng tên và ≤550 từ không, hồ sơ thể loại có đủ mục không, slug thể loại có khớp hai chiều không,
+liên kết nội bộ có gãy không, nguồn ngoài có bị ghi sai license không. Chi tiết:
+[`tests/README.md`](tests/README.md).
 
 ---
 
@@ -461,16 +488,13 @@ liên kết nội bộ có gãy không, nguồn ngoài có bị ghi sai license 
 
 **Nguyễn Quang Đức** · [ducnguyen.vn](https://ducnguyen.vn) · duc.nguyen@kpim.vn · ducnguyen.ams@gmail.com
 
-Khai thác hay phát triển tiếp: license MIT đã bắt buộc giữ nguyên copyright notice trong mọi bản
-sao; ngoài ra tác giả **đề nghị** (không ràng buộc) dẫn về repo này — định dạng trích dẫn có sẵn ở
-`CITATION.cff` (nút *Cite this repository* trên GitHub).
+Khai thác hay phát triển tiếp thì xem mục 7, tiểu mục *License & trích dẫn*.
 
 **Trang web giới thiệu:** mở `index.html` ở thư mục gốc bằng trình duyệt, hoặc xem bản đã đăng qua
 GitHub Pages.
 
 ---
 
-**License:** dự kiến **MIT**, cùng chuẩn với hai repo anh em `agent-design-studio` (hình ảnh) và
-`agent-voice-studio` (giọng nói) — ba repo nối với nhau bằng **file**, không import code chéo nhau.
-⚠️ File `LICENSE` **chưa được thêm** vào repo; chừng nào chưa có, đây mới là dự định của chủ repo chứ
-chưa phải một giấy phép có hiệu lực.
+**License:** **MIT** — file [`LICENSE`](LICENSE) đã có trong repo, Copyright 2026 Nguyễn Quang Đức.
+Cùng chuẩn với hai repo anh em `agent-design-studio` (hình ảnh) và `agent-voice-studio` (giọng nói) —
+ba repo nối với nhau bằng **file**, không import code chéo nhau.

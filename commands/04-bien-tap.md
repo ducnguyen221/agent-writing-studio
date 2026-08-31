@@ -27,7 +27,7 @@ Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./.work/<slug>/`):
 - `draft.meta.json` — **ranh giới đạo đức**: trục 4 chỉ chạy trên bản thảo đã biết nguồn gốc.
 
 Thiếu văn bản thì dừng và nói rõ. Thiếu `critique.json` thì vẫn sửa được, nhưng nói rõ đang sửa mà
-chưa có danh sách việc phải sửa của trục 3 (`/agent-writing-studio:phan-bien <slug>`). Thiếu
+chưa có danh sách việc phải sửa của trục 3 (`/agent-writing-studio:03-phan-bien <slug>`). Thiếu
 `draft.meta.json` mà bài đến từ ngoài studio: vẫn sửa được, nhưng phải nói thẳng rằng bản giao sẽ
 mang ghi chú "đã qua biên tập máy" và **không** có bản tự khai nguồn gốc phần trước đó. Trục 4
 **không phải dịch vụ né máy chấm AI**.

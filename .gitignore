@@ -26,3 +26,9 @@ shared/writers/**
 .venv/
 __pycache__/
 *.pyc
+
+# Nhật ký làm việc nội bộ — không public.
+# Spec, task, nhật ký cổng và kết quả đo của từng đợt xây: hữu ích cho tác giả,
+# nhưng là ghi chép quy trình, không phải tài liệu người dùng cần khi clone/cài.
+docs/plans/
+docs/results/

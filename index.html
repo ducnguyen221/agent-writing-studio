@@ -109,7 +109,7 @@
       <li><b>9</b> hồ sơ thể loại</li>
       <li><b>9</b> skill trong <b>5</b> thư mục</li>
       <li><b>7</b> lệnh chạy lẻ</li>
-      <li><b>371</b> test</li>
+      <li><b>372</b> test</li>
       <li>chạy CPU, <b>không</b> cần GPU</li>
     </ul>
   </div>
@@ -278,11 +278,11 @@ cp -r skills/* ~/.codex/skills/      # Codex</code></pre>
       <table>
         <thead><tr><th>Lệnh</th><th>Trục</th><th>Làm gì</th><th>Cần đầu vào</th><th>Ra file</th></tr></thead>
         <tbody>
-          <tr><td><code>boi-canh</code></td><td class="axis">Y1</td><td>Phỏng vấn ý đồ, luận đề, độc giả, ràng buộc</td><td>— (bước đầu)</td><td><code>context.json</code></td></tr>
-          <tr><td><code>viet-nhap</code></td><td class="axis">Y2</td><td>Dàn ý ba tầng → chờ duyệt → viết văn xuôi</td><td><code>context.json</code></td><td><code>draft.md</code> · <code>draft.meta.json</code> · <code>sentences.json</code></td></tr>
-          <tr><td><code>phan-bien</code></td><td class="axis">Y3</td><td>Chấm từng tiêu chí theo barem thể loại</td><td><code>draft.md</code> · <code>sentences.json</code></td><td><code>critique.json</code></td></tr>
-          <tr><td><code>bien-tap</code></td><td class="axis">Y4</td><td>Sửa về phía giọng tác giả, ba chế độ đầu ra</td><td><code>draft.md</code> · <code>sentences.json</code></td><td><code>polished.md</code> · <code>polish.diff.json</code> · sidecar</td></tr>
-          <tr><td><code>giam-dinh</code></td><td class="axis">Y5</td><td>Đọc mù → S/C → báo cáo; mặc định <code>audit</code></td><td>văn bản · <code>sentences.json</code></td><td><code>evidence.json</code> · <code>report.md</code></td></tr>
+          <tr><td><code>01-boi-canh</code></td><td class="axis">Y1</td><td>Phỏng vấn ý đồ, luận đề, độc giả, ràng buộc</td><td>— (bước đầu)</td><td><code>context.json</code></td></tr>
+          <tr><td><code>02-viet-nhap</code></td><td class="axis">Y2</td><td>Dàn ý ba tầng → chờ duyệt → viết văn xuôi</td><td><code>context.json</code></td><td><code>draft.md</code> · <code>draft.meta.json</code> · <code>sentences.json</code></td></tr>
+          <tr><td><code>03-phan-bien</code></td><td class="axis">Y3</td><td>Chấm từng tiêu chí theo barem thể loại</td><td><code>draft.md</code> · <code>sentences.json</code></td><td><code>critique.json</code></td></tr>
+          <tr><td><code>04-bien-tap</code></td><td class="axis">Y4</td><td>Sửa về phía giọng tác giả, ba chế độ đầu ra</td><td><code>draft.md</code> · <code>sentences.json</code></td><td><code>polished.md</code> · <code>polish.diff.json</code> · sidecar</td></tr>
+          <tr><td><code>05-giam-dinh</code></td><td class="axis">Y5</td><td>Đọc mù → S/C → báo cáo; mặc định <code>audit</code></td><td>văn bản · <code>sentences.json</code></td><td><code>evidence.json</code> · <code>report.md</code></td></tr>
           <tr><td><code>giao-docx</code></td><td class="axis">giao</td><td>md → docx đúng quy cách Việt, đặt vào thư mục bạn chọn</td><td><code>polished.md</code></td><td><code>&lt;tên&gt;.docx</code> + sidecar</td></tr>
           <tr><td><code>danh-sach</code></td><td class="axis">—</td><td>In chính bảng này, đọc động từ các file lệnh</td><td>—</td><td>—</td></tr>
         </tbody>

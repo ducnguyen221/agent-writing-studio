@@ -1,6 +1,6 @@
 """`commands/` — bảy lệnh chạy lẻ từng bước có đúng hợp đồng không?
 
-Lệnh là **cửa vào hẹp**: người dùng gõ `/agent-writing-studio:phan-bien` là muốn chạy ĐÚNG một bước,
+Lệnh là **cửa vào hẹp**: người dùng gõ `/agent-writing-studio:03-phan-bien` là muốn chạy ĐÚNG một bước,
 không phải khởi động lại cả chuỗi. Ba thứ hỏng thì hỏng im lặng, nên bị khoá ở đây:
 
 1. **`description` phải là tiếng Anh** — đó là câu harness đọc để định tuyến (luật ngôn ngữ tài liệu:
@@ -19,8 +19,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 COMMANDS = ROOT / "commands"
 
-# Thứ tự chuỗi công việc; `danh-sach` là lệnh tra cứu, đứng ngoài chuỗi.
-CHUOI = ("boi-canh", "viet-nhap", "phan-bien", "bien-tap", "giam-dinh", "giao-docx")
+# Thứ tự chuỗi công việc. Từ v0.1.2 năm lệnh trong chuỗi mang SỐ TRỤC ở đầu tên, nên `ls commands/`
+# đã tự sắp đúng thứ tự chạy; `giao-docx` (bàn giao) và `danh-sach` (tra cứu) đứng ngoài trục.
+CHUOI = ("01-boi-canh", "02-viet-nhap", "03-phan-bien", "04-bien-tap", "05-giam-dinh", "giao-docx")
 MONG_DOI = set(CHUOI) | {"danh-sach"}
 
 FRONTMATTER = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
@@ -40,8 +41,12 @@ def frontmatter(text):
 
 class BoLenhTests(unittest.TestCase):
     def test_dung_bay_lenh_khong_thua_khong_thieu(self):
-        tren_dia = {path.stem for path in COMMANDS.glob("*.md")}
+        # `README.md` là tài liệu giới thiệu thư mục cho người đọc, không phải một lệnh.
+        tren_dia = {path.stem for path in COMMANDS.glob("*.md") if path.name != "README.md"}
         self.assertEqual(tren_dia, MONG_DOI)
+
+    def test_thu_muc_co_readme_cho_nguoi_doc(self):
+        self.assertTrue((COMMANDS / "README.md").is_file(), "commands/ thiếu README cho người dùng")
 
 
 class FrontmatterTests(unittest.TestCase):
@@ -97,12 +102,12 @@ class HopDongThanBaiTests(unittest.TestCase):
 
     def test_lenh_can_buoc_truoc_deu_chi_ra_lenh_sinh_ra_dau_vao(self):
         """Thiếu artifact thì nói thiếu gì + lệnh nào tạo ra nó, KHÔNG tự chạy lại cả chuỗi."""
-        for ten in ("viet-nhap", "phan-bien", "bien-tap", "giam-dinh", "giao-docx"):
+        for ten in ("02-viet-nhap", "03-phan-bien", "04-bien-tap", "05-giam-dinh", "giao-docx"):
             with self.subTest(lenh=ten):
                 text = doc(ten)
                 self.assertRegex(
                     text,
-                    r"/agent-writing-studio:(boi-canh|viet-nhap|phan-bien|bien-tap)",
+                    r"/agent-writing-studio:(01-boi-canh|02-viet-nhap|03-phan-bien|04-bien-tap)",
                     f"{ten}.md không chỉ ra lệnh sinh ra đầu vào của nó",
                 )
 

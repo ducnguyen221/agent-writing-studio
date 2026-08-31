@@ -37,7 +37,7 @@ hoặc `draft.md`, hoặc file người dùng đưa), `sentences.json`, và — 
 
 Thiếu `sentences.json`: sinh bằng `python skills/05-forensics/scripts/extract.py <file> --out <ca>`
 rồi nói rõ đã sinh. Thiếu `draft.meta.json`: **không chạy `audit`**, nói rõ đang chạy `blind` vì
-không có bản tự khai (bài của studio thì `/agent-writing-studio:viet-nhap` là chỗ sinh ra nó), và
+không có bản tự khai (bài của studio thì `/agent-writing-studio:02-viet-nhap` là chỗ sinh ra nó), và
 đừng đọc điểm mù thành phán xét.
 
 ## Đầu ra
