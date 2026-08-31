@@ -14,7 +14,7 @@ Ba lý do, mỗi lý do đủ mạnh một mình:
 ## Tìm Brain ở đâu
 
 Gốc Brain đọc từ biến môi trường `OPCOS_BRAIN_PATH`; không có thì mặc định
-`C:\Users\DucNguyen\Brain`. **Không hardcode đường dẫn khác trong skill.** Ngoài Brain, đọc cả thư
+`~/Brain` trong thư mục người dùng. **Không hardcode đường dẫn tuyệt đối nào trong skill.** Ngoài Brain, đọc cả thư
 mục dự án hiện hành — bối cảnh gần bài viết nhất thường nằm ở đó.
 
 Không có Brain trên máy là chuyện bình thường: `brain_pointers[]` để rỗng và đi tiếp. Không có kho

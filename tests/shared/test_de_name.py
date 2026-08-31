@@ -29,40 +29,48 @@ SCANNED_SUFFIXES = {".md", ".json", ".py", ".txt", ".yaml", ".yml"}
 # Ngoại lệ pháp lý: file mang DỮ LIỆU cấp phép MIT, notice bắt buộc phải ở lại.
 MIT_DATA_FILE = "skills/04-humanizer/assets/thanh-ngu.json"
 
-# Slug repo nguồn đầy đủ — dạng `owner/repo`.
-BANNED_SLUGS = (
-    "blader/humanizer",
-    "SalZaki/antislop",
-    "danielmiessler/fabric",
-    "stanford-oval/storm",
-    "LAY-lgtm/novel-writing-framework",
-    "simondgoldstein/deep-drafter",
-    "devswha/patina",
-    "seyedehsanhadi/sloptrim",
-    "NousResearch/autonovel",
-    "anthropics/skills",
-    "causalNLP/logical-fallacy",
-    "1ec5/hunspell-vi",
+# Needle được ĐẢO CHUỖI (s[::-1]) rồi giải lúc chạy — để chính file test này không bày
+# tên nguồn ra cây public. Muốn đọc: python -c "print('<needle>'[::-1])".
+_d = lambda s: s[::-1]
+
+# Slug repo nguồn đầy đủ — dạng `owner/repo` (đã đảo).
+BANNED_SLUGS = tuple(
+    _d(s)
+    for s in (
+        "rezinamuh/redalb",
+        "polsitna/ikaZlaS",
+        "cirbaf/relsseimleinad",
+        "mrots/lavo-drofnats",
+        "krowemarf-gnitirw-levon/mtgl-YAL",
+        "retfard-peed/nietsdlogdnomis",
+        "anitap/ahwsved",
+        "mirtpols/idahnashedeyes",
+        "levonotua/hcraeseRsuoN",
+        "slliks/sciporhtna",
+        "ycallaf-lacigol/PLNlasuac",
+        "iv-llepsnuh/5ce1",
+    )
 )
 
-# Tên trần đủ đặc thù để nhận ra repo nguồn dù không có phần `owner/`.
-# CHÚ Ý — KHÔNG cấm chuỗi "humanizer" trần: `skills/04-humanizer/` là TÊN TRỤC hợp lệ,
-# và "công cụ humanizer trên thị trường" là danh từ chung. Chỉ slug đầy đủ mới bị cấm.
-# Cũng không cấm "storm"/"fabric" trần: `verified_fabrication` là thuật ngữ của repo.
-BANNED_BARE = (
-    "antislop",
-    "sloptrim",
-    "patina",
-    "deep-drafter",
-    "autonovel",
-    "causalNLP",
-    "blader",
-    "VIVID",
-    "ReML",
-    "novel-writing-framework",
-    "logical-fallacy",
-    "hunspell-vi",
-    "doc-coauthoring",
+# Tên trần đủ đặc thù (đã đảo). KHÔNG cấm "humanizer" trần (tên trục 4 hợp lệ),
+# không cấm "storm"/"fabric" trần (`verified_fabrication` là thuật ngữ của repo).
+BANNED_BARE = tuple(
+    _d(s)
+    for s in (
+        "polsitna",
+        "mirtpols",
+        "anitap",
+        "retfard-peed",
+        "levonotua",
+        "PLNlasuac",
+        "redalb",
+        "DIVIV",
+        "LMeR",
+        "krowemarf-gnitirw-levon",
+        "ycallaf-lacigol",
+        "iv-llepsnuh",
+        "gnirohtuaoc-cod",
+    )
 )
 
 # Con trỏ sang sổ nguồn đã dời khỏi repo.
@@ -118,7 +126,7 @@ class DeNameFenceTests(unittest.TestCase):
                 if needle.lower() not in lowered:
                     continue
                 # Ngoại lệ MIT: notice bắt buộc của kho thành ngữ.
-                if relative == MIT_DATA_FILE and needle in ("VIVID", "ReML"):
+                if relative == MIT_DATA_FILE and needle in (_d("DIVIV"), _d("LMeR")):
                     continue
                 line = next(
                     (

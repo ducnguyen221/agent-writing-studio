@@ -228,7 +228,8 @@ class FallacyReferenceTests(unittest.TestCase):
         self.assertIn("tự biên", text)
         self.assertIn("bộ luật của studio", text)
         self.assertIn("sổ xưởng", text)
-        for banned in ("causalNLP", "logical-fallacy", "vendor-notes/"):
+        # Tên nguồn cụ thể do hàng rào chung tests/shared/test_de_name.py canh.
+        for banned in ("vendor-notes/",):
             with self.subTest(banned=banned):
                 self.assertNotIn(banned, text)
 
