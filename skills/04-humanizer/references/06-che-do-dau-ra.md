@@ -40,6 +40,12 @@ Văn bản dán vào không có `sentences.json`: sinh `sentence_id` cho lượt
 - `polish.diff.json` và `polished.provenance.json` ghi **cạnh** file đích, không chèn vào trong nó.
   Trường hợp không được phép tạo file phụ: chèn provenance dưới dạng HTML-comment ở cuối file.
 - Ghi đè file gốc chỉ khi người dùng nói rõ. Mặc định ghi sang `<tên>.polished.<đuôi>`.
+- **Đích giao vs kho gốc.** Người dùng chỉ định thư mục làm việc của họ thì **bản giao** (file đích
+  + sidecar) ghi thẳng vào đó — đó là nơi họ đọc và quản lý. Toàn bộ **file làm việc** của ca
+  (`polish.diff.json`, meta, bản trung gian) vẫn nằm trong thư mục ca ở station
+  (`$WRITING_STUDIO_DATA/work/<slug>/`, fallback `./.work/<slug>/`): station là nơi làm việc gốc
+  của agent, bản trong thư mục người dùng là bản chép để giao. Sửa tiếp thì sửa từ ca trong station
+  rồi giao lại, không biến bản chép thành nguồn thứ hai.
 
 ---
 
