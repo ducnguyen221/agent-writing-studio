@@ -410,6 +410,10 @@ liên kết nội bộ có gãy không, nguồn ngoài có bị ghi sai license 
 
 **Nguyễn Quang Đức** · [ducnguyen.vn](https://ducnguyen.vn) · duc.nguyen@kpim.vn · ducnguyen.ams@gmail.com
 
+Khai thác hay phát triển tiếp: license MIT đã bắt buộc giữ nguyên copyright notice trong mọi bản
+sao; ngoài ra tác giả **đề nghị** (không ràng buộc) dẫn về repo này — định dạng trích dẫn có sẵn ở
+`CITATION.cff` (nút *Cite this repository* trên GitHub).
+
 **Trang web giới thiệu:** mở `index.html` ở thư mục gốc bằng trình duyệt, hoặc xem bản đã đăng qua
 GitHub Pages.
 

@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Nếu bạn khai thác hoặc phát triển tiếp repo này, xin trích dẫn như dưới đây."
+title: "agent-writing-studio — Xưởng viết tiếng Việt cho AI agent"
+authors:
+  - family-names: "Nguyễn"
+    given-names: "Quang Đức"
+    website: "https://ducnguyen.vn"
+version: 0.1.0
+date-released: "2026-08-31"
+url: "https://github.com/ducnguyen221/agent-writing-studio"
+repository-code: "https://github.com/ducnguyen221/agent-writing-studio"
+license: MIT
+keywords:
+  - writing
+  - vietnamese
+  - provenance
+  - ai-detection
+  - academic-integrity
