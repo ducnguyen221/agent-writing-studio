@@ -41,11 +41,25 @@ class WorkflowAssetTests(unittest.TestCase):
         for skill in ("05a-reading", "05b-scoring", "05c-reporting", "05d-calibration"):
             self.assertIn(skill, readme)
 
-    def test_distillation_declares_one_architectural_source(self):
-        content = self.read("skills/05-forensics/references/06-distill-repo.md").lower()
-        self.assertIn("một nguồn kiến trúc", content)
-        self.assertIn("đối chiếu", content)
-        self.assertNotIn("skill dùng hai nguồn với vai trò khác nhau", content)
+    def test_forensics_router_no_longer_points_at_the_distill_log(self):
+        """Nhật ký distill đã dời về sổ xưởng: router và mọi reference phải bỏ trỏ."""
+        self.assertFalse(
+            (ROOT / "skills/05-forensics/references/06-distill-repo.md").exists(),
+            "06-distill-repo.md phải dời khỏi repo public",
+        )
+        surfaces = [ROOT / "skills/05-forensics/SKILL.md"]
+        surfaces += sorted((ROOT / "skills/05-forensics/references").glob("*.md"))
+        for path in surfaces:
+            with self.subTest(document=path.relative_to(ROOT).as_posix()):
+                self.assertNotIn("06-distill-repo", path.read_text(encoding="utf-8"))
+
+    def test_forensics_reference_numbering_has_no_hole_left_by_the_move(self):
+        """Dời file thì phải dời cả con trỏ — không để lại 06 mồ côi trong danh mục."""
+        names = sorted(p.name for p in (ROOT / "skills/05-forensics/references").glob("*.md"))
+        self.assertTrue(names)
+        self.assertNotIn("06-distill-repo.md", names)
+        for expected in ("01-rubric-5-truc.md", "05-kiem-chung-trich-dan.md", "07-case-study.md"):
+            self.assertIn(expected, names)
 
 
 if __name__ == "__main__":

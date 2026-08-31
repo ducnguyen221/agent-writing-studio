@@ -255,7 +255,6 @@ studio làm **văn hay hơn**, không làm **dịch vụ né máy chấm**.
 agent-writing-studio/
 ├─ README.md                          # ✅ viết lại 30/08 cho người không kỹ thuật
 ├─ LICENSE                            # ❌ chưa thêm — MIT là dự định, chưa phải giấy phép có hiệu lực
-├─ upstream.json                      # ✅ 13 nguồn distill, pin SHA + license + storage
 ├─ .gitignore                         # ✅ .work/ · fixtures/** · *.docx · shared/writers/**
 │
 ├─ docs/
@@ -304,7 +303,6 @@ agent-writing-studio/
 │  └─ writing-studio/                  # ❌ router toàn studio (xây cuối, tuỳ chọn)
 │
 ├─ tests/                             # ✅ 314 test: forensics/ · genres/ · shared/ · skills/
-├─ vendor-notes/                      # ✅ 13 thư mục, mỗi nguồn một DISTILL-NOTES
 └─ fixtures/                          # ✅ gitignored trừ README; hiện CÒN RỖNG
 ```
 

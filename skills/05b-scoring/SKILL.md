@@ -3,7 +3,7 @@ name: 05b-scoring
 description: Use when sealed forensic findings must be converted into a reproducible review-priority score, AI-signal coverage, uncertainty range, and action band.
 ---
 
-# Scoring Forensic Evidence
+# Chấm điểm bằng chứng giám định
 
 ## Tổng quan
 

@@ -38,7 +38,8 @@ dùng để buộc tội văn bản của ai.
 
 ## 3. Danh sách theo thể loại — năm hồ sơ đầy đủ
 
-Chép lại ở đây để đọc một lượt; **nguồn thật vẫn là `§2` của hồ sơ**, hồ sơ đổi thì file này lỗi thời.
+Bản chép ngày 31/08/2026. Chép lại ở đây để đọc một lượt; **nguồn thật vẫn là `§2` của hồ sơ**, hồ sơ
+đổi thì file này lỗi thời.
 
 ### `essay.md`
 

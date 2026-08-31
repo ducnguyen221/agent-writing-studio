@@ -1,8 +1,8 @@
 # Chấm mù — quy trình bốn bước
 
-Luật gốc chưng cất từ `deep-drafter` (MIT, xem `vendor-notes/deep-drafter/`): **người chấm không được
-nhận câu hỏi mớm, và không được biết phần nào do máy viết, trước khi chấm xong.** Đây là luật quan
-trọng nhất của trục 3; hồ sơ thể loại bật nó bằng `blind_referee: true` ở §3.
+Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo). Luật gốc: **người chấm không được nhận câu hỏi
+mớm, và không được biết phần nào do máy viết, trước khi chấm xong.** Đây là luật quan trọng nhất của
+trục 3; hồ sơ thể loại bật nó bằng `blind_referee: true` ở §3.
 
 ## Vì sao
 

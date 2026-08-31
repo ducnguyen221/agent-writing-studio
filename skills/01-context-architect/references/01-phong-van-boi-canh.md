@@ -1,9 +1,7 @@
 # Phỏng vấn bối cảnh
 
-Chưng cất từ `doc-coauthoring` của `anthropics/skills` (**không có license — idea-only**, xem
-`vendor-notes/anthropics-skills/`). Lấy đúng hai nguyên lý: *thu thập bối cảnh là một pha riêng,
-đứng trước pha viết* và *người viết cùng phải hỏi trước khi gõ chữ đầu tiên*. Không câu chữ nào của
-upstream có mặt ở đây.
+Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo). Hai nguyên lý nền: *thu thập bối cảnh là một
+pha riêng, đứng trước pha viết* và *người viết cùng phải hỏi trước khi gõ chữ đầu tiên*.
 
 Nguyên lý ấy trong studio này có một hình dạng cụ thể: câu hỏi **không do skill nghĩ ra**. Skill đọc
 `intent_questions[]` ở `§1` của hồ sơ thể loại và hỏi đúng từng câu ở đó. Thêm thể loại là thêm một
@@ -29,7 +27,7 @@ Ba cách lách hay gặp, cả ba đều cấm:
 
 **Lượt 2 — hỏi theo `intent_questions[]`.** Mỗi câu một mục trong `intent.answers[]`. Hỏi **từng
 câu**, không gộp năm câu vào một tin nhắn: người trả lời gộp sẽ bỏ qua câu khó nhất. Khi `§1` khai
-cách hỏi theo góc nhìn — `research.md` mượn lối này từ `storm` — thì hỏi lần lượt từ từng góc, vì
+cách hỏi theo góc nhìn — `research.md` dùng lối này — thì hỏi lần lượt từ từng góc, vì
 người phản biện phương pháp và người dùng kết quả không hỏi cùng một câu. Câu trả lời ghi **kết
 luận** của người dùng (≤ 600 ký tự); người dùng dán cả tài liệu vào thì tài liệu ấy thành một con trỏ
 trong `brain_pointers[]`, không nằm trong `answer` — xem [cầu Brain](03-cau-brain.md) mục "Ba lỗ rò".

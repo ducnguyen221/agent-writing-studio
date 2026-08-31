@@ -13,7 +13,7 @@ liệu về nguồn và truy được kết luận về thiết kế nghiên c�
 Trục 1 đọc mục này để biết phải hỏi những gì trước khi cho phép bắt đầu viết.
 
 Xác định câu hỏi nghiên cứu, phạm vi và đơn vị phân tích, dữ liệu thật sự đang có, chuẩn trích dẫn và
-nơi bài sẽ nộp. Cách hỏi mượn từ `storm`: thay vì hỏi một chuỗi câu chung, **liệt kê các góc nhìn
+nơi bài sẽ nộp. Cách hỏi theo góc nhìn: thay vì hỏi một chuỗi câu chung, **liệt kê các góc nhìn
 trước rồi hỏi từ từng góc** — người phản biện phương pháp, người dùng kết quả trong thực tế, và người
 đã công bố kết quả ngược lại đều hỏi những câu khác nhau. Một câu hỏi nghiên cứu chỉ đứng vững khi
 trả lời được cả ba.
@@ -63,7 +63,7 @@ ranh giới Kết quả – Bàn luận bằng ranh giới **khung phân tích �
 được nêu trước khi bằng chứng được gọi ra, nếu không thì bằng chứng chỉ là minh hoạ cho kết luận đã
 có sẵn.
 
-Luật lấy từ `storm`: **outline mang nguồn ngay khi dựng**, không gắn nguồn sau khi viết xong prose.
+Luật của studio: **outline mang nguồn ngay khi dựng**, không gắn nguồn sau khi viết xong prose.
 Mỗi mục ở tầng hai của dàn ý phải kèm ít nhất một nguồn hoặc một dòng dữ liệu; mục nào không gắn được
 gì thì hoặc là chưa đọc đủ, hoặc là ý của chính tác giả và phải được đánh dấu rõ như vậy. Gắn nguồn
 sau khi viết là công thức sinh ra trích dẫn trang trí — nguồn được chọn vì nó khớp câu đã viết, chứ

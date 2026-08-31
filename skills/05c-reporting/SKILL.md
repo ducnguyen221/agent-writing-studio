@@ -3,7 +3,7 @@ name: 05c-reporting
 description: Use when forensic evidence and scores must be turned into a Vietnamese review report with located issues, counterevidence, verification questions, and concrete fixes.
 ---
 
-# Reporting Forensic Findings
+# Báo cáo kết quả giám định
 
 ## Tổng quan
 

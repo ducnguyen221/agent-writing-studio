@@ -2,11 +2,9 @@
 
 Đây là bảng làm việc của lăng kính `fallacy_scan`.
 
-**Nguồn của danh sách tên:** taxonomy 13 loại của bộ `causalNLP/logical-fallacy`
-(xem `vendor-notes/logical-fallacy/`). Repo đó **không có license**, nên ở đây chỉ mượn **tên loại** —
-vốn là thuật ngữ logic học có từ lâu trước repo. Mọi định nghĩa, ví dụ và phản chứng dưới đây là
-**tự biên bằng tiếng Việt**; không có một câu nào của upstream trong file này, và cũng không được
-phép có.
+**Nguồn của danh sách tên:** taxonomy 13 loại là thuật ngữ logic học có từ lâu, dùng làm khung phân
+loại. Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo). Mọi định nghĩa, ví dụ và phản chứng dưới đây
+là **tự biên bằng tiếng Việt**.
 
 ---
 

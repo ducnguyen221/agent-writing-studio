@@ -3,7 +3,7 @@ name: 05a-reading
 description: Use when an agent must read a document closely, locate possible AI-writing signals, distinguish mixed authorship, or prepare evidence before any score is calculated.
 ---
 
-# Reading Forensic Evidence
+# Đọc bằng chứng giám định
 
 ## Tổng quan
 

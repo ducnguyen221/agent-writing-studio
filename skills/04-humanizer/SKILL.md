@@ -3,22 +3,22 @@ name: 04-humanizer
 description: Use when a draft of known origin needs editing toward the author's own voice, with every edit logged, facts frozen, and genre-standard prose left alone.
 ---
 
-# Humanizer
+# Biên tập về giọng tác giả
 
 ## Ranh giới đạo đức — không đàm phán
 
 Trục này làm văn **hay hơn cho người đọc**, **không** phải công cụ né máy chấm.
 
-- **Chỉ chạy khi biết bài từ đâu ra:** `draft.meta.json` của trục 2, hoặc người dùng tự khai;
-  không có thì dừng và hỏi.
+- **Chỉ chạy khi biết nguồn gốc bài:** `draft.meta.json` của trục 2, hoặc người dùng tự khai;
+  thiếu thì dừng và hỏi.
 - **Không xem điểm trục 5 của bài đang sửa** — sửa cho điểm đẹp lên là tối ưu theo thước đo; ghi
   `metadata.forensics_score_seen: false`.
 - **Bản đã sửa tự khai** `metadata.stylometric_polish: true` — giấu đi là biến biên tập thành che
-  giấu. Khai đi theo bản giao:
+  giấu. Khai theo bản giao:
   [`polished.provenance.json`](../../shared/schemas/provenance.schema.json) hoặc footer
   HTML-comment.
 
-`reason` mỗi nhát sửa nói bản sau tốt hơn **cho người đọc** ở chỗ nào; "để bớt giống AI" không hợp lệ.
+`reason` mỗi nhát nói bản sau tốt hơn **cho người đọc** ở chỗ nào; "để bớt giống AI" không hợp lệ.
 
 ## Quy trình
 

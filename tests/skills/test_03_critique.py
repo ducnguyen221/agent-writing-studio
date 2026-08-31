@@ -222,11 +222,15 @@ class FallacyReferenceTests(unittest.TestCase):
         text = (REFERENCES / "02-nguy-bien-13-loai-vi.md").read_text(encoding="utf-8")
         self.assertIn("Ngụy biện không phải lỗi ngôn ngữ", text)
 
-    def test_fallacy_reference_takes_names_only_from_the_unlicensed_source(self):
-        """Repo nguồn không có license: chỉ được mượn tên loại."""
+    def test_fallacy_reference_takes_names_only_and_names_no_source_repo(self):
+        """Chỉ mượn TÊN loại; định nghĩa và ví dụ tự biên, và không nêu tên repo nguồn."""
         text = (REFERENCES / "02-nguy-bien-13-loai-vi.md").read_text(encoding="utf-8")
-        self.assertIn("không có license", text)
         self.assertIn("tự biên", text)
+        self.assertIn("bộ luật của studio", text)
+        self.assertIn("sổ xưởng", text)
+        for banned in ("causalNLP", "logical-fallacy", "vendor-notes/"):
+            with self.subTest(banned=banned):
+                self.assertNotIn(banned, text)
 
 
 class BlindRefereeTests(unittest.TestCase):

@@ -188,7 +188,6 @@ Ba cổng cứng trong chuỗi, qua được mới đi tiếp:
 ```
 agent-writing-studio/
 ├─ README.md                    file bạn đang đọc — bản triển khai
-├─ upstream.json                13 repo nguồn: SHA đã ghim, license, lấy cái gì (xem mục 6)
 ├─ requirements-dev.txt         thư viện để chạy test
 │
 ├─ skills/                      CHÍN SKILL — thứ được chép sang ~/.claude/skills/
@@ -213,7 +212,7 @@ agent-writing-studio/
 ├─ tests/                       314 test — canh cấu trúc skill, hình dạng dữ liệu, liên kết
 │  ├─ forensics/                  hành vi trục 5 (có từ bản v1)
 │  ├─ genres/                     hồ sơ thể loại đúng schema, slug khớp hai chiều
-│  ├─ shared/                     schema, quy tắc, provenance của nguồn ngoài
+│  ├─ shared/                     schema, quy tắc, hàng rào de-name
 │  └─ skills/                     bốn trục viết + kịch bản nghiệm thu dạng văn bản
 │
 ├─ docs/
@@ -226,7 +225,6 @@ agent-writing-studio/
 │  ├─ results/                    kết quả đo có thật, không phải ví dụ minh hoạ
 │  └─ plans/                      hồ sơ từng đợt làm: spec, task, nhật ký cổng
 │
-├─ vendor-notes/                13 thư mục — mỗi repo nguồn một ghi chú "lấy gì, không lấy gì"
 ├─ fixtures/                    bộ bài mẫu để hiệu chuẩn — GITIGNORED, hiện còn rỗng
 └─ .work/                       thư mục làm việc từng ca — GITIGNORED, chứa bài người thật
 ```
@@ -330,31 +328,15 @@ Cả repo này được thiết kế xung quanh hai con số đó.
 
 ---
 
-## 7. Nguồn distill — 13 repo
+## 7. Ghi nhận nguồn
 
 Repo này **không vendor, không chép code** từ nguồn nào. Nó *đọc để chưng cất phương pháp*, rồi tự
-viết lại bằng tiếng Việt với ví dụ tiếng Việt. `upstream.json` ghim SHA của từng nguồn để về sau còn
-đối chiếu được; `vendor-notes/<tên>/DISTILL-NOTES.md` ghi rõ lấy gì và **không** lấy gì.
+viết lại bằng tiếng Việt với ví dụ tiếng Việt — có tham khảo ý tưởng từ cộng đồng mã nguồn mở, và sổ
+nguồn chi tiết (lấy gì, không lấy gì, SHA đã ghim) giữ ở xưởng, không nằm trong repo này.
 
-| Repo | License | Cách dùng | Lấy cái gì |
-|---|---|---|---|
-| `SalZaki/antislop` | MIT | ý tưởng | hợp đồng finding; phân tầng bằng chứng tất định và bằng chứng phán đoán |
-| `danielmiessler/fabric` | MIT | ý tưởng | khung lăng kính soi ngụy biện |
-| `stanford-oval/storm` | MIT | ý tưởng | hỏi từ nhiều góc nhìn trước khi dựng dàn ý |
-| `LAY-lgtm/novel-writing-framework` | MIT | ý tưởng | bộ chỉ số chất lượng chương truyện (giữ 9, bỏ 4) |
-| `simondgoldstein/deep-drafter` | MIT | ý tưởng | outline ba tầng, duyệt xong mới viết văn xuôi |
-| `devswha/patina` | MIT | ý tưởng | kiến trúc tách luật chung khỏi luật riêng của từng ngôn ngữ |
-| `seyedehsanhadi/sloptrim` | Apache-2.0 | ý tưởng | cổng 0-token: đo tất định trước và sau khi sửa |
-| `ReML-AI/VIVID` | MIT | dữ liệu | kho thành ngữ tiếng Việt — lấy một tập con có chọn lọc |
-| `blader/humanizer` | MIT | ý tưởng | quy trình biên tập hai lượt; cách phân họ dấu hiệu |
-| **`NousResearch/autonovel`** | **không có license** | **idea-only** | chỉ sơ đồ vòng sửa – đánh giá – giữ |
-| **`anthropics/skills`** | **không có license** | **idea-only** | chỉ ý tưởng thu thập bối cảnh trước khi viết |
-| **`causalNLP/logical-fallacy`** | **không có license** | **idea-only** | chỉ **tên** 13 loại ngụy biện, dùng làm taxonomy |
-| **`1ec5/hunspell-vi`** | **GPL-2.0** (dữ liệu từ điển, gốc không có LICENSE) | **idea-only** | chỉ ghi nhận đây là bộ từ điển chính tả tiếng Việt trưởng thành |
-
-Bốn dòng in đậm là **idea-only**: license không rõ ràng hoặc thuộc loại copyleft, nên repo này **cấm
-chép bất kỳ dòng nội dung nào** — chỉ được lấy sơ đồ, tên taxonomy hoặc ý tưởng kiến trúc. Test
-`tests/shared/test_upstream_all.py` canh đúng luật đó.
+Một ngoại lệ có nghĩa vụ pháp lý: kho thành ngữ `skills/04-humanizer/assets/thanh-ngu.json` **dùng dữ
+liệu cấp phép MIT**, nên copyright notice và permission notice của nguồn nằm ngay trong file đó và
+**không được gỡ**.
 
 ---
 

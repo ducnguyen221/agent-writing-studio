@@ -6,9 +6,8 @@ Trục 5 báo oan thì tác giả còn cãi được: finding nằm trên giấy
 oan thì **văn bản đã đổi rồi**. Người dùng bấm nhận bản mới, và một khung được dạy trong trường, một
 phép lặp có chủ ý, một câu chốt bắt buộc của thể loại đã bị xoá mất mà không ai kịp phản đối.
 
-Kế thừa và hợp nhất: danh sách "những thứ không được gắn cờ" cùng "chi tiết người phải giữ" của
-`blader/humanizer` (MIT, chỉ lấy nguyên lý — xem `vendor-notes/humanizer/`), và
-`skills/05-forensics/references/03-chong-bao-oan.md` mục 2 và mục 6.
+Kế thừa và hợp nhất: danh sách "những thứ không được gắn cờ" cùng "chi tiết người phải giữ" của bộ
+luật studio, và `skills/05-forensics/references/03-chong-bao-oan.md` mục 2 và mục 6. Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo).
 
 ---
 
@@ -122,12 +121,13 @@ chỗ chứng minh có người ngồi viết.
 
 ---
 
-## 4. Cái KHÔNG mang sang từ upstream
+## 4. Năm mẫu bị loại khỏi danh mục
 
-`blader/humanizer` là nguồn distill nặng nhất của trục 4. Năm mẫu dưới đây **bị loại**, và lý do phải
-được nhắc lại ở đây vì chúng rất dễ bò ngược vào qua một lần "cải tiến" sau này.
+Danh mục tell của studio (`shared/rules/vi-ai-tells.json`) đã loại năm mẫu dưới đây — xem
+`excluded_patterns[]` ở file đó. Lý do phải được nhắc lại ở đây vì chúng rất dễ bò ngược vào qua một
+lần "cải tiến" sau này.
 
-| Mẫu upstream | Vì sao loại |
+| Mẫu bị loại | Vì sao loại |
 |---|---|
 | **Em dash / en dash** (#14) | Tín hiệu tiếng Anh. Thực đo trong ca giám định: **0 lần** ở cả bài người lẫn bài máy tiếng Việt. `03-chong-bao-oan` §6 đã bác. Cấm em dash như một luật văn phong không có cơ sở trong tiếng Việt |
 | **Ngoặc kép cong** (#19) | Word **tự chuẩn hoá** dấu nháy khi lưu. Đo được là đo trình soạn thảo, không đo người viết. Đã bác bằng thực đo |

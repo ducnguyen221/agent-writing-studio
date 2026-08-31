@@ -137,7 +137,7 @@ class TellsRegistryTests(unittest.TestCase):
             int(match)
             for entry in entries()
             for source in entry["source"]
-            for match in re.findall(r"blader/humanizer#(\d+)", source)
+            for match in re.findall(r"studio:catalog#(\d+)", source)
         }
         # 15 được gộp vào T16 ở dạng có nghĩa; các pattern còn lại không được xuất hiện.
         leaked = (cited & EXCLUDED_UPSTREAM) - {15}
@@ -168,7 +168,7 @@ class TellsRegistryTests(unittest.TestCase):
         for tell_id, needle in merged.items():
             with self.subTest(tell=tell_id):
                 sources = " ".join(by_id[tell_id]["source"])
-                self.assertIn("blader/humanizer#", sources)
+                self.assertIn("studio:catalog#", sources)
                 self.assertIn(needle, sources, f"{tell_id}: phải ghi cả nguồn counters.py đã có")
 
     def test_merged_patterns_point_at_real_counters(self):

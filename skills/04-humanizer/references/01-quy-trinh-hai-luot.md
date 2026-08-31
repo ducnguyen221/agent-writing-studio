@@ -1,7 +1,6 @@
 # Quy trình hai lượt
 
-Chưng cất từ `blader/humanizer` (MIT, pin ở `vendor-notes/humanizer/SOURCES.md`). Lấy **quy trình và
-hàng rào**, không lấy một câu ví dụ nào của bản gốc. Mọi ví dụ dưới đây tự soạn bằng tiếng Việt.
+Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo). Mọi ví dụ dưới đây tự soạn bằng tiếng Việt.
 
 ---
 

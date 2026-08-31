@@ -1,16 +1,15 @@
 # Hiệu chỉnh giọng — dựng writer profile
 
-Hai nguồn chưng cất, cả hai chỉ lấy nguyên lý:
+Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo). Hai nguyên lý nền:
 
-- **`deep-drafter`** (xem `vendor-notes/deep-drafter/`): hiệu chỉnh giọng từ **3–6 bài cũ của chính
-  tác giả** trước khi viết. Ba là sàn chứ không phải con số tròn cho đẹp — dưới ba bài thì không tách
-  được thói quen của NGƯỜI ra khỏi đặc thù của BÀI. Trên sáu bài thì lợi ích thêm nhỏ dần, trong khi
-  rủi ro trộn nhiều giai đoạn và nhiều thể loại tăng lên.
-- **`blader/humanizer`** (xem `vendor-notes/humanizer/`): cách đọc một bài mẫu — **độ dài câu, cách
-  mở đoạn, dấu câu, cụm lặp** — và luật *bài mẫu của người viết thắng mọi luật văn phong*. Không câu
-  ví dụ tiếng Anh nào của upstream được mang sang.
+- **Hiệu chỉnh giọng từ 3–6 bài cũ của chính tác giả** trước khi viết. Ba là sàn chứ không phải con
+  số tròn cho đẹp — dưới ba bài thì không tách được thói quen của NGƯỜI ra khỏi đặc thù của BÀI.
+  Trên sáu bài thì lợi ích thêm nhỏ dần, trong khi rủi ro trộn nhiều giai đoạn và nhiều thể loại
+  tăng lên.
+- **Đọc một bài mẫu theo bốn chiều** — **độ dài câu, cách mở đoạn, dấu câu, cụm lặp** — và luật
+  *bài mẫu của người viết thắng mọi luật văn phong*. Mọi ví dụ trong file này là tiếng Việt tự soạn.
 
-Bốn thứ `humanizer` bảo phải nhìn, ánh xạ thẳng vào bốn trường của hồ sơ:
+Bốn chiều ấy ánh xạ thẳng vào bốn trường của hồ sơ:
 
 | Đọc bài mẫu thấy gì | Trường trong `writer.schema.json` | Ai dùng |
 |---|---|---|

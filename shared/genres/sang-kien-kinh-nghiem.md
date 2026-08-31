@@ -2,7 +2,7 @@
 
 **Hồ sơ một phần (`partial`): chỉ có §5.** Thể loại này đã phải giám định thật trước khi tới lượt
 soạn phần viết, nên hồ sơ chỉ khai thứ trục 5 cần: yêu cầu bắt buộc của thể loại và các tín hiệu là
-văn phong chuẩn. Trục 1–4 không đọc file này — nhưng trục 4 **có** đọc `genre_baseline` dưới đây qua
+văn phong chuẩn. Trục 1–3 không đọc file này; trục 4 chỉ đọc `§5 genre_baseline` dưới đây qua
 `polish_check.py`, để không báo oan các cột counter ở thể loại này.
 
 Phạm vi: sáng kiến kinh nghiệm của giáo viên, báo cáo giải pháp dự thi cấp trường – huyện – tỉnh,

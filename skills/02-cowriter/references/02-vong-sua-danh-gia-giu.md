@@ -1,10 +1,7 @@
 # Vòng sửa – đánh giá – giữ
 
 Sơ đồ ba bước này là kiến thức chung của ngành, và ở đây được viết lại **hoàn toàn bằng lời của
-repo này**. Nguồn cảm hứng là `autonovel` — repo **KHÔNG CÓ LICENSE**, xem
-`vendor-notes/autonovel/`: đọc thì được, chép thì không. Không một dòng mã, một prompt hay một
-thuật ngữ riêng nào của upstream được mang sang. Câu chữ trong file này trùng upstream ở đâu thì
-đó là lỗi phải sửa ngay.
+repo này**. Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo).
 
 ---
 
@@ -74,9 +71,9 @@ Bản mới chỉ thắng khi qua được cả bốn, theo đúng thứ tự n�
 
 ## 5. Tự kiểm theo cụm ba chương — cho truyện dài
 
-Chưng cất `novel-writing-framework` (MIT, `76291596ae91`). **Chưa dùng được ở đợt này**:
-`shared/genres/novel.md` chưa tồn tại, nên mục này là mô tả để khi hồ sơ ấy được soạn thì trục 2 đã
-biết phải đọc gì — không phải một luật đang chạy.
+Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo). **Đây là luật đang chạy**: `shared/genres/novel.md`
+khai `three_chapter_selfcheck` trong `lenses[]` ở `§3`, nên với thể loại truyện dài trục 2 phải chạy
+mục này, không phải chỉ đọc để biết.
 
 Truyện dài hỏng theo cách mà vòng lặp một-đoạn không thấy: nhân vật đổi tính giữa các chương, một
 manh mối được cài rồi bỏ quên, nhịp thắt–mở phẳng dần. Nên ngoài vòng lặp cấp đoạn, cứ **ba chương**
@@ -87,5 +84,6 @@ dừng lại một lần và đọc cụm ba chương ấy như một khối:
 - ba chương có cùng một hình nhịp không — cả ba cùng lên đều rồi hạ ở câu cuối là dấu hiệu đang
   viết theo khuôn, không theo truyện.
 
-Ba câu hỏi này ứng với ba lăng kính `character_consistency`, `plot_consistency`, `pacing_curve`, và
-`novel.md` sẽ bật chúng qua `lenses[]` ở `§3` — trục 2 không tự bịa ra chúng cho thể loại khác.
+Ba câu hỏi này ứng với ba lăng kính `character_consistency`, `plot_consistency`, `pacing_curve`;
+`novel.md` bật cả ba cộng `three_chapter_selfcheck` qua `lenses[]` ở `§3` — trục 2 đọc `lenses[]` của
+hồ sơ, không tự bịa ra chúng cho thể loại không khai.

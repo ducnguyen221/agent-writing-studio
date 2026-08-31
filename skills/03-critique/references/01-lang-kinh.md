@@ -13,9 +13,8 @@ Một lăng kính gồm đúng bốn phần, và phải đủ cả bốn mới �
 | **Bằng chứng cần** | Thứ phải trưng ra được; không có thì không có finding |
 | **Đầu ra** | Ghi vào đâu trong `critique.json` |
 
-Khung "một việc – một câu hỏi – một hợp đồng đầu ra" chưng cất từ cách `Fabric` tổ chức pattern
-(MIT, xem `vendor-notes/fabric/`). Chỉ lấy nguyên lý tổ chức; toàn bộ câu hỏi dưới đây là tự soạn cho
-tiếng Việt.
+Khung "một việc – một câu hỏi – một hợp đồng đầu ra" là nguyên lý tổ chức chung. Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo).
+Toàn bộ câu hỏi dưới đây là tự soạn cho tiếng Việt.
 
 ---
 
@@ -167,8 +166,8 @@ tiếng Việt.
 
 ## 13. `three_chapter_selfcheck` — tự kiểm theo cụm ba chương
 
-Lăng kính thứ 13, dành riêng cho truyện dài kỳ; danh mục lõi ở trên là 12. Chưng cất từ luật tự kiểm
-theo cụm chương của `novel-writing-framework` (MIT, xem `vendor-notes/novel-writing-framework/`).
+Lăng kính thứ 13, dành riêng cho truyện dài kỳ; danh mục lõi ở trên là 12. Luật tự kiểm theo cụm
+chương thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo).
 
 - **Đầu vào:** ba chương gần nhất, đọc liền một mạch.
 - **Câu hỏi:** Ba chương này có tự mâu thuẫn, lặp cùng một nước cờ, hay để rơi một tuyến đã mở không?

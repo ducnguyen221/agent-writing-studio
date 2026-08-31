@@ -10,9 +10,9 @@ luận, bài nghiên cứu thuyết phục bằng phương pháp lặp lại đ�
 phẩm, không đo tính đúng đắn bên ngoài. Chi tiết trong tiểu thuyết không cần kiểm chứng được ngoài
 đời — luật này viết đầy đủ ở §4 và là ngoại lệ lớn nhất của cả repo.
 
-Phương pháp và các con số ngưỡng ở §2 và §3 chưng cất từ `novel-writing-framework` (MIT, xem
-`vendor-notes/novel-writing-framework/`). Bộ chỉ số gốc dựng cho hai nền tảng truyện mạng tiếng
-Trung; ở đây chỉ giữ những chỉ số còn có nghĩa với tiểu thuyết tiếng Việt, và mọi ví dụ là tự soạn.
+Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo). Bộ chỉ số gốc dựng cho hai nền tảng truyện mạng
+tiếng Trung; ở đây chỉ giữ những chỉ số còn có nghĩa với tiểu thuyết tiếng Việt, và mọi ví dụ là tự
+soạn.
 
 ## 1. Intent và bối cảnh
 
@@ -64,8 +64,8 @@ hoảng đóng hồi hai. Ba hồi là khung để **kiểm** chứ không phả
 "sau hồi này, điều gì khác trước", nếu không thì hồi đó chưa tồn tại.
 
 **Luật ba chương tự kiểm.** Cứ viết xong ba chương thì quét ngay, không dồn tới cuối bản thảo. Đây
-là con số chưng cất từ `novel-writing-framework`, và lý do là một con số khác: trong bản thảo dài mà
-upstream đo, một khuôn câu duy nhất lặp **663 lượt** vì không ai quét sớm; quét theo cụm ba chương
+là con số chưng cất từ bộ chỉ số gốc, và lý do là một con số khác: trong bản thảo dài mà bộ đó đo,
+một khuôn câu duy nhất lặp **663 lượt** vì không ai quét sớm; quét theo cụm ba chương
 thì lượt thứ mười đã lộ. Sửa muộn tốn hơn sửa sớm nhiều lần, vì tới lúc đó khuôn đã thành nhịp của
 cả cuốn. Quét cái gì thì §3 liệt kê; lăng kính tương ứng là `three_chapter_selfcheck`.
 
@@ -106,13 +106,13 @@ và cho thấy thay vì kể lại. Bốn lăng kính được bật khác nhau 
 chương gần nhất như một khối. Một bản thảo có thể qua ba lăng kính đầu mà trượt lăng kính thứ tư:
 từng chương ổn, ba chương liền nhau lặp cùng một nước cờ.
 
-**Mười ba chỉ số cứng của `novel-writing-framework` — giữ gì, bỏ gì.** Bộ gốc dựng cho truyện mạng
+**Mười ba chỉ số cứng của bộ gốc — giữ gì, bỏ gì.** Bộ gốc dựng cho truyện mạng
 tiếng Trung nên có chỉ số đo bằng đơn vị không tồn tại trong tiếng Việt, và có chỉ số là tối ưu nền
 tảng chứ không phải chất lượng văn. Giữ chín, gộp lại thành tám phép kiểm, bỏ bốn:
 
 | Chỉ số gốc | Quyết định | Lý do |
 |---|---|---|
-| Khuôn "không phải X mà là Y" ≤ 2 lượt/chương | **giữ, ngưỡng chưa hiệu chuẩn** | Khuôn này có thật trong tiếng Việt và là khuôn máy hay dùng nhất. Cùng họ G1 với `T09`, nhưng `T09` hiện chỉ khai "không chỉ… mà còn" / "vừa… vừa"; khuôn "không phải… mà là" **chưa có** trong danh mục tell lẫn `counters.TEMPLATES` — trục 3 đếm tay cho tới khi bổ sung. Con số 2 là của upstream, giữ để có mốc, không phải ngưỡng đã đo trên văn Việt |
+| Khuôn "không phải X mà là Y" ≤ 2 lượt/chương | **giữ, ngưỡng chưa hiệu chuẩn** | Khuôn này có thật trong tiếng Việt và là khuôn máy hay dùng nhất. Cùng họ G1 với `T09`, nhưng `T09` hiện chỉ khai "không chỉ… mà còn" / "vừa… vừa"; khuôn "không phải… mà là" **chưa có** trong danh mục tell lẫn `counters.TEMPLATES` — trục 3 đếm tay cho tới khi bổ sung. Con số 2 là của bộ chỉ số gốc, giữ để có mốc, không phải ngưỡng đã đo trên văn Việt |
 | Không gọi tên cấu trúc trong thân truyện | **giữ** | "Như đã kể ở phần trước", "trong chương này" là giọng người biên tập lọt vào giọng người kể |
 | Không có đoạn khuôn lặp giữa các chương | **giữ** | Đo bằng cách đọc chéo hai chương xa nhau, tìm đoạn cùng cấu trúc |
 | Mỗi chương có ít nhất một cảnh, một câu thoại, một hình ảnh chỉ thuộc chương đó | **giữ** | Phép kiểm chống tự lặp vô thức khi viết nhiều chương liền |

@@ -1,7 +1,7 @@
 # Reader testing — giả lập độc giả đọc dàn ý
 
-Chưng cất từ `doc-coauthoring` (**idea-only**, không license): ý tưởng *thử tài liệu bằng cách đọc
-nó bằng mắt người nhận trước khi gửi*. Ở đây ý đó có một hình dạng kiểm được: dựng độc giả từ
+Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo). Nguyên lý nền: *thử tài liệu bằng cách đọc nó
+bằng mắt người nhận trước khi gửi*. Ở đây ý đó có một hình dạng kiểm được: dựng độc giả từ
 `shared/writers/audience.schema.json`, cho họ đọc dàn ý, thu về **đúng ba câu hỏi họ sẽ hỏi**.
 
 Chạy khi đã có `context.json` và một dàn ý (trục 2 sinh tầng 1–2). Chạy **trước** khi viết prose:

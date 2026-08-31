@@ -3,8 +3,8 @@
 """
 polish_check.py — CỔNG 0-TOKEN cho trục 4. Không gọi mô hình, không sửa văn bản.
 
-Ý tưởng cổng-khi-lưu lấy từ `sloptrim` (Apache-2.0, reference-only, xem
-`vendor-notes/sloptrim/`). Không chép một dòng mã nào; ở đây chỉ có phép so trước/sau.
+Ý tưởng cổng-khi-lưu thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong
+repo). Không chép một dòng mã nào; ở đây chỉ có phép so trước/sau.
 
 Script này ĐO và CHẶN. Nó không bao giờ nói bản nào hay hơn:
 

@@ -245,12 +245,15 @@ class OutlineReferenceTests(unittest.TestCase):
 
 
 class ModifyEvaluateKeepTests(unittest.TestCase):
-    def test_reference_declares_autonovel_as_idea_only(self):
-        """Repo không license: lấy sơ đồ thì được, chép thì không."""
+    def test_reference_credits_the_studio_rulebook_not_a_repo(self):
+        """De-name: sơ đồ ba bước là kiến thức chung, nguồn ghi ở sổ xưởng."""
         text = normalise(reference_text("02-vong-sua-danh-gia-giu.md"))
-        self.assertIn("autonovel", text)
-        self.assertIn("KHÔNG CÓ LICENSE", text)
-        self.assertIn("chép thì không", text)
+        self.assertIn("kiến thức chung của ngành", text)
+        self.assertIn("bộ luật của studio", text)
+        self.assertIn("sổ xưởng", text)
+        for banned in ("autonovel", "vendor-notes/"):
+            with self.subTest(banned=banned):
+                self.assertNotIn(banned, text)
 
     def test_reference_runs_counters_plus_one_or_two_lenses(self):
         text = normalise(reference_text("02-vong-sua-danh-gia-giu.md"))
@@ -268,12 +271,16 @@ class ModifyEvaluateKeepTests(unittest.TestCase):
         self.assertIn("Không sửa để con số đẹp lên", text)
         self.assertIn("genre_baseline", text)
 
-    def test_reference_describes_the_three_chapter_self_check_as_not_yet_active(self):
+    def test_reference_describes_the_three_chapter_self_check_as_active(self):
+        """`novel.md` đã có từ Phase 1b: mục 5 phải là luật đang chạy, không phải mô tả."""
         text = normalise(reference_text("02-vong-sua-danh-gia-giu.md"))
         self.assertIn("ba chương", text)
         self.assertIn("novel.md", text)
-        self.assertIn("Chưa dùng được", text)
-        for lens in ("character_consistency", "plot_consistency", "pacing_curve"):
+        self.assertIn("luật đang chạy", text)
+        self.assertNotIn("Chưa dùng được", text)
+        self.assertNotIn("chưa tồn tại", text)
+        for lens in ("character_consistency", "plot_consistency", "pacing_curve",
+                     "three_chapter_selfcheck"):
             with self.subTest(lens=lens):
                 self.assertIn(lens, text)
 

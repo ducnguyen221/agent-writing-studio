@@ -3,7 +3,7 @@ name: 05d-calibration
 description: Use when building forensic fixtures, calibrating thresholds, evaluating false positives, adding a language profile, or changing scoring rules.
 ---
 
-# Calibrating Forensics
+# Hiệu chuẩn giám định
 
 ## Tổng quan
 
@@ -24,7 +24,7 @@ tránh rò. Không commit văn bản thật; chỉ lưu manifest và số liệu
 4. Đo FPR người thật, recall AI, precision từng finding, span overlap của mixed, abstention và độ ổn
    định qua ba lượt đọc.
 5. Rule có precision dưới 50% trên bài người bị tắt hoặc chuyển vào profile thể loại.
-6. Chạy paraphrase, humanizer, homoglyph, lỗi chính tả, đổi khoảng trắng và chèn đoạn người.
+6. Chạy paraphrase, công cụ máy-làm-mượt, homoglyph, lỗi chính tả, đổi khoảng trắng và chèn đoạn người.
 7. Xuất số liệu kèm cỡ mẫu và khoảng; không công bố “X% chính xác” trần trụi.
 
 Đọc [giao thức đánh giá](../../docs/EVALUATION_v1.md) và

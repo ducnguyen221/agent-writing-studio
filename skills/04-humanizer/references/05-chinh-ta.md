@@ -2,17 +2,17 @@
 
 ## 1. Quyết định cấp phép: KHÔNG vendor
 
-Kiểm tay `1ec5/hunspell-vi` ngày 30/08/2026, xác nhận lại ở Phase 3:
+Kiểm tay các bộ từ điển chính tả tiếng Việt dạng hunspell ngày 30/08/2026, xác nhận lại ở Phase 3:
 
-- Gốc repo **không có file `LICENSE`**. API license của GitHub vì thế trả rỗng — rỗng ở đây nghĩa là
-  "không xác định được", không nghĩa là "tự do dùng".
-- Điều khoản duy nhất tìm được nằm trong `dictionaries/README-en.txt`: dữ liệu bắt nguồn từ gói GNU
+- Bộ trưởng thành nhất **không có file `LICENSE`** ở gốc. API license của GitHub vì thế trả rỗng —
+  rỗng ở đây nghĩa là "không xác định được", không nghĩa là "tự do dùng".
+- Điều khoản duy nhất tìm được nằm trong README của thư mục từ điển: dữ liệu bắt nguồn từ gói GNU
   Aspell tiếng Việt của Hồ Ngọc Đức, **Copyright Terms: GPLv2**.
 - GPLv2 là copyleft. Mang một file `.dic` hoặc `.aff` vào đây sẽ kéo nghĩa vụ cấp phép sang cả repo
   này, vốn không phải là repo GPL.
 
 **Kết luận vận hành:** không vendor một dòng nào. Không rút danh sách từ ra khỏi từ điển. Không sinh
-một file dẫn xuất nào từ nó. Chi tiết ở `vendor-notes/hunspell-vi/`.
+một file dẫn xuất nào từ nó. Sổ xưởng giữ bản kiểm chi tiết (không nằm trong repo).
 
 Repo này vì vậy **không có bộ kiểm chính tả**. Đó là lựa chọn, không phải thiếu sót.
 
@@ -59,7 +59,7 @@ Luật cho trục 4:
 
 Lỗi chính tả nói về **người gõ**, không nói về máy. Một bài nhiều lỗi gõ là bằng chứng có người ngồi
 gõ, không phải bằng chứng ngược lại. Trục 4 không được dùng mật độ lỗi chính tả làm tín hiệu nguồn
-gốc, và trục 5 cũng không — `vendor-notes/hunspell-vi/DISTILL-NOTES.md` ghi đúng luật này.
+gốc, và trục 5 cũng không.
 
 Khi sửa lỗi chính tả, ba chỗ vẫn thuộc vùng bảo vệ:
 

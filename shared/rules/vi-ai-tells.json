@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "updated": "2026-08-30",
   "purpose": "Một danh mục, hai chiều. Trục 4 (04-humanizer) đọc `fix` + `vi_example` để NHẬN RA và SỬA. Trục 5 (05-forensics) đọc `vi_counterexample` + `genre_baseline` để HẠ finding. Chiều buộc tội bị khoá: chỉ mục `calibrated` mới được dùng để TẠO finding, và đợt này không mục nào là `calibrated`.",
-  "provenance": "Ý tưởng phân họ lấy từ blader/humanizer (MIT, pin e2e92e7b4b8229253ed5c8e81dc65463fdeddda5). MỌI ví dụ và phản chứng trong file này do người soạn tự viết bằng tiếng Việt — không dịch câu nào từ bản gốc tiếng Anh.",
+  "provenance": "Phương pháp phân họ dấu hiệu thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo). Mã `studio:catalog#N` ở trường `source` là số hiệu mục trong danh mục nội bộ. MỌI ví dụ và phản chứng trong file này do người soạn tự viết bằng tiếng Việt — không dịch câu nào từ bản gốc tiếng Anh.",
   "families": {
     "G1": "Khuôn hình thức — cấu trúc câu, đoạn, tiêu đề, danh sách dựng sẵn",
     "G2": "Từ vựng và cú pháp — cụm đệm, danh từ hoá, rào đón",
@@ -24,27 +24,27 @@
   ],
   "excluded_patterns": [
     {
-      "source": "blader/humanizer#14",
+      "source": "studio:catalog#14",
       "name": "em dash / en dash",
       "why": "Tín hiệu tiếng Anh. Đo trong ca giám định thật: 0 lần ở cả bài người lẫn bài máy tiếng Việt. Xem 03-chong-bao-oan §6."
     },
     {
-      "source": "blader/humanizer#15",
+      "source": "studio:catalog#15",
       "name": "in đậm quá tay",
       "why": "Đã gộp vào T16 ở dạng có nghĩa (danh sách tiêu đề đậm thay cho đoạn văn). Riêng mật độ chữ đậm không phân biệt được người với máy."
     },
     {
-      "source": "blader/humanizer#17",
+      "source": "studio:catalog#17",
       "name": "Title Case",
       "why": "Tiếng Việt không có khái niệm Title Case. Không chuyển được."
     },
     {
-      "source": "blader/humanizer#19",
+      "source": "studio:catalog#19",
       "name": "ngoặc kép cong",
       "why": "Word tự chuẩn hoá dấu nháy khi lưu. Đã bị bác bằng thực đo, xem 03-chong-bao-oan §6."
     },
     {
-      "source": "blader/humanizer#26",
+      "source": "studio:catalog#26",
       "name": "cặp gạch nối",
       "why": "Không có tương đương trong chính tả tiếng Việt."
     }
@@ -69,7 +69,7 @@
       "fix": "Cắt mệnh đề toàn cảnh, thay bằng phạm vi cụ thể tác giả kiểm được. Không có phạm vi nào thì hạ giọng xuống mức 'ở đơn vị tôi'.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#1"
+        "studio:catalog#1"
       ]
     },
     {
@@ -84,7 +84,7 @@
       "fix": "Đòi tên bài, số, ngày hoặc trang. Không có thì KHÔNG sửa câu và tuyệt đối không bịa nguồn: chuyển câu sang danh sách 'khẳng định chưa có nguồn' để tác giả tự trưng.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#2"
+        "studio:catalog#2"
       ]
     },
     {
@@ -99,7 +99,7 @@
       "fix": "Xoá câu đệm, giữ lại câu nói đúng cái khó. Tác giả không nêu được cái khó thì đó là lỗ hổng nội dung — ghi finding cho trục 3, đừng vá câu.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#3"
+        "studio:catalog#3"
       ]
     },
     {
@@ -116,7 +116,7 @@
       "fix": "Đổi tính từ khen thành mô tả kiểm được, và thêm đúng một điều kiện làm lời hứa đó không đúng.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#4"
+        "studio:catalog#4"
       ]
     },
     {
@@ -131,7 +131,7 @@
       "fix": "Nêu tên nghiên cứu và năm, hoặc hạ khẳng định xuống mức tác giả thật sự đỡ được. Tuyệt đối không bịa một nguồn cho vừa câu.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#5",
+        "studio:catalog#5",
         "counters.py:VAGUE_SRC"
       ]
     },
@@ -152,7 +152,7 @@
       "fix": "Giữ nguyên khung nếu thể loại đòi hỏi. Chỉ bơm nội dung: mỗi 'hạn chế' phải chỉ ra được một việc cụ thể, mỗi 'phương hướng' phải có người làm và mốc thời gian.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#6"
+        "studio:catalog#6"
       ]
     },
     {
@@ -167,9 +167,9 @@
       "fix": "",
       "status": "needs_corpus",
       "source": [
-        "blader/humanizer#7"
+        "studio:catalog#7"
       ],
-      "blocked_reason": "Danh sách từ tiếng Anh của upstream không chuyển sang tiếng Việt được. Dịch nó chính là thứ 05d-calibration cấm: một blacklist dịch máy sẽ phạt đúng văn hành chính chuẩn. Thực đo trong ca 2026-08-29: bài Tạp chí Cộng sản do người viết có mật độ cliché GẤP ĐÔI bài nghi vấn.",
+      "blocked_reason": "Danh sách từ tiếng Anh của các bộ rule ngoại ngữ không chuyển sang tiếng Việt được. Dịch nó chính là thứ 05d-calibration cấm: một blacklist dịch máy sẽ phạt đúng văn hành chính chuẩn. Thực đo trong ca 2026-08-29: bài Tạp chí Cộng sản do người viết có mật độ cliché GẤP ĐÔI bài nghi vấn.",
       "corpus_requirement": "Cần corpus tiếng Việt có provenance (tối thiểu 100 bài người và 100 bài máy, cùng thể loại, cùng độ dài) để rút chênh lệch tần suất. Trước khi có corpus đó, mục này không tạo finding và không được dùng để sửa."
     },
     {
@@ -190,7 +190,7 @@
       "fix": "Thay bằng động từ thật, KHÔNG đổi nghĩa tính từ: 'sở hữu một hệ thống báo cáo mạnh mẽ' thành 'có hệ thống báo cáo mạnh'; 'đóng vai trò là cầu nối giữa A và B' thành 'nối A với B'.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#8"
+        "studio:catalog#8"
       ]
     },
     {
@@ -205,7 +205,7 @@
       "fix": "Hỏi vế sau có thêm thông tin không. Không thì xoá vế sau. Có thì tách thành hai câu để vế nặng hơn được đứng riêng.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#9",
+        "studio:catalog#9",
         "counters.py:TEMPLATES.khong_chi_X_ma_con",
         "counters.py:TEMPLATES.vua_X_vua_Y"
       ],
@@ -228,7 +228,7 @@
       "fix": "Thử xoá phần tử thứ ba. Câu không nghèo đi thì bỏ hẳn; câu nghèo đi thì giữ và đó không phải tell.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#10"
+        "studio:catalog#10"
       ]
     },
     {
@@ -246,7 +246,7 @@
       "fix": "Chọn một tên và giữ nguyên xuyên bài. Chỉ đổi kiểu mở đoạn khi hai đoạn thật sự có quan hệ khác nhau. Không đụng vào lặp có chủ ý.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#11"
+        "studio:catalog#11"
       ]
     },
     {
@@ -262,7 +262,7 @@
       "fix": "Chỉ sửa khi câu dựng phổ giả: bỏ khuôn và nói thẳng cái định nói — 'Dữ liệu chi phối cả những quyết định mua văn phòng phẩm lẫn quyết định mở chi nhánh mới.' Không đụng câu liệt kê, cũng không đụng thành ngữ liệt kê quen thuộc của tiếng Việt.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#12"
+        "studio:catalog#12"
       ]
     },
     {
@@ -284,7 +284,7 @@
       "fix": "Hỏi 'ai làm?' rồi đưa người đó lên làm chủ ngữ: 'Phòng công nghệ thông tin sẽ tập huấn an toàn thông tin cho toàn trường trong quý 4.'",
       "status": "candidate",
       "source": [
-        "blader/humanizer#13",
+        "studio:catalog#13",
         "counters.py:NOMINAL"
       ],
       "note": "Gộp với NOMINAL sẵn có trong counters.py thay vì tạo họ trùng. counters.py đếm mật độ; mục này giải thích và nêu cách sửa."
@@ -301,8 +301,8 @@
       "fix": "Đổi ba dòng thành một đoạn có quan hệ nhân quả giữa các ý. Giữ nguyên danh sách khi nội dung thật sự là danh sách: bước, vật tư, tiêu chí kiểm.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#16",
-        "blader/humanizer#15"
+        "studio:catalog#16",
+        "studio:catalog#15"
       ]
     },
     {
@@ -319,7 +319,7 @@
       "fix": "Xoá emoji khỏi tiêu đề và đầu dòng ở văn bản trang trọng. Giữ lại khi emoji là ký hiệu có nghĩa trong một bảng hoặc chú giải.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#18"
+        "studio:catalog#18"
       ]
     },
     {
@@ -334,7 +334,7 @@
       "fix": "Xoá thẳng. Đây là lỗi lắp ráp, không phải lỗi văn phong — sửa không cần cân nhắc gì thêm.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#20"
+        "studio:catalog#20"
       ]
     },
     {
@@ -349,7 +349,7 @@
       "fix": "Đổi câu rào chung thành một giới hạn cụ thể có mốc thời gian hoặc phạm vi. Không có giới hạn cụ thể nào thì xoá.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#21"
+        "studio:catalog#21"
       ]
     },
     {
@@ -364,7 +364,7 @@
       "fix": "Xoá câu khen. Muốn giữ phép lịch sự thì thay bằng lời cảm ơn gắn với một việc cụ thể.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#22"
+        "studio:catalog#22"
       ]
     },
     {
@@ -385,7 +385,7 @@
       "fix": "Xoá cụm đệm, giữ mệnh đề chính. Giữ lại khi cụm đó tạo một phép đối lập thật.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#23"
+        "studio:catalog#23"
       ]
     },
     {
@@ -400,7 +400,7 @@
       "fix": "Giữ ĐÚNG MỘT lớp rào và biến nó thành điều kiện cụ thể. Không được đổi mức mạnh của khẳng định gốc, chỉ được làm nó rõ hơn.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#24"
+        "studio:catalog#24"
       ]
     },
     {
@@ -421,7 +421,7 @@
       "fix": "Đổi lời hứa thành một điều kiện có mốc thời gian và người chịu trách nhiệm. Thể loại bắt buộc có mục phương hướng thì GIỮ MỤC, chỉ thay nội dung.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#25"
+        "studio:catalog#25"
       ]
     },
     {
@@ -436,7 +436,7 @@
       "fix": "Bỏ lời dẫn 'sự thật là'. Phần còn lại là mệnh đề hiển nhiên thì xoá luôn; là điều bất ngờ thật thì để nó tự đứng.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#27"
+        "studio:catalog#27"
       ]
     },
     {
@@ -451,7 +451,7 @@
       "fix": "Xoá câu báo trước, để tiêu đề mục làm việc đó. Chỉ giữ khi câu dẫn nêu một quy tắc đọc mà tiêu đề không nêu được.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#28"
+        "studio:catalog#28"
       ]
     },
     {
@@ -466,7 +466,7 @@
       "fix": "Xoá câu chép lại, bắt đầu mục bằng dữ kiện hoặc luận điểm đầu tiên.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#29"
+        "studio:catalog#29"
       ]
     },
     {
@@ -481,7 +481,7 @@
       "fix": "Kiểm lại phiên bản hiện hành và ghi rõ 'tính đến ngày…'. Nếu cố ý nói về bản cũ thì nêu số hiệu bản đó.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#30"
+        "studio:catalog#30"
       ]
     },
     {
@@ -499,7 +499,7 @@
       "fix": "Xoá nếu chỉ nhắc lại. Giữ nếu câu đó rút ra hệ quả, nêu điều kiện, hoặc bắc cầu sang đoạn sau. ĐỪNG NHẦM với câu Link của khung PEEL mà essay.md §2 bắt buộc: câu chốt nối về luận đề là cấu trúc, chỉ câu chốt nhắc lại nguyên đoạn mới là tell.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#31"
+        "studio:catalog#31"
       ]
     },
     {
@@ -514,7 +514,7 @@
       "fix": "Xoá, hoặc thay bằng mệnh đề nói đúng điều tác giả muốn nói. Trích tục ngữ hay danh ngôn có sẵn thì giữ và ghi rõ là trích.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#32"
+        "studio:catalog#32"
       ]
     },
     {
@@ -529,7 +529,7 @@
       "fix": "Bỏ lời dẫn. Phần sau không có gì khó nói thì xoá cả câu; có thì để nó đứng trần.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#33"
+        "studio:catalog#33"
       ]
     },
     {
@@ -544,7 +544,7 @@
       "fix": "Nêu ai đã phản đối và ở đâu, hoặc nêu phản đề ở dạng mạnh nhất của nó. Không làm được thì xoá cả cặp phản đối và bác bỏ. ĐỪNG NHẦM với bước xử lý phản đề mà §5 của bài luận bắt buộc phải có: phản đề thật thì giữ, chỉ phản đề rơm mới xoá.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#34"
+        "studio:catalog#34"
       ]
     },
     {
@@ -559,7 +559,7 @@
       "fix": "Nêu phương án thay thế ở dạng mạnh nhất kèm cái giá thật của nó. Không nêu nổi thì xoá cả cặp.",
       "status": "candidate",
       "source": [
-        "blader/humanizer#35"
+        "studio:catalog#35"
       ]
     },
     {

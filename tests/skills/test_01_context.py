@@ -236,11 +236,14 @@ class ReferenceContentTests(unittest.TestCase):
         self.assertIn("inferred", text)
         self.assertIn("intent_questions", text)
 
-    def test_interview_reference_marks_the_source_as_idea_only(self):
-        """`anthropics/skills` không có license: chỉ được lấy ý tưởng."""
+    def test_interview_reference_credits_the_studio_rulebook_not_a_repo(self):
+        """De-name: phần public ghi nguồn bằng một dòng chung, không nêu tên repo."""
         text = reference_text("01-phong-van-boi-canh.md")
-        self.assertIn("idea-only", text)
-        self.assertIn("không có license", text)
+        self.assertIn("bộ luật của studio", text)
+        self.assertIn("sổ xưởng", text)
+        for banned in ("anthropics/skills", "doc-coauthoring", "vendor-notes/"):
+            with self.subTest(banned=banned):
+                self.assertNotIn(banned, text)
 
     def test_reader_testing_returns_exactly_three_questions(self):
         text = reference_text("02-reader-testing.md")

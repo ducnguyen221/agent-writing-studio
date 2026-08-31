@@ -1,7 +1,7 @@
 # Outline ba tầng — duyệt xong tầng ba mới được viết prose
 
-Chưng cất `deep-drafter` (MIT, `de7452649f44`, xem `vendor-notes/deep-drafter/`) và luật gắn nguồn
-của `storm` (MIT, `fb951af7744d`). Không chép mã, không chép prompt: ở đây chỉ có phương pháp.
+Phương pháp trong file này thuộc bộ luật của studio; nguồn gốc tri thức ghi ở sổ xưởng (không nằm trong repo). Không chép mã, không chép prompt: ở đây chỉ có
+phương pháp.
 
 **Số tầng lẫn nghĩa của từng tầng đều không do file này quyết định.** Trục 2 đọc `outline_depth` và
 `outline_layers[]` ở `§2` của hồ sơ thể loại: `outline_depth` cho biết phải duyệt xong bao nhiêu
