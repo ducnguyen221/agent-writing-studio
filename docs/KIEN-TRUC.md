@@ -38,10 +38,14 @@ vẫn duy nhất và thứ tự gọi được ghi rõ. Giao điểm (Yi, Xj) = 
 | Y3 | `03-critique` | Hội đồng phản biện: chấm barem thể loại, soi ngụy biện, plot holes | ✅ chạy thật trên bài hội thảo 6.307 chữ |
 | Y4 | `04-humanizer` | Biên tập: de-nominalization, bơm nhịp câu, thuần Việt hoá — sửa đúng thứ Y5 đo | ✅ chạy thật (9 nhát / 8 câu, `facts_added=[]`) |
 | Y5 | `05-forensics` | Router giám định: reading → scoring → reporting; **hai chế độ `blind` / `audit`** (§2.5) | ✅ **đã tách skill con** |
-| Y5a | `05a-reading` | Đọc mù trực tiếp, finding có phản chứng | ✅ |
-| Y5b | `05b-scoring` | S/C, khoảng vận hành, kiểm tra xung đột | ✅ |
-| Y5c | `05c-reporting` | Báo cáo tiếng Việt, cách sửa, câu hỏi xác minh | ✅ |
-| Y5d | `05d-calibration` | Corpus, false positive, ngôn ngữ/thể loại | ✅ |
+| Y5a | `05-forensics/05a-reading` | Đọc mù trực tiếp, finding có phản chứng | ✅ |
+| Y5b | `05-forensics/05b-scoring` | S/C, khoảng vận hành, kiểm tra xung đột | ✅ |
+| Y5c | `05-forensics/05c-reporting` | Báo cáo tiếng Việt, cách sửa, câu hỏi xác minh | ✅ |
+| Y5d | `05-forensics/05d-calibration` | Corpus, false positive, ngôn ngữ/thể loại | ✅ |
+
+Từ **v0.1.1** bốn sub-skill của Y5 nằm **bên trong** `skills/05-forensics/`, mỗi cái một thư mục con.
+Cây `skills/` vì thế còn đúng **năm thư mục — một thư mục một trục**; mọi đường vào Y5 vẫn qua router,
+router trỏ sub-skill bằng đường tương đối nên không phụ thuộc việc harness có tự dò skill lồng hay không.
 | — | `writing-studio` *(tuỳ chọn)* | Router mỏng: nhận yêu cầu tự nhiên, định tuyến vào 1 trong 5 skill trên, quản lý thư mục ca | ❌ chưa có, xây cuối |
 
 ### Hồ sơ thể loại (`shared/genres/*.md`) — mỗi file đúng 5 mục
@@ -93,6 +97,7 @@ một hồ sơ mới: `docs/GENRES.md`.
 | `shared/scripts/scoring.py` | **ĐÃ CÓ** — phép cộng tất định sau bản đọc mù: trần nhóm, khoảng vận hành, độ phủ C; không tự tạo finding | Y3, Y5 |
 | `shared/scripts/profile_build.py` | **ĐÃ CÓ** — dựng writer profile từ ≥3 bài đã xác nhận chính chủ; đọc `samples/`, lấy **trung vị** làm vân tay; <3 bài ⇒ profile ở trạng thái `draft` | Y1, Y4, Y5 |
 | `shared/scripts/check_spans.py` | **MỚI (P0, 30/08)** — cổng 0-token đối chiếu `machine_written_spans[].sentence_id` của `draft.meta.json` ↔ `sentences.json` bản cuối. Báo *id lệch*, *câu chưa khai*, và cờ **NGHI INDEX CŨ** khi bản tự khai viết theo hệ đánh số trước đó | Y5 (chế độ `audit`), người rà provenance |
+| `shared/scripts/xuat_docx.py` | **MỚI (v0.1.1)** — md ➜ docx quy cách Việt (Times New Roman 13pt, giãn dòng 1,5, lề 2/2/3/2cm, heading đậm 14–16); parser tự viết, không thêm phụ thuộc md; `--provenance` chép sidecar sang **cạnh** bản giao. Không dựng bảng Markdown — giới hạn đã khai | Y4 (giao thành phẩm), lệnh `/giao-docx` |
 | `shared/scripts/evaluate.py` | **ĐÃ CÓ** — gộp bản ghi đánh giá thành aggregate; chỉ nhận nhãn, rule id và span số, từ chối nguyên văn | 05d |
 | `skills/04-humanizer/scripts/polish_check.py` | **MỚI** — cổng 0-token trước/sau khi biên tập: đọc `genre_baseline` trước khi in cột counter, gộp `warnings[]`, và **đòi sidecar provenance** cạnh bản giao (thiếu ⇒ exit 1) | Y4 |
 | `skills/05-forensics/scripts/report.py` | **ĐÃ NÂNG** — renderer tùy chọn cho S/C, finding, phản chứng, cách sửa và câu hỏi | Y5 |
@@ -212,7 +217,7 @@ chứa văn của người thật. `.work/` vẫn nằm trong `.gitignore` làm 
 | Giao diện sang nhau | Bài blog xong → gọi design-studio làm cover/infographic (input: `polished.md` + `context.json`) | Tiểu thuyết/blog xong → voice-studio đọc thành audio (input: `polished.md`, đã qua cổng Y5) | Nhận brief hình/tiếng chỉ ở mức *mô tả bằng chữ* |
 | KHÔNG làm | Không viết caption dài, không chấm văn bản | Không sửa văn phong kịch bản | **Không render ảnh, không sinh audio** — kể cả "tiện tay" |
 
-Ba repo cùng chuẩn: public, dự kiến MIT (LICENSE chưa thêm), `skills/<kebab-case>/SKILL.md + references/ + scripts/ + assets/`,
+Ba repo cùng chuẩn: public MIT (LICENSE ở gốc repo), `skills/<kebab-case>/SKILL.md + references/ + scripts/ + assets/`,
 cài bằng `cp -r` vào `~/.claude/skills/`. Điểm nối kỹ thuật duy nhất là **file** (markdown/json
 theo schema), không import code chéo repo.
 
@@ -240,7 +245,7 @@ mình, và mọi lời hứa "Anti-AI-bias by design" của Y2 là khẩu hiệu
 vì thế đã bị đảo một nửa: máy viết có rồi, máy đo có rồi, nhưng **thước chưa được neo**. Hệ quả cụ
 thể: 0/33 tell `calibrated` ⇒ trục 5 chỉ được NOTE, không được tạo finding; và ngưỡng trong
 ngưỡng trong `CHAM-DIEM.md` vẫn là mốc n=1÷3. Datum hiệu chuẩn số 1 đã có
-(`skills/05d-calibration/references/01-corpus-log.md`), cần ≥5 bài máy từ studio + ≥5 bài chính chủ
+(`skills/05-forensics/05d-calibration/references/01-corpus-log.md`), cần ≥5 bài máy từ studio + ≥5 bài chính chủ
 chấm mù bởi model khác trước khi bất kỳ tell nào lên `calibrated`.
 
 Riêng Y4 có một cảnh báo thiết kế phải ghi ngay từ đầu: **Y4 chính là một công cụ máy-làm-mượt** —
@@ -258,7 +263,7 @@ studio làm **văn hay hơn**, không làm **dịch vụ né máy chấm**.
 ```
 agent-writing-studio/
 ├─ README.md                          # ✅ viết lại 30/08 cho người không kỹ thuật
-├─ LICENSE                            # ❌ chưa thêm — MIT là dự định, chưa phải giấy phép có hiệu lực
+├─ LICENSE                            # ✅ MIT — Copyright 2026 Nguyễn Quang Đức
 ├─ index.html                         # ✅ trang giới thiệu tĩnh, mở thẳng bằng trình duyệt
 ├─ .gitignore                         # ✅ .work/ · fixtures/** · *.docx · shared/writers/**
 │
@@ -276,6 +281,7 @@ agent-writing-studio/
 │  │  ├─ profile_build.py             # ✅ dựng writer profile
 │  │  ├─ check_spans.py               # ✅ cổng 0-token: spans ↔ sentences
 │  │  ├─ evaluate.py                  # ✅ gộp bản ghi đánh giá thành aggregate
+│  │  ├─ xuat_docx.py                  # ✅ md ➜ docx quy cách Việt (v0.1.1)
 │  │  ├─ vi_segment.py                # ❌ chưa di trú — vẫn ở skills/05-forensics/scripts/
 │  │  └─ counters.py                  # ❌ chưa di trú — như trên
 │  ├─ schemas/
@@ -298,14 +304,17 @@ agent-writing-studio/
 │  ├─ 02-cowriter/                     # ✅ Y2 — SKILL.md + references
 │  ├─ 03-critique/                     # ✅ Y3 — SKILL.md + references (lăng kính, ngụy biện, barem)
 │  ├─ 04-humanizer/                    # ✅ Y4 — SKILL.md + references + scripts/ + assets/
-│  ├─ 05-forensics/                    # ✅ Y5 — router agent-first, hai chế độ blind/audit
-│  ├─ 05a-reading/                     # ✅ đọc mù, finding và phản chứng
-│  ├─ 05b-scoring/                     # ✅ S/C và khoảng vận hành
-│  ├─ 05c-reporting/                   # ✅ báo cáo, cách sửa, câu hỏi
-│  ├─ 05d-calibration/                 # ✅ corpus và hiệu chỉnh (có 01-corpus-log.md, datum #1)
-│  └─ writing-studio/                  # ❌ router toàn studio (xây cuối, tuỳ chọn)
+│  └─ 05-forensics/                    # ✅ Y5 — router agent-first, hai chế độ blind/audit
+│     ├─ 05a-reading/                  # ✅ đọc mù, finding và phản chứng
+│     ├─ 05b-scoring/                  # ✅ S/C và khoảng vận hành
+│     ├─ 05c-reporting/                # ✅ báo cáo, cách sửa, câu hỏi
+│     ├─ 05d-calibration/              # ✅ corpus và hiệu chỉnh (có 01-corpus-log.md, datum #1)
+│     ├─ references/                   # ✅ 11 tài liệu dài của trục 5
+│     └─ scripts/                      # ✅ extract · vi_segment · counters · report
+│                                      # ❌ writing-studio/ — router toàn studio (xây cuối, tuỳ chọn)
 │
-├─ tests/                             # ✅ 338 test: forensics/ · genres/ · shared/ · skills/
+├─ commands/                          # ✅ 7 lệnh chạy lẻ từng bước (v0.1.1)
+├─ tests/                             # ✅ 371 test: forensics/ · genres/ · shared/ · skills/
 └─ fixtures/                          # ✅ gitignored trừ README; hiện CÒN RỖNG
 ```
 

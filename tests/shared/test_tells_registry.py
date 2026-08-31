@@ -269,7 +269,7 @@ class TellsRegistryTests(unittest.TestCase):
                 )
 
     def test_reading_skill_states_candidate_cannot_create_findings(self):
-        skill = (ROOT / "skills/05a-reading/SKILL.md").read_text(encoding="utf-8")
+        skill = (ROOT / "skills/05-forensics/05a-reading/SKILL.md").read_text(encoding="utf-8")
         self.assertIn("vi-ai-tells.json", skill, "05a-reading phải nói rõ nạp danh mục để làm gì")
         self.assertIn("vi_counterexample", skill)
         self.assertIn("genre_baseline", skill)

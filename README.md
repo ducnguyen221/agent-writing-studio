@@ -9,8 +9,8 @@ tiếng Việt bình thường.
 
 > **Thuật ngữ ngay từ đầu.** *Agent* = trợ lý AI có thể đọc file trên máy bạn và chạy lệnh, không chỉ
 > chat. *Skill* (kỹ năng) = một thư mục có file `SKILL.md` mô tả cho agent biết **khi nào** dùng và
-> **làm theo trình tự nào**; agent tự nạp khi gặp đúng tình huống. Toàn bộ repo này là 9 skill cộng
-> với dữ liệu dùng chung.
+> **làm theo trình tự nào**; agent tự nạp khi gặp đúng tình huống. Toàn bộ repo này là 9 skill (5 trục
+> ở `skills/`, trong đó trục 5 chứa 4 skill con) cộng với dữ liệu dùng chung và 7 lệnh chạy lẻ.
 
 ---
 
@@ -75,10 +75,14 @@ mới = thêm **một file**, không sửa dòng code nào. Không skill nào đ
 | Y3 | `03-critique` | ✅ | bài hội thảo thật 6.307 chữ, và ca `cot-b` |
 | Y4 | `04-humanizer` | ✅ | ca `cot-b`: 9 nhát sửa trên 8 câu |
 | Y5 | `05-forensics` | ✅ router + 4 skill con | ca hội thảo; ca `cot-b` chấm mù bởi model khác |
-| Y5a | `05a-reading` | ✅ | đọc mù, gán nhãn từng câu, mỗi nhận định kèm phản chứng |
-| Y5b | `05b-scoring` | ✅ | tính hai con số S và C sau khi bản đọc đã khoá |
-| Y5c | `05c-reporting` | ✅ | báo cáo tiếng Việt: vị trí, cách sửa, câu hỏi xác minh |
-| Y5d | `05d-calibration` | ✅ | quản lý bộ bài mẫu, đo báo oan, hiệu chuẩn ngưỡng |
+| Y5a | `05-forensics/05a-reading` | ✅ | đọc mù, gán nhãn từng câu, mỗi nhận định kèm phản chứng |
+| Y5b | `05-forensics/05b-scoring` | ✅ | tính hai con số S và C sau khi bản đọc đã khoá |
+| Y5c | `05-forensics/05c-reporting` | ✅ | báo cáo tiếng Việt: vị trí, cách sửa, câu hỏi xác minh |
+| Y5d | `05-forensics/05d-calibration` | ✅ | quản lý bộ bài mẫu, đo báo oan, hiệu chuẩn ngưỡng |
+
+Bốn skill con của trục 5 nằm **bên trong** `skills/05-forensics/` (từ v0.1.1), nên `ls skills/` ra
+đúng **năm thư mục — một thư mục một trục**. Mọi đường vào trục 5 vẫn qua router; router trỏ skill con
+bằng đường tương đối, không phụ thuộc việc agent có tự dò skill lồng nhau hay không.
 
 Chín skill, **không có** router tổng — router chỉ nên xây khi năm trục đã ổn định, và hiện chưa tới lúc.
 
@@ -110,7 +114,8 @@ Muốn thêm một thể loại? Xem `docs/GENRES.md`.
 
 ### Cài
 
-Chép thư mục `skills/` vào nơi agent tìm skill. Chép cả chín, vì các skill gọi lẫn nhau.
+Chép thư mục `skills/` vào nơi agent tìm skill. Chép **cả cây** — năm thư mục trục, và bốn skill con
+nằm sẵn trong `05-forensics/` — vì các skill gọi lẫn nhau bằng đường tương đối.
 
 ```bash
 # Claude Code
@@ -141,7 +146,8 @@ chung ở `shared/` (hồ sơ thể loại, quy tắc, schema). Hãy nói cho ag
 
 ### Gọi từng trục
 
-Không có cú pháp lệnh riêng. Nói bằng tiếng Việt, agent tự chọn skill:
+Cách thường dùng: nói bằng tiếng Việt, agent tự chọn skill. Muốn chỉ chạy đúng một bước thì có
+**bộ lệnh** ở mục kế tiếp.
 
 | Muốn gì | Nói với agent | Trục chạy |
 |---|---|---|
@@ -153,6 +159,47 @@ Không có cú pháp lệnh riêng. Nói bằng tiếng Việt, agent tự chọ
 
 Nói rõ **thể loại** thì tốt (`essay`, `research`, `blog`, `journalism`, `novel`, `chinh-luan`,
 `de-cuong-nghien-cuu`, `bao-cao-thuc-tap`, `sang-kien-kinh-nghiem`); không nói thì agent sẽ hỏi.
+
+### Chạy lẻ từng bước bằng lệnh
+
+Bảy lệnh trong `commands/`, namespace `/agent-writing-studio:<lệnh>`. Mỗi lệnh **chỉ làm đúng một
+bước**: thiếu sản phẩm của bước trước thì nó nói rõ thiếu file gì và lệnh nào sinh ra file đó, chứ
+**không tự chạy lại cả chuỗi**.
+
+| Lệnh | Trục | Làm gì | Cần đầu vào | Ra file |
+|---|---|---|---|---|
+| `/agent-writing-studio:boi-canh` | Y1 | phỏng vấn ý đồ, luận đề, độc giả, ràng buộc | — (bước đầu) | `context.json` |
+| `/agent-writing-studio:viet-nhap` | Y2 | dàn ý ba tầng → chờ duyệt → viết văn xuôi | `context.json` | `draft.md` · `draft.meta.json` · `sentences.json` |
+| `/agent-writing-studio:phan-bien` | Y3 | chấm từng tiêu chí theo barem thể loại | `draft.md` · `sentences.json` | `critique.json` |
+| `/agent-writing-studio:bien-tap` | Y4 | sửa về phía giọng tác giả, 3 chế độ đầu ra | `draft.md` · `sentences.json` | `polished.md` · `polish.diff.json` · sidecar provenance |
+| `/agent-writing-studio:giam-dinh` | Y5 | đọc mù → S/C → báo cáo; mặc định `audit` | văn bản · `sentences.json` | `evidence.json` · `report.md` |
+| `/agent-writing-studio:giao-docx` | giao hàng | md → docx đúng quy cách Việt, đặt vào thư mục bạn chọn | `polished.md` | `<tên>.docx` + sidecar |
+| `/agent-writing-studio:danh-sach` | — | in chính bảng này, đọc động từ các file lệnh | — | — |
+
+Bảng trên là bản chép cho người đọc README. **Nguồn thật là bảy file trong `commands/`** — lệnh
+`danh-sach` đọc thẳng từ đó, nên nếu hai chỗ lệch nhau thì tin `danh-sach`.
+
+### Giao bản docx
+
+Bản giao hoàn chỉnh cho người đọc **mặc định là `.docx`**, không phải `.md`: giảng viên và biên tập
+viên nhận bài bằng Word. Script:
+
+```bash
+python shared/scripts/xuat_docx.py polished.md --out "D:/thu-muc-cua-toi" --provenance polished.provenance.json
+```
+
+Quy cách mặc định là chuẩn văn bản Việt phổ thông: **Times New Roman 13pt · giãn dòng 1,5 · lề trên
+và dưới 2cm, trái 3cm, phải 2cm · heading đậm cỡ 14–16**. `--out` nhận thư mục (lấy tên theo file
+nguồn) hoặc đường dẫn `.docx` cụ thể; `--provenance` chép sidecar tự khai nguồn gốc sang **cạnh** file
+docx, đúng luật "provenance đi theo bản giao".
+
+Cần `python-docx` (`pip install python-docx`); thiếu thì script báo đúng câu lệnh cần chạy chứ không
+lặng lẽ giao bản khác. Giới hạn đã biết: **bảng Markdown không được dựng thành bảng Word** — bài có
+bảng thì dùng pandoc hoặc dựng bảng trong Word sau.
+
+> **Bản giao nằm ở thư mục của bạn, không nằm trong station.** `$WRITING_STUDIO_DATA` (`.writing`) là
+> **xưởng cục bộ của agent**: mọi file làm việc ở lại đó. Bản giao ghi **chính xác vào thư mục bạn
+> đang làm việc hoặc đã chỉ định** — không ai phải mò vào `.writing` để lấy bài.
 
 ### Chạy trọn chuỗi Y1 → Y5
 
@@ -211,26 +258,30 @@ agent-writing-studio/
 ├─ README.md                    file bạn đang đọc — bản triển khai
 ├─ requirements-dev.txt         thư viện để chạy test
 │
-├─ skills/                      CHÍN SKILL — thứ được chép sang ~/.claude/skills/
+├─ skills/                      NĂM THƯ MỤC, CHÍN SKILL — thứ được chép sang ~/.claude/skills/
 │  ├─ 01-context-architect/       Y1 · phỏng vấn bối cảnh, chân dung người viết và độc giả
 │  ├─ 02-cowriter/                Y2 · dàn ý ba tầng → duyệt → viết → tự khai nguồn gốc
 │  ├─ 03-critique/                Y3 · chấm từng tiêu chí, 13 lăng kính, 13 loại ngụy biện
 │  ├─ 04-humanizer/               Y4 · biên tập về phía giọng tác giả, có vùng cấm sửa
-│  ├─ 05-forensics/               Y5 · router giám định + tài liệu chống báo oan
-│  ├─ 05a-reading/                  đọc mù, gán nhãn từng câu, mỗi nhận định kèm phản chứng
-│  ├─ 05b-scoring/                  tính S và C sau khi bản đọc đã khoá
-│  ├─ 05c-reporting/                viết báo cáo: vị trí, cách sửa, câu hỏi xác minh
-│  └─ 05d-calibration/              dựng bộ bài mẫu, đo tỷ lệ báo oan, chỉnh ngưỡng
+│  └─ 05-forensics/               Y5 · router giám định + tài liệu chống báo oan
+│     ├─ 05a-reading/               đọc mù, gán nhãn từng câu, mỗi nhận định kèm phản chứng
+│     ├─ 05b-scoring/               tính S và C sau khi bản đọc đã khoá
+│     ├─ 05c-reporting/             viết báo cáo: vị trí, cách sửa, câu hỏi xác minh
+│     ├─ 05d-calibration/           dựng bộ bài mẫu, đo tỷ lệ báo oan, chỉnh ngưỡng
+│     ├─ references/                11 tài liệu dài của trục 5
+│     └─ scripts/                   extract · vi_segment · counters · report
 │     (mỗi skill: SKILL.md ≤550 từ + references/ tài liệu dài + scripts/ + assets/)
+│
+├─ commands/                    BẢY LỆNH chạy lẻ từng bước — /agent-writing-studio:<lệnh>
 │
 ├─ shared/                      DỮ LIỆU DÙNG CHUNG — nhiều skill cùng đọc một nguồn
 │  ├─ genres/                     9 hồ sơ thể loại + _schema.md (hợp đồng hình dạng file)
 │  ├─ schemas/                    5 schema JSON: context · draft · critique · polish · provenance
 │  ├─ rules/                      quy tắc máy đọc được: 33 dấu hiệu tiếng Việt, bảng chấm điểm
-│  ├─ scripts/                    script dùng lại: đo, đối chiếu, dựng hồ sơ người viết
+│  ├─ scripts/                    script dùng lại: đo, đối chiếu, dựng hồ sơ, xuất docx
 │  └─ writers/                    CHỈ schema + hướng dẫn; hồ sơ người thật ở station ngoài repo
 │
-├─ tests/                       338 test — canh cấu trúc skill, hình dạng dữ liệu, liên kết
+├─ tests/                       371 test — canh cấu trúc skill, hình dạng dữ liệu, liên kết
 │  ├─ forensics/                  hành vi trục 5 (có từ bản v1)
 │  ├─ genres/                     hồ sơ thể loại đúng schema, slug khớp hai chiều
 │  ├─ shared/                     schema, quy tắc, hàng rào de-name
@@ -400,7 +451,7 @@ python -m pytest tests/ -q
 python -m unittest discover -s tests -t .
 ```
 
-Cả hai cùng cho **338 passed**. Test không kiểm "văn hay"; nó kiểm những thứ hỏng thì im lặng: skill
+Cả hai cùng cho **371 passed**. Test không kiểm "văn hay"; nó kiểm những thứ hỏng thì im lặng: skill
 có đúng tên và ≤550 từ không, hồ sơ thể loại có đủ mục không, slug thể loại có khớp hai chiều không,
 liên kết nội bộ có gãy không, nguồn ngoài có bị ghi sai license không.
 

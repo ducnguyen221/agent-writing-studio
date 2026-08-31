@@ -29,15 +29,15 @@ của một người hiểu điều mình đang viết, đồng thời chủ đ�
    đổi. Đường ranh lắp ráp mạnh hơn một chỉ số trung bình toàn bài.
 6. **Phản biện ngược.** Sau khi đã ghi nhận tín hiệu mù, nạp baseline thể loại và writer profile nếu
    có. Baseline chỉ được hạ/bỏ G1–G2, không được tạo thêm nghi vấn. Nạp
-   [`shared/rules/vi-ai-tells.json`](../../shared/rules/vi-ai-tells.json) **chỉ để đọc**
+   [`shared/rules/vi-ai-tells.json`](../../../shared/rules/vi-ai-tells.json) **chỉ để đọc**
    `vi_counterexample` và `genre_baseline`; mục `candidate` không bao giờ được tạo finding. Với mỗi
    `FLAG`, viết lời giải thích vô tội mạnh nhất; không đứng vững thì hạ `NOTE` hoặc bỏ.
 7. **Khóa bản đọc.** Ghi `sealed_before_counters: true`; chỉ sau đó mới cho phép đo bổ trợ.
 
-Đọc chi tiết tại [giao thức từng câu](../05-forensics/references/08-giao-thuc-doc-tung-cau.md),
-[rubric](../05-forensics/references/01-rubric-5-truc.md) và
-[chống báo oan](../05-forensics/references/03-chong-bao-oan.md). Writer profile tùy chọn phải theo
-[hợp đồng baseline](../../shared/writers/README.md).
+Đọc chi tiết tại [giao thức từng câu](../references/08-giao-thuc-doc-tung-cau.md),
+[rubric](../references/01-rubric-5-truc.md) và
+[chống báo oan](../references/03-chong-bao-oan.md). Writer profile tùy chọn phải theo
+[hợp đồng baseline](../../../shared/writers/README.md).
 
 ## Finding bắt buộc
 
@@ -49,7 +49,7 @@ và câu hỏi xác minh. Nếu hơn 25% câu bị gắn `NOTE/FLAG`, dừng và
 Với bài không phải tiếng Việt, giữ nguyên câu trích nhưng giải thích phát hiện bằng tiếng Việt. Chỉ
 dùng đặc trưng phổ quát như độ cụ thể, chủ thể, nguồn, đổi giọng và mạch lập luận; không dịch danh
 sách tín hiệu tiếng Việt sang ngôn ngữ khác rồi coi đó là hiệu chỉnh. Xem
-[hiệu chỉnh ngôn ngữ](../05-forensics/references/11-language-calibration.md).
+[hiệu chỉnh ngôn ngữ](../references/11-language-calibration.md).
 
 ## Bàn giao
 

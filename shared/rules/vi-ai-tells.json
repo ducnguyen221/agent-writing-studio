@@ -18,7 +18,7 @@
     "Đây KHÔNG phải danh sách từ cấm. Mỗi mục là một HỌ tín hiệu kèm phản chứng.",
     "`genre_baseline` liệt kê thể loại mà tín hiệu này là VĂN PHONG CHUẨN. Với các thể loại đó, tín hiệu không được tính là dấu hiệu nguồn gốc và trục 4 chỉ được bơm nội dung, không được phá khung.",
     "Trục 4 sửa vì bản sau tốt hơn cho người đọc, không phải vì bản sau ít giống máy hơn.",
-    "Trục 5 dùng file này để HẠ nghi vấn. Muốn dùng để nâng, phải hiệu chỉnh trước — xem skills/05d-calibration.",
+    "Trục 5 dùng file này để HẠ nghi vấn. Muốn dùng để nâng, phải hiệu chỉnh trước — xem skills/05-forensics/05d-calibration.",
     "Mọi slug trong `genre_baseline` PHẢI có hồ sơ `shared/genres/<slug>.md`. Baseline trỏ tới một thể loại không có hồ sơ thì trục 5 không tìm được §5 để hạ tín hiệu — tests/genres/test_genre_schema.py canh điều này.",
     "`genre_baseline` ở đây và `genre_baseline.normal_signals` ở §5 hồ sơ thể loại là HAI KHUNG NHÌN của cùng một luật, hợp nhất bằng phép HỢP: file này khai theo tell, hồ sơ khai theo thể loại. polish_check.py đọc cả hai. Xem shared/genres/_schema.md mục 5."
   ],

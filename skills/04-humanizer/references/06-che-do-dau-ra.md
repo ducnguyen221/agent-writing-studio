@@ -40,12 +40,18 @@ Văn bản dán vào không có `sentences.json`: sinh `sentence_id` cho lượt
 - `polish.diff.json` và `polished.provenance.json` ghi **cạnh** file đích, không chèn vào trong nó.
   Trường hợp không được phép tạo file phụ: chèn provenance dưới dạng HTML-comment ở cuối file.
 - Ghi đè file gốc chỉ khi người dùng nói rõ. Mặc định ghi sang `<tên>.polished.<đuôi>`.
-- **Đích giao vs kho gốc.** Người dùng chỉ định thư mục làm việc của họ thì **bản giao** (file đích
-  + sidecar) ghi thẳng vào đó — đó là nơi họ đọc và quản lý. Toàn bộ **file làm việc** của ca
-  (`polish.diff.json`, meta, bản trung gian) vẫn nằm trong thư mục ca ở station
-  (`$WRITING_STUDIO_DATA/work/<slug>/`, fallback `./.work/<slug>/`): station là nơi làm việc gốc
-  của agent, bản trong thư mục người dùng là bản chép để giao. Sửa tiếp thì sửa từ ca trong station
-  rồi giao lại, không biến bản chép thành nguồn thứ hai.
+- **Đích giao vs kho gốc.** **Bản giao** (file đích + sidecar) ghi **chính xác vào thư mục người dùng
+  đang làm việc hoặc đã chỉ định** — đó là nơi họ đọc và quản lý. Chưa có thư mục nào được chỉ định
+  thì hỏi một câu, đừng tự chọn hộ. Toàn bộ **file làm việc** của ca (`polish.diff.json`, meta, bản
+  trung gian) vẫn nằm trong thư mục ca ở station (`$WRITING_STUDIO_DATA/work/<slug>/`, fallback
+  `./.work/<slug>/`): station là **xưởng cục bộ của agent**, không phải chỗ người dùng phải mò vào;
+  bản trong thư mục người dùng là bản chép để giao. Sửa tiếp thì sửa từ ca trong station rồi giao
+  lại, không biến bản chép thành nguồn thứ hai.
+- **Giao thành phẩm thì mặc định là `.docx`.** Khi bản sửa đã là bản cuối cho người đọc (nộp bài,
+  gửi biên tập, lưu hồ sơ), xuất bằng
+  [`shared/scripts/xuat_docx.py`](../../../shared/scripts/xuat_docx.py) — quy cách văn bản Việt sẵn
+  trong script. `.md` chỉ giữ vai trò bản trung gian, trừ khi người dùng nói rõ muốn nhận `.md`.
+  Sidecar provenance đi cùng file `.docx` (`--provenance`), không bị bỏ lại ở station.
 
 ---
 

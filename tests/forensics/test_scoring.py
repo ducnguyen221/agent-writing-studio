@@ -155,7 +155,7 @@ class ClusterRequirementTests(unittest.TestCase):
         cls.reference = (
             ROOT / "skills/05-forensics/references/09-cham-diem-agent-first.md"
         ).read_text(encoding="utf-8")
-        cls.skill = (ROOT / "skills/05b-scoring/SKILL.md").read_text(encoding="utf-8")
+        cls.skill = (ROOT / "skills/05-forensics/05b-scoring/SKILL.md").read_text(encoding="utf-8")
 
     def test_rules_declare_the_cluster_requirement(self):
         cluster = self.rules["cluster_requirement"]

@@ -107,8 +107,9 @@
     <ul class="facts">
       <li><b>5</b> trục quy trình</li>
       <li><b>9</b> hồ sơ thể loại</li>
-      <li><b>9</b> skill</li>
-      <li><b>338</b> test</li>
+      <li><b>9</b> skill trong <b>5</b> thư mục</li>
+      <li><b>7</b> lệnh chạy lẻ</li>
+      <li><b>371</b> test</li>
       <li>chạy CPU, <b>không</b> cần GPU</li>
     </ul>
   </div>
@@ -229,6 +230,11 @@
 <pre><code>cp -r skills/* ~/.claude/skills/     # Claude Code
 cp -r skills/* ~/.codex/skills/      # Codex</code></pre>
 <pre><code>Copy-Item -Recurse skills\* $HOME\.claude\skills\    # Windows PowerShell</code></pre>
+    <p><code>skills/</code> có đúng <strong>năm thư mục — một thư mục một trục</strong>. Bốn skill con
+      của trục 5 (<code>05a-reading</code>, <code>05b-scoring</code>, <code>05c-reporting</code>,
+      <code>05d-calibration</code>) nằm <strong>bên trong</strong> <code>05-forensics/</code>, cạnh
+      <code>references/</code> và <code>scripts/</code>. Chép cả cây: các skill gọi lẫn nhau bằng
+      đường tương đối, và mọi đường vào trục 5 đều qua router.</p>
 
     <h3>Thư viện Python (tuỳ chọn, đều nhẹ)</h3>
 <pre><code>pip install underthesea python-docx pymupdf jsonschema pyyaml</code></pre>
@@ -263,6 +269,43 @@ cp -r skills/* ~/.codex/skills/      # Codex</code></pre>
       </table>
     </div>
     <p>Nói rõ thể loại thì tốt; không nói thì agent sẽ hỏi.</p>
+
+    <h3>Chạy lẻ từng bước bằng lệnh</h3>
+    <p>Bảy lệnh trong <code>commands/</code>, namespace <code>/agent-writing-studio:&lt;lệnh&gt;</code>.
+      Mỗi lệnh <strong>chỉ làm đúng một bước</strong>: thiếu sản phẩm của bước trước thì nó nói rõ
+      thiếu file gì và lệnh nào sinh ra file đó, chứ <strong>không tự chạy lại cả chuỗi</strong>.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Lệnh</th><th>Trục</th><th>Làm gì</th><th>Cần đầu vào</th><th>Ra file</th></tr></thead>
+        <tbody>
+          <tr><td><code>boi-canh</code></td><td class="axis">Y1</td><td>Phỏng vấn ý đồ, luận đề, độc giả, ràng buộc</td><td>— (bước đầu)</td><td><code>context.json</code></td></tr>
+          <tr><td><code>viet-nhap</code></td><td class="axis">Y2</td><td>Dàn ý ba tầng → chờ duyệt → viết văn xuôi</td><td><code>context.json</code></td><td><code>draft.md</code> · <code>draft.meta.json</code> · <code>sentences.json</code></td></tr>
+          <tr><td><code>phan-bien</code></td><td class="axis">Y3</td><td>Chấm từng tiêu chí theo barem thể loại</td><td><code>draft.md</code> · <code>sentences.json</code></td><td><code>critique.json</code></td></tr>
+          <tr><td><code>bien-tap</code></td><td class="axis">Y4</td><td>Sửa về phía giọng tác giả, ba chế độ đầu ra</td><td><code>draft.md</code> · <code>sentences.json</code></td><td><code>polished.md</code> · <code>polish.diff.json</code> · sidecar</td></tr>
+          <tr><td><code>giam-dinh</code></td><td class="axis">Y5</td><td>Đọc mù → S/C → báo cáo; mặc định <code>audit</code></td><td>văn bản · <code>sentences.json</code></td><td><code>evidence.json</code> · <code>report.md</code></td></tr>
+          <tr><td><code>giao-docx</code></td><td class="axis">giao</td><td>md → docx đúng quy cách Việt, đặt vào thư mục bạn chọn</td><td><code>polished.md</code></td><td><code>&lt;tên&gt;.docx</code> + sidecar</td></tr>
+          <tr><td><code>danh-sach</code></td><td class="axis">—</td><td>In chính bảng này, đọc động từ các file lệnh</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Bảng trên là bản chép cho người đọc. Nguồn thật là bảy file trong <code>commands/</code> —
+      lệnh <code>danh-sach</code> đọc thẳng từ đó, nên hai chỗ lệch nhau thì tin <code>danh-sach</code>.</p>
+
+    <h3>Giao bản docx</h3>
+    <p>Bản giao hoàn chỉnh cho người đọc <strong>mặc định là <code>.docx</code></strong>, không phải
+      <code>.md</code>: giảng viên và biên tập viên nhận bài bằng Word.</p>
+<pre><code>python shared/scripts/xuat_docx.py polished.md --out "D:/thu-muc-cua-toi" --provenance polished.provenance.json</code></pre>
+    <p>Quy cách mặc định là chuẩn văn bản Việt phổ thông: <strong>Times New Roman 13pt · giãn dòng 1,5
+      · lề trên và dưới 2cm, trái 3cm, phải 2cm · heading đậm cỡ 14–16</strong>. <code>--out</code>
+      nhận thư mục hoặc đường dẫn <code>.docx</code> cụ thể; <code>--provenance</code> chép bản tự khai
+      nguồn gốc sang <strong>cạnh</strong> file docx. Cần <code>python-docx</code>; bảng Markdown chưa
+      được dựng thành bảng Word — bài có bảng thì dùng pandoc.</p>
+    <div class="note">
+      <p><strong>Bản giao nằm ở thư mục của bạn, không nằm trong station.</strong>
+        <code>$WRITING_STUDIO_DATA</code> là <strong>xưởng cục bộ của agent</strong> — mọi file làm
+        việc ở lại đó. Bản giao ghi chính xác vào thư mục bạn đang làm việc hoặc đã chỉ định; không ai
+        phải mò vào <code>.writing</code> để lấy bài.</p>
+    </div>
   </div>
 </section>
 

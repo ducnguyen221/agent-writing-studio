@@ -21,7 +21,7 @@ sau bằng chứng có vị trí, không đứng một mình.
 6. Tối đa 3–5 câu hỏi vấn đáp lấy từ findings mạnh nhất; 0 câu hỏi nếu không có finding đứng vững.
 7. Giới hạn và hành động rẻ, đảo ngược được.
 
-Dùng [mẫu báo cáo](../05-forensics/references/10-mau-bao-cao-va-cach-sua.md).
+Dùng [mẫu báo cáo](../references/10-mau-bao-cao-va-cach-sua.md).
 
 ## Một finding hoàn chỉnh
 

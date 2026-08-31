@@ -21,7 +21,8 @@ ROOT = Path(__file__).resolve().parents[2]
 
 # Cây public: thứ được clone/cài. `docs/plans` và `docs/results` là nhật ký làm việc,
 # nằm ngoài hàng rào (chúng ghi lại chính quá trình de-name này).
-PUBLIC_DIRS = ("skills", "shared", "docs")
+# `commands/` vào hàng rào từ v0.1.1: nó cũng được clone/cài, nên cũng phải sạch tên nguồn.
+PUBLIC_DIRS = ("skills", "shared", "docs", "commands")
 PUBLIC_FILES = ("README.md",)
 EXCLUDED_PREFIXES = ("docs/plans/", "docs/results/")
 SCANNED_SUFFIXES = {".md", ".json", ".py", ".txt", ".yaml", ".yml"}

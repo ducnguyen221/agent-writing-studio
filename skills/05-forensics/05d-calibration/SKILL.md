@@ -27,9 +27,9 @@ tránh rò. Không commit văn bản thật; chỉ lưu manifest và số liệu
 6. Chạy paraphrase, công cụ máy-làm-mượt, homoglyph, lỗi chính tả, đổi khoảng trắng và chèn đoạn người.
 7. Xuất số liệu kèm cỡ mẫu và khoảng; không công bố “X% chính xác” trần trụi.
 
-Đọc [giao thức đánh giá](../../docs/CHAM-DIEM.md) và
-[chống báo oan](../05-forensics/references/03-chong-bao-oan.md). Khi thêm ngôn ngữ, bắt buộc đọc
-[hướng dẫn hiệu chỉnh ngôn ngữ](../05-forensics/references/11-language-calibration.md).
+Đọc [giao thức đánh giá](../../../docs/CHAM-DIEM.md) và
+[chống báo oan](../references/03-chong-bao-oan.md). Khi thêm ngôn ngữ, bắt buộc đọc
+[hướng dẫn hiệu chỉnh ngôn ngữ](../references/11-language-calibration.md).
 
 ## Thang bằng chứng
 

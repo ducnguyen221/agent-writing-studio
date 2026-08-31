@@ -36,7 +36,7 @@ thêm điều kiện trước khi tra bậc. G3, G4 không chịu luật cụm.
 
 ## Tính S
 
-Áp đúng [bảng điểm](../05-forensics/references/09-cham-diem-agent-first.md): G1 khuôn/cấu trúc,
+Áp đúng [bảng điểm](../references/09-cham-diem-agent-first.md): G1 khuôn/cấu trúc,
 G2 độ rỗng/từ vựng, G3 dẫn chứng, G4 chuẩn thể loại. Qua cổng cụm trước, rồi áp trần từng nhóm và
 giảm tổng nếu chỉ G1/G2 kích hoạt vì đây là hai nhóm dễ báo oan nhất. Không cộng điểm ngoài bảng.
 

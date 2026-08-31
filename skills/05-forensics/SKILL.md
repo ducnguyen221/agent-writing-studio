@@ -12,14 +12,15 @@ trước; số đếm chỉ kiểm lại nhận định đã hình thành**. Kh�
 
 ## Định tuyến bắt buộc
 
+Ba sub-skill là **thư mục con ngay tại đây** — mở theo đường dẫn, không chờ harness tự dò.
 Một lượt review đầy đủ **bắt buộc gọi ba sub-skill**, đúng thứ tự:
 
-1. `05a-reading` — đọc mù, gắn nhãn câu và lập findings.
-2. `05b-scoring` — tính S/C từ bản đọc đã khóa.
-3. `05c-reporting` — giải thích, phản chứng và hướng dẫn sửa.
+1. `05a-reading` — đọc mù, gắn nhãn câu, lập findings ([SKILL.md](05a-reading/SKILL.md)).
+2. `05b-scoring` — tính S/C từ bản đọc đã khóa ([SKILL.md](05b-scoring/SKILL.md)).
+3. `05c-reporting` — giải thích, phản chứng, hướng dẫn sửa ([SKILL.md](05c-reporting/SKILL.md)).
 
 Khi xây corpus, hiệu chỉnh ngưỡng, thêm ngôn ngữ hoặc đánh giá độ chính xác, dùng
-`05d-calibration` — không gọi trong lượt review thường.
+`05d-calibration` ([SKILL.md](05d-calibration/SKILL.md)) — không gọi trong lượt review thường.
 
 ## Hai chế độ: `blind` (mặc định) và `audit`
 
@@ -28,7 +29,7 @@ Khi xây corpus, hiệu chỉnh ngưỡng, thêm ngôn ngữ hoặc đánh giá 
 - **`audit`** — bật khi thư mục ca có **cả** `draft.meta.json` lẫn `sentences.json`. Đọc hai file đó
   **sau** khi `05a-reading` đã khoá bản đọc mù, rồi đối chiếu finding với bản tự khai và **báo câu
   máy chưa khai**; phần đối chiếu ID chạy bằng `shared/scripts/check_spans.py`, 0 gọi mô hình. Kết
-  quả của `audit` là báo cáo liêm chính, không phải điểm.
+  quả là báo cáo liêm chính, không phải điểm.
 
 Trên văn đã qua chính studio này, `low_signal` ở chế độ mù là **kết quả kỳ vọng, không phải bằng
 chứng**: trục 2 tránh đúng danh mục mà trục 5 dùng để soi. Không lấy S/C mù của sản phẩm studio ra
@@ -42,13 +43,12 @@ phán xét — dùng `audit`.
 - Mỗi finding phải có vị trí, trích dẫn, bằng chứng, phản chứng và cách kiểm tra.
 - S là mức ưu tiên xem lại; C là độ phủ dấu hiệu quan sát được. Cả hai không phải xác suất tác giả
   đã dùng AI.
-- Với ngôn ngữ chưa hiệu chỉnh, vẫn được phân tích định tính nhưng không áp ngưỡng tiếng Việt.
+- Ngôn ngữ chưa hiệu chỉnh: vẫn phân tích định tính, nhưng không áp ngưỡng tiếng Việt.
 
 ## Chế độ script
 
-Script là tùy chọn sau bản đọc mù: trích xuất file, đếm lặp, tính lại điểm cho tái lập. Script mâu
-thuẫn với nhận định thì đọc lại ngữ cảnh và hạ/rút finding; không lấy số đè lên nghĩa. Không có
-script vẫn review được bằng ba skill con.
+Script là tùy chọn **sau** bản đọc mù: trích xuất, đếm lặp, tính lại điểm cho tái lập. Số mâu thuẫn
+với nhận định thì đọc lại ngữ cảnh rồi hạ/rút finding — không lấy số đè lên nghĩa.
 
 ## Kết quả tối thiểu
 
