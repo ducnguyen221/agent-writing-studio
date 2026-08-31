@@ -12,6 +12,14 @@
     "NOTE": 0.4,
     "FLAG": 1.0
   },
+  "cluster_requirement": {
+    "applies_to_groups": ["G1", "G2"],
+    "distinct_families_in_one_paragraph": 2,
+    "same_family_repeats_in_document": 3,
+    "solo_signal_max_label": "NOTE",
+    "solo_signal_scores": false,
+    "rationale": "Một khuôn lẻ là văn người bình thường; cụm nhiều họ tín hiệu cùng một chỗ mới là dáng máy. Tín hiệu đơn lẻ tối đa là NOTE, không bao giờ FLAG, và không cộng điểm vào G1/G2."
+  },
   "label_bands": [
     {"minimum": 0, "maximum": 29, "label": "low_signal"},
     {"minimum": 30, "maximum": 59, "label": "worth_reviewing"},

@@ -18,7 +18,34 @@ phần trích dẫn dài nguyên văn.
 | `NOTE` | 0,4 | Một dấu hiệu, có thể giải thích vô tội |
 | `FLAG` | 1,0 | Ít nhất hai dấu hiệu khác bản chất hội tụ, hoặc một khuôn mạnh lặp có hệ thống |
 
-`SKIP` không vào tử số hoặc mẫu số.
+`SKIP` không vào tử số hoặc mẫu số. Ranh giới `NOTE`/`FLAG` ở đây chính là **luật cụm** ở mục 1b:
+một dấu hiệu đứng một mình dừng ở `NOTE`, hội tụ mới lên `FLAG`.
+
+## 1b. Luật cụm — điều kiện đứng trước mọi phép cộng G1/G2
+
+Máy đọc được ở `shared/rules/forensics-scoring-v3.json` → `cluster_requirement`. Đây là **luật chung**
+của trục 5, không phải ghi chú riêng của một ô trong bảng.
+
+**Điểm G1 và G2 chỉ được cộng khi tín hiệu đứng CỤM.** Một tín hiệu được coi là đứng cụm khi thoả
+**một** trong hai điều kiện, và phải liệt kê được bằng chứng:
+
+1. **Cụm theo chỗ:** trong cùng một đoạn có **≥2 họ tín hiệu khác nhau** — liệt kê tên họ kèm
+   `sentence_id` của từng lượt.
+2. **Cụm theo tần suất:** **một họ lặp ≥3 lượt** trên toàn bài — liệt kê đủ ba `sentence_id`.
+
+Không thoả điều kiện nào: **tín hiệu đơn lẻ**. Nó tối đa là `NOTE`, **không bao giờ `FLAG`**, và
+**không cộng điểm** vào G1/G2 — kể cả khi nó khớp danh mục rất đẹp. Nó vẫn được ghi vào bản đọc để
+người sau đối chiếu; ghi nhận khác với buộc tội.
+
+**Vì sao:** một khuôn tu từ lẻ, một câu danh từ hoá, một thuật ngữ Anh không chú giải là **văn người
+bình thường** — người viết nào cũng có vài chỗ như vậy trong một bài dài. Cái phân biệt được dáng máy
+không phải sự có mặt của một khuôn, mà là **nhiều họ khuôn cùng đổ về một chỗ**, hoặc **một khuôn
+được lặp lại như phản xạ**. Chấm điểm tín hiệu lẻ là chấm điểm xác suất nền của tiếng Việt, và đó
+chính là cơ chế sinh ra báo oan.
+
+Luật cụm **không đổi thang điểm**: trần G1 vẫn 30, trần G2 vẫn 20, mọi bậc trong hai bảng dưới giữ
+nguyên. Nó chỉ thêm một **cổng vào** trước khi tra bậc. G3 và G4 không chịu luật này: chúng đo nguồn
+và chuẩn thể loại, một khẳng định không nguồn vẫn là một khẳng định không nguồn dù đứng một mình.
 
 ## 2. Điểm S theo bốn nhóm
 
@@ -31,7 +58,8 @@ phần trích dẫn dài nguyên văn.
 | Nhịp/khung đoạn quá đều: không / nhẹ / lặp rõ ở ≥3 đoạn / xuyên suốt | 0 / 2 / 5 / 10 |
 | Đối xứng bullet hoặc section máy móc: không / vừa / rõ | 0 / 3 / 6 |
 
-Áp trần 30. Không phạt một phép đối đơn lẻ hoặc một đoạn có cấu trúc cân đối hợp lý.
+Áp trần 30. Qua **cổng cụm ở mục 1b** rồi mới tra bảng: không phạt một phép đối đơn lẻ hoặc một đoạn
+có cấu trúc cân đối hợp lý.
 
 > ⚠️ **Số "lượt" phải là số ĐẾM, không phải số ƯỚC.** Trước khi tra bậc, liệt kê **từng lượt kèm
 > `sentence_id`**. Không liệt kê được thì không được tính. Ước lượng kiểu "~20 lượt" **cấm** đưa vào bảng.
@@ -47,7 +75,7 @@ phần trích dẫn dài nguyên văn.
 | Gloss/thuật ngữ Anh không cần thiết: không / cụm cục bộ / lặp nhiều đoạn / xuyên suốt | 0 / 4 / 8 / 12 |
 | Danh từ hóa, chủ thể mờ, câu đệm rỗng: không / nhẹ / lặp ≥3 đoạn / xuyên suốt | 0 / 2 / 5 / 8 |
 
-Áp trần 20. Thuật ngữ nghề nghiệp đúng ngữ cảnh không phải lỗi; chỉ chấm phần thừa hoặc giải thích lại
+Áp trần 20, sau **cổng cụm ở mục 1b**. Thuật ngữ nghề nghiệp đúng ngữ cảnh không phải lỗi; chỉ chấm phần thừa hoặc giải thích lại
 những khái niệm độc giả mục tiêu đã biết.
 
 ### G3 · Dẫn chứng và khả năng kiểm chứng — tối đa 25
@@ -124,3 +152,5 @@ Nếu văn bản OCR, nhiều bảng, nhiều trích dẫn dài hoặc agent kh�
 - S ≥60 nhưng C <10%: nghi vấn nằm ở cấu trúc/nguồn/chuẩn thể loại, không ở từng câu.
 - C ≥30% nhưng S <30: cờ dàn trải nhưng yếu; hạ kết luận một bậc.
 - Chỉ G1/G2 kích hoạt: không được kết luận nặng; đây là hai nhóm dễ báo oan nhất.
+- **G1 hoặc G2 có điểm mà không liệt kê được cụm** (≥2 họ trong một đoạn, hoặc một họ ≥3 lượt kèm
+  `sentence_id`): trả điểm nhóm đó về 0 và tính lại. Đây là lỗi quy trình, không phải chuyện thẩm mỹ.

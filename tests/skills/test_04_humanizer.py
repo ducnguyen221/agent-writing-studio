@@ -35,6 +35,7 @@ REQUIRED_REFERENCES = (
     "03-chong-sua-oan.md",
     "04-ban-do-loi-cach-sua.md",
     "05-chinh-ta.md",
+    "06-che-do-dau-ra.md",
 )
 
 # Những từ chỉ xuất hiện nếu ai đó dịch một blacklist tiếng Anh rồi dán vào. Danh mục tell của
@@ -194,6 +195,106 @@ class ErrorMapTests(unittest.TestCase):
     def test_error_map_allows_a_null_tell_id(self):
         text = reference_text("04-ban-do-loi-cach-sua.md")
         self.assertIn("`null`", text)
+
+
+class OutputModeTests(unittest.TestCase):
+    """Ba chế độ đầu ra — cùng luật biên tập, khác cái được in và cái được ghi xuống đĩa."""
+
+    def test_skill_makes_the_caller_pick_a_mode(self):
+        text = skill_text()
+        self.assertIn("references/06-che-do-dau-ra.md", text)
+        for mode in ("dán-text", "file", "nhúng-trong-task"):
+            with self.subTest(mode=mode):
+                self.assertIn(mode, text, f"SKILL.md phải nêu chế độ {mode}")
+
+    def test_paste_mode_returns_tells_by_sentence_id_then_the_text_then_the_diff(self):
+        text = reference_text("06-che-do-dau-ra.md")
+        self.assertIn("sentence_id", text)
+        self.assertIn("polish.diff.json", text)
+        self.assertIn("Bản đã sửa", text)
+
+    def test_file_mode_never_touches_code_numbers_or_tables(self):
+        flat = " ".join(reference_text("06-che-do-dau-ra.md").split())
+        self.assertIn("Tuyệt đối không đụng", flat)
+        for protected in ("code block", "bảng", "frontmatter"):
+            with self.subTest(protected=protected):
+                self.assertIn(protected, flat)
+
+    def test_embedded_mode_returns_only_the_final_text(self):
+        flat = " ".join(reference_text("06-che-do-dau-ra.md").split())
+        self.assertIn("Chỉ trả bản cuối", flat)
+        self.assertIn("Không diễn giải", flat)
+        self.assertIn(
+            "vẫn phải sinh",
+            flat,
+            "im lặng với người đọc không có nghĩa là im lặng với sổ ghi",
+        )
+
+    def test_every_mode_still_writes_the_diff(self):
+        self.assertIn("cả ba đều sinh diff", skill_text())
+
+
+class AdHocVoiceMatchingTests(unittest.TestCase):
+    """Không có writer profile: 1–2 bài mẫu tại lượt vẫn dùng được, nhưng phải khai đúng."""
+
+    def test_reference_treats_ad_hoc_samples_as_a_draft_profile(self):
+        flat = " ".join(reference_text("06-che-do-dau-ra.md").split())
+        self.assertIn("status: draft", flat)
+        self.assertIn("không ép", flat)
+        self.assertIn("fingerprint", flat)
+
+    def test_reference_fixes_the_exact_profile_used_declaration(self):
+        flat = " ".join(reference_text("06-che-do-dau-ra.md").split())
+        self.assertIn("ad-hoc (n bài, chưa xác nhận chính chủ)", flat)
+        self.assertIn(
+            "polish.diff.json",
+            flat,
+            "khai báo ad-hoc phải nằm trong sổ ghi, không chỉ trong lời nói",
+        )
+
+    def test_ad_hoc_samples_cannot_lower_a_forensic_finding(self):
+        flat = " ".join(reference_text("06-che-do-dau-ra.md").split())
+        self.assertIn("không** được dùng để hạ finding", flat)
+
+    def test_two_turn_process_also_mentions_the_ad_hoc_path(self):
+        flat = " ".join(reference_text("01-quy-trinh-hai-luot.md").split())
+        self.assertIn("ad-hoc", flat)
+        self.assertIn("06-che-do-dau-ra.md", flat)
+
+
+class SystematicIdentificationTests(unittest.TestCase):
+    """Bước 1 của quy trình chuẩn là NHẬN DIỆN theo danh mục, không phải sửa."""
+
+    def test_reference_lists_the_four_steps_in_order(self):
+        flat = " ".join(reference_text("01-quy-trinh-hai-luot.md").split())
+        self.assertIn("bốn bước", flat)
+        for step in (
+            "Nhận diện theo danh mục",
+            "Sửa, giữ nguyên sự kiện",
+            "Tự kiểm hai câu hỏi",
+            "Chốt bản cuối",
+        ):
+            with self.subTest(step=step):
+                self.assertIn(step, flat)
+
+    def test_identification_happens_before_any_edit(self):
+        flat = " ".join(reference_text("01-quy-trinh-hai-luot.md").split())
+        self.assertIn("TRƯỚC khi sửa", flat)
+        self.assertIn("vi_counterexample", flat)
+        self.assertIn("genre_baseline", flat)
+
+    def test_identification_is_a_map_not_a_todo_list(self):
+        """Nhận diện trọn bài KHÔNG biến danh mục thành danh sách việc phải gạch."""
+        flat = " ".join(reference_text("01-quy-trinh-hai-luot.md").split())
+        self.assertIn("bản đồ, không phải danh sách việc", flat)
+
+    def test_skill_puts_identification_before_the_first_pass(self):
+        text = skill_text()
+        self.assertLess(
+            text.index("Nhận diện trọn bài"),
+            text.index("Lượt một"),
+            "SKILL.md phải đặt bước nhận diện TRƯỚC lượt một",
+        )
 
 
 class SpellingReferenceTests(unittest.TestCase):

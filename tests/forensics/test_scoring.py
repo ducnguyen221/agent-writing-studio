@@ -137,5 +137,75 @@ class ScoringTests(unittest.TestCase):
         self.assertNotIn("ai_probability", result)
 
 
+class ClusterRequirementTests(unittest.TestCase):
+    """Luật cụm: tín hiệu đứng CỤM mới được cộng điểm G1/G2.
+
+    Một khuôn tu từ lẻ, một câu danh từ hoá lẻ là văn người bình thường. Cái phân biệt được
+    dáng máy là NHIỀU HỌ dồn về một chỗ, hoặc MỘT HỌ lặp như phản xạ. Chấm điểm tín hiệu lẻ
+    là chấm xác suất nền của tiếng Việt — đúng cơ chế sinh ra báo oan.
+
+    Ba file phải nói cùng một luật, nếu không thì rule máy đọc và luật người đọc trôi khỏi nhau.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.rules = json.loads(
+            (ROOT / "shared/rules/forensics-scoring-v3.json").read_text(encoding="utf-8")
+        )
+        cls.reference = (
+            ROOT / "skills/05-forensics/references/09-cham-diem-agent-first.md"
+        ).read_text(encoding="utf-8")
+        cls.skill = (ROOT / "skills/05b-scoring/SKILL.md").read_text(encoding="utf-8")
+
+    def test_rules_declare_the_cluster_requirement(self):
+        cluster = self.rules["cluster_requirement"]
+        self.assertEqual(cluster["applies_to_groups"], ["G1", "G2"])
+        self.assertEqual(cluster["distinct_families_in_one_paragraph"], 2)
+        self.assertEqual(cluster["same_family_repeats_in_document"], 3)
+        self.assertEqual(cluster["solo_signal_max_label"], "NOTE")
+        self.assertIs(cluster["solo_signal_scores"], False)
+
+    def test_cluster_requirement_does_not_change_the_existing_caps(self):
+        """Luật cụm thêm ĐIỀU KIỆN, không đổi THANG. Trần G1/G2 phải nguyên như cũ."""
+        self.assertEqual(self.rules["group_caps"]["G1"], 30)
+        self.assertEqual(self.rules["group_caps"]["G2"], 20)
+        self.assertEqual(self.rules["group_caps"]["G3"], 25)
+        self.assertEqual(self.rules["group_caps"]["G4"], 25)
+        self.assertEqual(self.rules["sentence_weights"], {"PLAIN": 0.0, "NOTE": 0.4, "FLAG": 1.0})
+
+    def test_reference_states_the_cluster_rule_as_a_general_law(self):
+        text = self.reference
+        self.assertIn("cluster_requirement", text, "reference phải trỏ tới rule máy đọc")
+        self.assertIn("≥2 họ tín hiệu khác nhau", text)
+        self.assertIn("≥3 lượt", text)
+        self.assertIn("không bao giờ `FLAG`", text)
+        self.assertIn(
+            "không đổi thang",
+            text.lower(),
+            "phải nói rõ luật cụm không đụng tới trần G1≤30 / G2≤20",
+        )
+
+    def test_reference_explains_why_a_solo_signal_is_not_evidence(self):
+        flat = " ".join(self.reference.split())
+        self.assertIn("văn người bình thường", flat, "phải nói rõ vì sao tell lẻ không phải bằng chứng")
+        self.assertIn("báo oan", flat)
+
+    def test_scoring_skill_carries_the_same_rule(self):
+        text = self.skill
+        self.assertIn("cluster_requirement", text)
+        self.assertIn("≥2 họ tín hiệu khác nhau", text)
+        self.assertIn("≥3 lượt", text)
+        self.assertIn("không cộng điểm", text)
+
+    def test_humanizer_orders_edits_by_cluster_density(self):
+        """Trục 4 dùng cùng ranh giới ấy để xếp thứ tự sửa, không để buộc tội."""
+        text = (
+            ROOT / "skills/04-humanizer/references/04-ban-do-loi-cach-sua.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("cụm trước, lẻ sau", text)
+        self.assertIn("09-cham-diem-agent-first.md", text)
+        self.assertIn("lượt hai", text)
+
+
 if __name__ == "__main__":
     unittest.main()

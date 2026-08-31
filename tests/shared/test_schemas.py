@@ -292,6 +292,20 @@ class SchemaTests(unittest.TestCase):
         errors = list(Draft202012Validator(load("polish")).iter_errors(sample))
         self.assertTrue(errors, "route_to trỏ về chính trục 4 PHẢI bị từ chối")
 
+    def test_polish_accepts_an_ad_hoc_profile_declaration(self):
+        """Chưa có hồ sơ người viết mà người dùng đưa 1–2 bài mẫu ngay trong lượt.
+
+        Bài mẫu đó vẫn được dùng, nhưng sổ ghi phải nói rõ nó chưa xác nhận chính chủ —
+        `null` là sai sự thật (đã dùng bài mẫu), một slug là sai (chưa có hồ sơ nào).
+        """
+        sample = deepcopy(POLISH_SAMPLE)
+        sample["profile_used"] = "ad-hoc (2 bài, chưa xác nhận chính chủ)"
+        errors = list(Draft202012Validator(load("polish")).iter_errors(sample))
+        self.assertEqual([], errors, "profile_used phải nhận khai báo ad-hoc")
+        description = load("polish")["properties"]["profile_used"].get("description", "")
+        self.assertIn("ad-hoc", description, "schema phải nói rõ dạng khai ad-hoc")
+        self.assertIn("chưa xác nhận chính chủ", description)
+
     def test_context_rejects_long_brain_excerpt(self):
         sample = deepcopy(CONTEXT_SAMPLE)
         sample["brain_pointers"][0]["excerpt"] = "x" * 301

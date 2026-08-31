@@ -24,6 +24,36 @@ thước đo, không phải biên tập. Trường `metadata.forensics_score_see
 
 ---
 
+## 0b. Nhận diện có hệ thống theo danh mục — TRƯỚC khi sửa chữ nào
+
+Quy trình chuẩn của trục 4 có **bốn bước**, và bước một không phải là sửa:
+
+1. **Nhận diện theo danh mục** — mục này.
+2. **Sửa, giữ nguyên sự kiện** — mục 1.
+3. **Tự kiểm hai câu hỏi** — mục 2.
+4. **Chốt bản cuối** — mục 3, kèm cổng 0-token.
+
+Bước 1 làm một lượt duy nhất, đi hết bài trước khi động vào câu nào. Cách làm:
+
+- Duyệt **từng họ tín hiệu** mà `§4` của hồ sơ thể loại đã bật, theo đúng thứ tự trong
+  `shared/rules/vi-ai-tells.json` — không duyệt theo cảm giác "đoạn này nghe lạ".
+- Mỗi lượt bắt được ghi một dòng: `sentence_id` · tên họ · trích đúng cụm. Không ghi được
+  `sentence_id` thì không được tính là một lượt.
+- Đọc cột `vi_counterexample` và `genre_baseline` của họ đó **ngay lúc ghi**. Có phản chứng đúng với
+  ngữ cảnh này thì gạch dòng vừa ghi, đừng để nó chờ tới lượt hai.
+- Cuối bước 1, gộp các dòng theo đoạn để biết **đoạn nào dày tín hiệu nhất** — đó là thứ tự sửa ở
+  lượt một, xem [bản đồ lỗi](04-ban-do-loi-cach-sua.md) mục *Thứ tự sửa: cụm trước, lẻ sau*.
+
+Vì sao phải nhận diện trọn trước: sửa tới đâu tìm tới đó thì mật độ tín hiệu của cả bài không bao giờ
+hiện ra, và người sửa sẽ dồn công vào đoạn đầu chỉ vì đọc nó trước. Ngoài ra, một danh sách lập trọn
+trước khi sửa là thứ duy nhất đối chiếu được với bản sau — sau khi văn đã đổi thì không ai dựng lại
+được nó nữa.
+
+Nhận diện trọn **không** có nghĩa là sửa từng dòng trong danh sách. Danh sách là bản đồ, không phải
+danh sách việc; mục 1 vẫn viết lại theo nghĩa chứ không vá theo cờ.
+
+---
+
 ## 1. Lượt một — viết lại theo nghĩa, không vá theo cờ
 
 Lượt một **không giữ cấu trúc cố định**. Được gộp hai đoạn rời rạc thành một, tách một đoạn ôm ba ý
@@ -109,17 +139,21 @@ nói ngược lại. Danh mục tell là mặc định khi chưa biết gì về
 Không có profile mà cũng không có bài mẫu: giữ những đặc điểm lặp lại **trong chính bản thảo** — đó
 là bằng chứng gần nhất về giọng của tác giả.
 
+Chưa có profile nhưng người dùng đưa được **1–2 bài mẫu ngay trong lượt**: vẫn dùng, ở mức hồ sơ
+`status: draft` — chỉ gợi ý về giọng, không ép `fingerprint`, và `polish.diff.json` khai
+`profile_used: "ad-hoc (n bài, chưa xác nhận chính chủ)"`. Ba ràng buộc đầy đủ ở
+[chế độ đầu ra](06-che-do-dau-ra.md) mục 4.
+
 ---
 
 ## 5. Ba chế độ trả kết quả
 
-Hỏi người dùng muốn nhận kiểu nào; mặc định là chế độ 2.
-
 | Chế độ | Trả gì | Dùng khi |
 |---|---|---|
-| **Dán thẳng** | Bản đã sửa in ra màn hình, kèm bảng các nhát sửa lớn | Đoạn ngắn, sửa nhanh trong hội thoại |
-| **File** | `polished.md` + `polish.diff.json` cạnh bản gốc | Bài dài, cần rà lại từng nhát sửa |
-| **Nhúng** | Sửa tại chỗ trong file gốc, giữ nguyên frontmatter, code block và định dạng | Bài đã nằm trong repo hoặc trong vault |
+| **Dán-text** | Danh sách tín hiệu theo `sentence_id` → bản đã sửa → `polish.diff.json` | Người dùng dán văn bản thẳng vào lượt |
+| **File** | Chỉ ghi bản cuối vào file đích; sổ ghi để cạnh, không chèn vào trong | Người dùng đưa đường dẫn |
+| **Nhúng-trong-task** | Chỉ bản cuối, không một câu diễn giải nào | Trục 4 là một bước của quy trình lớn hơn |
 
-Cả ba chế độ đều **bắt buộc** sinh `polish.diff.json` với `metadata.stylometric_polish: true`. Chế độ
-"dán thẳng" cũng phải in phần diff ra, không được im lặng.
+Hợp đồng đầy đủ của từng chế độ — cái gì được in, cái gì tuyệt đối không được đụng — ở
+[chế độ đầu ra](06-che-do-dau-ra.md). Cả ba chế độ đều **bắt buộc** sinh `polish.diff.json` với
+`metadata.stylometric_polish: true`; chế độ nhúng ghi nó ra ngoài phần văn bản chứ không bỏ.

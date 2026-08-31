@@ -31,7 +31,10 @@
         "user_statement": { "type": "string" }
       }
     },
-    "profile_used": { "type": ["string", "null"] },
+    "profile_used": {
+      "type": ["string", "null"],
+      "description": "Slug hồ sơ người viết đã dùng; null khi không dùng hồ sơ nào. Khi chưa có hồ sơ mà người dùng đưa 1–2 bài mẫu ngay trong lượt, khai đúng dạng \"ad-hoc (n bài, chưa xác nhận chính chủ)\" — bài mẫu ad-hoc chỉ gợi ý giọng, không được ép fingerprint và không được dùng để hạ finding của trục 5."
+    },
     "edits": {
       "type": "array",
       "items": {

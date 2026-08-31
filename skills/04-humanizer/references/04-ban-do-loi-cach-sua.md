@@ -10,6 +10,23 @@ File này chỉ làm một việc mà bản gốc không làm được: nối m�
 
 Cách dùng: mở `references/10` §3 bên cạnh, tra dòng, rồi tra `tell_id` ở đây.
 
+## Thứ tự sửa: cụm trước, lẻ sau
+
+Trục 5 chỉ cộng điểm cho tín hiệu **đứng cụm** (≥2 họ trong một đoạn, hoặc một họ lặp ≥3 lượt toàn
+bài — xem `skills/05-forensics/references/09-cham-diem-agent-first.md` mục 1b). Trục 4 dùng đúng cái
+ranh giới ấy để **xếp thứ tự việc**, vì cùng một lý do: cụm mới là chỗ văn thật sự hỏng.
+
+- **Lượt một sửa theo cụm.** Trước khi động vào câu nào, đánh dấu mỗi đoạn bằng số họ tín hiệu có
+  trong nó và số lượt của họ dày nhất. Sắp đoạn theo mật độ giảm dần rồi sửa từ đầu danh sách. Đoạn
+  dày tín hiệu gần như luôn là đoạn không có ý — sửa nó bằng cách viết lại quanh ý chính, không phải
+  bằng cách gạch từng cụm.
+- **Tell lẻ để lượt hai cân nhắc.** Một khuôn xuất hiện đúng một lần, trong một đoạn không có họ nào
+  khác, thì mặc định **để nguyên**. Ở lượt hai mới hỏi: câu này có khó đọc cho người đọc thật không?
+  Có thì sửa và ghi `reason` theo lợi ích người đọc; không thì bỏ qua. Sửa một khuôn lẻ chỉ vì nó có
+  trong danh mục là dọn theo bảng đếm, không phải biên tập — và nó hay xoá mất nhịp riêng của tác giả.
+- Đoạn đã sửa xong ở lượt một thì không mở lại cấu trúc ở lượt hai (luật của
+  [quy trình hai lượt](01-quy-trinh-hai-luot.md) §3).
+
 | Dòng ở `references/10` §3 | `tell_id` | Ghi chú riêng của trục 4 |
 |---|---|---|
 | Câu đệm / rỗng | `T03`, `T23`, `T24` | `T23` có `genre_baseline` cho `chinh-luan`, `sang-kien-kinh-nghiem` — ở đó chỉ sửa khi cụm đệm thay cho một phép đối lập thật |
