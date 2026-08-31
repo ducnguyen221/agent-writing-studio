@@ -1,0 +1,23 @@
+{
+  "name": "agent-writing-studio",
+  "description": "A writing studio an AI agent runs for Vietnamese text, from blank page to delivery. Five axes: a context architect that refuses to write until the brief is real, a co-writer that declares every machine-written sentence, a critic that scores per criterion with quotable evidence and no total score, an editor that moves prose toward the author's own voice without touching facts, and a forensic reader with two modes — audit against the self-declaration, or blind for calibration only. Genres are data files with a fixed schema; nine profiles included (essay, research, novel, journalism, blog, and four Vietnamese institutional forms). Integrity comes from provenance that travels with the text, not from a detector score.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Nguyen Quang Duc",
+    "url": "https://ducnguyen.vn"
+  },
+  "homepage": "https://github.com/ducnguyen221/agent-writing-studio",
+  "license": "MIT",
+  "keywords": [
+    "writing",
+    "vietnamese",
+    "co-writing",
+    "critique",
+    "editing",
+    "ai-detection",
+    "provenance",
+    "academic-integrity",
+    "genre",
+    "forensics"
+  ]
+}
