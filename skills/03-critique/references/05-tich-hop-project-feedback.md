@@ -20,7 +20,8 @@ chuyên môn cho phần viết, trả về bằng chứng chứ không trả v�
 
 ## Hợp đồng file
 
-Thư mục ca: `.work/<case>/` (không vào git).
+Thư mục ca: `$WRITING_STUDIO_DATA/work/<case>/`, fallback `.work/<case>/` khi chưa đặt biến
+(cả hai đều không vào git).
 
 **Đầu vào mà `project-feedback` phải đặt sẵn:**
 

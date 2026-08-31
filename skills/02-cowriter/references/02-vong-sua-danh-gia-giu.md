@@ -54,7 +54,7 @@ Bản mới chỉ thắng khi qua được cả bốn, theo đúng thứ tự n�
 
 ## 4. Luật chống Goodhart — thước không phải đích
 
-Đây là chỗ vòng lặp này dễ hỏng nhất, và cũng là lý do luật `§2.5` của `ARCHITECTURE_v2.md` tồn tại.
+Đây là chỗ vòng lặp này dễ hỏng nhất, và cũng là lý do luật `§2.5` của `KIEN-TRUC.md` tồn tại.
 
 - **Không sửa để con số đẹp lên.** Không có ngưỡng nào ở đây cả: `counters.py` chỉ ra chỗ để nhìn,
   không ra điểm đỗ. Sửa một câu vì `NOMINAL` cao là đã lấy thước làm đích.

@@ -1,4 +1,4 @@
-# KIẾN TRÚC v2 — agent-writing-studio theo Ma trận 5×5
+# KIẾN TRÚC — agent-writing-studio theo Ma trận 5×5
 
 > Tài liệu kiến trúc và hiện trạng triển khai. Tài liệu này ánh xạ đủ 25 giao điểm thành cấu trúc
 > skill cụ thể, chỉ rõ cái đã có / còn thiếu / thứ tự xây, và phần dùng chung.
@@ -42,7 +42,7 @@ vẫn duy nhất và thứ tự gọi được ghi rõ. Giao điểm (Yi, Xj) = 
 | Y5b | `05b-scoring` | S/C, khoảng vận hành, kiểm tra xung đột | ✅ |
 | Y5c | `05c-reporting` | Báo cáo tiếng Việt, cách sửa, câu hỏi xác minh | ✅ |
 | Y5d | `05d-calibration` | Corpus, false positive, ngôn ngữ/thể loại | ✅ |
-| — | `writing-studio` *(tuỳ chọn)* | Router mỏng: nhận yêu cầu tự nhiên, định tuyến vào 1 trong 5 skill trên, quản lý `.work/<case>/` | ❌ chưa có, xây cuối |
+| — | `writing-studio` *(tuỳ chọn)* | Router mỏng: nhận yêu cầu tự nhiên, định tuyến vào 1 trong 5 skill trên, quản lý thư mục ca | ❌ chưa có, xây cuối |
 
 ### Hồ sơ thể loại (`shared/genres/*.md`) — mỗi file đúng 5 mục
 
@@ -103,7 +103,9 @@ hình**, chỉ so tập hợp và đếm — nên kết quả của chúng tái 
 
 ### 2.2 Writer profile — hồ sơ vân tay người viết
 
-`shared/writers/<slug>/profile.yaml` (+ `samples/`, **gitignored** như `.work/` — chứa văn bản người thật).
+`$WRITING_STUDIO_DATA/writers/<slug>/profile.yaml` (+ `samples/`) — **station ngoài repo** từ 31/08/2026,
+vì đây là văn bản của người thật. Chưa đặt biến thì lui về `shared/writers/<slug>/` trong repo, chỗ đó
+vẫn gitignored.
 
 ```yaml
 name: duc-nguyen
@@ -124,7 +126,7 @@ Một profile, bốn người dùng:
 - **Y1** nạp làm "persona người viết" của tài liệu tầm nhìn.
 - **Y2** viết đúng giọng chính chủ thay vì giọng LLM mặc định.
 - **Y4** đánh bóng **về phía giọng của tác giả**, không phải về "văn hay chung chung" — đây là điểm khác
-  biệt với mọi humanizer trên thị trường.
+  biệt với mọi công cụ máy-làm-mượt trên thị trường.
 - **Y5** so bài nghi vấn với baseline chính chủ (*authorship verification* — bài toán "có phải văn của
   đúng người này không?" có cơ sở hơn hẳn "có phải AI không?", và `pet_templates` chống báo oan:
   người mê phép đối có hồ sơ chứng minh mình mê phép đối từ trước).
@@ -136,12 +138,13 @@ Một profile, bốn người dùng:
 - Chiều ngược: kết thúc một ca viết/giám định đáng nhớ, bài học đi về Brain/memory theo quy trình
   reflection chung của máy — **repo này không tự đẻ kho tri thức thứ hai**.
 
-### 2.4 Hợp đồng dữ liệu giữa các giai đoạn (`.work/<case-slug>/`)
+### 2.4 Hợp đồng dữ liệu giữa các giai đoạn (thư mục ca)
 
-Mỗi ca một thư mục làm việc, mỗi giai đoạn đọc sản phẩm giai đoạn trước, schema đặt tại `shared/schemas/`:
+Mỗi ca một thư mục làm việc — `$WRITING_STUDIO_DATA/work/<case>/`, fallback `.work/<case>/` khi chưa đặt
+biến — mỗi giai đoạn đọc sản phẩm giai đoạn trước, schema đặt tại `shared/schemas/`:
 
 ```
-.work/<case>/
+<work>/<case>/
 ├─ context.json                Y1 → intent, persona, genre, con trỏ Brain, ràng buộc
 │                                   (shared/schemas/context.schema.json)
 ├─ draft.md                    Y2 → bản thảo
@@ -168,14 +171,15 @@ vì tới giờ chỉ trục 5 đọc nó; chuyển sang `shared/` khi có consu
 Y5 **không được tự đếm câu**. Ca `cot-b` đã trả giá cho luật này: ba hệ đánh số khác nhau (43 / 45 /
 46 câu) khiến bản tự khai phải map bằng trích dẫn thay vì bằng ID. `check_spans.py` là cổng kiểm.
 
-`.work/` giữ nguyên vị trí trong `.gitignore` — chứa văn của người thật, **không bao giờ commit**.
+Từ 31/08/2026 thư mục ca mặc định nằm ở **station** `$WRITING_STUDIO_DATA/work/`, ngoài repo hẳn —
+chứa văn của người thật. `.work/` vẫn nằm trong `.gitignore` làm lưới an toàn cho ai chạy không có station.
 
 ### 2.5 Luật xung đột lợi ích (mới, bắt buộc)
 
 1. **Y5 không giám định bài do chính pipeline này viết bằng cùng một model.** Self-recognition bias
    đã có tài liệu (`references/03` mục 1). Bài đi qua Y2/Y4 bằng Claude → nhánh giám định mù phải chạy
    model khác (Codex/Gemini qua bridge) hoặc tối thiểu ghi rõ xung đột vào `limitations`.
-2. **Y4 và Y5 dùng chung định nghĩa tín hiệu** (SCORING_v2) nhưng **Y4 không được xem điểm Y5 của
+2. **Y4 và Y5 dùng chung định nghĩa tín hiệu** (`CHAM-DIEM.md` phần I) nhưng **Y4 không được xem điểm Y5 của
    bài đang sửa trước khi sửa xong** — nếu không sẽ tối ưu hoá vào thước đo (Goodhart), thước hỏng.
 3. **`draft.meta.json` là bắt buộc khi Y2 tham gia**: studio tự khai phần máy viết. Cổng Y5 của chính
    studio mà không có bản tự khai thì mất tư cách nói về liêm chính.
@@ -221,12 +225,12 @@ mình, và mọi lời hứa "Anti-AI-bias by design" của Y2 là khẩu hiệu
 
 | # | Việc | Vì sao đứng ở đây |
 |---|---|---|
-| 0 | `docs/` v2 (tài liệu này + SCORING + REPORT template) | Khung trước, code sau |
-| 1 | **`fixtures/`** — ≥10 human + ≥10 AI + 10 mixed cho thể loại đầu tiên (chính luận/bài luận) | Việc quan trọng nhất của cả repo, v1 đã tự thừa nhận. Mọi con số của SCORING_v2 đứng hay đổ ở đây |
-| 2 | `shared/scripts/scoring.py` + nâng `05-forensics` xuất điểm tổng & %C theo SCORING_v2 | Trả đúng món nợ chủ repo yêu cầu; chạy lại được trên fixtures ngay khi có |
+| 0 | `docs/` (tài liệu này + `CHAM-DIEM.md`) | Khung trước, code sau |
+| 1 | **`fixtures/`** — ≥10 human + ≥10 AI + 10 mixed cho thể loại đầu tiên (chính luận/bài luận) | Việc quan trọng nhất của cả repo, v1 đã tự thừa nhận. Mọi con số của `CHAM-DIEM.md` đứng hay đổ ở đây |
+| 2 | `shared/scripts/scoring.py` + nâng `05-forensics` xuất điểm tổng & %C theo `CHAM-DIEM.md` | Trả đúng món nợ chủ repo yêu cầu; chạy lại được trên fixtures ngay khi có |
 | 3 | 5 + 4 hồ sơ thể loại `shared/genres/` (viết **§5 trước**, rồi §3) | §5 phục vụ G4 của Y5 đang chạy thật; §3 mở đường Y3 |
 | 4 | `03-critique` (Y3) | Tái dùng scoring engine + §3; khác Y5 ở rubric (chất lượng vs dấu hiệu) chứ không ở máy móc |
-| 5 | `04-humanizer` (Y4) | Nghịch đảo của Y5: mỗi tín hiệu trong SCORING_v2 là một mục sửa; vòng kiểm = chạy lại counters trước/sau, ghi `polish.diff.json` |
+| 5 | `04-humanizer` (Y4) | Nghịch đảo của Y5: mỗi tín hiệu trong `CHAM-DIEM.md` là một mục sửa; vòng kiểm = chạy lại counters trước/sau, ghi `polish.diff.json` |
 | 6 | `profile_build.py` + `01-context-architect` (Y1) | Writer profile + Brain — cần trước khi cho máy viết |
 | 7 | `02-cowriter` (Y2) | Cuối cùng, vì cần đủ: context (Y1), khung (§2), giọng (profile), và cổng ra (Y5) để tự nghiệm thu |
 | 8 | Router `writing-studio` *(tuỳ chọn)* | Chỉ khi 5 skill đã ổn định — đúng thang nâng cấp skill |
@@ -235,12 +239,12 @@ mình, và mọi lời hứa "Anti-AI-bias by design" của Y2 là khẩu hiệu
 `fixtures/` — vẫn chưa làm, và đó là món nợ lớn nhất còn lại.** Thứ tự "xây tầng đo trước tầng sinh"
 vì thế đã bị đảo một nửa: máy viết có rồi, máy đo có rồi, nhưng **thước chưa được neo**. Hệ quả cụ
 thể: 0/33 tell `calibrated` ⇒ trục 5 chỉ được NOTE, không được tạo finding; và ngưỡng trong
-`SCORING_v2.md` vẫn là mốc n=1÷3. Datum hiệu chuẩn số 1 đã có
+ngưỡng trong `CHAM-DIEM.md` vẫn là mốc n=1÷3. Datum hiệu chuẩn số 1 đã có
 (`skills/05d-calibration/references/01-corpus-log.md`), cần ≥5 bài máy từ studio + ≥5 bài chính chủ
 chấm mù bởi model khác trước khi bất kỳ tell nào lên `calibrated`.
 
-Riêng Y4 có một cảnh báo thiết kế phải ghi ngay từ đầu: **Y4 chính là một "humanizer"** — thứ mà
-`references/06` (bài học RAID) chỉ ra là phá được phần lớn detector. Trong cùng một repo, Y4 và Y5
+Riêng Y4 có một cảnh báo thiết kế phải ghi ngay từ đầu: **Y4 chính là một công cụ máy-làm-mượt** —
+thứ mà `references/06` (bài học RAID) chỉ ra là phá được phần lớn detector. Trong cùng một repo, Y4 và Y5
 là hai lưỡi của một con dao. Ranh giới đạo đức: Y4 chỉ chạy trên bản thảo có `draft.meta.json`
 (nguồn gốc tự khai), và output Y4 luôn kèm ghi chú "đã qua stylometric polish" trong metadata —
 studio làm **văn hay hơn**, không làm **dịch vụ né máy chấm**.
@@ -255,21 +259,20 @@ studio làm **văn hay hơn**, không làm **dịch vụ né máy chấm**.
 agent-writing-studio/
 ├─ README.md                          # ✅ viết lại 30/08 cho người không kỹ thuật
 ├─ LICENSE                            # ❌ chưa thêm — MIT là dự định, chưa phải giấy phép có hiệu lực
+├─ index.html                         # ✅ trang giới thiệu tĩnh, mở thẳng bằng trình duyệt
 ├─ .gitignore                         # ✅ .work/ · fixtures/** · *.docx · shared/writers/**
 │
 ├─ docs/
-│  ├─ ARCHITECTURE_v2.md              # ✅ (file này)
+│  ├─ KIEN-TRUC.md                    # ✅ (file này)
+│  ├─ CHAM-DIEM.md                    # ✅ thang S/C + cách đo + mẫu báo cáo (gộp 3 file cũ, 31/08)
 │  ├─ GENRES.md                       # ✅ cách soạn hồ sơ thể loại mới
-│  ├─ SCORING_v2.md                   # ✅ hệ chấm điểm tất định
-│  ├─ REPORT_TEMPLATE_v2.md           # ✅ mẫu báo cáo có S + độ phủ dấu hiệu C
-│  ├─ EVALUATION_v1.md                # ✅ cách đo độ chính xác khi có corpus
 │  ├─ agent-writing-studio.md         # ✅ tầm nhìn gốc của chủ repo
 │  ├─ results/                        # ✅ kết quả đo thật (self-audit-cot-B.md)
 │  └─ plans/                          # ✅ spec · tasks · nhật ký cổng từng đợt
 │
 ├─ shared/
 │  ├─ scripts/
-│  │  ├─ scoring.py                   # ✅ hiện thực SCORING_v2
+│  │  ├─ scoring.py                   # ✅ hiện thực phép cộng của CHAM-DIEM.md
 │  │  ├─ profile_build.py             # ✅ dựng writer profile
 │  │  ├─ check_spans.py               # ✅ cổng 0-token: spans ↔ sentences
 │  │  ├─ evaluate.py                  # ✅ gộp bản ghi đánh giá thành aggregate
@@ -287,8 +290,8 @@ agent-writing-studio/
 │  │     · sang-kien-kinh-nghiem.md                                           (partial, chỉ §5)
 │  ├─ rules/                          # ✅ vi-ai-tells.json · forensics-scoring-v3.json
 │  │                                  #    · forensic-rule-registry.json
-│  └─ writers/                        # ✅ gitignored trừ README + 2 schema
-│     └─ README.md                    # cách dựng profile, luật riêng tư
+│  └─ writers/                        # ✅ CHỈ schema + README; dữ liệu ở station ngoài repo
+│     └─ README.md                    # cách dựng profile, luật riêng tư, hợp đồng station
 │
 ├─ skills/
 │  ├─ 01-context-architect/            # ✅ Y1 — SKILL.md + 4 references
@@ -302,7 +305,7 @@ agent-writing-studio/
 │  ├─ 05d-calibration/                 # ✅ corpus và hiệu chỉnh (có 01-corpus-log.md, datum #1)
 │  └─ writing-studio/                  # ❌ router toàn studio (xây cuối, tuỳ chọn)
 │
-├─ tests/                             # ✅ 314 test: forensics/ · genres/ · shared/ · skills/
+├─ tests/                             # ✅ 338 test: forensics/ · genres/ · shared/ · skills/
 └─ fixtures/                          # ✅ gitignored trừ README; hiện CÒN RỖNG
 ```
 
@@ -313,5 +316,6 @@ agent-writing-studio/
 - Không chạy model ML nặng, không GPU — giữ triết lý v1 (tầng model như VietBinoculars ghi nhận
   ở `references/06` là hướng mở rộng, không phải phần thân).
 - Không tự kết luận kỷ luật ai — mọi cổng Y5 giữ nguyên "người quyết định".
-- Không lưu bài của người thật vào git — `.work/`, `fixtures/`, `shared/writers/` đều gitignored.
+- Không lưu bài của người thật vào git — từ 31/08/2026 chúng nằm hẳn ở station `$WRITING_STUDIO_DATA`
+  ngoài repo; `.work/`, `fixtures/`, `shared/writers/` vẫn gitignored làm lưới an toàn.
 - Không đẻ 25 skill, không đẻ router trước khi 5 skill sống thật.

@@ -6,7 +6,7 @@ và trong đó `machine_written_spans[]` là trường **bắt buộc có mặt*
 
 ---
 
-## 1. Vì sao — luật `§2.5` của `ARCHITECTURE_v2.md`
+## 1. Vì sao — luật `§2.5` của `KIEN-TRUC.md`
 
 Repo này có một trục đi giám định xem văn bản của người khác có phải do máy viết không (trục 5), và
 một trục đi sửa văn cho mượt hơn (trục 4). Hai việc ấy chỉ đứng vững nếu chính studio trả lời được
@@ -18,7 +18,7 @@ về liêm chính*. Đây không phải một dòng thủ tục. Ba hệ quả c
 1. **Không có bản tự khai thì không đo được trục 5.** Bản tự khai là **ground truth** duy nhất repo
    này tự tạo ra được. Trục 5 chấm mù `polished.md`, rồi đối chiếu finding với
    `machine_written_spans[]`: chỗ nào bắt đúng, chỗ nào trượt, chỗ nào báo oan. Không có nó, mọi con
-   số của `SCORING_v2` chỉ là ý kiến.
+   số của `CHAM-DIEM.md` chỉ là ý kiến.
 2. **Người dùng phải biết mình đang nộp cái gì.** Một bản thảo có 40 câu máy viết và một bản có 3
    câu máy viết là hai thứ khác nhau về mặt trách nhiệm học thuật, dù đọc giống nhau.
 3. **Tự khai chặn đúng cái cám dỗ mà repo này tồn tại để chống.** Studio vừa viết hộ vừa xoá dấu vết

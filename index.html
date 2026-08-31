@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>agent-writing-studio — xưởng viết bằng AI agent cho chữ tiếng Việt</title>
+<meta name="description" content="Bộ hướng dẫn cho AI agent viết, phản biện, biên tập và giám định văn bản tiếng Việt: 5 trục quy trình × 9 hồ sơ thể loại.">
+<style>
+  :root{
+    --ink:#1a1d21; --ink-soft:#4a5158; --line:#e2e5ea; --line-soft:#eef0f4;
+    --bg:#ffffff; --bg-soft:#f7f8fa; --accent:#1f4e79; --accent-soft:#eaf0f6;
+    --warn-bg:#fdf6e7; --warn-line:#e6cf9a;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+       font-size:17px;line-height:1.65;}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+  a{color:var(--accent)}
+  code{font-family:var(--mono);font-size:.88em;background:var(--bg-soft);
+       border:1px solid var(--line-soft);border-radius:4px;padding:1px 5px}
+  pre{background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;
+      padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:14px;line-height:1.55}
+  pre code{background:none;border:0;padding:0;font-size:inherit}
+
+  header.hero{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fbfcfd,#fff);
+              padding:72px 0 56px}
+  .hero h1{font-size:2.35rem;line-height:1.2;margin:0 0 .5rem;letter-spacing:-.02em}
+  .hero p.lede{font-size:1.2rem;color:var(--ink-soft);margin:0 0 1.5rem;max-width:62ch}
+  .kicker{display:inline-block;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;
+          color:var(--accent);background:var(--accent-soft);border-radius:999px;
+          padding:4px 12px;margin-bottom:18px;font-weight:600}
+  .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;padding:0;list-style:none}
+  .facts li{border:1px solid var(--line);border-radius:6px;padding:6px 12px;
+            font-size:.9rem;color:var(--ink-soft);background:#fff}
+  .facts b{color:var(--ink)}
+
+  section{padding:52px 0;border-bottom:1px solid var(--line-soft)}
+  section:last-of-type{border-bottom:0}
+  h2{font-size:1.5rem;margin:0 0 .35rem;letter-spacing:-.01em}
+  h2 .num{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:.5rem}
+  h3{font-size:1.08rem;margin:1.9rem 0 .5rem}
+  .sub{color:var(--ink-soft);margin:0 0 1.6rem;max-width:68ch}
+  p{max-width:70ch}
+
+  .tablewrap{overflow-x:auto;margin:1.2rem 0;border:1px solid var(--line);border-radius:8px}
+  table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:520px}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  thead th{background:var(--bg-soft);font-size:.8rem;text-transform:uppercase;
+           letter-spacing:.05em;color:var(--ink-soft);border-bottom:1px solid var(--line)}
+  tbody tr:last-child td{border-bottom:0}
+  td.axis{white-space:nowrap;font-weight:600;color:var(--accent)}
+
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:1.4rem 0}
+  .step{border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:8px;
+        padding:12px 13px;background:#fff}
+  .step .tag{font-family:var(--mono);font-size:.75rem;color:var(--accent);font-weight:700}
+  .step h4{margin:.35rem 0 .3rem;font-size:.98rem}
+  .step p{margin:0;font-size:.84rem;color:var(--ink-soft);line-height:1.5}
+  .step .out{display:block;margin-top:.55rem;font-family:var(--mono);font-size:.73rem;
+             color:var(--ink-soft);border-top:1px dashed var(--line);padding-top:.45rem}
+
+  .gates{margin:1.4rem 0 0;padding-left:1.2rem}
+  .gates li{margin-bottom:.4rem}
+
+  .note{border:1px solid var(--line);border-left:3px solid var(--accent);
+        background:var(--bg-soft);border-radius:0 8px 8px 0;padding:14px 18px;margin:1.4rem 0}
+  .note p{margin:0}
+  .note p + p{margin-top:.7rem}
+  .warn{border:1px solid var(--warn-line);border-left:3px solid #b8860b;background:var(--warn-bg);
+        border-radius:0 8px 8px 0;padding:14px 18px;margin:1.4rem 0}
+  .warn p{margin:0}
+
+  dl.glossary{margin:1.2rem 0 0;display:grid;grid-template-columns:170px 1fr;gap:.55rem 1.2rem}
+  dl.glossary dt{font-weight:600}
+  dl.glossary dd{margin:0;color:var(--ink-soft)}
+
+  footer{background:var(--bg-soft);border-top:1px solid var(--line);padding:40px 0 56px;
+         font-size:.93rem;color:var(--ink-soft)}
+  footer h2{font-size:1.1rem;color:var(--ink);margin-bottom:.6rem}
+  footer ul{list-style:none;padding:0;margin:0 0 1rem}
+  footer li{margin-bottom:.25rem}
+  footer .license{border-top:1px solid var(--line);padding-top:14px;margin-top:18px;font-size:.87rem}
+
+  @media (max-width:760px){
+    body{font-size:16px}
+    .hero{padding:52px 0 40px}
+    .hero h1{font-size:1.85rem}
+    .flow{grid-template-columns:1fr 1fr}
+    dl.glossary{grid-template-columns:1fr;gap:.15rem}
+    dl.glossary dd{margin-bottom:.6rem}
+  }
+  @media (max-width:460px){ .flow{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">Bộ kỹ năng cho AI agent · tiếng Việt</span>
+    <h1>agent-writing-studio</h1>
+    <p class="lede">Một xưởng viết bằng AI agent cho chữ tiếng Việt: từ lúc chưa có chữ nào
+      đến lúc nghiệm thu bản giao — viết, phản biện, biên tập và giám định nguồn gốc, trong cùng
+      một quy trình có ghi vết.</p>
+    <ul class="facts">
+      <li><b>5</b> trục quy trình</li>
+      <li><b>9</b> hồ sơ thể loại</li>
+      <li><b>9</b> skill</li>
+      <li><b>338</b> test</li>
+      <li>chạy CPU, <b>không</b> cần GPU</li>
+    </ul>
+  </div>
+</header>
+
+<main>
+
+<section id="co-che">
+  <div class="wrap">
+    <h2><span class="num">01</span>Cơ chế: 5 trục × 9 hồ sơ thể loại</h2>
+    <p class="sub">Trục dọc là <strong>quy trình</strong> — năm việc phải làm để có một bài tử tế.
+      Trục ngang là <strong>tham số</strong> — thể loại đang viết. Cách chấm một bài luận khác cách
+      chấm một bài blog ở <em>tiêu chí</em>, không khác ở <em>quy trình</em>. Vì vậy tri thức thể loại
+      là <strong>dữ liệu</strong>, không phải code: cả năm trục cùng đọc một nguồn, không trục nào
+      giữ một bản hiểu riêng rồi trôi lệch dần.</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Trục</th><th>Việc của nó</th><th>Đọc mục nào của hồ sơ thể loại</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="axis">Y1 · Bối cảnh</td><td>Phỏng vấn ý đồ, dựng chân dung người viết và độc giả, nạp tài liệu nền</td><td>§1 Ý đồ và độc giả</td></tr>
+          <tr><td class="axis">Y2 · Đồng viết</td><td>Dàn ý ba tầng → duyệt → viết → tự khai câu nào máy viết</td><td>§2 Khung viết</td></tr>
+          <tr><td class="axis">Y3 · Phản biện</td><td>Chấm từng tiêu chí, soi lỗ hổng lập luận và ngụy biện</td><td>§3 Barem chấm</td></tr>
+          <tr><td class="axis">Y4 · Biên tập</td><td>Sửa về phía giọng tác giả, có vùng cấm sửa (số liệu, trích dẫn, thuật ngữ)</td><td>§4 Quy tắc biên tập</td></tr>
+          <tr><td class="axis">Y5 · Giám định</td><td>Đọc mù, chấm dấu hiệu, báo cáo có phản chứng và câu hỏi xác minh</td><td>§5 Chuẩn mực bắt buộc</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Chín hồ sơ thể loại</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Hồ sơ</th><th>Dùng cho</th><th>Mức</th></tr></thead>
+        <tbody>
+          <tr><td><code>blog</code></td><td>Bài chia sẻ chuyên môn, nội dung tìm kiếm</td><td>đủ 5 mục</td></tr>
+          <tr><td><code>essay</code></td><td>Bài luận, bài thi, bài nghị luận</td><td>đủ 5 mục</td></tr>
+          <tr><td><code>research</code></td><td>Bài nghiên cứu, báo cáo khoa học</td><td>đủ 5 mục</td></tr>
+          <tr><td><code>journalism</code></td><td>Tin, bài báo chí, phóng sự</td><td>đủ 5 mục</td></tr>
+          <tr><td><code>novel</code></td><td>Truyện, tiểu thuyết</td><td>đủ 5 mục</td></tr>
+          <tr><td><code>chinh-luan</code></td><td>Bài chính luận, bài bảo vệ nền tảng tư tưởng</td><td>chỉ §5</td></tr>
+          <tr><td><code>de-cuong-nghien-cuu</code></td><td>Đề cương nghiên cứu, thuyết minh đề tài</td><td>chỉ §5</td></tr>
+          <tr><td><code>bao-cao-thuc-tap</code></td><td>Báo cáo thực tập, kiến tập</td><td>chỉ §5</td></tr>
+          <tr><td><code>sang-kien-kinh-nghiem</code></td><td>Sáng kiến kinh nghiệm của giáo viên</td><td>chỉ §5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Bốn hồ sơ cuối là thể loại đặc thù Việt Nam, sinh ra từ việc giám định thật nên mới chỉ khai
+      phần trục 5 cần. Muốn <em>viết</em> chúng thì dùng <code>essay</code> hoặc <code>research</code>
+      và nói rõ phần chuẩn mực thể loại lấy từ hồ sơ nào.</p>
+  </div>
+</section>
+
+<section id="quy-trinh">
+  <div class="wrap">
+    <h2><span class="num">02</span>Quy trình Y1 → Y5</h2>
+    <p class="sub">Năm trục nối nhau bằng <strong>file</strong>, không bằng trí nhớ hội thoại. Mỗi bài
+      một thư mục ca; mỗi giai đoạn đọc sản phẩm của giai đoạn trước và để lại sản phẩm của mình.
+      Đổi agent giữa chừng, đóng máy rồi mở lại, hay giao cho người khác chạy tiếp — chuỗi vẫn liền,
+      vì trạng thái nằm trên đĩa.</p>
+
+    <div class="flow">
+      <div class="step">
+        <span class="tag">Y1</span>
+        <h4>Bối cảnh</h4>
+        <p>Đề bài, luận đề, độc giả, ràng buộc, con trỏ tài liệu nền.</p>
+        <span class="out">→ context.json</span>
+      </div>
+      <div class="step">
+        <span class="tag">Y2</span>
+        <h4>Đồng viết</h4>
+        <p>Dàn ý ba tầng, duyệt xong mới viết văn xuôi.</p>
+        <span class="out">→ draft.md<br>→ draft.meta.json</span>
+      </div>
+      <div class="step">
+        <span class="tag">Y3</span>
+        <h4>Phản biện</h4>
+        <p>Chấm barem thể loại, chỉ chỗ lập luận hổng, xếp việc phải sửa.</p>
+        <span class="out">→ critique.json</span>
+      </div>
+      <div class="step">
+        <span class="tag">Y4</span>
+        <h4>Biên tập</h4>
+        <p>Sửa từng nhát có lý do; thêm hay bớt một dữ kiện là trả lại bản gốc.</p>
+        <span class="out">→ polished.md<br>→ polish.diff.json</span>
+      </div>
+      <div class="step">
+        <span class="tag">Y5</span>
+        <h4>Giám định</h4>
+        <p>Đọc mù, gán nhãn từng câu, báo cáo có phản chứng.</p>
+        <span class="out">→ evidence.json<br>→ report.md</span>
+      </div>
+    </div>
+
+    <p>Một hệ đánh số câu duy nhất (<code>sentences.json</code>) đi suốt chuỗi: Y3, Y4 và Y5 không
+      được tự đếm câu. Đây là hợp đồng, không phải tiện ích — ba hệ đánh số khác nhau trong cùng một
+      ca là cách nhanh nhất để bản tự khai trỏ vào câu không tồn tại.</p>
+
+    <h3>Ba cổng cứng, qua được mới đi tiếp</h3>
+    <ol class="gates">
+      <li>Y1 còn điều kiện chưa gỡ được → <strong>dừng và hỏi</strong>, không chuyển sang Y2.</li>
+      <li>Y2 chưa được duyệt dàn ý → <strong>không viết văn xuôi</strong>.</li>
+      <li>Y4 phát hiện mình đã thêm hoặc bớt một dữ kiện → <strong>trả lại bản gốc</strong>, không sửa tiếp.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="cai-dat">
+  <div class="wrap">
+    <h2><span class="num">03</span>Cài đặt và cách gọi</h2>
+    <p class="sub">Không có nút bấm, không có máy chủ. Bạn chép thư mục skill vào chỗ agent tìm được,
+      rồi nói chuyện với agent bằng tiếng Việt bình thường.</p>
+
+    <h3>Chép skill</h3>
+<pre><code>cp -r skills/* ~/.claude/skills/     # Claude Code
+cp -r skills/* ~/.codex/skills/      # Codex</code></pre>
+<pre><code>Copy-Item -Recurse skills\* $HOME\.claude\skills\    # Windows PowerShell</code></pre>
+
+    <h3>Thư viện Python (tuỳ chọn, đều nhẹ)</h3>
+<pre><code>pip install underthesea python-docx pymupdf jsonschema pyyaml</code></pre>
+    <p>Không cài gì cả thì agent vẫn đọc, vẫn chấm, vẫn báo cáo được — script trong repo là
+      <strong>lớp kiểm chứng</strong>, không phải bộ não. Riêng <code>underthesea</code> đáng cài:
+      tiếng Việt không tách từ bằng khoảng trắng, thiếu nó thì các bộ đếm tự hạ độ tin cậy của chính mình.</p>
+
+    <h3>Nơi để dữ liệu của bạn</h3>
+    <p>Bài của người thật, hồ sơ giọng văn và các ca chạy <strong>không nằm trong repo</strong>.
+      Chúng ở một thư mục riêng trên máy bạn, trỏ bằng một biến môi trường:</p>
+<pre><code>setx WRITING_STUDIO_DATA "$HOME\.writing"</code></pre>
+<pre><code>$WRITING_STUDIO_DATA/
+  writers/&lt;slug&gt;/     hồ sơ giọng + bài mẫu chính chủ
+  audiences/&lt;slug&gt;/   chân dung độc giả
+  work/&lt;slug&gt;/        thư mục từng ca chạy
+  corpus/             bài hiệu chuẩn có provenance
+  out/                bản giao</code></pre>
+    <p>Thứ tự ưu tiên: tham số dòng lệnh → biến môi trường → đường mặc định trong repo. Không đặt
+      biến thì mọi thứ vẫn chạy, chỉ là dữ liệu nằm cạnh mã nguồn.</p>
+
+    <h3>Gọi</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Muốn gì</th><th>Nói với agent</th><th>Trục chạy</th></tr></thead>
+        <tbody>
+          <tr><td>Chuẩn bị viết</td><td><em>“Tôi cần viết một bài luận về X. Dựng bối cảnh giúp tôi trước đã.”</em></td><td>Y1</td></tr>
+          <tr><td>Viết nháp</td><td><em>“Đã có bối cảnh ở thư mục ca. Dựng dàn ý rồi viết nháp.”</em></td><td>Y2</td></tr>
+          <tr><td>Phản biện</td><td><em>“Chấm giúp bài này theo hồ sơ research, chỉ chỗ lập luận hổng.”</em></td><td>Y3</td></tr>
+          <tr><td>Biên tập</td><td><em>“Biên tập bản nháp này, giữ nguyên số liệu và trích dẫn.”</em></td><td>Y4</td></tr>
+          <tr><td>Giám định</td><td><em>“Bài nộp này có dấu hiệu AI viết không? Đọc và báo cáo.”</em></td><td>Y5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Nói rõ thể loại thì tốt; không nói thì agent sẽ hỏi.</p>
+  </div>
+</section>
+
+<section id="dao-duc">
+  <div class="wrap">
+    <h2><span class="num">04</span>Ranh giới đạo đức</h2>
+    <p class="sub">Repo này vừa <strong>viết</strong> vừa <strong>giám định nguồn gốc</strong>, bằng
+      cùng một danh mục dấu hiệu. Đó là xung đột lợi ích có thật — nên nó được đo, không được hứa suông.</p>
+
+    <h3>Phép thử: studio viết một bài 100% bằng máy, rồi chính studio chấm mù</h3>
+    <p>Một bài 994 từ do trục 2 viết trọn, không một chữ nào của người, và tự khai đúng như vậy.
+      Trục 5 chấm <strong>mù</strong> bằng một mô hình khác, chỉ nhìn thấy bản văn:</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Đo cái gì</th><th>Con số</th></tr></thead>
+        <tbody>
+          <tr><td>Điểm dấu hiệu S</td><td><strong>2/100</strong> → nhãn <code>low_signal</code>: không làm gì, không lưu hồ sơ nghi vấn</td></tr>
+          <tr><td>Câu ở mức NOTE (đáng ghi chú)</td><td><strong>2/45 = 4,4%</strong></td></tr>
+          <tr><td>Câu ở mức FLAG (đáng nghi)</td><td><strong>0 = 0%</strong></td></tr>
+          <tr><td>Lớp đếm tự động, không gọi mô hình</td><td><strong>0 tín hiệu</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Con số 4,4% tính trên 45 câu — cách đếm câu tại thời điểm đo. Sau đó một lỗi nuốt câu ngắn đã
+      được sửa và bài có 47 câu; tính lại là 2/47 = 4,3%. Con số gốc được giữ kèm ghi chú thay vì làm
+      tròn cho đẹp.</p>
+
+    <div class="warn">
+      <p><strong>Đọc con số này cho đúng.</strong> Trục 2 tránh đúng danh mục mà trục 5 dùng để soi —
+      một danh sách, dùng theo hai chiều. Văn viết bằng cách tránh danh sách thì danh sách ấy không
+      thấy nó. Trên văn đã đi qua studio, <code>low_signal</code> khi chấm mù là <strong>kết quả kỳ
+      vọng, không phải bằng chứng</strong>. Ai đọc điểm thấp thành “bài này do người viết” là đọc sai.</p>
+    </div>
+
+    <div class="note">
+      <p><strong>Liêm chính đến từ provenance đi theo sản phẩm, không đến từ điểm của máy giám định.</strong>
+      Bản tự khai nguồn gốc — câu nào máy viết, bài đã qua biên tập máy hay chưa — nằm trong
+      <code>draft.meta.json</code> và trong file đi kèm bản giao. Câu hỏi đúng là <em>bản tự khai có
+      khớp với bản văn không</em>, chứ không phải <em>máy có đoán ra được không</em>.</p>
+      <p>Vì thế trục 5 có hai chế độ: <code>blind</code> chỉ thấy bản văn, dùng cho tài liệu từ ngoài;
+      <code>audit</code> được xem bản tự khai <em>sau khi</em> bản đọc mù đã khoá, và trả về
+      <strong>báo cáo liêm chính, không trả về điểm</strong>.</p>
+    </div>
+
+    <h3>Bốn luật không thương lượng</h3>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td class="axis">Không kỷ luật ai</td><td>Mọi kết quả là đầu vào cho một cuộc trao đổi, không phải một phán quyết</td></tr>
+          <tr><td class="axis">Luôn có phản chứng</td><td>Không nghĩ ra được một lời giải thích vô tội cho câu đó thì bỏ nhận định đi</td></tr>
+          <tr><td class="axis">Văn hành chính vốn công thức</td><td>“Trong bối cảnh…”, bố cục “kết quả – tồn tại – phương hướng” là văn phong được dạy trong trường, có trước khi có mô hình ngôn ngữ. Mật độ sáo ngữ đo <em>thể loại</em>, không đo <em>nguồn gốc</em></td></tr>
+          <tr><td class="axis">Không né máy chấm</td><td>Trục 4 chỉ chạy trên bản thảo đã biết nguồn gốc, và mọi bản giao đều mang theo ghi chú “đã qua biên tập máy”</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Hai con số nên nhớ trước khi tin bất kỳ máy dò AI nào: một mô hình lớn khi được giao làm giám
+      định viên nhận đúng 97–100% văn AI nhưng gắn nhầm hơn <strong>95% văn người</strong> thành AI
+      (arXiv 2308.01284); bảy công cụ dò AI thương mại phân loại nhầm <strong>61,22%</strong> bài
+      TOEFL của người không nói tiếng Anh bản ngữ thành AI (arXiv 2304.02819, <em>Patterns</em> 2023).
+      Cả repo này được thiết kế xung quanh hai con số đó.</p>
+  </div>
+</section>
+
+<section id="thuat-ngu">
+  <div class="wrap">
+    <h2><span class="num">05</span>Bảng thuật ngữ</h2>
+    <dl class="glossary">
+      <dt>Agent</dt><dd>Trợ lý AI đọc được file trên máy bạn và chạy được lệnh, không chỉ trò chuyện.</dd>
+      <dt>Skill</dt><dd>Một thư mục có file <code>SKILL.md</code> nói cho agent biết khi nào dùng và làm theo trình tự nào.</dd>
+      <dt>Hồ sơ thể loại</dt><dd>File dữ liệu mô tả một thể loại theo 5 mục, tương ứng 5 trục; cả năm trục cùng đọc một nguồn.</dd>
+      <dt>S — điểm dấu hiệu</dt><dd>0–100, dấu hiệu toàn tài liệu mạnh đến đâu. Không phải xác suất do AI viết.</dd>
+      <dt>C — độ phủ</dt><dd>Phần trăm câu hợp lệ mang dấu hiệu đo được. Không phải “bao nhiêu phần trăm bài do AI viết”.</dd>
+      <dt>FLAG / NOTE</dt><dd>Nhãn câu khi đọc mù: nhiều dấu hiệu hội tụ / một dấu hiệu đơn lẻ.</dd>
+      <dt>Provenance</dt><dd>Bản tự khai nguồn gốc đi kèm bản giao: câu nào máy viết, đã qua biên tập máy hay chưa.</dd>
+      <dt>Đọc mù</dt><dd>Chấm khi chỉ nhìn thấy bản văn, chưa được xem bản tự khai — và phải khoá kết quả trước khi xem.</dd>
+      <dt>Phản chứng</dt><dd>Lời giải thích vô tội cho chính dấu hiệu vừa nêu; thiếu nó thì nhận định chưa hoàn chỉnh.</dd>
+      <dt>Thư mục ca</dt><dd>Một bài một thư mục, chứa toàn bộ sản phẩm trung gian của chuỗi Y1→Y5.</dd>
+    </dl>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>Tác giả</h2>
+    <ul>
+      <li><strong>Nguyễn Quang Đức</strong></li>
+      <li><a href="https://ducnguyen.vn">ducnguyen.vn</a></li>
+      <li><a href="mailto:duc.nguyen@kpim.vn">duc.nguyen@kpim.vn</a></li>
+      <li><a href="mailto:ducnguyen.ams@gmail.com">ducnguyen.ams@gmail.com</a></li>
+    </ul>
+    <p>Tài liệu đầy đủ nằm trong repo: <code>README.md</code> (bản triển khai) ·
+      <code>docs/KIEN-TRUC.md</code> (kiến trúc) · <code>docs/CHAM-DIEM.md</code> (thang điểm, cách đo,
+      mẫu báo cáo) · <code>docs/GENRES.md</code> (soạn hồ sơ thể loại mới).</p>
+    <p class="license">MIT License · Trang này là tài liệu tĩnh, không thu thập dữ liệu và không gọi
+      dịch vụ bên ngoài.</p>
+  </div>
+</footer>
+
+</body>
+</html>

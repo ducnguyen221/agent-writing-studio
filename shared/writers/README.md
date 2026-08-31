@@ -1,8 +1,22 @@
 # Writer baseline — hồ sơ tùy chọn, lưu cục bộ
 
 Writer baseline dùng để chống báo oan khi người viết vốn có thói quen dùng phép đối, thuật ngữ Anh,
-câu dài hoặc công thức nghề nghiệp. Đây là dữ liệu có thể nhận diện cá nhân nên profile và bài mẫu bị
-Git bỏ qua; chỉ file hướng dẫn này được commit.
+câu dài hoặc công thức nghề nghiệp. Đây là dữ liệu có thể nhận diện cá nhân nên **nó không nằm trong
+repo nữa**: thư mục này chỉ giữ schema và hướng dẫn.
+
+## Dữ liệu nằm ở đâu (từ 31/08/2026)
+
+Hồ sơ và bài mẫu sống ở **station** ngoài repo, trỏ bằng biến môi trường `WRITING_STUDIO_DATA`:
+
+```
+$WRITING_STUDIO_DATA/writers/<slug>/profile.yaml
+$WRITING_STUDIO_DATA/writers/<slug>/samples/
+```
+
+Thứ tự ưu tiên của mọi script: **tham số CLI tường minh** (`--samples-dir`, `--out`) → biến
+`WRITING_STUDIO_DATA` → `shared/writers/<slug>/` trong repo. Vế cuối chỉ là lưới an toàn cho người
+clone repo về mà chưa dựng station; `.gitignore` vẫn chặn `shared/writers/**` để một lần đặt nhầm
+chỗ không thành một lần commit nhầm. Dựng station: xem `README.md` trong chính thư mục station.
 
 ## Điều kiện tạo
 
@@ -15,7 +29,7 @@ Git bỏ qua; chỉ file hướng dẫn này được commit.
 
 Từ 30/08/2026, **nguồn chân lý về hình dạng hồ sơ là `writer.schema.json`** trong chính thư mục này,
 và chân dung độc giả là `audience.schema.json`. Hai file đó được commit; `profile.yaml` và `samples/`
-thì không. Dựng hồ sơ bằng:
+thì không — chúng ở station. Dựng hồ sơ bằng:
 
 ```
 python shared/scripts/profile_build.py --writer <slug> --genre <genre>

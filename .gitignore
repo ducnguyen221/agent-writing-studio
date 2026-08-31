@@ -1,5 +1,7 @@
 # DỮ LIỆU BÀI ĐƯỢC GIÁM ĐỊNH — TUYỆT ĐỐI KHÔNG COMMIT
 # Chứa nguyên văn bài của người thật + metadata định danh.
+# Từ 31/08/2026 chỗ ở chính thức của chúng là station ngoài repo ($WRITING_STUDIO_DATA);
+# các dòng dưới đây là LƯỚI AN TOÀN cho ai chạy khi chưa đặt biến, không phải chỗ để dữ liệu.
 .work/
 *.docx
 *.pdf

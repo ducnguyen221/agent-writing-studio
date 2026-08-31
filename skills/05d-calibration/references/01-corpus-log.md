@@ -1,8 +1,9 @@
 # Sổ corpus hiệu chuẩn — datum và kế hoạch
 
-> Chỉ số liệu tổng hợp + `sentence_id`. **Không chép văn bản thật** vào đây (luật `docs/EVALUATION_v1.md`
+> Chỉ số liệu tổng hợp + `sentence_id`. **Không chép văn bản thật** vào đây (luật `docs/CHAM-DIEM.md` phần II
 > và `fixtures/README.md`). Mỗi datum là một dòng của manifest `fixtures/manifest.schema.json` cộng
-> kết quả Y5 tại thời điểm đo; văn bản nằm ở `.work/<case>/` (gitignored).
+> kết quả Y5 tại thời điểm đo; văn bản nằm ở thư mục ca `$WRITING_STUDIO_DATA/work/<case>/`
+> (fallback `.work/<case>/`) — ngoài git.
 
 ## 0. Cách đọc sổ này
 
@@ -31,7 +32,7 @@ Manifest (theo `fixtures/manifest.schema.json`):
 | `ground_truth_level` | `generated_and_logged` |
 | `generator` | `claude-fable-5` (Claude Code) — Y2 viết, Y4 cùng model sửa 9 nhát / 8 câu |
 | `prompt_family` | `studio-cot-b` = Y1 `context.json` → outline 3 tầng → Y2 áp `anti_llm_defaults` của `essay.md` §2 → Y3 → Y4 |
-| `evidence` | `.work/cot-b-ai-baitap/draft.meta.json` (45 span `origin: machine`), `polish.diff.json`, `y5-codex-blind.md` |
+| `evidence` | `<station>/work/cot-b-ai-baitap/draft.meta.json` (45 span `origin: machine`), `polish.diff.json`, `y5-codex-blind.md` |
 | `split` | `dev` |
 | Độ dài | 994 từ · 47 câu thật (`sentences.json` chỉ 45 — xem §1.2) |
 
@@ -121,7 +122,7 @@ cho A1/A2/A4/A5/A6; A3 là `prompt_family` riêng (`bare-prompt`) — chia split
    vào dưới trạng thái `candidate`, **không** tạo finding.
 3. Chạy `ai` trước, `human` sau, cùng một tuần; ghi mỗi datum ngay sau khi chấm.
 4. Kết quả kỳ vọng để ra quyết định: tell nào NOTE ≥ 2/5 bài máy **và** 0/5 bài người → ứng viên corpus
-   thật (≥ 30 + 30 theo `docs/EVALUATION_v1.md`); tell nào NOTE bài người → tắt hoặc chuyển vào
+   thật (≥ 30 + 30 theo `docs/CHAM-DIEM.md` §8); tell nào NOTE bài người → tắt hoặc chuyển vào
    `genre_baseline`. Ở n=5 không kết luận gì về FPR.
 
 ### 2.4 Ghi số, không ghi văn

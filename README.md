@@ -146,7 +146,7 @@ Không có cú pháp lệnh riêng. Nói bằng tiếng Việt, agent tự chọ
 | Muốn gì | Nói với agent | Trục chạy |
 |---|---|---|
 | Chuẩn bị viết | *"Tôi cần viết một bài luận về X. Dựng bối cảnh giúp tôi trước đã."* | Y1 |
-| Viết nháp | *"Đã có `context.json` ở `.work/bai-x/`. Dựng dàn ý rồi viết nháp."* | Y2 |
+| Viết nháp | *"Đã có `context.json` ở thư mục ca `bai-x`. Dựng dàn ý rồi viết nháp."* | Y2 |
 | Phản biện | *"Chấm giúp bài này theo hồ sơ `research`, chỉ chỗ lập luận hổng."* | Y3 |
 | Biên tập | *"Biên tập bản nháp này, giữ nguyên số liệu và trích dẫn."* | Y4 |
 | Giám định | *"Bài nộp này có dấu hiệu AI viết không? Đọc và báo cáo."* | Y5 |
@@ -156,11 +156,12 @@ Nói rõ **thể loại** thì tốt (`essay`, `research`, `blog`, `journalism`,
 
 ### Chạy trọn chuỗi Y1 → Y5
 
-Năm trục nối với nhau bằng **file**, không bằng trí nhớ hội thoại. Mỗi bài một thư mục
-`.work/<tên-ca>/`, mỗi giai đoạn đọc sản phẩm của giai đoạn trước:
+Năm trục nối với nhau bằng **file**, không bằng trí nhớ hội thoại. Mỗi bài một **thư mục ca**:
+`$WRITING_STUDIO_DATA/work/<tên-ca>/` nếu bạn đã dựng station (mục dưới), còn không thì `.work/<tên-ca>/`
+ngay trong thư mục đang làm việc. Mỗi giai đoạn đọc sản phẩm của giai đoạn trước:
 
 ```
-.work/bai-cua-toi/
+<thư-mục-ca>/bai-cua-toi/
 ├─ context.json                 Y1 → đề bài, luận đề, chân dung độc giả, con trỏ tài liệu nền
 ├─ draft.md                     Y2 → bản nháp
 ├─ draft.meta.json              Y2 → tự khai: câu nào máy viết, dàn ý đã duyệt chưa
@@ -173,7 +174,27 @@ Năm trục nối với nhau bằng **file**, không bằng trí nhớ hội tho
 └─ report.md                    báo cáo cho người đọc
 ```
 
-`.work/` **không bao giờ được commit** — nó chứa bài của người thật. `.gitignore` đã chặn sẵn.
+**Bài của người thật không nằm trong repo.** Từ 31/08/2026 dữ liệu cá nhân của studio — hồ sơ giọng
+người viết, bài mẫu, các ca chạy, corpus — ở một **station** riêng ngoài repo, trỏ bằng biến môi
+trường `WRITING_STUDIO_DATA`:
+
+```powershell
+# Windows, đặt một lần cho tài khoản (mở cửa sổ mới sau khi chạy)
+setx WRITING_STUDIO_DATA "$HOME\.writing"
+```
+
+```
+$WRITING_STUDIO_DATA/
+  writers/<slug>/     hồ sơ giọng + bài mẫu chính chủ
+  audiences/<slug>/   chân dung độc giả
+  work/<slug>/        thư mục từng ca chạy
+  corpus/             bài hiệu chuẩn có provenance
+  out/                bản giao
+```
+
+Thứ tự ưu tiên của mọi script: **tham số dòng lệnh** → `WRITING_STUDIO_DATA` → đường mặc định cũ
+trong repo (`shared/writers/`, `./.work/`). Không đặt biến thì repo vẫn chạy được — `.gitignore`
+vẫn chặn `.work/`, `fixtures/` và `shared/writers/**` làm lưới an toàn.
 
 Ba cổng cứng trong chuỗi, qua được mới đi tiếp:
 
@@ -207,27 +228,29 @@ agent-writing-studio/
 │  ├─ schemas/                    5 schema JSON: context · draft · critique · polish · provenance
 │  ├─ rules/                      quy tắc máy đọc được: 33 dấu hiệu tiếng Việt, bảng chấm điểm
 │  ├─ scripts/                    script dùng lại: đo, đối chiếu, dựng hồ sơ người viết
-│  └─ writers/                    hồ sơ giọng văn của người thật — GITIGNORED, chỉ commit hướng dẫn
+│  └─ writers/                    CHỈ schema + hướng dẫn; hồ sơ người thật ở station ngoài repo
 │
-├─ tests/                       314 test — canh cấu trúc skill, hình dạng dữ liệu, liên kết
+├─ tests/                       338 test — canh cấu trúc skill, hình dạng dữ liệu, liên kết
 │  ├─ forensics/                  hành vi trục 5 (có từ bản v1)
 │  ├─ genres/                     hồ sơ thể loại đúng schema, slug khớp hai chiều
 │  ├─ shared/                     schema, quy tắc, hàng rào de-name
 │  └─ skills/                     bốn trục viết + kịch bản nghiệm thu dạng văn bản
 │
+├─ index.html                   trang giới thiệu tĩnh — mở thẳng bằng trình duyệt
+│
 ├─ docs/
-│  ├─ ARCHITECTURE_v2.md          kiến trúc: vì sao 5 skill chứ không 25, ai đọc gì của ai
+│  ├─ KIEN-TRUC.md                kiến trúc: vì sao 5 skill chứ không 25, ai đọc gì của ai
+│  ├─ CHAM-DIEM.md                thang điểm S và C, cách đo thang đó, mẫu báo cáo giám định
 │  ├─ GENRES.md                   cách soạn một hồ sơ thể loại mới
-│  ├─ SCORING_v2.md               hệ chấm điểm S và C, bảng ánh xạ số đo → điểm
-│  ├─ REPORT_TEMPLATE_v2.md       mẫu báo cáo giám định
-│  ├─ EVALUATION_v1.md            cách đo độ chính xác khi đã có bộ bài mẫu
 │  ├─ agent-writing-studio.md     tầm nhìn gốc của chủ repo (ma trận 5×5)
 │  ├─ results/                    kết quả đo có thật, không phải ví dụ minh hoạ
 │  └─ plans/                      hồ sơ từng đợt làm: spec, task, nhật ký cổng
 │
-├─ fixtures/                    bộ bài mẫu để hiệu chuẩn — GITIGNORED, hiện còn rỗng
-└─ .work/                       thư mục làm việc từng ca — GITIGNORED, chứa bài người thật
+└─ fixtures/                    bộ bài mẫu để hiệu chuẩn — GITIGNORED, hiện còn rỗng
 ```
+
+Thư mục ca (`work/`), hồ sơ người viết và corpus **không có trong cây này** — chúng ở station
+`$WRITING_STUDIO_DATA` ngoài repo, xem mục 3.
 
 ---
 
@@ -350,7 +373,7 @@ bất cứ con số nào** ở trên.
    đo trên bài có nguồn gốc biết trước) và 1 `needs_corpus` (chưa đủ cơ sở để viết cả ví dụ). Theo
    luật của chính repo, **trục 5 không được dùng dấu hiệu `candidate` để tạo nghi vấn** — nên khi
    chưa có bộ mẫu, trục 5 chỉ ghi chú chứ không kết luận. `fixtures/` hiện còn rỗng, và ngưỡng trong
-   `SCORING_v2.md` là **mốc tham chiếu với n rất nhỏ (1–3 văn bản)**, không phải phân vị của một
+   `docs/CHAM-DIEM.md` là **mốc tham chiếu với n rất nhỏ (1–3 văn bản)**, không phải phân vị của một
    cohort thật.
 
 2. **Hồ sơ giọng người viết chưa dựng xong.** `profile_build.py` cần **≥3 bài đã xác nhận chính chủ**
@@ -377,9 +400,18 @@ python -m pytest tests/ -q
 python -m unittest discover -s tests -t .
 ```
 
-Cả hai cùng cho **314 passed**. Test không kiểm "văn hay"; nó kiểm những thứ hỏng thì im lặng: skill
+Cả hai cùng cho **338 passed**. Test không kiểm "văn hay"; nó kiểm những thứ hỏng thì im lặng: skill
 có đúng tên và ≤550 từ không, hồ sơ thể loại có đủ mục không, slug thể loại có khớp hai chiều không,
 liên kết nội bộ có gãy không, nguồn ngoài có bị ghi sai license không.
+
+---
+
+## 10. Tác giả
+
+**Nguyễn Quang Đức** · [ducnguyen.vn](https://ducnguyen.vn) · duc.nguyen@kpim.vn · ducnguyen.ams@gmail.com
+
+**Trang web giới thiệu:** mở `index.html` ở thư mục gốc bằng trình duyệt, hoặc xem bản đã đăng qua
+GitHub Pages.
 
 ---
 

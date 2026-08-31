@@ -5,7 +5,7 @@ phát hiện được nếu chúng vỡ:
 
 1. **Không có `context.json` thì không viết.** Bỏ luật này là bỏ luôn trục 1: skill sẽ tự phỏng
    vấn qua loa rồi viết, và bài ra đời từ một bối cảnh không ai duyệt.
-2. **`draft.meta.json` với `machine_written_spans[]` là bắt buộc** (`ARCHITECTURE_v2.md` §2.5).
+2. **`draft.meta.json` với `machine_written_spans[]` là bắt buộc** (`KIEN-TRUC.md` §2.5).
    Đây là bản tự khai của chính studio, và là ground truth duy nhất để đo trục 5. Mất nó thì
    repo mất tư cách nói về liêm chính.
 3. **Chống khuôn áp NGAY KHI SINH.** `anti_llm_defaults[]` của §2 phải có mặt đủ trong

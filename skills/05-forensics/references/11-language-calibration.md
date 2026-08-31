@@ -35,7 +35,7 @@ Danh sách “AI words” ngoại ngữ không đạt cổng này.
 - Human fixture phải có bằng chứng nguồn gốc; AI fixture phải ghi model/prompt; mixed fixture phải có
   thao tác biên tập và span.
 - Đo false positive trước: nếu rule thường xuyên gắn cờ văn người thật, hạ trọng số hoặc loại rule.
-- Chỉ thu hẹp khoảng S/C theo [giao thức đánh giá](../../../docs/EVALUATION_v1.md), không theo cảm giác.
+- Chỉ thu hẹp khoảng S/C theo [giao thức đánh giá](../../../docs/CHAM-DIEM.md), không theo cảm giác.
 
 ## 4. Ranh giới ngôn ngữ báo cáo
 

@@ -6,9 +6,12 @@ profile_build.py — dựng writer profile từ bài chính chủ. KHÔNG gọi 
     python profile_build.py --writer duc-nguyen
     python profile_build.py --writer duc-nguyen --samples-dir /duong/dan/khac --dry-run
 
-Đọc mọi file `.txt` / `.md` / `.docx` trong `shared/writers/<slug>/samples/`, đo từng bài
+Đọc mọi file `.txt` / `.md` / `.docx` trong `<writers>/<slug>/samples/`, đo từng bài
 bằng `vi_segment.py` + `counters.py` của trục 5, rồi lấy **trung vị** làm vân tay. Xuất
-`shared/writers/<slug>/profile.yaml` theo `shared/writers/writer.schema.json`.
+`<writers>/<slug>/profile.yaml` theo `shared/writers/writer.schema.json`.
+
+`<writers>` = `$WRITING_STUDIO_DATA/writers/` nếu biến môi trường đó có, ngược lại
+`shared/writers/` trong repo. `--samples-dir` / `--out` tường minh luôn thắng cả hai.
 
 Ba luật của script này, đọc trước khi sửa:
 
@@ -27,9 +30,9 @@ Mã thoát: 0 = dựng xong · 1 = dựng xong nhưng có cảnh báo (thiếu b
 import argparse
 import hashlib
 import importlib.util
+import os
 import re
 import statistics
-import sys
 import sys
 from datetime import date
 from pathlib import Path
@@ -38,7 +41,23 @@ TOOL_VERSION = "profile_build.py 1.0"
 
 ROOT = Path(__file__).resolve().parents[2]
 FORENSICS_SCRIPTS = ROOT / "skills/05-forensics/scripts"
-WRITERS_DIR = ROOT / "shared/writers"
+
+# Đường mặc định trong repo. Chỉ dùng khi KHÔNG có station: người ngoài clone repo về vẫn chạy được.
+REPO_WRITERS_DIR = ROOT / "shared/writers"
+STATION_ENV = "WRITING_STUDIO_DATA"
+
+
+def writers_dir() -> Path:
+    """Thư mục hồ sơ người viết.
+
+    Thứ tự: tham số CLI tường minh (xử lý ở `main`) > station `$WRITING_STUDIO_DATA/writers` >
+    `shared/writers/` trong repo. Đọc env tại LÚC GỌI chứ không phải lúc nạp module, để test
+    monkeypatch được và để một tiến trình đổi env giữa chừng vẫn đúng.
+    """
+    station = (os.environ.get(STATION_ENV) or "").strip()
+    if station:
+        return Path(station) / "writers"
+    return REPO_WRITERS_DIR
 
 EXIT_OK, EXIT_WARN, EXIT_FAIL = 0, 1, 2
 
@@ -302,7 +321,8 @@ def main():
     parser = argparse.ArgumentParser(
         description="Dựng writer profile từ bài chính chủ. Không in nội dung bài."
     )
-    parser.add_argument("--writer", required=True, help="Slug thư mục trong shared/writers/")
+    parser.add_argument("--writer", required=True,
+                        help="Slug thư mục trong $WRITING_STUDIO_DATA/writers/ (fallback shared/writers/)")
     parser.add_argument("--samples-dir", help="Ghi đè đường dẫn samples/ (mặc định theo slug)")
     parser.add_argument("--out", help="Ghi đè đường dẫn profile.yaml")
     parser.add_argument("--language", default="vi")
@@ -316,7 +336,8 @@ def main():
     args = parser.parse_args()
 
     slug = args.writer
-    samples_dir = Path(args.samples_dir) if args.samples_dir else WRITERS_DIR / slug / "samples"
+    base_dir = writers_dir()
+    samples_dir = Path(args.samples_dir) if args.samples_dir else base_dir / slug / "samples"
     paths = collect_samples(samples_dir)
     if not paths:
         print(f"Không tìm thấy bài mẫu nào trong {samples_dir}", file=sys.stderr)
@@ -332,7 +353,7 @@ def main():
             print(f"  ! {line}", file=sys.stderr)
         return EXIT_FAIL
 
-    out_path = Path(args.out) if args.out else WRITERS_DIR / slug / "profile.yaml"
+    out_path = Path(args.out) if args.out else base_dir / slug / "profile.yaml"
     text = to_yaml(profile)
     if not args.dry_run:
         out_path.parent.mkdir(parents=True, exist_ok=True)

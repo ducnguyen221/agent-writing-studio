@@ -36,7 +36,7 @@ Skill này viết **cùng người**, không viết **thay người**.
 ## Luật không được đảo
 
 - **`machine_written_spans[]` là bắt buộc.** Được rỗng — rỗng là một khẳng định, không phải chỗ
-  trống. Studio không tự khai thì mất tư cách nói về liêm chính (`ARCHITECTURE_v2.md` `§2.5`).
+  trống. Studio không tự khai thì mất tư cách nói về liêm chính (`KIEN-TRUC.md` `§2.5`).
 - **Không viết prose trước khi outline được duyệt.** Chưa duyệt mà vẫn cần bản thăm dò thì
   `outline_approved: false`, và bản đó không được nộp.
 - **Không đặt lại luận đề.** `thesis_one_sentence` không phản bác được thì trả về trục 1.

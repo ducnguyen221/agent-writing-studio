@@ -2,13 +2,13 @@
 
 Trục 1 **đọc** kho tri thức cá nhân và thư mục dự án để dựng bối cảnh, nhưng **không copy nội dung**
 vào repo. `context.json` chỉ ghi **con trỏ**: đường dẫn, một đoạn trích ngắn, và lý do liên quan.
-Nguồn luật: `docs/ARCHITECTURE_v2.md` §2.3.
+Nguồn luật: `docs/KIEN-TRUC.md` §2.3.
 
 Ba lý do, mỗi lý do đủ mạnh một mình:
 
 1. **Một fact, một nơi canonical.** Chép sang đây là đẻ ra bản sao thứ hai sẽ lệch với bản gốc.
 2. **Riêng tư.** Kho cá nhân có thứ không được vào một repo có thể công khai — và `context.json`
-   nằm trong `.work/`, thứ đi qua tay nhiều công cụ.
+   nằm trong thư mục ca, thứ đi qua tay nhiều công cụ.
 3. **Bản quyền.** Tài liệu trong kho thường không phải của người dùng.
 
 ## Tìm Brain ở đâu

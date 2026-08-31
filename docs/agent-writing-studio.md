@@ -1,5 +1,5 @@
 > **Vision gốc của chủ repo — giữ nguyên làm nguồn tham chiếu. Bản triển khai thật xem `README.md`**
-> (và `ARCHITECTURE_v2.md` cho phần kiến trúc): repo hiện thực ma trận này bằng **5 skill × 9 hồ sơ
+> (và `KIEN-TRUC.md` cho phần kiến trúc): repo hiện thực ma trận này bằng **5 skill × 9 hồ sơ
 > thể loại**, không phải 25 skill; `studio_engine.py` ở mục V dưới đây là **phác thảo minh hoạ**,
 > chưa bao giờ là code đang chạy trong repo.
 

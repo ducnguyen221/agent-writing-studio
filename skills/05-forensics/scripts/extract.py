@@ -3,14 +3,17 @@
 """
 extract.py — Bước 0: trích văn bản + metadata, gán ID/offset cho từng câu.
 
-    python extract.py "bai.docx" --out .work/
+    python extract.py "bai.docx" --out <thư-mục-ca>/
 
-Sinh: .work/text.txt · .work/meta.json · .work/sentences.json
+Sinh: <ca>/text.txt · <ca>/meta.json · <ca>/sentences.json
+
+Không truyền `--out` thì ghi vào `$WRITING_STUDIO_DATA/work/` nếu biến đó có, ngược lại `./.work`
+trong thư mục đang đứng.
 
 Phụ thuộc: python-docx (cho .docx), pymupdf (cho .pdf). Cả hai TÙY CHỌN —
 thiếu thì chỉ xử lý được .txt.
 """
-import argparse, importlib.util, json, re, sys, zipfile
+import argparse, importlib.util, json, os, re, sys, zipfile
 from pathlib import Path
 
 _VI_SEGMENT_PATH = Path(__file__).with_name("vi_segment.py")
@@ -98,12 +101,29 @@ def sentences(text):
     assert_full_coverage(text, out)
     return out
 
+STATION_ENV = "WRITING_STUDIO_DATA"
+REPO_WORK_DIR = Path(".work")
+
+
+def default_work_dir() -> Path:
+    """Thư mục ca chạy mặc định: station `$WRITING_STUDIO_DATA/work` > `./.work` trong repo.
+
+    Đọc env lúc gọi, không phải lúc nạp module (test monkeypatch được). `--out` luôn thắng.
+    """
+    station = (os.environ.get(STATION_ENV) or "").strip()
+    if station:
+        return Path(station) / "work"
+    return REPO_WORK_DIR
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("path")
-    ap.add_argument("--out", default=".work")
+    ap.add_argument("--out", default=None,
+                    help="thư mục ca chạy (mặc định: $WRITING_STUDIO_DATA/work, fallback ./.work)")
     a = ap.parse_args()
-    p, out = Path(a.path), Path(a.out)
+    p = Path(a.path)
+    out = Path(a.out) if a.out else default_work_dir()
     out.mkdir(parents=True, exist_ok=True)
     ext = p.suffix.lower()
     if ext == ".docx":

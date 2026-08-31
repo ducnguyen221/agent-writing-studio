@@ -205,7 +205,7 @@
       },
       "then": {
         "properties": { "status": { "const": "draft" } },
-        "$comment": "Dưới 3 bài mốc thì hồ sơ chỉ ở trạng thái draft — luật của shared/writers/README.md và ARCHITECTURE_v2 §2.2."
+        "$comment": "Dưới 3 bài mốc thì hồ sơ chỉ ở trạng thái draft — luật của shared/writers/README.md và KIEN-TRUC §2.2."
       }
     },
     {
