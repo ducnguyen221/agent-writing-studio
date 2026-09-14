@@ -5,8 +5,8 @@ authors:
   - family-names: "Nguyễn"
     given-names: "Quang Đức"
     website: "https://ducnguyen.vn"
-version: 0.1.2
-date-released: "2026-08-31"
+version: 0.2.1
+date-released: "2026-09-14"
 url: "https://github.com/ducnguyen221/agent-writing-studio"
 repository-code: "https://github.com/ducnguyen221/agent-writing-studio"
 license: MIT

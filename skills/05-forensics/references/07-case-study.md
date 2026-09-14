@@ -90,6 +90,6 @@ Ba trụ:
    đồng thuận thành ground truth; bằng chứng quy trình vẫn quan trọng hơn.
 
 ⚠️ **Giới hạn của ca này:** n = 1. Agent đọc có thể thiên lệch về phía gắn cờ AI
-(xem `03-chong-bao-oan.md` mục 1). Việc giả thuyết của nó khớp nhiều quan sát hơn trong ca này
+(xem `03-false-positive-guard.md` mục 1). Việc giả thuyết của nó khớp nhiều quan sát hơn trong ca này
 **không chứng minh** nó đúng hoặc sẽ luôn đúng.
 Đó là lý do skill bắt buộc phản chứng và chỉ dùng script/model như lớp đối chứng tùy chọn.

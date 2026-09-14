@@ -70,7 +70,7 @@
     },
     "profile_used": {
       "type": ["string", "null"],
-      "description": "Slug writer profile đã dùng, hoặc null nếu viết theo giọng mặc định thể loại."
+      "description": "Slug hoặc đường tương đối của hồ sơ giọng đã dùng — đúng chuỗi writer_profile_ref của context.json; phân giải cùng thứ tự (kho tri thức OPCOS_BRAIN_PATH → station WRITING_STUDIO_DATA → repo). null = viết theo giọng mặc định thể loại."
     },
     "self_checks": {
       "type": "array",

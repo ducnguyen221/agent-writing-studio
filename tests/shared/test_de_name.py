@@ -5,7 +5,7 @@ Luật một câu: repo này chưng cất PHƯƠNG PHÁP rồi tự viết lại
 rào chống tên bò ngược vào qua một lần "cải tiến" sau này — thay cho bộ test provenance
 cũ vốn đọc `upstream.json` và `vendor-notes/` đã dời đi.
 
-Ngoại lệ DUY NHẤT: `skills/04-humanizer/assets/thanh-ngu.json` là nguồn duy nhất ta MANG
+Ngoại lệ DUY NHẤT: `skills/04-humanizer/assets/idioms.json` là nguồn duy nhất ta MANG
 DỮ LIỆU. License MIT bắt buộc giữ copyright notice + permission notice khi phân phối, nên
 tên nguồn ở file đó là NGHĨA VỤ PHÁP LÝ, không phải lựa chọn — và test dưới đây bắt nó
 phải còn.
@@ -29,7 +29,7 @@ EXCLUDED_PREFIXES = ("docs/plans/", "docs/results/")
 SCANNED_SUFFIXES = {".md", ".json", ".py", ".txt", ".yaml", ".yml"}
 
 # Ngoại lệ pháp lý: file mang DỮ LIỆU cấp phép MIT, notice bắt buộc phải ở lại.
-MIT_DATA_FILE = "skills/04-humanizer/assets/thanh-ngu.json"
+MIT_DATA_FILE = "skills/04-humanizer/assets/idioms.json"
 
 # Needle được ĐẢO CHUỖI (s[::-1]) rồi giải lúc chạy — để chính file test này không bày
 # tên nguồn ra cây public. Muốn đọc: python -c "print('<needle>'[::-1])".
@@ -75,10 +75,29 @@ BANNED_BARE = tuple(
     )
 )
 
+# Tên riêng của CHỦ REPO và thương hiệu của người đó. Khác nhóm trên ở chỗ: nhóm trên chặn tên
+# repo NGUỒN bò vào, nhóm này chặn tên NGƯỜI bò vào. Cây public phải dùng được cho bất kỳ ai,
+# nên slug ví dụ là `writer-a`, không phải tên thật. Tác quyền ở LICENSE/CITATION và mục liên hệ
+# của README là hợp lệ và không nằm trong danh sách này.
+BANNED_PERSONAL = tuple(
+    _d(s)
+    for s in (
+        "neyugn-cud",
+        "iboT",
+        "ssalCAPMOC",
+        "IAgnuCcoH",
+        # Đường kho tri thức của chủ repo (thêm 14/09/2026): repo chỉ được nói "kho tri thức cá nhân".
+        "anosrep_10",
+        "fles_00",
+        "ia-neyugncud",
+        "atad_eciov",
+    )
+)
+
 # Con trỏ sang sổ nguồn đã dời khỏi repo.
 BANNED_POINTERS = ("vendor-notes/", "upstream.json", "06-distill-repo")
 
-BANNED = tuple(BANNED_SLUGS) + tuple(BANNED_BARE) + tuple(BANNED_POINTERS)
+BANNED = tuple(BANNED_SLUGS) + tuple(BANNED_BARE) + tuple(BANNED_PERSONAL) + tuple(BANNED_POINTERS)
 
 # Sổ nguồn phải KHÔNG còn trong repo (đã dời về xưởng OpcOS 31/08/2026).
 MOVED_OUT = (
@@ -152,7 +171,7 @@ class DeNameFenceTests(unittest.TestCase):
     def test_mit_data_file_keeps_its_notice(self):
         """Không giữ notice là VI PHẠM LICENSE, không phải một lựa chọn sạch hơn."""
         data = json.loads((ROOT / MIT_DATA_FILE).read_text(encoding="utf-8"))
-        self.assertIn("attribution", data, "thanh-ngu.json thiếu khối attribution")
+        self.assertIn("attribution", data, "idioms.json thiếu khối attribution")
         attribution = data["attribution"]
         for key in ("source_repo", "license", "copyright_notice", "license_notice"):
             self.assertIn(key, attribution, f"attribution thiếu {key} — MIT bắt buộc giữ")

@@ -26,7 +26,7 @@
     {
       "source": "studio:catalog#14",
       "name": "em dash / en dash",
-      "why": "Tín hiệu tiếng Anh. Đo trong ca giám định thật: 0 lần ở cả bài người lẫn bài máy tiếng Việt. Xem 03-chong-bao-oan §6."
+      "why": "Tín hiệu tiếng Anh. Đo trong ca giám định thật: 0 lần ở cả bài người lẫn bài máy tiếng Việt. Xem 03-false-positive-guard §6."
     },
     {
       "source": "studio:catalog#15",
@@ -41,7 +41,7 @@
     {
       "source": "studio:catalog#19",
       "name": "ngoặc kép cong",
-      "why": "Word tự chuẩn hoá dấu nháy khi lưu. Đã bị bác bằng thực đo, xem 03-chong-bao-oan §6."
+      "why": "Word tự chuẩn hoá dấu nháy khi lưu. Đã bị bác bằng thực đo, xem 03-false-positive-guard §6."
     },
     {
       "source": "studio:catalog#26",
@@ -56,14 +56,14 @@
       "name": "thoi_phong_tam_quan_trong",
       "label": "Thổi phồng tầm quan trọng",
       "what": "Gán tầm vóc thời đại hoặc quốc gia cho chủ đề ngay câu đầu, thay cho một lý do cụ thể vì sao chủ đề đáng bàn.",
-      "warning": "'Trong bối cảnh…' là câu mở CHUẨN được dạy cho báo cáo, đề cương, sáng kiến kinh nghiệm (03-chong-bao-oan §2 liệt kê đích danh) và cho bài nghị luận trong nhà trường. Ở các thể loại trong genre_baseline, câu mở toàn cảnh không phải tín hiệu; trục 4 chỉ được bơm lý do cụ thể vào SAU câu mở, không xoá câu mở. LƯU Ý về `essay`: baseline này chỉ có nghĩa 'không tính là dấu hiệu nguồn gốc, không phá khung' — essay.md §2 vẫn CẤM SINH ra câu mở toàn cảnh. Cấm-khi-sinh (§2) và hạ-tín-hiệu (§5) là hai việc khác nhau, xem 02-cowriter/references/04-chong-khuon-llm.md mục 5.",
+      "warning": "'Trong bối cảnh…' là câu mở CHUẨN được dạy cho báo cáo, đề cương, sáng kiến kinh nghiệm (03-false-positive-guard §2 liệt kê đích danh) và cho bài nghị luận trong nhà trường. Ở các thể loại trong genre_baseline, câu mở toàn cảnh không phải tín hiệu; trục 4 chỉ được bơm lý do cụ thể vào SAU câu mở, không xoá câu mở. LƯU Ý về `essay`: baseline này chỉ có nghĩa 'không tính là dấu hiệu nguồn gốc, không phá khung' — essay.md §2 vẫn CẤM SINH ra câu mở toàn cảnh. Cấm-khi-sinh (§2) và hạ-tín-hiệu (§5) là hai việc khác nhau, xem 02-cowriter/references/04-anti-llm-patterns.md mục 5.",
       "vi_example": "Trong bối cảnh cuộc cách mạng công nghiệp lần thứ tư đang diễn ra mạnh mẽ, kỹ năng đọc dữ liệu đã trở thành yếu tố sống còn quyết định vị thế của mỗi quốc gia.",
       "vi_counterexample": "Năm nay 7 trong 12 tin tuyển dụng của phòng kinh doanh yêu cầu đọc được báo cáo trên hệ thống, ba năm trước chưa tin nào yêu cầu. — Cũng là khẳng định tầm quan trọng, nhưng đỡ bằng một phép đếm tác giả kiểm được.",
       "genre_baseline": [
-        "chinh-luan",
-        "bao-cao-thuc-tap",
-        "sang-kien-kinh-nghiem",
-        "de-cuong-nghien-cuu",
+        "commentary",
+        "internship-report",
+        "teaching-initiative",
+        "thesis-proposal",
         "essay"
       ],
       "fix": "Cắt mệnh đề toàn cảnh, thay bằng phạm vi cụ thể tác giả kiểm được. Không có phạm vi nào thì hạ giọng xuống mức 'ở đơn vị tôi'.",
@@ -141,13 +141,13 @@
       "name": "muc_thach_thuc_trien_vong_cong_thuc",
       "label": "Mục thách thức và triển vọng công thức",
       "what": "Mục cuối bài theo khuôn 'bên cạnh kết quả đạt được vẫn còn tồn tại… trong thời gian tới cần…', trong đó cả hạn chế lẫn phương hướng đều rỗng.",
-      "warning": "ĐÂY LÀ BỐ CỤC BẮT BUỘC của báo cáo, tờ trình và sáng kiến kinh nghiệm ở Việt Nam, có trước khi có mô hình ngôn ngữ. Sự hiện diện của mục này KHÔNG BAO GIỜ là tín hiệu; chỉ nội dung rỗng bên trong mới đáng nói. Xem 03-chong-bao-oan §2.",
+      "warning": "ĐÂY LÀ BỐ CỤC BẮT BUỘC của báo cáo, tờ trình và sáng kiến kinh nghiệm ở Việt Nam, có trước khi có mô hình ngôn ngữ. Sự hiện diện của mục này KHÔNG BAO GIỜ là tín hiệu; chỉ nội dung rỗng bên trong mới đáng nói. Xem 03-false-positive-guard §2.",
       "vi_example": "Bên cạnh những kết quả đạt được, vẫn còn tồn tại một số hạn chế nhất định. Trong thời gian tới, cần tiếp tục đẩy mạnh và nâng cao hơn nữa hiệu quả của công tác này.",
       "vi_counterexample": "Bên cạnh kết quả đạt được, hai lớp thí điểm vẫn thiếu máy chiếu nên phải học chay ba buổi. Học kỳ tới, phòng thiết bị đã xếp lịch mua bổ sung trong tháng 10. — Cùng khung, nhưng hạn chế và phương hướng đều cụ thể và kiểm được.",
       "genre_baseline": [
-        "bao-cao-thuc-tap",
-        "sang-kien-kinh-nghiem",
-        "chinh-luan"
+        "internship-report",
+        "teaching-initiative",
+        "commentary"
       ],
       "fix": "Giữ nguyên khung nếu thể loại đòi hỏi. Chỉ bơm nội dung: mỗi 'hạn chế' phải chỉ ra được một việc cụ thể, mỗi 'phương hướng' phải có người làm và mốc thời gian.",
       "status": "candidate",
@@ -178,14 +178,14 @@
       "name": "dong_vai_tro_la_so_huu",
       "label": "Cụm rỗng thay cho động từ thật",
       "what": "Cụm rỗng đứng thay động từ: 'đóng vai trò là', 'sở hữu', 'mang trong mình'. LƯU Ý: trong tiếng Việt việc lược chữ 'là' là ngữ pháp bình thường — không được áp luật 'tránh động từ to be' của tiếng Anh.",
-      "warning": "'Đóng vai trò quan trọng' là cụm chuẩn của văn hành chính–học thuật Việt Nam (03-chong-bao-oan §2). Ở các thể loại trong genre_baseline chỉ sửa khi cụm đứng thay cho một động từ cụ thể có sẵn trong câu; không sửa vì 'nghe giống máy'.",
+      "warning": "'Đóng vai trò quan trọng' là cụm chuẩn của văn hành chính–học thuật Việt Nam (03-false-positive-guard §2). Ở các thể loại trong genre_baseline chỉ sửa khi cụm đứng thay cho một động từ cụ thể có sẵn trong câu; không sửa vì 'nghe giống máy'.",
       "vi_example": "Nền tảng này sở hữu một hệ thống báo cáo mạnh mẽ và đóng vai trò là cầu nối giữa dữ liệu và người ra quyết định.",
       "vi_counterexample": "Ông Nam sở hữu hai cửa hàng ở quận 7. — 'Sở hữu' đúng nghĩa pháp lý là dùng chuẩn; chỉ cụm 'sở hữu + tính chất trừu tượng' mới rỗng.",
       "genre_baseline": [
-        "chinh-luan",
-        "bao-cao-thuc-tap",
-        "sang-kien-kinh-nghiem",
-        "de-cuong-nghien-cuu"
+        "commentary",
+        "internship-report",
+        "teaching-initiative",
+        "thesis-proposal"
       ],
       "fix": "Thay bằng động từ thật, KHÔNG đổi nghĩa tính từ: 'sở hữu một hệ thống báo cáo mạnh mẽ' thành 'có hệ thống báo cáo mạnh'; 'đóng vai trò là cầu nối giữa A và B' thành 'nối A với B'.",
       "status": "candidate",
@@ -221,9 +221,9 @@
       "vi_example": "Chuyển đổi số đòi hỏi sự quyết tâm, đồng lòng và chung sức của toàn thể cán bộ, giảng viên và sinh viên.",
       "vi_counterexample": "Đề án cần ba thứ: 1,2 tỷ đồng, một phòng máy 40 chỗ, và một kỹ thuật viên toàn thời gian. — Cũng là bộ ba, nhưng ba phần tử là ba nguồn lực khác loại; thiếu một là không chạy được.",
       "genre_baseline": [
-        "chinh-luan",
-        "bao-cao-thuc-tap",
-        "sang-kien-kinh-nghiem"
+        "commentary",
+        "internship-report",
+        "teaching-initiative"
       ],
       "fix": "Thử xoá phần tử thứ ba. Câu không nghèo đi thì bỏ hẳn; câu nghèo đi thì giữ và đó không phải tell.",
       "status": "candidate",
@@ -275,10 +275,10 @@
       "vi_example": "Việc nâng cao nhận thức về an toàn thông tin cần được đẩy mạnh trong thời gian tới.",
       "vi_counterexample": "Quá trình quang hợp diễn ra ở lục lạp. — 'Quá trình' ở đây là thuật ngữ khoa học chỉ đúng một hiện tượng, không phải cách giấu chủ thể.",
       "genre_baseline": [
-        "chinh-luan",
-        "bao-cao-thuc-tap",
-        "sang-kien-kinh-nghiem",
-        "de-cuong-nghien-cuu",
+        "commentary",
+        "internship-report",
+        "teaching-initiative",
+        "thesis-proposal",
         "research"
       ],
       "fix": "Hỏi 'ai làm?' rồi đưa người đó lên làm chủ ngữ: 'Phòng công nghệ thông tin sẽ tập huấn an toàn thông tin cho toàn trường trong quý 4.'",
@@ -373,12 +373,12 @@
       "name": "cum_dem_rong",
       "label": "Cụm đệm rỗng",
       "what": "Cụm mở đầu không thêm gì: 'điều quan trọng cần lưu ý là', 'có thể nói rằng', 'trên thực tế thì', 'nhìn chung mà nói'.",
-      "warning": "'Có thể nói rằng', 'tóm lại', 'nhìn chung' là cụm dẫn được dạy trong văn nghị luận (03-chong-bao-oan §2). Bài Tạp chí Cộng sản do người viết có mật độ cliché gấp đôi bài AI — mật độ cụm đệm đo thể loại, không đo nguồn gốc. `essay` và `research` có trong baseline vì cùng lý do: cụm dẫn quy ước là đăng ký ngôn ngữ của hai thể loại đó (essay.md §5, research.md §5 khai đích danh). Baseline KHÔNG có nghĩa 'cấm sửa': trục 4 vẫn được xoá cụm đệm khi nó không tạo phép đối lập nào, chỉ không được coi mật độ cụm đệm là dấu hiệu nguồn gốc.",
+      "warning": "'Có thể nói rằng', 'tóm lại', 'nhìn chung' là cụm dẫn được dạy trong văn nghị luận (03-false-positive-guard §2). Bài Tạp chí Cộng sản do người viết có mật độ cliché gấp đôi bài AI — mật độ cụm đệm đo thể loại, không đo nguồn gốc. `essay` và `research` có trong baseline vì cùng lý do: cụm dẫn quy ước là đăng ký ngôn ngữ của hai thể loại đó (essay.md §5, research.md §5 khai đích danh). Baseline KHÔNG có nghĩa 'cấm sửa': trục 4 vẫn được xoá cụm đệm khi nó không tạo phép đối lập nào, chỉ không được coi mật độ cụm đệm là dấu hiệu nguồn gốc.",
       "vi_example": "Trên thực tế, có thể nói rằng điều quan trọng cần lưu ý ở đây là dữ liệu phải sạch trước khi phân tích.",
       "vi_counterexample": "Trên lý thuyết mô hình chạy 2 giây; trên thực tế 40 giây vì phải chờ khoá cơ sở dữ liệu. — 'Trên thực tế' đối lập với 'trên lý thuyết', nên nó mang nghĩa.",
       "genre_baseline": [
-        "chinh-luan",
-        "sang-kien-kinh-nghiem",
+        "commentary",
+        "teaching-initiative",
         "essay",
         "research"
       ],
@@ -412,9 +412,9 @@
       "vi_example": "Với sự chung tay của toàn xã hội, chúng ta hoàn toàn có thể tin tưởng vào một tương lai tươi sáng phía trước.",
       "vi_counterexample": "Nếu phòng đào tạo chốt được lịch máy trước 15/9, lớp thí điểm kịp chạy trong học kỳ này; không kịp thì phải dời sang học kỳ sau. — Kết bằng một điều kiện kiểm được, có mốc thời gian.",
       "genre_baseline": [
-        "chinh-luan",
-        "bao-cao-thuc-tap",
-        "sang-kien-kinh-nghiem",
+        "commentary",
+        "internship-report",
+        "teaching-initiative",
         "essay"
       ],
       "warning": "Kết bài nhắc lại luận đề và khép bằng một câu hướng tới tương lai là YÊU CẦU của bài nghị luận trong nhà trường (essay.md §5 khai đích danh), và là mục bắt buộc của báo cáo, sáng kiến, chính luận. Ở các thể loại trong genre_baseline: GIỮ MỤC, chỉ thay nội dung rỗng; sự hiện diện của kết bài lạc quan không phải tín hiệu nguồn gốc. Riêng với `essay`, essay.md §2 vẫn cấm SINH ra lời kêu gọi chung chung không gắn với luận đề — cấm-khi-sinh khác hạ-tín-hiệu.",
@@ -494,7 +494,7 @@
       "vi_example": "Như vậy, có thể thấy rằng vai trò của giáo viên trong quá trình này là vô cùng quan trọng.",
       "vi_counterexample": "Vậy nên phần chấm tay vẫn phải giữ, ít nhất tới khi có barem riêng cho bài có dùng công cụ. — Câu cuối rút ra một hệ quả hành động chứ không nhắc lại.",
       "genre_baseline": [
-        "chinh-luan"
+        "commentary"
       ],
       "fix": "Xoá nếu chỉ nhắc lại. Giữ nếu câu đó rút ra hệ quả, nêu điều kiện, hoặc bắc cầu sang đoạn sau. ĐỪNG NHẦM với câu Link của khung PEEL mà essay.md §2 bắt buộc: câu chốt nối về luận đề là cấu trúc, chỉ câu chốt nhắc lại nguyên đoạn mới là tell.",
       "status": "candidate",
@@ -591,7 +591,7 @@
       "vi_counterexample": "Vậy nên cấm hay không? Câu hỏi này tôi chưa trả lời được, và phần còn lại của bài là ba lần thử trả lời rồi phải rút lại. — Cũng là câu hỏi mở đoạn, nhưng nó KHÔNG được trả lời ngay và nó tổ chức phần còn lại của bài.",
       "genre_baseline": [
         "blog",
-        "chinh-luan"
+        "commentary"
       ],
       "fix": "Giữ lại nhiều nhất một câu hỏi mở đoạn trong bài, ở chỗ câu hỏi thật sự là câu hỏi của người đọc. Các chỗ còn lại: bỏ dấu hỏi, nói thẳng điều câu sau đang nói.",
       "status": "candidate",
@@ -611,7 +611,7 @@
       "vi_example": "Ai viết được dòng đó thì đã học, ai không viết được thì máy đang làm thay.",
       "vi_counterexample": "Ai đã nộp bản kế hoạch trước ngày 10 thì được xếp lịch bảo vệ đợt một, ai nộp sau thì chờ đợt hai vào tháng sau. — Cùng dáng câu, nhưng hai vế là hai quy định có thật, không phải hai nửa của một thế giới bị chẻ đôi cho gọn.",
       "genre_baseline": [
-        "chinh-luan"
+        "commentary"
       ],
       "fix": "Đếm số lượt trước đã. Từ ba lượt trở lên trong một bài ngắn thì giữ lượt mạnh nhất, các lượt còn lại viết lại thành câu kể có chủ ngữ. Nếu phân đôi còn che mất trường hợp thứ ba có thật, đó là việc của trục 3 và phải đi qua must_fix, không sửa lặng ở trục 4.",
       "status": "candidate",

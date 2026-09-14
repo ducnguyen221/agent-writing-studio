@@ -8,16 +8,16 @@ Gõ theo dạng `/agent-writing-studio:<tên-lệnh>`. Số đầu tên chính l
 
 | Lệnh | Trục | Làm gì |
 |---|---|---|
-| `/agent-writing-studio:01-boi-canh` | Y1 | Phỏng vấn ý đồ, luận đề, độc giả, ràng buộc |
-| `/agent-writing-studio:02-viet-nhap` | Y2 | Dàn ý ba tầng → chờ bạn duyệt → viết văn xuôi |
-| `/agent-writing-studio:03-phan-bien` | Y3 | Chấm từng tiêu chí theo barem thể loại |
-| `/agent-writing-studio:04-bien-tap` | Y4 | Sửa về phía giọng tác giả, ba chế độ đầu ra |
-| `/agent-writing-studio:05-giam-dinh` | Y5 | Đọc bài tìm dấu hiệu máy viết, kèm phản chứng |
-| `/agent-writing-studio:giao-docx` | — | Xuất bản giao ra `.docx` đúng quy cách văn bản Việt |
-| `/agent-writing-studio:danh-sach` | — | In chính bảng này, đọc thẳng từ các file lệnh |
+| `/agent-writing-studio:01-context` | Y1 | Phỏng vấn ý đồ, luận đề, độc giả, ràng buộc |
+| `/agent-writing-studio:02-draft` | Y2 | Dàn ý ba tầng → chờ bạn duyệt → viết văn xuôi |
+| `/agent-writing-studio:03-critique` | Y3 | Chấm từng tiêu chí theo barem thể loại |
+| `/agent-writing-studio:04-humanize` | Y4 | Sửa về phía giọng tác giả, ba chế độ đầu ra |
+| `/agent-writing-studio:05-audit` | Y5 | Đọc bài tìm dấu hiệu máy viết, kèm phản chứng |
+| `/agent-writing-studio:deliver-docx` | — | Xuất bản giao ra `.docx` đúng quy cách văn bản Việt |
+| `/agent-writing-studio:list` | — | In chính bảng này, đọc thẳng từ các file lệnh |
 
-Hai lệnh cuối không mang số vì chúng **không thuộc trục nào**: `giao-docx` là bàn giao thành phẩm,
-`danh-sach` là tra cứu.
+Hai lệnh cuối không mang số vì chúng **không thuộc trục nào**: `deliver-docx` là bàn giao thành phẩm,
+`list` là tra cứu.
 
 ## Luật của mọi lệnh: chỉ làm đúng bước của nó
 
@@ -26,4 +26,4 @@ lệnh sẽ nói thẳng nó thiếu file gì và lệnh nào sinh ra file đó 
 cả chuỗi, vì chạy lại nghĩa là phỏng vấn lại bạn từ đầu hoặc tự bịa ra bối cảnh.
 
 Bảng trên là bản chép cho người đọc. **Nguồn thật là bảy file `.md` trong thư mục này** — lệnh
-`danh-sach` đọc thẳng từ đó, nên nếu hai chỗ lệch nhau thì tin `danh-sach`.
+`list` đọc thẳng từ đó, nên nếu hai chỗ lệch nhau thì tin `list`.

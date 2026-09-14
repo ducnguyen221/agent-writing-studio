@@ -153,7 +153,7 @@ class ClusterRequirementTests(unittest.TestCase):
             (ROOT / "shared/rules/forensics-scoring-v3.json").read_text(encoding="utf-8")
         )
         cls.reference = (
-            ROOT / "skills/05-forensics/references/09-cham-diem-agent-first.md"
+            ROOT / "skills/05-forensics/references/09-agent-first-scoring.md"
         ).read_text(encoding="utf-8")
         cls.skill = (ROOT / "skills/05-forensics/05b-scoring/SKILL.md").read_text(encoding="utf-8")
 
@@ -200,10 +200,10 @@ class ClusterRequirementTests(unittest.TestCase):
     def test_humanizer_orders_edits_by_cluster_density(self):
         """Trục 4 dùng cùng ranh giới ấy để xếp thứ tự sửa, không để buộc tội."""
         text = (
-            ROOT / "skills/04-humanizer/references/04-ban-do-loi-cach-sua.md"
+            ROOT / "skills/04-humanizer/references/04-error-fix-map.md"
         ).read_text(encoding="utf-8")
         self.assertIn("cụm trước, lẻ sau", text)
-        self.assertIn("09-cham-diem-agent-first.md", text)
+        self.assertIn("09-agent-first-scoring.md", text)
         self.assertIn("lượt hai", text)
 
 

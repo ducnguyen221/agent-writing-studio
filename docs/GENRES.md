@@ -47,8 +47,8 @@ Mỗi mục §1…§5 gồm hai phần, và **cả hai đều bắt buộc**:
 | `partial` | **chỉ có `## 5.`** | riêng trục 5 (giám định) |
 
 `partial` tồn tại vì một lý do thực tế: có những thể loại **đã phải giám định thật** trước khi ai kịp
-soạn phần viết cho chúng. Bốn thể loại Việt Nam đặc thù trong repo — `chinh-luan`,
-`de-cuong-nghien-cuu`, `bao-cao-thuc-tap`, `sang-kien-kinh-nghiem` — đang ở trạng thái này. Trục 1
+soạn phần viết cho chúng. Bốn thể loại Việt Nam đặc thù trong repo — `commentary`,
+`thesis-proposal`, `internship-report`, `teaching-initiative` — đang ở trạng thái này. Trục 1
 đến trục 4 **không đọc** file `partial` nào; chúng chỉ tồn tại để trục 5 có căn cứ hạ tín hiệu thay vì
 báo oan văn phong hành chính chuẩn.
 
@@ -260,9 +260,9 @@ Mọi slug xuất hiện trong `genre_baseline` của `vi-ai-tells.json` **phả
 để hạ tín hiệu, **và lỗi đó im lặng** — không có gì báo đỏ, chỉ có một người bị báo oan.
 `tests/genres/test_genre_schema.py` canh cả hai chiều.
 
-Lưu ý một chỗ trông giống lệch nhưng không lệch: `research` và `de-cuong-nghien-cuu` là **hai slug
+Lưu ý một chỗ trông giống lệch nhưng không lệch: `research` và `thesis-proposal` là **hai slug
 khác nhau**. `research.md` là hồ sơ **viết** (đủ §1–§5, có khung `de_cuong` cho trục 2);
-`de-cuong-nghien-cuu.md` là hồ sơ **giám định** (`partial`, chỉ §5) và khai riêng thứ mà đề cương
+`thesis-proposal.md` là hồ sơ **giám định** (`partial`, chỉ §5) và khai riêng thứ mà đề cương
 nghiên cứu sinh Việt Nam bắt buộc phải có.
 
 ---

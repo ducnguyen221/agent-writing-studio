@@ -122,7 +122,7 @@ tảng chứ không phải chất lượng văn. Giữ chín, gộp lại thành
 | Che tên vẫn phân biệt được ai đang nói | **giữ** | Phép thử mù, mạnh nhất trong bộ, và không phụ thuộc ngôn ngữ |
 | Số chữ tối thiểu mỗi chương | **bỏ** | Đơn vị đếm chữ Hán, và là chỉ tiêu doanh thu của nền tảng, không phải chất lượng |
 | Đoạn văn ≤ 200 chữ | **bỏ** | Tối ưu cho màn hình điện thoại; giữ lại thì phạt oan văn xuôi Việt vốn có đoạn dài. Chuyển thành trường `kenh_doc_va_do_dai_moi_lan_doc` ở §1 |
-| Gạch ngang ≤ 20 lần/chương | **bỏ** | Tiếng Việt dùng gạch ngang để dẫn lời thoại; đếm dấu là cấm phong cách, đúng loại `03-chong-bao-oan.md` §6 cấm |
+| Gạch ngang ≤ 20 lần/chương | **bỏ** | Tiếng Việt dùng gạch ngang để dẫn lời thoại; đếm dấu là cấm phong cách, đúng loại `03-false-positive-guard.md` §6 cấm |
 | Dấu chấm than ≥ 2 lần ở chương hành động | **bỏ** | Ép giọng theo một dòng truyện mạng cụ thể |
 
 Bảy phép kiểm đầu chạy được ở cụm ba chương; phép thử mù về giọng nhân vật chạy mỗi mười chương hoặc
@@ -243,7 +243,7 @@ chiếu nguồn, không phải suy đoán ai đã viết.
 Cảnh báo báo oan riêng của thể loại: gần như mọi thước đo thống kê dùng cho văn xuôi lập luận đều
 mất nghĩa ở đây. Độ dài câu chênh nhau rất lớn là **chủ ý** (cảnh hành động khác cảnh tĩnh); lặp mở
 đầu câu là **phép điệp**; câu không chủ ngữ là **nhịp kể**. Xem `T11` trong `shared/rules/vi-ai-tells.json`
-và `skills/05-forensics/references/03-chong-bao-oan.md` §6.
+và `skills/05-forensics/references/03-false-positive-guard.md` §6.
 
 ```yaml
 must_have:

@@ -14,7 +14,7 @@ Ba cơ chế, cơ chế nào cũng đủ để làm hỏng một lượt chấm:
    cho *chất lượng*. Nguy hiểm gấp đôi ở repo này, vì trục 2 tự khai `machine_written_spans[]` — bản
    tự khai trung thực sẽ trở thành hình phạt, và lần sau sẽ không ai khai nữa.
 3. **Thiên vị bản thân.** Khi bài do chính mô hình này viết ở trục 2, việc đọc `draft.meta.json`
-   trước làm hỏng nốt lớp bảo vệ cuối. Xem `skills/05-forensics/references/03-chong-bao-oan.md` mục 1
+   trước làm hỏng nốt lớp bảo vệ cuối. Xem `skills/05-forensics/references/03-false-positive-guard.md` mục 1
    về self-recognition bias.
 
 ## Bốn bước, đúng thứ tự
@@ -42,7 +42,7 @@ chuyện văn trơn tru đang gánh cho lập luận yếu, đúng thứ repo n�
 ### Bước 3 — Chạy lăng kính
 
 Chạy đúng các `lenses[]` mà §3 bật, không hơn không kém, theo
-[`01-lang-kinh.md`](01-lang-kinh.md). Mỗi finding phải có vị trí, câu trích, bằng chứng, **phản
+[`01-lenses.md`](01-lenses.md). Mỗi finding phải có vị trí, câu trích, bằng chứng, **phản
 chứng** và câu hỏi xác minh.
 
 Vị trí neo bằng `sentence_id` của `sentences.json` **do studio sinh** (`extract.py`), **không tự đếm

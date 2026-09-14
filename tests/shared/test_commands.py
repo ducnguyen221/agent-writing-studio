@@ -1,13 +1,13 @@
 """`commands/` — bảy lệnh chạy lẻ từng bước có đúng hợp đồng không?
 
-Lệnh là **cửa vào hẹp**: người dùng gõ `/agent-writing-studio:03-phan-bien` là muốn chạy ĐÚNG một bước,
+Lệnh là **cửa vào hẹp**: người dùng gõ `/agent-writing-studio:03-critique` là muốn chạy ĐÚNG một bước,
 không phải khởi động lại cả chuỗi. Ba thứ hỏng thì hỏng im lặng, nên bị khoá ở đây:
 
 1. **`description` phải là tiếng Anh** — đó là câu harness đọc để định tuyến (luật ngôn ngữ tài liệu:
    frontmatter tiếng Anh, thân tiếng Việt). Một dòng mô tả tiếng Việt vẫn "chạy" nhưng định tuyến kém.
 2. **Mỗi lệnh phải nói rõ đầu vào của nó ở đâu và thiếu thì làm gì** — không thì agent sẽ tự phỏng
    vấn lại, tự bịa bối cảnh, tự chạy lại chuỗi; đúng thứ lệnh sinh ra để tránh.
-3. **`danh-sach` không được chép cứng bảng** — bảng chép cứng + bảy file lệnh = hai nguồn sự thật,
+3. **`list` không được chép cứng bảng** — bảng chép cứng + bảy file lệnh = hai nguồn sự thật,
    lệch nhau ngay lần sửa đầu.
 """
 
@@ -20,9 +20,9 @@ ROOT = Path(__file__).resolve().parents[2]
 COMMANDS = ROOT / "commands"
 
 # Thứ tự chuỗi công việc. Từ v0.1.2 năm lệnh trong chuỗi mang SỐ TRỤC ở đầu tên, nên `ls commands/`
-# đã tự sắp đúng thứ tự chạy; `giao-docx` (bàn giao) và `danh-sach` (tra cứu) đứng ngoài trục.
-CHUOI = ("01-boi-canh", "02-viet-nhap", "03-phan-bien", "04-bien-tap", "05-giam-dinh", "giao-docx")
-MONG_DOI = set(CHUOI) | {"danh-sach"}
+# đã tự sắp đúng thứ tự chạy; `deliver-docx` (bàn giao) và `list` (tra cứu) đứng ngoài trục.
+CHUOI = ("01-context", "02-draft", "03-critique", "04-humanize", "05-audit", "deliver-docx")
+MONG_DOI = set(CHUOI) | {"list"}
 
 FRONTMATTER = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
 # Dấu tiếng Việt: đủ để bắt một `description` lỡ viết bằng tiếng Việt.
@@ -92,22 +92,22 @@ class HopDongThanBaiTests(unittest.TestCase):
                 self.assertIn(".work/", text, f"{ten}.md thiếu đường lui khi chưa đặt station")
 
     def test_lenh_trong_chuoi_deu_co_o_tom_tat_cho_danh_sach(self):
-        """`danh-sach` đọc đúng khối này; thiếu nó là bảng thủng một dòng."""
+        """`list` đọc đúng khối này; thiếu nó là bảng thủng một dòng."""
         for ten in CHUOI:
             with self.subTest(lenh=ten):
                 text = doc(ten)
-                self.assertIn("## Tóm tắt cho `/agent-writing-studio:danh-sach`", text)
+                self.assertIn("## Tóm tắt cho `/agent-writing-studio:list`", text)
                 for nhan in ("**Trục:**", "**Làm gì:**", "**Cần đầu vào:**", "**Ra file:**"):
                     self.assertIn(nhan, text, f"{ten}.md thiếu dòng {nhan}")
 
     def test_lenh_can_buoc_truoc_deu_chi_ra_lenh_sinh_ra_dau_vao(self):
         """Thiếu artifact thì nói thiếu gì + lệnh nào tạo ra nó, KHÔNG tự chạy lại cả chuỗi."""
-        for ten in ("02-viet-nhap", "03-phan-bien", "04-bien-tap", "05-giam-dinh", "giao-docx"):
+        for ten in ("02-draft", "03-critique", "04-humanize", "05-audit", "deliver-docx"):
             with self.subTest(lenh=ten):
                 text = doc(ten)
                 self.assertRegex(
                     text,
-                    r"/agent-writing-studio:(01-boi-canh|02-viet-nhap|03-phan-bien|04-bien-tap)",
+                    r"/agent-writing-studio:(01-context|02-draft|03-critique|04-humanize)",
                     f"{ten}.md không chỉ ra lệnh sinh ra đầu vào của nó",
                 )
 
@@ -119,25 +119,25 @@ class HopDongThanBaiTests(unittest.TestCase):
 
 class DanhSachTests(unittest.TestCase):
     def test_danh_sach_doc_dong_khong_chep_cung_bang(self):
-        text = doc("danh-sach")
+        text = doc("list")
         bang = [d for d in text.splitlines() if d.lstrip().startswith("|")]
-        self.assertEqual(bang, [], "`danh-sach.md` đang chép cứng bảng thay vì đọc file lệnh anh em")
+        self.assertEqual(bang, [], "`list.md` đang chép cứng bảng thay vì đọc file lệnh anh em")
 
     def test_danh_sach_noi_ro_doc_tu_dau(self):
-        text = doc("danh-sach")
-        self.assertIn("`## Tóm tắt cho /agent-writing-studio:danh-sach`", text.replace("**", ""))
+        text = doc("list")
+        self.assertIn("`## Tóm tắt cho /agent-writing-studio:list`", text.replace("**", ""))
         self.assertIn("cùng thư mục", text)
 
 
 class LenhGiaoDocxTests(unittest.TestCase):
-    def test_tro_dung_script_xuat_docx(self):
-        text = doc("giao-docx")
-        self.assertIn("shared/scripts/xuat_docx.py", text)
-        self.assertTrue((ROOT / "shared/scripts/xuat_docx.py").is_file())
+    def test_tro_dung_script_export_docx(self):
+        text = doc("deliver-docx")
+        self.assertIn("shared/scripts/export_docx.py", text)
+        self.assertTrue((ROOT / "shared/scripts/export_docx.py").is_file())
 
     def test_noi_ro_ban_giao_nam_o_thu_muc_nguoi_dung(self):
         """Quyết định 31/08/2026: `.writing` là xưởng của agent, không phải chỗ người dùng vào lấy bài."""
-        text = doc("giao-docx")
+        text = doc("deliver-docx")
         self.assertIn("--provenance", text)
         self.assertIn("xưởng cục bộ của agent", text)
 

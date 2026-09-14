@@ -5,11 +5,11 @@ phát hiện được nếu chúng vỡ:
 
 1. **Không có `context.json` thì không viết.** Bỏ luật này là bỏ luôn trục 1: skill sẽ tự phỏng
    vấn qua loa rồi viết, và bài ra đời từ một bối cảnh không ai duyệt.
-2. **`draft.meta.json` với `machine_written_spans[]` là bắt buộc** (`KIEN-TRUC.md` §2.5).
+2. **`draft.meta.json` với `machine_written_spans[]` là bắt buộc** (`ARCHITECTURE.md` §2.5).
    Đây là bản tự khai của chính studio, và là ground truth duy nhất để đo trục 5. Mất nó thì
    repo mất tư cách nói về liêm chính.
 3. **Chống khuôn áp NGAY KHI SINH.** `anti_llm_defaults[]` của §2 phải có mặt đủ trong
-   `references/04-chong-khuon-llm.md`; thiếu một mục là một khuôn lọt xuống tận trục 4, nơi gỡ
+   `references/04-anti-llm-patterns.md`; thiếu một mục là một khuôn lọt xuống tận trục 4, nơi gỡ
    nó đồng nghĩa với viết lại cả đoạn.
 """
 
@@ -31,10 +31,10 @@ GENRES_DIR = ROOT / "shared/genres"
 TELLS = ROOT / "shared/rules/vi-ai-tells.json"
 
 REQUIRED_REFERENCES = (
-    "01-outline-ba-tang.md",
-    "02-vong-sua-danh-gia-giu.md",
-    "03-tu-khai-nguon-goc.md",
-    "04-chong-khuon-llm.md",
+    "01-three-layer-outline.md",
+    "02-revise-evaluate-keep-loop.md",
+    "03-provenance-self-declaration.md",
+    "04-anti-llm-patterns.md",
 )
 
 # Bốn họ tell mô tả CHỖ ĐẶT của một câu chứ không phải cách dùng từ, nên phải chặn lúc sinh.
@@ -66,7 +66,7 @@ DRAFT_META_SAMPLE = {
         {"sentence_id": "s0019", "origin": "human_edited_by_machine"},
     ],
     "model": {"name": "claude-opus", "version": "5"},
-    "profile_used": "duc-nguyen",
+    "profile_used": "writer-a",
     "self_checks": [
         {"name": "counters.py", "passed": True, "detail": "NOMINAL 6,8/1000; không cột nào bất thường"},
         {"name": "lens:task_response", "passed": True, "detail": "Bốn đoạn thân đều ánh xạ về luận đề"},
@@ -217,29 +217,29 @@ class DraftMetaContractTests(unittest.TestCase):
 
 class OutlineReferenceTests(unittest.TestCase):
     def test_outline_depth_comes_from_the_genre_not_from_the_reference(self):
-        text = reference_text("01-outline-ba-tang.md")
+        text = reference_text("01-three-layer-outline.md")
         self.assertIn("outline_depth", text)
         self.assertIn("§2", text)
 
     def test_reference_names_all_three_layers(self):
-        text = reference_text("01-outline-ba-tang.md")
+        text = reference_text("01-three-layer-outline.md")
         for layer in ("Tầng 1", "Tầng 2", "Tầng 3"):
             with self.subTest(layer=layer):
                 self.assertIn(layer, text)
         self.assertIn("bằng chứng", text)
 
     def test_reference_gates_prose_behind_an_approved_outline(self):
-        text = normalise(reference_text("01-outline-ba-tang.md"))
+        text = normalise(reference_text("01-three-layer-outline.md"))
         self.assertIn("outline_approved", text)
         self.assertIn("không được nộp", text)
 
     def test_reference_forbids_filling_an_empty_evidence_slot_with_prose(self):
-        text = normalise(reference_text("01-outline-ba-tang.md"))
+        text = normalise(reference_text("01-three-layer-outline.md"))
         self.assertIn("Chỗ trống ở tầng ba là chỗ trống thật", text)
         self.assertIn("T05", text, "Nguồn mơ hồ là tell phải gọi tên, không nói chung chung")
 
     def test_research_outline_carries_its_citations_from_the_start(self):
-        text = normalise(reference_text("01-outline-ba-tang.md"))
+        text = normalise(reference_text("01-three-layer-outline.md"))
         self.assertIn("nguồn phải gắn ngay tại đây", text)
         self.assertIn("research.md", text)
 
@@ -247,7 +247,7 @@ class OutlineReferenceTests(unittest.TestCase):
 class ModifyEvaluateKeepTests(unittest.TestCase):
     def test_reference_credits_the_studio_rulebook_not_a_repo(self):
         """De-name: sơ đồ ba bước là kiến thức chung, nguồn ghi ở sổ xưởng."""
-        text = normalise(reference_text("02-vong-sua-danh-gia-giu.md"))
+        text = normalise(reference_text("02-revise-evaluate-keep-loop.md"))
         self.assertIn("kiến thức chung của ngành", text)
         self.assertIn("bộ luật của studio", text)
         self.assertIn("sổ xưởng", text)
@@ -256,24 +256,24 @@ class ModifyEvaluateKeepTests(unittest.TestCase):
                 self.assertNotIn(banned, text)
 
     def test_reference_runs_counters_plus_one_or_two_lenses(self):
-        text = normalise(reference_text("02-vong-sua-danh-gia-giu.md"))
+        text = normalise(reference_text("02-revise-evaluate-keep-loop.md"))
         self.assertIn("counters.py", text)
         self.assertIn("lăng kính", text)
-        self.assertIn("01-lang-kinh.md", text, "Danh mục lăng kính là của trục 3, phải trỏ sang")
+        self.assertIn("01-lenses.md", text, "Danh mục lăng kính là của trục 3, phải trỏ sang")
 
     def test_reference_keeps_the_old_version_when_the_new_one_does_not_win(self):
-        text = normalise(reference_text("02-vong-sua-danh-gia-giu.md"))
+        text = normalise(reference_text("02-revise-evaluate-keep-loop.md"))
         self.assertIn("giữ bản cũ", text.lower())
 
     def test_reference_states_the_anti_goodhart_rule(self):
-        text = normalise(reference_text("02-vong-sua-danh-gia-giu.md"))
+        text = normalise(reference_text("02-revise-evaluate-keep-loop.md"))
         self.assertIn("Goodhart", text)
         self.assertIn("Không sửa để con số đẹp lên", text)
         self.assertIn("genre_baseline", text)
 
     def test_reference_describes_the_three_chapter_self_check_as_active(self):
         """`novel.md` đã có từ Phase 1b: mục 5 phải là luật đang chạy, không phải mô tả."""
-        text = normalise(reference_text("02-vong-sua-danh-gia-giu.md"))
+        text = normalise(reference_text("02-revise-evaluate-keep-loop.md"))
         self.assertIn("ba chương", text)
         self.assertIn("novel.md", text)
         self.assertIn("luật đang chạy", text)
@@ -287,22 +287,22 @@ class ModifyEvaluateKeepTests(unittest.TestCase):
 
 class SelfDeclarationReferenceTests(unittest.TestCase):
     def test_reference_cites_the_conflict_of_interest_rule(self):
-        text = normalise(reference_text("03-tu-khai-nguon-goc.md"))
+        text = normalise(reference_text("03-provenance-self-declaration.md"))
         self.assertIn("§2.5", text)
         self.assertIn("mất tư cách nói về liêm chính", text)
 
     def test_reference_explains_why_an_empty_array_is_a_claim(self):
-        text = normalise(reference_text("03-tu-khai-nguon-goc.md"))
+        text = normalise(reference_text("03-provenance-self-declaration.md"))
         self.assertIn("một khẳng định, không phải một chỗ trống", text)
 
     def test_reference_ties_spans_to_sentence_ids_from_extract(self):
-        text = normalise(reference_text("03-tu-khai-nguon-goc.md"))
+        text = normalise(reference_text("03-provenance-self-declaration.md"))
         self.assertIn("sentence_id", text)
         self.assertIn("sentences.json", text)
         self.assertIn("extract.py", text)
 
     def test_reference_covers_all_three_origin_values(self):
-        text = reference_text("03-tu-khai-nguon-goc.md")
+        text = reference_text("03-provenance-self-declaration.md")
         schema = json.loads(DRAFT_SCHEMA.read_text(encoding="utf-8"))
         origins = schema["properties"]["machine_written_spans"]["items"]["properties"]["origin"]["enum"]
         for origin in origins:
@@ -310,12 +310,12 @@ class SelfDeclarationReferenceTests(unittest.TestCase):
                 self.assertIn(origin, text)
 
     def test_reference_warns_that_edits_shift_sentence_ids(self):
-        text = normalise(reference_text("03-tu-khai-nguon-goc.md"))
+        text = normalise(reference_text("03-provenance-self-declaration.md"))
         self.assertIn("dịch hết", text)
         self.assertIn("chạy lại extract", text)
 
     def test_reference_keeps_axis_three_and_five_blind(self):
-        text = normalise(reference_text("03-tu-khai-nguon-goc.md"))
+        text = normalise(reference_text("03-provenance-self-declaration.md"))
         self.assertIn("Trục 3 không xem `draft.meta.json` trước khi chấm xong", text)
         self.assertIn("Trục 5 chạy mù", text)
 
@@ -325,7 +325,7 @@ class AntiTemplateReferenceTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.text = normalise(reference_text("04-chong-khuon-llm.md"))
+        cls.text = normalise(reference_text("04-anti-llm-patterns.md"))
 
     def test_every_anti_llm_default_of_every_genre_is_present(self):
         collected = 0
@@ -343,7 +343,7 @@ class AntiTemplateReferenceTests(unittest.TestCase):
                 with self.subTest(genre=path.stem, default=item[:40]):
                     self.assertIn(normalise(item), self.text)
         self.assertGreaterEqual(
-            collected, 29, "Năm hồ sơ đầy đủ khai 29 khuôn; gom thiếu là lỗi"
+            collected, 33, "Năm hồ sơ đầy đủ khai 33 khuôn; gom thiếu là lỗi"
         )
 
     def test_the_four_always_on_tell_families_are_listed_with_a_fix(self):

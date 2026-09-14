@@ -34,10 +34,10 @@ CONTEXT_SCHEMA = ROOT / "shared/schemas/context.schema.json"
 PROFILE_BUILD = ROOT / "shared/scripts/profile_build.py"
 
 REQUIRED_REFERENCES = (
-    "01-phong-van-boi-canh.md",
+    "01-brief-interview.md",
     "02-reader-testing.md",
-    "03-cau-brain.md",
-    "04-hieu-chinh-giong.md",
+    "03-brain-bridge.md",
+    "04-voice-calibration.md",
 )
 
 # Ba đoạn tiếng Việt đủ dài để counters.analyse() có số liệu thật. Nội dung vô thưởng vô
@@ -110,7 +110,7 @@ CONTEXT_SAMPLE = {
         ],
         "unresolved": [],
     },
-    "writer_profile_ref": "shared/writers/duc-nguyen/profile.yaml",
+    "writer_profile_ref": "shared/writers/writer-a/profile.yaml",
     "audience": AUDIENCE_SAMPLE,
     "brain_pointers": [
         {
@@ -127,7 +127,7 @@ CONTEXT_SAMPLE = {
 
 WRITER_SAMPLE = {
     "profile_version": "1.0",
-    "name": "duc-nguyen",
+    "name": "writer-a",
     "language": "vi",
     "genre": "research",
     "built_from": 3,
@@ -231,14 +231,14 @@ class SkillStructureTests(unittest.TestCase):
 
 class ReferenceContentTests(unittest.TestCase):
     def test_interview_reference_forbids_answering_on_behalf(self):
-        text = reference_text("01-phong-van-boi-canh.md")
+        text = reference_text("01-brief-interview.md")
         self.assertIn("stop_if_missing", text)
         self.assertIn("inferred", text)
         self.assertIn("intent_questions", text)
 
     def test_interview_reference_credits_the_studio_rulebook_not_a_repo(self):
         """De-name: phần public ghi nguồn bằng một dòng chung, không nêu tên repo."""
-        text = reference_text("01-phong-van-boi-canh.md")
+        text = reference_text("01-brief-interview.md")
         self.assertIn("bộ luật của studio", text)
         self.assertIn("sổ xưởng", text)
         for banned in ("anthropics/skills", "doc-coauthoring", "vendor-notes/"):
@@ -252,16 +252,16 @@ class ReferenceContentTests(unittest.TestCase):
         self.assertIn("drop_off_triggers", text)
 
     def test_brain_bridge_states_root_variable_limit_and_forbidden_zones(self):
-        text = reference_text("03-cau-brain.md")
+        text = reference_text("03-brain-bridge.md")
         self.assertIn("OPCOS_BRAIN_PATH", text)
         self.assertIn("300 ký tự", text)
         self.assertIn("không copy", text)
         for zone in ("tài chính", "sức khoẻ", "đời tư"):
             with self.subTest(zone=zone):
-                self.assertIn(zone, text, f"03-cau-brain.md phải nêu vùng cấm: {zone}")
+                self.assertIn(zone, text, f"03-brain-bridge.md phải nêu vùng cấm: {zone}")
 
     def test_voice_reference_keeps_stylometry_measuring_only(self):
-        text = " ".join(reference_text("04-hieu-chinh-giong.md").split())
+        text = " ".join(reference_text("04-voice-calibration.md").split())
         self.assertIn("faststylometry", text)
         self.assertIn("chỉ ĐO, không SINH", text)
         self.assertIn("dùng để **sinh** văn theo giọng", text)
@@ -489,6 +489,90 @@ class ProfileBuildTests(unittest.TestCase):
             samples.mkdir()
             result = run_profile_build(samples, tmp_path / "profile.yaml")
             self.assertEqual(result.returncode, 2, "Không có bài nào thì phải fail, không im lặng")
+
+    def test_front_matter_stripped_only_at_file_start(self):
+        """Bài mẫu trong kho tri thức có frontmatter YAML; số đo phải như bài không có nó.
+
+        Bài mạng xã hội dùng `---` làm vạch ngăn giữa thân bài — vạch đó là câu chữ của tác
+        giả, script không được coi nó là frontmatter.
+        """
+        front = '---\ntitle: "Bài thử"\ntype: reference_note\nstatus: active\n---\n\n'
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            plain, fronted = tmp_path / "plain", tmp_path / "fronted"
+            plain.mkdir()
+            fronted.mkdir()
+            bodies = []
+            for index, key in enumerate(("a", "b", "c"), start=1):
+                body = SAMPLE_BODY[key] + "\n---\n" + (SAMPLE_BODY[key] + "\n\n") * 2
+                bodies.append(body)
+                (plain / f"{index:02d}-bai.md").write_text(body, encoding="utf-8")
+                (fronted / f"{index:02d}-bai.md").write_text(front + body, encoding="utf-8")
+
+            out_plain, out_fronted = tmp_path / "plain.yaml", tmp_path / "fronted.yaml"
+            self.assertEqual(run_profile_build(plain, out_plain).returncode, 0)
+            self.assertEqual(run_profile_build(fronted, out_fronted).returncode, 0)
+            a = yaml.safe_load(out_plain.read_text(encoding="utf-8"))["provenance"]["samples"]
+            b = yaml.safe_load(out_fronted.read_text(encoding="utf-8"))["provenance"]["samples"]
+            for left, right, body in zip(a, b, bodies):
+                with self.subTest(sample=left["id"]):
+                    self.assertEqual(left["sha256_12"], right["sha256_12"],
+                                     "Frontmatter đầu file lọt vào số đo")
+                    self.assertEqual(left["chars"], right["chars"])
+                    self.assertEqual(right["chars"], len(body),
+                                     "Vạch --- giữa thân bài bị cắt nhầm")
+
+    def test_keep_manual_preserves_hand_filled_fields(self):
+        """Dựng lại hồ sơ không được xoá phần người đã điền tay."""
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            samples = tmp_path / "samples"
+            samples.mkdir()
+            self._write_samples(samples, ("a", "b", "c"))
+            out = tmp_path / "profile.yaml"
+            self.assertEqual(run_profile_build(samples, out).returncode, 0)
+
+            profile = yaml.safe_load(out.read_text(encoding="utf-8"))
+            profile["voice_notes"] = "Hay kể một buổi tập huấn trước khi nêu ý."
+            profile["provenance"]["ownership_confirmed_by"] = "người thử nghiệm"
+            profile["known_typos"] = [{"wrong": "dữ liêu", "right": "dữ liệu"}]
+            profile["pet_templates"].append(
+                {"id": "khung_ngay_xua_bay_gio", "seen_in_samples": 2, "total_hits": 8}
+            )
+            profile["necessary_english_terms"].append("semantic model")
+            profile["limitations"].append("Dòng viết tay để thử cơ chế giữ.")
+            profile["provenance"]["built_by"] = "profile_build.py 1.0"
+            out.write_text(yaml.safe_dump(profile, allow_unicode=True, sort_keys=False),
+                           encoding="utf-8")
+
+            result = run_profile_build(samples, out, extra=("--keep-manual",))
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            rebuilt = yaml.safe_load(out.read_text(encoding="utf-8"))
+            Draft202012Validator(load_json(WRITER_SCHEMA)).validate(rebuilt)
+            self.assertEqual(rebuilt["voice_notes"], "Hay kể một buổi tập huấn trước khi nêu ý.")
+            self.assertEqual(rebuilt["provenance"]["ownership_confirmed_by"], "người thử nghiệm")
+            self.assertEqual(rebuilt["known_typos"], [{"wrong": "dữ liêu", "right": "dữ liệu"}])
+            frames = {item["id"]: item for item in rebuilt["pet_templates"]}
+            self.assertIn("vua_X_vua_Y", frames, "Khuôn đo được phải còn")
+            self.assertEqual(frames.get("khung_ngay_xua_bay_gio"),
+                             {"id": "khung_ngay_xua_bay_gio", "seen_in_samples": 2, "total_hits": 8})
+            self.assertIn("semantic model", rebuilt["necessary_english_terms"])
+            self.assertIn("Dòng viết tay để thử cơ chế giữ.", rebuilt["limitations"])
+            self.assertEqual(rebuilt["provenance"]["built_by"], "profile_build.py 1.1")
+            self.assertNotIn("Hay kể một buổi", result.stdout + result.stderr,
+                             "--keep-manual chỉ được in số lượng, không in nội dung")
+
+    def test_keep_manual_missing_old_file_warns(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            samples = tmp_path / "samples"
+            samples.mkdir()
+            self._write_samples(samples, ("a", "b", "c"))
+            out = tmp_path / "profile.yaml"
+            missing = tmp_path / "khong-co.yaml"
+            result = run_profile_build(samples, out, extra=("--keep-manual", str(missing)))
+            self.assertEqual(result.returncode, 1, "Thiếu hồ sơ cũ phải cảnh báo, không im lặng")
+            self.assertTrue(out.is_file(), "Thiếu hồ sơ cũ vẫn phải ghi hồ sơ mới")
 
 
 class PrivacyTests(unittest.TestCase):

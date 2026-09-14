@@ -426,7 +426,7 @@
         <li><b class="num" data-to="9">9</b> hồ sơ thể loại</li>
         <li><b class="num" data-to="9">9</b> skill · <b class="num" data-to="5">5</b> thư mục</li>
         <li><b class="num" data-to="7">7</b> lệnh chạy lẻ</li>
-        <li class="m"><b class="num" data-to="372">372</b> test</li>
+        <li class="m"><b class="num" data-to="375">375</b> test</li>
         <li>chạy CPU · <b>không</b> cần GPU</li>
       </ul>
     </div>
@@ -513,15 +513,15 @@
 
     <h3 class="sub reveal">Chín hồ sơ thể loại</h3>
     <ul class="genres reveal">
-      <li>blog <span class="use">chia sẻ chuyên môn, nội dung tìm kiếm</span><span class="lv">đủ 5 mục</span></li>
+      <li>blog <span class="use">bài chia sẻ, quan điểm, hướng dẫn, bài mạng xã hội dài</span><span class="lv">đủ 5 mục</span></li>
       <li>essay <span class="use">bài luận, bài thi, nghị luận</span><span class="lv">đủ 5 mục</span></li>
       <li>research <span class="use">nghiên cứu, báo cáo khoa học</span><span class="lv">đủ 5 mục</span></li>
       <li>journalism <span class="use">tin, bài báo, phóng sự</span><span class="lv">đủ 5 mục</span></li>
       <li>novel <span class="use">truyện, tiểu thuyết</span><span class="lv">đủ 5 mục</span></li>
-      <li class="partial">chinh-luan <span class="use">chính luận, bảo vệ nền tảng tư tưởng</span><span class="lv">chỉ §5</span></li>
-      <li class="partial">de-cuong-nghien-cuu <span class="use">thuyết minh đề tài</span><span class="lv">chỉ §5</span></li>
-      <li class="partial">bao-cao-thuc-tap <span class="use">báo cáo thực tập, kiến tập</span><span class="lv">chỉ §5</span></li>
-      <li class="partial">sang-kien-kinh-nghiem <span class="use">sáng kiến của giáo viên</span><span class="lv">chỉ §5</span></li>
+      <li class="partial">commentary <span class="use">chính luận, bảo vệ nền tảng tư tưởng</span><span class="lv">chỉ §5</span></li>
+      <li class="partial">thesis-proposal <span class="use">thuyết minh đề tài</span><span class="lv">chỉ §5</span></li>
+      <li class="partial">internship-report <span class="use">báo cáo thực tập, kiến tập</span><span class="lv">chỉ §5</span></li>
+      <li class="partial">teaching-initiative <span class="use">sáng kiến của giáo viên</span><span class="lv">chỉ §5</span></li>
     </ul>
     <p class="prose reveal">Bốn hồ sơ cuối là thể loại đặc thù Việt Nam, sinh ra từ việc giám định thật
       nên mới chỉ khai phần trục 5 cần. Muốn <em>viết</em> chúng thì dùng <code class="inline">essay</code>
@@ -666,17 +666,18 @@
           <div class="code-scroll"><pre><code><span class="pr">setx</span> WRITING_STUDIO_DATA <span class="st">"$HOME\.writing"</span>
 
 $WRITING_STUDIO_DATA/
-  writers/&lt;slug&gt;/     <span class="cm"># hồ sơ giọng + bài mẫu chính chủ</span>
-  audiences/&lt;slug&gt;/   <span class="cm"># chân dung độc giả</span>
   work/&lt;slug&gt;/        <span class="cm"># thư mục từng ca chạy</span>
+  out/                <span class="cm"># bản giao</span>
   corpus/             <span class="cm"># bài hiệu chuẩn có provenance</span>
-  out/                <span class="cm"># bản giao</span></code></pre></div>
+  writers/&lt;slug&gt;/     <span class="cm"># tuỳ chọn: hồ sơ giọng, khi không có kho tri thức</span>
+  audiences/&lt;slug&gt;/   <span class="cm"># tuỳ chọn: chân dung độc giả, như trên</span></code></pre></div>
         </div>
       </div>
       <div class="reveal" style="--d:90ms">
         <p class="prose" style="margin-top:0">Bài của người thật, hồ sơ giọng văn và các ca chạy
-          <strong>không nằm trong repo</strong>. Chúng ở một thư mục riêng trên máy bạn — gọi là
-          <strong>station</strong> — trỏ bằng một biến môi trường.</p>
+          <strong>không nằm trong repo</strong>. Ca chạy và bản giao ở một thư mục riêng trên máy bạn — gọi là
+          <strong>station</strong> — trỏ bằng một biến môi trường. Hồ sơ giọng, bài mẫu và chân dung độc giả
+          nên nằm trong kho tri thức cá nhân của bạn; không có kho thì để ở station.</p>
         <p class="prose">Thứ tự ưu tiên: tham số dòng lệnh → biến môi trường → đường mặc định trong repo.
           Không đặt biến thì mọi thứ vẫn chạy, chỉ là dữ liệu nằm cạnh mã nguồn.</p>
       </div>
@@ -703,10 +704,10 @@ $WRITING_STUDIO_DATA/
       và biên tập viên nhận bài bằng Word.</p>
     <div class="code-card reveal">
       <div class="code-top">
-        <span class="fn">shared/scripts/xuat_docx.py</span>
+        <span class="fn">shared/scripts/export_docx.py</span>
         <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="lbl">Sao chép</span></button>
       </div>
-      <div class="code-scroll"><pre><code><span class="pr">python</span> shared/scripts/xuat_docx.py polished.md \
+      <div class="code-scroll"><pre><code><span class="pr">python</span> shared/scripts/export_docx.py polished.md \
   --out <span class="st">"D:/thu-muc-cua-toi"</span> --provenance polished.provenance.json</code></pre></div>
     </div>
     <p class="prose reveal">Quy cách mặc định là chuẩn văn bản Việt phổ thông: <strong>Times New Roman
@@ -738,19 +739,19 @@ $WRITING_STUDIO_DATA/
       <table class="tbl">
         <thead><tr><th>Lệnh</th><th>Trục</th><th>Làm gì</th><th>Cần đầu vào</th><th>Ra file</th></tr></thead>
         <tbody>
-          <tr><td class="rule"><code>01-boi-canh</code></td><td class="lbl">Y1</td><td>Phỏng vấn ý đồ, luận đề, độc giả, ràng buộc</td><td>— (bước đầu)</td><td><code>context.json</code></td></tr>
-          <tr><td class="rule"><code>02-viet-nhap</code></td><td class="lbl">Y2</td><td>Dàn ý ba tầng → chờ duyệt → viết văn xuôi</td><td><code>context.json</code></td><td><code>draft.md</code> · <code>draft.meta.json</code> · <code>sentences.json</code></td></tr>
-          <tr><td class="rule"><code>03-phan-bien</code></td><td class="lbl">Y3</td><td>Chấm từng tiêu chí theo barem thể loại</td><td><code>draft.md</code> · <code>sentences.json</code></td><td><code>critique.json</code></td></tr>
-          <tr><td class="rule"><code>04-bien-tap</code></td><td class="lbl m">Y4</td><td>Sửa về phía giọng tác giả, ba chế độ đầu ra</td><td><code>draft.md</code> · <code>sentences.json</code></td><td><code>polished.md</code> · <code>polish.diff.json</code> · sidecar</td></tr>
-          <tr><td class="rule"><code>05-giam-dinh</code></td><td class="lbl m">Y5</td><td>Đọc mù → S/C → báo cáo; mặc định <code>audit</code></td><td>văn bản · <code>sentences.json</code></td><td><code>evidence.json</code> · <code>report.md</code></td></tr>
-          <tr><td class="rule"><code>giao-docx</code></td><td class="lbl">giao</td><td>md → docx đúng quy cách Việt, đặt vào thư mục bạn chọn</td><td><code>polished.md</code></td><td><code>&lt;tên&gt;.docx</code> + sidecar</td></tr>
-          <tr><td class="rule"><code>danh-sach</code></td><td class="lbl">—</td><td>In chính bảng này, đọc động từ các file lệnh</td><td>—</td><td>—</td></tr>
+          <tr><td class="rule"><code>01-context</code></td><td class="lbl">Y1</td><td>Phỏng vấn ý đồ, luận đề, độc giả, ràng buộc</td><td>— (bước đầu)</td><td><code>context.json</code></td></tr>
+          <tr><td class="rule"><code>02-draft</code></td><td class="lbl">Y2</td><td>Dàn ý ba tầng → chờ duyệt → viết văn xuôi</td><td><code>context.json</code></td><td><code>draft.md</code> · <code>draft.meta.json</code> · <code>sentences.json</code></td></tr>
+          <tr><td class="rule"><code>03-critique</code></td><td class="lbl">Y3</td><td>Chấm từng tiêu chí theo barem thể loại</td><td><code>draft.md</code> · <code>sentences.json</code></td><td><code>critique.json</code></td></tr>
+          <tr><td class="rule"><code>04-humanize</code></td><td class="lbl m">Y4</td><td>Sửa về phía giọng tác giả, ba chế độ đầu ra</td><td><code>draft.md</code> · <code>sentences.json</code></td><td><code>polished.md</code> · <code>polish.diff.json</code> · sidecar</td></tr>
+          <tr><td class="rule"><code>05-audit</code></td><td class="lbl m">Y5</td><td>Đọc mù → S/C → báo cáo; mặc định <code>audit</code></td><td>văn bản · <code>sentences.json</code></td><td><code>evidence.json</code> · <code>report.md</code></td></tr>
+          <tr><td class="rule"><code>deliver-docx</code></td><td class="lbl">giao</td><td>md → docx đúng quy cách Việt, đặt vào thư mục bạn chọn</td><td><code>polished.md</code></td><td><code>&lt;tên&gt;.docx</code> + sidecar</td></tr>
+          <tr><td class="rule"><code>list</code></td><td class="lbl">—</td><td>In chính bảng này, đọc động từ các file lệnh</td><td>—</td><td>—</td></tr>
         </tbody>
       </table>
     </div>
     <p class="prose reveal">Bảng trên là bản chép cho người đọc. Nguồn thật là bảy file trong
-      <code class="inline">commands/</code> — lệnh <code class="inline">danh-sach</code> đọc thẳng từ đó,
-      nên hai chỗ lệch nhau thì tin <code class="inline">danh-sach</code>.</p>
+      <code class="inline">commands/</code> — lệnh <code class="inline">list</code> đọc thẳng từ đó,
+      nên hai chỗ lệch nhau thì tin <code class="inline">list</code>.</p>
   </div>
 </section>
 
@@ -870,8 +871,8 @@ $WRITING_STUDIO_DATA/
         <div class="foot-col">
           <b>Tài liệu</b>
           <a href="https://github.com/ducnguyen221/agent-writing-studio/blob/main/README.md" target="_blank" rel="noopener">README — bản triển khai</a>
-          <a href="https://github.com/ducnguyen221/agent-writing-studio/blob/main/docs/KIEN-TRUC.md" target="_blank" rel="noopener">KIEN-TRUC.md — kiến trúc</a>
-          <a href="https://github.com/ducnguyen221/agent-writing-studio/blob/main/docs/CHAM-DIEM.md" target="_blank" rel="noopener">CHAM-DIEM.md — thang điểm</a>
+          <a href="https://github.com/ducnguyen221/agent-writing-studio/blob/main/docs/ARCHITECTURE.md" target="_blank" rel="noopener">ARCHITECTURE.md — kiến trúc</a>
+          <a href="https://github.com/ducnguyen221/agent-writing-studio/blob/main/docs/SCORING.md" target="_blank" rel="noopener">SCORING.md — thang điểm</a>
           <a href="https://github.com/ducnguyen221/agent-writing-studio/blob/main/docs/GENRES.md" target="_blank" rel="noopener">GENRES.md — soạn hồ sơ mới</a>
         </div>
         <div class="foot-col">

@@ -25,17 +25,17 @@ ROOT = Path(__file__).resolve().parents[2]
 SKILL = ROOT / "skills/04-humanizer/SKILL.md"
 REFERENCES = ROOT / "skills/04-humanizer/references"
 SCRIPT = ROOT / "skills/04-humanizer/scripts/polish_check.py"
-THANH_NGU = ROOT / "skills/04-humanizer/assets/thanh-ngu.json"
+THANH_NGU = ROOT / "skills/04-humanizer/assets/idioms.json"
 TELLS = ROOT / "shared/rules/vi-ai-tells.json"
-SCENARIO = ROOT / "tests/skills/scenarios/04-van-nguoi-trang-trong.md"
+SCENARIO = ROOT / "tests/skills/scenarios/04-human-formal-prose.md"
 
 REQUIRED_REFERENCES = (
-    "01-quy-trinh-hai-luot.md",
-    "02-vung-bao-ve.md",
-    "03-chong-sua-oan.md",
-    "04-ban-do-loi-cach-sua.md",
-    "05-chinh-ta.md",
-    "06-che-do-dau-ra.md",
+    "01-two-pass-process.md",
+    "02-protected-zones.md",
+    "03-anti-overcorrection.md",
+    "04-error-fix-map.md",
+    "05-spelling.md",
+    "06-output-modes.md",
 )
 
 # Những từ chỉ xuất hiện nếu ai đó dịch một blacklist tiếng Anh rồi dán vào. Danh mục tell của
@@ -123,77 +123,77 @@ class EthicalBoundaryTests(unittest.TestCase):
 
 
 class AntiOverEditTests(unittest.TestCase):
-    """`03-chong-sua-oan.md` — file mà mọi chốt trong đó đều đổi bằng một ca thật."""
+    """`03-anti-overcorrection.md` — file mà mọi chốt trong đó đều đổi bằng một ca thật."""
 
     def test_reference_keeps_the_measured_cliche_counterevidence(self):
-        text = reference_text("03-chong-sua-oan.md")
+        text = reference_text("03-anti-overcorrection.md")
         self.assertIn("1,04", text)
         self.assertIn("0,50", text)
-        self.assertIn("03-chong-bao-oan", text)
+        self.assertIn("03-false-positive-guard", text)
 
     def test_reference_protects_intentional_repetition_and_author_asides(self):
-        text = reference_text("03-chong-sua-oan.md")
+        text = reference_text("03-anti-overcorrection.md")
         self.assertIn("Lặp có chủ ý", text)
         self.assertIn("tự sửa mình", text)
 
     def test_reference_protects_the_peel_link_sentence(self):
         """T31: câu Link của PEEL là cấu trúc bắt buộc, không phải tell."""
-        text = reference_text("03-chong-sua-oan.md")
+        text = reference_text("03-anti-overcorrection.md")
         self.assertIn("T31", text)
         self.assertIn("PEEL", text)
 
     def test_reference_keeps_the_value_density_carve_out(self):
-        text = " ".join(reference_text("03-chong-sua-oan.md").split())
+        text = " ".join(reference_text("03-anti-overcorrection.md").split())
         self.assertIn("value_density", text)
         for zone in ("(1)", "(2)", "(3)", "(4)"):
             self.assertIn(zone, text, "carve-out phải giữ đủ 4 vùng không được chạm")
         self.assertIn("đoạn thân", text)
 
     def test_reference_protects_the_administrative_report_skeleton(self):
-        text = reference_text("03-chong-sua-oan.md")
+        text = reference_text("03-anti-overcorrection.md")
         self.assertIn("T06", text)
         self.assertIn("phương hướng", text)
 
     def test_reference_lists_what_was_not_carried_over(self):
         """Em dash và ngoặc kép cong đã bị bác bằng thực đo — phải nói rõ là KHÔNG mang sang."""
-        text = reference_text("03-chong-sua-oan.md")
+        text = reference_text("03-anti-overcorrection.md")
         for excluded in ("Em dash", "Ngoặc kép cong", "Title Case"):
             self.assertIn(excluded, text, f"Thiếu mẫu bị loại: {excluded}")
         self.assertIn("needs_corpus", text, "Pattern 7 phải được nói rõ là vẫn để rỗng")
 
     def test_reference_says_genre_baseline_wins_over_counters(self):
-        text = reference_text("03-chong-sua-oan.md")
+        text = reference_text("03-anti-overcorrection.md")
         self.assertIn("genre_baseline", text)
         self.assertIn("baseline thể loại", text)
 
 
 class ProtectedZoneTests(unittest.TestCase):
     def test_reference_lists_the_default_protected_zones(self):
-        text = reference_text("02-vung-bao-ve.md")
+        text = reference_text("02-protected-zones.md")
         for zone in ("Số liệu", "Trích dẫn nguyên văn", "Tên riêng", "frontmatter"):
             self.assertIn(zone, text, f"Thiếu vùng bảo vệ mặc định: {zone}")
 
     def test_reference_scopes_the_fiction_exception_to_the_genre_profile(self):
-        text = reference_text("02-vung-bao-ve.md")
+        text = reference_text("02-protected-zones.md")
         self.assertIn("hư cấu", text)
         self.assertIn("không tự suy ra ngoại lệ", text)
 
 
 class ErrorMapTests(unittest.TestCase):
     def test_error_map_points_at_the_existing_table_instead_of_copying_it(self):
-        text = reference_text("04-ban-do-loi-cach-sua.md")
-        self.assertIn("10-mau-bao-cao-va-cach-sua.md", text)
+        text = reference_text("04-error-fix-map.md")
+        self.assertIn("10-report-template-and-fixes.md", text)
         self.assertIn("không được chép lại", text)
 
     def test_error_map_adds_the_tell_id_column(self):
-        text = reference_text("04-ban-do-loi-cach-sua.md")
+        text = reference_text("04-error-fix-map.md")
         self.assertIn("tell_id", text)
         self.assertGreaterEqual(
             len(set(re.findall(r"`(T\d{2})`", text))), 8, "Bản đồ phải nối được ít nhất 8 họ tell"
         )
 
     def test_error_map_allows_a_null_tell_id(self):
-        text = reference_text("04-ban-do-loi-cach-sua.md")
+        text = reference_text("04-error-fix-map.md")
         self.assertIn("`null`", text)
 
 
@@ -202,26 +202,26 @@ class OutputModeTests(unittest.TestCase):
 
     def test_skill_makes_the_caller_pick_a_mode(self):
         text = skill_text()
-        self.assertIn("references/06-che-do-dau-ra.md", text)
+        self.assertIn("references/06-output-modes.md", text)
         for mode in ("dán-text", "file", "nhúng-trong-task"):
             with self.subTest(mode=mode):
                 self.assertIn(mode, text, f"SKILL.md phải nêu chế độ {mode}")
 
     def test_paste_mode_returns_tells_by_sentence_id_then_the_text_then_the_diff(self):
-        text = reference_text("06-che-do-dau-ra.md")
+        text = reference_text("06-output-modes.md")
         self.assertIn("sentence_id", text)
         self.assertIn("polish.diff.json", text)
         self.assertIn("Bản đã sửa", text)
 
     def test_file_mode_never_touches_code_numbers_or_tables(self):
-        flat = " ".join(reference_text("06-che-do-dau-ra.md").split())
+        flat = " ".join(reference_text("06-output-modes.md").split())
         self.assertIn("Tuyệt đối không đụng", flat)
         for protected in ("code block", "bảng", "frontmatter"):
             with self.subTest(protected=protected):
                 self.assertIn(protected, flat)
 
     def test_embedded_mode_returns_only_the_final_text(self):
-        flat = " ".join(reference_text("06-che-do-dau-ra.md").split())
+        flat = " ".join(reference_text("06-output-modes.md").split())
         self.assertIn("Chỉ trả bản cuối", flat)
         self.assertIn("Không diễn giải", flat)
         self.assertIn(
@@ -238,13 +238,13 @@ class AdHocVoiceMatchingTests(unittest.TestCase):
     """Không có writer profile: 1–2 bài mẫu tại lượt vẫn dùng được, nhưng phải khai đúng."""
 
     def test_reference_treats_ad_hoc_samples_as_a_draft_profile(self):
-        flat = " ".join(reference_text("06-che-do-dau-ra.md").split())
+        flat = " ".join(reference_text("06-output-modes.md").split())
         self.assertIn("status: draft", flat)
         self.assertIn("không ép", flat)
         self.assertIn("fingerprint", flat)
 
     def test_reference_fixes_the_exact_profile_used_declaration(self):
-        flat = " ".join(reference_text("06-che-do-dau-ra.md").split())
+        flat = " ".join(reference_text("06-output-modes.md").split())
         self.assertIn("ad-hoc (n bài, chưa xác nhận chính chủ)", flat)
         self.assertIn(
             "polish.diff.json",
@@ -253,20 +253,20 @@ class AdHocVoiceMatchingTests(unittest.TestCase):
         )
 
     def test_ad_hoc_samples_cannot_lower_a_forensic_finding(self):
-        flat = " ".join(reference_text("06-che-do-dau-ra.md").split())
+        flat = " ".join(reference_text("06-output-modes.md").split())
         self.assertIn("không** được dùng để hạ finding", flat)
 
     def test_two_turn_process_also_mentions_the_ad_hoc_path(self):
-        flat = " ".join(reference_text("01-quy-trinh-hai-luot.md").split())
+        flat = " ".join(reference_text("01-two-pass-process.md").split())
         self.assertIn("ad-hoc", flat)
-        self.assertIn("06-che-do-dau-ra.md", flat)
+        self.assertIn("06-output-modes.md", flat)
 
 
 class SystematicIdentificationTests(unittest.TestCase):
     """Bước 1 của quy trình chuẩn là NHẬN DIỆN theo danh mục, không phải sửa."""
 
     def test_reference_lists_the_four_steps_in_order(self):
-        flat = " ".join(reference_text("01-quy-trinh-hai-luot.md").split())
+        flat = " ".join(reference_text("01-two-pass-process.md").split())
         self.assertIn("bốn bước", flat)
         for step in (
             "Nhận diện theo danh mục",
@@ -278,14 +278,14 @@ class SystematicIdentificationTests(unittest.TestCase):
                 self.assertIn(step, flat)
 
     def test_identification_happens_before_any_edit(self):
-        flat = " ".join(reference_text("01-quy-trinh-hai-luot.md").split())
+        flat = " ".join(reference_text("01-two-pass-process.md").split())
         self.assertIn("TRƯỚC khi sửa", flat)
         self.assertIn("vi_counterexample", flat)
         self.assertIn("genre_baseline", flat)
 
     def test_identification_is_a_map_not_a_todo_list(self):
         """Nhận diện trọn bài KHÔNG biến danh mục thành danh sách việc phải gạch."""
-        flat = " ".join(reference_text("01-quy-trinh-hai-luot.md").split())
+        flat = " ".join(reference_text("01-two-pass-process.md").split())
         self.assertIn("bản đồ, không phải danh sách việc", flat)
 
     def test_skill_puts_identification_before_the_first_pass(self):
@@ -299,13 +299,13 @@ class SystematicIdentificationTests(unittest.TestCase):
 
 class SpellingReferenceTests(unittest.TestCase):
     def test_spelling_reference_records_the_copyleft_finding_and_refuses_to_vendor(self):
-        text = reference_text("05-chinh-ta.md")
+        text = reference_text("05-spelling.md")
         self.assertIn("GPLv2", text)
         self.assertIn("không vendor", text.lower())
         self.assertIn("tự cài", text)
 
     def test_spelling_reference_refuses_typos_as_an_authorship_signal(self):
-        text = reference_text("05-chinh-ta.md")
+        text = reference_text("05-spelling.md")
         self.assertIn("nói về **người gõ**", text)
 
 
@@ -455,7 +455,7 @@ class PolishCheckTests(unittest.TestCase):
 
     def test_baseline_is_read_from_the_tell_registry_before_reporting_counters(self):
         """Thể loại VN có genre_baseline: NOMINAL và TEMPLATES không phải chỗ phải sửa."""
-        baseline = self.module.baseline_counters("bao-cao-thuc-tap")
+        baseline = self.module.baseline_counters("internship-report")
         self.assertIn("NOMINAL", baseline)
         self.assertIn("T13", baseline["NOMINAL"])
         self.assertIn("TEMPLATES", baseline)
@@ -744,7 +744,7 @@ class NewTokenTests(unittest.TestCase):
 
 class ScenarioTests(unittest.TestCase):
     def test_formal_human_scenario_protects_the_report_skeleton(self):
-        self.assertTrue(SCENARIO.is_file(), "Thiếu kịch bản 04-van-nguoi-trang-trong.md")
+        self.assertTrue(SCENARIO.is_file(), "Thiếu kịch bản 04-human-formal-prose.md")
         text = SCENARIO.read_text(encoding="utf-8")
         for part in ("Kết quả đạt được", "Tồn tại", "Phương hướng"):
             self.assertIn(part, text, f"Kịch bản phải nêu mục '{part}' là vùng không được xoá")

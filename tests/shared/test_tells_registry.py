@@ -24,7 +24,7 @@ FAMILIES = {"G1", "G2", "G3", "G4"}
 STATUSES = {"candidate", "calibrated", "needs_corpus"}
 EXCLUDED_UPSTREAM = {14, 15, 17, 19, 26}
 BASELINE_REQUIRED = {"T06", "T10"}
-VN_ADMIN_GENRES = {"bao-cao-thuc-tap", "sang-kien-kinh-nghiem", "chinh-luan"}
+VN_ADMIN_GENRES = {"internship-report", "teaching-initiative", "commentary"}
 
 REQUIRED_KEYS = {
     "id",

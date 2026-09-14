@@ -4,19 +4,39 @@ Writer baseline dùng để chống báo oan khi người viết vốn có thói
 câu dài hoặc công thức nghề nghiệp. Đây là dữ liệu có thể nhận diện cá nhân nên **nó không nằm trong
 repo nữa**: thư mục này chỉ giữ schema và hướng dẫn.
 
-## Dữ liệu nằm ở đâu (từ 31/08/2026)
+## Dữ liệu nằm ở đâu
 
-Hồ sơ và bài mẫu sống ở **station** ngoài repo, trỏ bằng biến môi trường `WRITING_STUDIO_DATA`:
+Hồ sơ và bài mẫu sống **ngoài repo**, ở một trong hai chỗ dưới đây. Repo chỉ là đường lui cuối cùng khi
+không có cả hai; thứ tự tra đầy đủ ba gốc ở đoạn cuối mục này:
+
+- **kho tri thức cá nhân** (`OPCOS_BRAIN_PATH`, mặc định `~/Brain`) — nên dùng khi có kho, vì hồ sơ
+  giọng mang danh tính người viết và dùng lại được ngoài xưởng viết;
+- **station** (`WRITING_STUDIO_DATA`) khi không có kho:
 
 ```
 $WRITING_STUDIO_DATA/writers/<slug>/profile.yaml
 $WRITING_STUDIO_DATA/writers/<slug>/samples/
 ```
 
+`writer_profile_ref` của `context.json` là đường **tương đối**, phân giải theo thứ tự: (1) gốc kho tri
+thức → (2) gốc station → (3) gốc repo; chuỗi không chứa `/` là slug, tìm `writers/<slug>/profile.yaml`
+ở (2) rồi `shared/writers/<slug>/profile.yaml` ở (3). Luật đầy đủ ở
+`skills/01-context-architect/references/03-brain-bridge.md`.
+
 Thứ tự ưu tiên của mọi script: **tham số CLI tường minh** (`--samples-dir`, `--out`) → biến
 `WRITING_STUDIO_DATA` → `shared/writers/<slug>/` trong repo. Vế cuối chỉ là lưới an toàn cho người
 clone repo về mà chưa dựng station; `.gitignore` vẫn chặn `shared/writers/**` để một lần đặt nhầm
 chỗ không thành một lần commit nhầm. Dựng station: xem `README.md` trong chính thư mục station.
+
+## Hồ sơ giọng là DỮ LIỆU, không phải tri thức
+
+Phân biệt này quyết định thứ gì vào đây. `profile.yaml` giữ **số đo**: vân tay câu chữ, khuôn tu từ
+đếm được, thuật ngữ bắt buộc, mã băm bài mẫu. Nó **sinh lại được** từ bài mẫu bằng script.
+
+Thứ **không đo được** — vai người viết được đứng, kho chất liệu được phép kể, điều cấm riêng, khuôn
+trình bày của kênh đăng — là **tri thức**, và thuộc kho tri thức cá nhân ngoài repo (xem README gốc,
+mục *Ba tầng, ba chỗ*). Trường `voice_notes` trong hồ sơ là **bản nén** của tri thức đó để trục 4 và
+trục 5 dùng được mà không phải mở kho; bản nén thì tự khai nguồn ở dòng đầu.
 
 ## Điều kiện tạo
 
@@ -29,10 +49,17 @@ chỗ không thành một lần commit nhầm. Dựng station: xem `README.md` t
 
 Từ 30/08/2026, **nguồn chân lý về hình dạng hồ sơ là `writer.schema.json`** trong chính thư mục này,
 và chân dung độc giả là `audience.schema.json`. Hai file đó được commit; `profile.yaml` và `samples/`
-thì không — chúng ở station. Dựng hồ sơ bằng:
+thì không — chúng ở kho tri thức hoặc station. Dựng hồ sơ bằng:
 
 ```
 python shared/scripts/profile_build.py --writer <slug> --genre <genre>
+```
+
+Hồ sơ và bài mẫu nằm trong kho tri thức thì chỉ rõ hai đường, và dựng lại mà giữ phần điền tay:
+
+```
+python shared/scripts/profile_build.py --writer <slug> --genre <genre> \
+  --samples-dir <kho>/<thư mục bài mẫu> --out <kho>/<đường profile.yaml> --keep-manual
 ```
 
 Ba khác biệt so với phác thảo bên dưới, ghi ra để không ai đọc nhầm bản cũ:

@@ -97,13 +97,13 @@ Chín skill, **không có** router tổng — router chỉ nên xây khi năm tr
 |---|---|---|
 | `essay.md` — bài luận, bài thi | `full` | hồ sơ mẫu, viết đầu tiên |
 | `research.md` — nghiên cứu, báo cáo chuyên sâu | `full` | có cả khung IMRAD lẫn khung phân tích chính sách |
-| `blog.md` — blog, thought leadership | `full` | |
+| `blog.md` — blog chia sẻ, thought leadership, bài mạng xã hội dạng dài | `full` | gộp blog kỹ thuật, blog kiến thức và blog chia sẻ vào một hồ sơ |
 | `journalism.md` — báo chí, phân tích chuyên luận | `full` | |
 | `novel.md` — tiểu thuyết, truyện dài kỳ | `full` | |
-| `chinh-luan.md` — chính luận | `partial` | thể loại Việt Nam đặc thù |
-| `de-cuong-nghien-cuu.md` — đề cương nghiên cứu sinh | `partial` | |
-| `bao-cao-thuc-tap.md` — báo cáo thực tập | `partial` | |
-| `sang-kien-kinh-nghiem.md` — sáng kiến kinh nghiệm | `partial` | |
+| `commentary.md` — chính luận | `partial` | thể loại Việt Nam đặc thù |
+| `thesis-proposal.md` — đề cương nghiên cứu sinh | `partial` | |
+| `internship-report.md` — báo cáo thực tập | `partial` | |
+| `teaching-initiative.md` — sáng kiến kinh nghiệm | `partial` | |
 
 Bốn hồ sơ cuối là **mở rộng cột**, không phá ma trận: chúng có thật trong đời sống viết tiếng Việt và
 đã có ca giám định thật, nên có mặt trước khi tới lượt soạn phần viết.
@@ -153,10 +153,16 @@ Cách thường dùng: nói bằng tiếng Việt, agent tự chọn skill. Mu�
 | Biên tập | *"Biên tập bản nháp này, giữ nguyên số liệu và trích dẫn."* | Y4 |
 | Giám định | *"Bài nộp này có dấu hiệu AI viết không? Đọc và báo cáo."* | Y5 |
 
-Nói rõ **thể loại** thì tốt (`essay`, `research`, `blog`, `journalism`, `novel`, `chinh-luan`,
-`de-cuong-nghien-cuu`, `bao-cao-thuc-tap`, `sang-kien-kinh-nghiem`); không nói thì agent sẽ hỏi.
+Nói rõ **thể loại** thì tốt (`essay`, `research`, `blog`, `journalism`, `novel`, `commentary`,
+`thesis-proposal`, `internship-report`, `teaching-initiative`); không nói thì agent sẽ hỏi.
 
 ### Chạy lẻ từng bước bằng lệnh
+
+> **Đổi tên lệnh ở bản 0.2.0.** Bảy lệnh đã đổi sang tên tiếng Anh và **tên cũ không còn**:
+> `01-boi-canh` → `01-context` · `02-viet-nhap` → `02-draft` · `03-phan-bien` → `03-critique` ·
+> `04-bien-tap` → `04-humanize` · `05-giam-dinh` → `05-audit` · `giao-docx` → `deliver-docx` ·
+> `danh-sach` → `list`. Ai đã cài bản 0.1.x phải cập nhật plugin trước khi gõ tên mới; xem
+> [CHANGELOG](CHANGELOG.md).
 
 Bảy lệnh trong `commands/`, namespace `/agent-writing-studio:<lệnh>`. Mỗi lệnh **chỉ làm đúng một
 bước**: thiếu sản phẩm của bước trước thì nó nói rõ thiếu file gì và lệnh nào sinh ra file đó, chứ
@@ -164,22 +170,22 @@ bước**: thiếu sản phẩm của bước trước thì nó nói rõ thiếu
 
 | Lệnh | Trục | Làm gì | Cần đầu vào | Ra file |
 |---|---|---|---|---|
-| `/agent-writing-studio:01-boi-canh` | Y1 | phỏng vấn ý đồ, luận đề, độc giả, ràng buộc | — (bước đầu) | `context.json` |
-| `/agent-writing-studio:02-viet-nhap` | Y2 | dàn ý ba tầng → chờ duyệt → viết văn xuôi | `context.json` | `draft.md` · `draft.meta.json` · `sentences.json` |
-| `/agent-writing-studio:03-phan-bien` | Y3 | chấm từng tiêu chí theo barem thể loại | `draft.md` · `sentences.json` | `critique.json` |
-| `/agent-writing-studio:04-bien-tap` | Y4 | sửa về phía giọng tác giả, 3 chế độ đầu ra | `draft.md` · `sentences.json` | `polished.md` · `polish.diff.json` · sidecar provenance |
-| `/agent-writing-studio:05-giam-dinh` | Y5 | đọc mù → S/C → báo cáo; mặc định `audit` | văn bản · `sentences.json` | `evidence.json` · `report.md` |
-| `/agent-writing-studio:giao-docx` | giao hàng | md → docx đúng quy cách Việt, đặt vào thư mục bạn chọn | `polished.md` | `<tên>.docx` + sidecar |
-| `/agent-writing-studio:danh-sach` | — | in chính bảng này, đọc động từ các file lệnh | — | — |
+| `/agent-writing-studio:01-context` | Y1 | phỏng vấn ý đồ, luận đề, độc giả, ràng buộc | — (bước đầu) | `context.json` |
+| `/agent-writing-studio:02-draft` | Y2 | dàn ý ba tầng → chờ duyệt → viết văn xuôi | `context.json` | `draft.md` · `draft.meta.json` · `sentences.json` |
+| `/agent-writing-studio:03-critique` | Y3 | chấm từng tiêu chí theo barem thể loại | `draft.md` · `sentences.json` | `critique.json` |
+| `/agent-writing-studio:04-humanize` | Y4 | sửa về phía giọng tác giả, 3 chế độ đầu ra | `draft.md` · `sentences.json` | `polished.md` · `polish.diff.json` · sidecar provenance |
+| `/agent-writing-studio:05-audit` | Y5 | đọc mù → S/C → báo cáo; mặc định `audit` | văn bản · `sentences.json` | `evidence.json` · `report.md` |
+| `/agent-writing-studio:deliver-docx` | giao hàng | md → docx đúng quy cách Việt, đặt vào thư mục bạn chọn | `polished.md` | `<tên>.docx` + sidecar |
+| `/agent-writing-studio:list` | — | in chính bảng này, đọc động từ các file lệnh | — | — |
 
 Bảng trên là bản chép cho người đọc README. **Nguồn thật là bảy file trong `commands/`** — lệnh
-`danh-sach` đọc thẳng từ đó, nên nếu hai chỗ lệch nhau thì tin `danh-sach`.
+`list` đọc thẳng từ đó, nên nếu hai chỗ lệch nhau thì tin `list`.
 
 ### Giao bản docx
 
 Bản giao hoàn chỉnh cho người đọc **mặc định là `.docx`**, không phải `.md`: giảng viên và biên tập
 viên nhận bài bằng Word. Bảo agent *"giao bản docx vào thư mục D:/thu-muc-cua-toi"*, hoặc gõ lệnh
-`/agent-writing-studio:giao-docx` rồi đưa thư mục bạn muốn nhận bài.
+`/agent-writing-studio:deliver-docx` rồi đưa thư mục bạn muốn nhận bài.
 
 Quy cách mặc định là chuẩn văn bản Việt phổ thông: **Times New Roman 13pt · giãn dòng 1,5 · lề trên
 và dưới 2cm, trái 3cm, phải 2cm · heading đậm cỡ 14–16**. Bản tự khai nguồn gốc được chép sang **cạnh**
@@ -213,9 +219,9 @@ ngay trong thư mục đang làm việc. Mỗi giai đoạn đọc sản phẩm 
 └─ report.md                    báo cáo cho người đọc
 ```
 
-**Bài của người thật không nằm trong repo.** Từ 31/08/2026 dữ liệu cá nhân của studio — hồ sơ giọng
-người viết, bài mẫu, các ca chạy, corpus — ở một **station** riêng ngoài repo, trỏ bằng biến môi
-trường `WRITING_STUDIO_DATA`:
+**Bài của người thật không nằm trong repo.** Từ 31/08/2026 các ca chạy, bản giao và corpus ở một
+**station** riêng ngoài repo, trỏ bằng biến môi trường `WRITING_STUDIO_DATA`; hồ sơ giọng, bài mẫu và
+chân dung độc giả nên nằm trong kho tri thức cá nhân (mục *Ba tầng, ba chỗ*):
 
 ```powershell
 # Windows, đặt một lần cho tài khoản (mở cửa sổ mới sau khi chạy)
@@ -224,12 +230,41 @@ setx WRITING_STUDIO_DATA "$HOME\.writing"
 
 ```
 $WRITING_STUDIO_DATA/
-  writers/<slug>/     hồ sơ giọng + bài mẫu chính chủ
-  audiences/<slug>/   chân dung độc giả
-  work/<slug>/        thư mục từng ca chạy
-  corpus/             bài hiệu chuẩn có provenance
-  out/                bản giao
+  work/<slug>/        thư mục từng ca chạy                      (bắt buộc)
+  out/                bản giao                                  (bắt buộc)
+  corpus/             bài hiệu chuẩn có provenance              (bắt buộc)
+  writers/<slug>/     hồ sơ giọng + bài mẫu    — tuỳ chọn, chỉ khi không có kho tri thức
+  audiences/<slug>/   chân dung độc giả        — tuỳ chọn, chỉ khi không có kho tri thức
 ```
+
+### Ba tầng, ba chỗ
+
+Repo này là **một** trong ba tầng. Biết ranh giới thì không ai nhét nhầm thứ vào chỗ sai.
+
+1. **Repo** giữ **luật chung cho mọi người**: năm skill, hồ sơ thể loại, schema, script. Đã khử mọi
+   tên riêng, và có hàng rào test chặn tên bò ngược vào.
+2. **Kho tri thức cá nhân** (tuỳ chọn, ngoài repo; gốc đọc từ `OPCOS_BRAIN_PATH`, mặc định `~/Brain`)
+   giữ **giọng và luật riêng của một người viết**: vai được đứng, chất giọng, kho chất liệu, điều cấm
+   riêng, khuôn trình bày theo kênh đăng — và khi có kho thì cả hồ sơ giọng đo được, bài mẫu chính
+   chủ, chân dung độc giả dạng máy đọc. Trục 1 chỉ **trỏ** vào đó qua `brain_pointers[]` của
+   `context.json`, không chép nội dung vào repo. Không có kho này thì tầng 2 rỗng và studio vẫn chạy,
+   chỉ là bài ra mang giọng mặc định của thể loại.
+3. **Station** (`WRITING_STUDIO_DATA`) giữ **ca chạy và sản phẩm**: thư mục từng ca, bản giao, corpus
+   hiệu chuẩn. Hồ sơ giọng đo được, bài mẫu, chân dung độc giả **nên** nằm trong kho tri thức cá nhân
+   khi có; không có thì ở station (`writers/`, `audiences/`); script và agent phân giải theo thứ tự
+   kho tri thức → station → repo. Không có station thì mọi script lui về đường mặc định trong repo.
+
+**Mặc định, mọi ca được tạo và mọi sản phẩm được sinh trong station.** Kho tri thức giữ **mọi thứ
+mang danh tính người viết** — giọng, hồ sơ đo được, chân dung độc giả — để dùng lại ngoài xưởng viết.
+
+Đường dẫn trong `brain_pointers[].path` tính từ **gốc kho tri thức**, lui về gốc dự án nếu không
+khớp. `writer_profile_ref` (và `profile_used`) là đường **tương đối**, agent tự ghép theo thứ tự:
+(1) gốc kho tri thức `OPCOS_BRAIN_PATH` → (2) gốc station `WRITING_STUDIO_DATA` → (3) gốc repo. Chuỗi
+**không chứa `/`** là slug: `writers/<slug>/profile.yaml` ở (2), rồi `shared/writers/<slug>/profile.yaml`
+ở (3). `null` = giọng mặc định thể loại. Không bao giờ ghi đường tuyệt đối.
+
+Ai có pipeline sản phẩm khác — bản tin, kênh video, trang đăng bài — thì để pipeline đó đọc một
+**bản dẫn xuất** từ kho tri thức của mình. Repo này không quy định chỗ đó, và cũng không cần biết.
 
 Thứ tự ưu tiên của mọi script: **tham số dòng lệnh** → `WRITING_STUDIO_DATA` → đường mặc định cũ
 trong repo (`shared/writers/`, `./.work/`). Không đặt biến thì repo vẫn chạy được — `.gitignore`
@@ -267,16 +302,16 @@ agent-writing-studio/
 │     (mỗi skill: SKILL.md ≤550 từ + references/ tài liệu dài + scripts/ + assets/)
 │
 ├─ commands/                    BẢY LỆNH chạy lẻ từng bước — /agent-writing-studio:<lệnh>
-│                              số đầu tên lệnh = số trục; giao-docx và danh-sach ngoài trục
+│                              số đầu tên lệnh = số trục; deliver-docx và list ngoài trục
 │
 ├─ shared/                      DỮ LIỆU DÙNG CHUNG — nhiều skill cùng đọc một nguồn
 │  ├─ genres/                     9 hồ sơ thể loại + _schema.md (hợp đồng hình dạng file)
 │  ├─ schemas/                    5 schema JSON: context · draft · critique · polish · provenance
 │  ├─ rules/                      quy tắc máy đọc được: 33 dấu hiệu tiếng Việt, bảng chấm điểm
 │  ├─ scripts/                    script dùng lại: đo, đối chiếu, dựng hồ sơ, xuất docx
-│  └─ writers/                    CHỈ schema + hướng dẫn; hồ sơ người thật ở station ngoài repo
+│  └─ writers/                    CHỈ schema + hướng dẫn; hồ sơ người thật ở kho tri thức hoặc station
 │
-├─ tests/                       372 test — canh cấu trúc skill, hình dạng dữ liệu, liên kết
+├─ tests/                       375 test — canh cấu trúc skill, hình dạng dữ liệu, liên kết
 │  ├─ forensics/                  hành vi trục 5 (có từ bản v1)
 │  ├─ genres/                     hồ sơ thể loại đúng schema, slug khớp hai chiều
 │  ├─ shared/                     schema, quy tắc, hàng rào de-name
@@ -285,8 +320,8 @@ agent-writing-studio/
 ├─ index.html                   trang giới thiệu tĩnh — mở thẳng bằng trình duyệt
 │
 ├─ docs/
-│  ├─ KIEN-TRUC.md                kiến trúc: vì sao 5 skill chứ không 25, ai đọc gì của ai
-│  ├─ CHAM-DIEM.md                thang điểm S và C, cách đo thang đó, mẫu báo cáo giám định
+│  ├─ ARCHITECTURE.md                kiến trúc: vì sao 5 skill chứ không 25, ai đọc gì của ai
+│  ├─ SCORING.md                thang điểm S và C, cách đo thang đó, mẫu báo cáo giám định
 │  ├─ GENRES.md                   cách soạn một hồ sơ thể loại mới
 │  └─ agent-writing-studio.md     tầm nhìn gốc của chủ repo (ma trận 5×5)
 │
@@ -297,8 +332,8 @@ agent-writing-studio/
 
 Mỗi thư mục gốc có `README.md` riêng nói nó chứa gì và dùng khi nào.
 
-Hai thứ **không có trong cây này**: thư mục ca (`work/`), hồ sơ người viết và corpus nằm ở station
-`$WRITING_STUDIO_DATA` ngoài repo (xem mục 3); còn nhật ký làm việc của xưởng — spec, danh sách task,
+Hai thứ **không có trong cây này**: thư mục ca (`work/`) và corpus nằm ở station
+`$WRITING_STUDIO_DATA`, hồ sơ người viết ở kho tri thức hoặc station — đều ngoài repo (xem mục 3); còn nhật ký làm việc của xưởng — spec, danh sách task,
 nhật ký cổng duyệt, sổ đo thô của từng đợt xây — chỉ nằm trên máy tác giả, vì đó là ghi chép quy
 trình chứ không phải tài liệu người dùng. Những kết luận đáng giữ từ đó đã được viết lại vào README
 và `docs/`.
@@ -408,7 +443,7 @@ Repo này **không vendor, không chép code** từ nguồn nào. Nó *đọc đ
 viết lại bằng tiếng Việt với ví dụ tiếng Việt — có tham khảo ý tưởng từ cộng đồng mã nguồn mở, và sổ
 nguồn chi tiết (lấy gì, không lấy gì, SHA đã ghim) giữ ở xưởng, không nằm trong repo này.
 
-Một ngoại lệ có nghĩa vụ pháp lý: kho thành ngữ `skills/04-humanizer/assets/thanh-ngu.json` **dùng dữ
+Một ngoại lệ có nghĩa vụ pháp lý: kho thành ngữ `skills/04-humanizer/assets/idioms.json` **dùng dữ
 liệu cấp phép MIT**, nên copyright notice và permission notice của nguồn nằm ngay trong file đó và
 **không được gỡ**.
 
@@ -418,7 +453,7 @@ Repo này phát hành theo **giấy phép MIT** — nguyên văn ở file [`LICE
 Nguyễn Quang Đức*. Nói bằng tiếng Việt thường: bạn được **dùng, sửa, phân phối lại và bán** phần mềm
 này cho mục đích gì cũng được, kể cả thương mại, không phải xin phép và không phải trả tiền. Ràng
 buộc **duy nhất**: mọi bản sao hay bản phái sinh phải **giữ nguyên copyright notice và permission
-notice** — đừng gỡ chúng khỏi file `LICENSE` cũng như khỏi `thanh-ngu.json`.
+notice** — đừng gỡ chúng khỏi file `LICENSE` cũng như khỏi `idioms.json`.
 
 Ngoài nghĩa vụ đó, tác giả **đề nghị nhưng không ràng buộc**: nếu công trình của bạn dựa trên repo
 này, xin dẫn về nó. Định dạng trích dẫn có sẵn ở [`CITATION.cff`](CITATION.cff) — trên GitHub bạn bấm
@@ -436,12 +471,13 @@ bất cứ con số nào** ở trên.
    đo trên bài có nguồn gốc biết trước) và 1 `needs_corpus` (chưa đủ cơ sở để viết cả ví dụ). Theo
    luật của chính repo, **trục 5 không được dùng dấu hiệu `candidate` để tạo nghi vấn** — nên khi
    chưa có bộ mẫu, trục 5 chỉ ghi chú chứ không kết luận. `fixtures/` hiện còn rỗng, và ngưỡng trong
-   `docs/CHAM-DIEM.md` là **mốc tham chiếu với n rất nhỏ (1–3 văn bản)**, không phải phân vị của một
+   `docs/SCORING.md` là **mốc tham chiếu với n rất nhỏ (1–3 văn bản)**, không phải phân vị của một
    cohort thật.
 
-2. **Hồ sơ giọng người viết chưa dựng xong.** `profile_build.py` cần **≥3 bài đã xác nhận chính chủ**
-   mới cho ra một hồ sơ dùng được; hiện chủ repo mới cung cấp 2 bài, nên hồ sơ ở trạng thái `draft` —
-   trục 2 và trục 4 chỉ được dùng nó **như gợi ý**, không được ép câu theo nó.
+2. **Hồ sơ giọng của chủ repo đã `ready` từ 5 bài chính chủ (09/2026); ngưỡng ≥3 bài vẫn là luật cho
+   mọi hồ sơ mới.** `profile_build.py` cần **≥3 bài đã xác nhận chính chủ** mới cho ra một hồ sơ dùng
+   được; dưới ngưỡng đó hồ sơ ở trạng thái `draft` — trục 2 và trục 4 chỉ được dùng nó **như gợi ý**,
+   không được ép câu theo nó.
 
 3. **Con số 83% / 58% là bằng chứng đầu tiên, không phải bằng chứng thống kê.** Trục 3 chấm một bài
    hội thảo thật rồi đối chiếu với phiếu phản biện của hội đồng: trong 6 điểm hội đồng nêu mà tác giả
@@ -476,7 +512,7 @@ python -m pytest tests/ -q
 python -m unittest discover -s tests -t .
 ```
 
-Hai runner phải cho **cùng một con số** (bản v0.1.2: 372 passed — con số đổi mỗi lần thêm luật, cứ
+Hai runner phải cho **cùng một con số** (bản v0.2.1: 375 passed — con số đổi mỗi lần thêm luật, cứ
 chạy để biết số hiện tại). Test không kiểm "văn hay"; nó kiểm những thứ hỏng thì im lặng: skill có
 đúng tên và ≤550 từ không, hồ sơ thể loại có đủ mục không, slug thể loại có khớp hai chiều không,
 liên kết nội bộ có gãy không, nguồn ngoài có bị ghi sai license không. Chi tiết:

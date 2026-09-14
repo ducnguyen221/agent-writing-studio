@@ -34,9 +34,9 @@ của một người hiểu điều mình đang viết, đồng thời chủ đ�
    `FLAG`, viết lời giải thích vô tội mạnh nhất; không đứng vững thì hạ `NOTE` hoặc bỏ.
 7. **Khóa bản đọc.** Ghi `sealed_before_counters: true`; chỉ sau đó mới cho phép đo bổ trợ.
 
-Đọc chi tiết tại [giao thức từng câu](../references/08-giao-thuc-doc-tung-cau.md),
-[rubric](../references/01-rubric-5-truc.md) và
-[chống báo oan](../references/03-chong-bao-oan.md). Writer profile tùy chọn phải theo
+Đọc chi tiết tại [giao thức từng câu](../references/08-sentence-reading-protocol.md),
+[rubric](../references/01-rubric-5-axes.md) và
+[chống báo oan](../references/03-false-positive-guard.md). Writer profile tùy chọn phải theo
 [hợp đồng baseline](../../../shared/writers/README.md).
 
 ## Finding bắt buộc

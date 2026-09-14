@@ -37,7 +37,7 @@ REQUIRED_KEYS = {
     5: {"must_have", "genre_baseline"},
 }
 
-# Danh mục lăng kính. Nguồn thật sẽ là `skills/03-critique/references/01-lang-kinh.md`
+# Danh mục lăng kính. Nguồn thật sẽ là `skills/03-critique/references/01-lenses.md`
 # (Phase 2); khi file đó tồn tại, test đọc từ đó và danh sách dưới chỉ còn là dự phòng.
 LENS_CATALOGUE_FALLBACK = {
     "fallacy_scan",
@@ -59,10 +59,10 @@ LENS_CATALOGUE_FALLBACK = {
 # thêm thể loại mới thì thêm vào đây, nhưng không được HẠ một hồ sơ full xuống partial mà không ai biết.
 FULL_GENRES = {"essay", "research", "novel", "journalism", "blog"}
 PARTIAL_GENRES = {
-    "chinh-luan",
-    "de-cuong-nghien-cuu",
-    "bao-cao-thuc-tap",
-    "sang-kien-kinh-nghiem",
+    "commentary",
+    "thesis-proposal",
+    "internship-report",
+    "teaching-initiative",
 }
 
 HEADING = re.compile(r"(?m)^##\s+(\d)\.\s+(.+?)\s*$")
@@ -71,7 +71,7 @@ YAML_BLOCK = re.compile(r"(?ms)^```yaml\r?\n(.*?)^```\s*$")
 
 def lens_catalogue():
     """Danh mục lăng kính: đọc từ reference của trục 3 nếu đã có, nếu chưa thì dùng bản dự phòng."""
-    reference = ROOT / "skills/03-critique/references/01-lang-kinh.md"
+    reference = ROOT / "skills/03-critique/references/01-lenses.md"
     if not reference.is_file():
         return LENS_CATALOGUE_FALLBACK
     text = reference.read_text(encoding="utf-8")

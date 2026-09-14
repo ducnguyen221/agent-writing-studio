@@ -3,15 +3,26 @@
 """
 profile_build.py — dựng writer profile từ bài chính chủ. KHÔNG gọi mô hình.
 
-    python profile_build.py --writer duc-nguyen
-    python profile_build.py --writer duc-nguyen --samples-dir /duong/dan/khac --dry-run
+    python profile_build.py --writer writer-a
+    python profile_build.py --writer writer-a --samples-dir /duong/dan/khac --dry-run
+    python profile_build.py --writer writer-a --samples-dir <kho>/bai-mau --out <kho>/profile.yaml --keep-manual
 
 Đọc mọi file `.txt` / `.md` / `.docx` trong `<writers>/<slug>/samples/`, đo từng bài
 bằng `vi_segment.py` + `counters.py` của trục 5, rồi lấy **trung vị** làm vân tay. Xuất
 `<writers>/<slug>/profile.yaml` theo `shared/writers/writer.schema.json`.
 
 `<writers>` = `$WRITING_STUDIO_DATA/writers/` nếu biến môi trường đó có, ngược lại
-`shared/writers/` trong repo. `--samples-dir` / `--out` tường minh luôn thắng cả hai.
+`shared/writers/` trong repo. `--samples-dir` / `--out` tường minh luôn thắng cả hai — và đó là
+cách dùng khi hồ sơ giọng, bài mẫu nằm trong kho tri thức cá nhân (`OPCOS_BRAIN_PATH`).
+
+Bài mẫu trong kho tri thức thường có frontmatter YAML: khối `---` ĐẦU file `.md`/`.txt` bị bỏ
+trước khi đo (kèm các dòng trống ngay sau nó). Vạch `---` giữa thân bài là câu chữ của tác giả,
+không bị đụng.
+
+`--keep-manual [PATH]` dựng lại mà không mất phần người đã điền tay: nạp hồ sơ cũ (mặc định =
+`--out`) rồi giữ `voice_notes`, `provenance.ownership_confirmed_by`, `known_typos`, các
+`pet_templates` có id ngoài `counters.TEMPLATES`, hợp `necessary_english_terms` và các dòng
+`limitations` viết tay. Chỉ in số lượng đã giữ, không in nội dung.
 
 Ba luật của script này, đọc trước khi sửa:
 
@@ -37,7 +48,7 @@ import sys
 from datetime import date
 from pathlib import Path
 
-TOOL_VERSION = "profile_build.py 1.0"
+TOOL_VERSION = "profile_build.py 1.1"
 
 ROOT = Path(__file__).resolve().parents[2]
 FORENSICS_SCRIPTS = ROOT / "skills/05-forensics/scripts"
@@ -103,13 +114,26 @@ EXTRACT = _load("forensics_extract", FORENSICS_SCRIPTS / "extract.py")
 
 
 # ---------- đọc bài ----------
+# Frontmatter YAML chỉ được nhận ở ĐẦU file. Bài Facebook dùng `---` làm vạch ngăn giữa các phần
+# của thân bài; neo `\A` là thứ giữ cho vạch ấy không bị cắt nhầm.
+_FRONT_MATTER_RX = re.compile(r"\A﻿?---[ \t]*\n.*?\n---[ \t]*\n", re.DOTALL)
+
+
+def strip_front_matter(text):
+    """Bỏ khối frontmatter đầu file và các dòng trống ngay sau nó. Không có thì trả nguyên."""
+    match = _FRONT_MATTER_RX.match(text)
+    if not match:
+        return text
+    return text[match.end():].lstrip("\n")
+
+
 def read_sample(path):
     """Trả nguyên văn bài. .docx đi qua extract.from_docx của trục 5."""
     suffix = path.suffix.lower()
     if suffix == ".docx":
         text, _meta = EXTRACT.from_docx(path)
         return text
-    return path.read_text(encoding="utf-8")
+    return strip_front_matter(path.read_text(encoding="utf-8"))
 
 
 def collect_samples(samples_dir):
@@ -300,13 +324,102 @@ def build_profile(slug, paths, language="vi", genre=None, with_examples=False):
     return profile, warnings
 
 
+# ---------- giữ phần điền tay ----------
+_MACHINE_LIMITATION_PREFIXES = (
+    "Dựng từ ",
+    "known_typos để rỗng:",
+    "Không khai thể loại:",
+    "Dưới 3 bài:",
+    "Giữ lại từ hồ sơ dựng ",
+)
+_UNFILLED_NOTES_PREFIX = "CHƯA ĐIỀN"
+
+
+def load_old_profile(path):
+    """Trả (dict | None, cảnh báo | None). Không ném lỗi: thiếu hồ sơ cũ chỉ là cảnh báo."""
+    if not path.is_file():
+        return None, f"--keep-manual: không có hồ sơ cũ ở {path}; không giữ được gì."
+    try:
+        import yaml
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except Exception as exc:  # YAML hỏng hay thiếu PyYAML đều không được làm mất hồ sơ mới
+        return None, f"--keep-manual: không đọc được hồ sơ cũ ({type(exc).__name__}); không giữ được gì."
+    if not isinstance(data, dict):
+        return None, "--keep-manual: hồ sơ cũ không phải một bảng YAML; không giữ được gì."
+    return data, None
+
+
+def merge_manual(profile, old):
+    """Chép phần điền tay của hồ sơ cũ sang hồ sơ vừa đo. Trả danh sách mô tả SỐ LƯỢNG đã giữ."""
+    kept = []
+    old_provenance = old.get("provenance") or {}
+
+    notes = old.get("voice_notes")
+    if isinstance(notes, str) and notes.strip() and not notes.lstrip().startswith(_UNFILLED_NOTES_PREFIX):
+        profile["voice_notes"] = notes
+        kept.append("voice_notes")
+
+    owner = old_provenance.get("ownership_confirmed_by")
+    if isinstance(owner, str) and owner.strip():
+        profile["provenance"]["ownership_confirmed_by"] = owner
+        kept.append("ownership_confirmed_by")
+
+    typos = [item for item in (old.get("known_typos") or []) if isinstance(item, dict)]
+    if typos:
+        profile["known_typos"] = typos
+        kept.append(f"{len(typos)} known_typos")
+
+    # Khuôn do script đo được thì lần đo mới là sự thật; chỉ khuôn người thêm tay mới được giữ.
+    measured_ids = {item["id"] for item in profile["pet_templates"]}
+    manual_templates = [
+        item for item in (old.get("pet_templates") or [])
+        if isinstance(item, dict) and item.get("id")
+        and item["id"] not in COUNTERS.TEMPLATES and item["id"] not in measured_ids
+    ]
+    profile["pet_templates"].extend(manual_templates)
+    kept.append(f"{len(manual_templates)} pet_templates")
+
+    # Giữ thứ tự người đã xếp; thuật ngữ mới đo được nối sau.
+    old_terms = [t for t in (old.get("necessary_english_terms") or []) if isinstance(t, str) and t.strip()]
+    machine_terms = profile["necessary_english_terms"]
+    merged_terms = list(dict.fromkeys(old_terms + [t for t in machine_terms if t not in old_terms]))
+    profile["necessary_english_terms"] = merged_terms
+    kept.append(f"{len([t for t in merged_terms if t not in machine_terms])} thuật ngữ")
+
+    limitations = [
+        line for line in profile["limitations"]
+        if not (typos and line.startswith("known_typos để rỗng:"))
+    ]
+    manual_lines = [
+        line for line in (old.get("limitations") or [])
+        if isinstance(line, str) and line.strip()
+        and not line.startswith(_MACHINE_LIMITATION_PREFIXES) and line not in limitations
+    ]
+    kept.append(f"{len(manual_lines)} dòng limitations")
+    old_built_at = old_provenance.get("built_at") or "không rõ ngày"
+    profile["limitations"] = limitations + manual_lines + [
+        f"Giữ lại từ hồ sơ dựng {old_built_at}: {', '.join(kept)}."
+    ]
+    return kept
+
+
 # ---------- xuất ----------
 def to_yaml(profile):
     try:
         import yaml
     except ImportError:
         raise SystemExit("Cần PyYAML để xuất profile.yaml: pip install pyyaml")
-    return yaml.safe_dump(profile, allow_unicode=True, sort_keys=False, width=100)
+
+    class _Dumper(yaml.SafeDumper):
+        pass
+
+    def _str(dumper, value):
+        # Chuỗi nhiều dòng (voice_notes) xuất dạng khối `|` để người còn sửa tay được.
+        style = "|" if "\n" in value else None
+        return dumper.represent_scalar("tag:yaml.org,2002:str", value, style=style)
+
+    _Dumper.add_representer(str, _str)
+    return yaml.dump(profile, Dumper=_Dumper, allow_unicode=True, sort_keys=False, width=100)
 
 
 def main():
@@ -323,8 +436,21 @@ def main():
     )
     parser.add_argument("--writer", required=True,
                         help="Slug thư mục trong $WRITING_STUDIO_DATA/writers/ (fallback shared/writers/)")
-    parser.add_argument("--samples-dir", help="Ghi đè đường dẫn samples/ (mặc định theo slug)")
+    parser.add_argument(
+        "--samples-dir",
+        help="Ghi đè đường dẫn samples/ (mặc định theo slug). Trỏ được vào thư mục bài mẫu trong "
+             "kho tri thức; frontmatter YAML đầu file .md bị bỏ.",
+    )
     parser.add_argument("--out", help="Ghi đè đường dẫn profile.yaml")
+    parser.add_argument(
+        "--keep-manual",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PATH",
+        help="Giữ phần điền tay (voice_notes, ownership_confirmed_by, known_typos, pet_templates "
+             "thêm tay, thuật ngữ, limitations) từ hồ sơ cũ. Không ghi PATH = dùng --out.",
+    )
     parser.add_argument("--language", default="vi")
     parser.add_argument("--genre", default=None, help="Slug thể loại trong shared/genres/")
     parser.add_argument(
@@ -354,6 +480,15 @@ def main():
         return EXIT_FAIL
 
     out_path = Path(args.out) if args.out else base_dir / slug / "profile.yaml"
+    kept = None
+    if args.keep_manual is not None:
+        # Đọc hồ sơ cũ TRƯỚC khi ghi: mặc định nó chính là file sắp bị ghi đè.
+        old_path = Path(args.keep_manual) if args.keep_manual else out_path
+        old, problem = load_old_profile(old_path)
+        if problem:
+            warnings.append(problem)
+        else:
+            kept = merge_manual(profile, old)
     text = to_yaml(profile)
     if not args.dry_run:
         out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -371,6 +506,8 @@ def main():
     print(f"tone_style  : {fingerprint['tone_style']} {fingerprint['tone_style_evidence']}")
     print(f"pet_templates: {[t['id'] for t in profile['pet_templates']] or '(chưa có)'}")
     print(f"thuật ngữ Anh: {profile['necessary_english_terms'] or '(chưa có)'}")
+    if kept is not None:
+        print(f"giữ tay     : {', '.join(kept)}")
     print(f"ghi ra      : {'(dry-run, không ghi)' if args.dry_run else out_path}")
     for line in warnings:
         print(f"  ! {line}")

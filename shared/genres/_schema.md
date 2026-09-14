@@ -119,7 +119,7 @@ Trục 5 **tiền đăng ký** `must_have[]` trước khi đọc bài, và dùng
 
 `genre_baseline` là hàng rào chống báo oan quan trọng nhất trong repo. Văn hành chính Việt Nam vốn
 công thức: mục "kết quả – tồn tại – phương hướng" và bộ ba song hành là văn phong **được dạy trong
-trường**, không phải dấu vết máy. Xem `skills/05-forensics/references/03-chong-bao-oan.md` §2 và §6.
+trường**, không phải dấu vết máy. Xem `skills/05-forensics/references/03-false-positive-guard.md` §2 và §6.
 
 Thiếu một `must_have` là dấu hiệu về **năng lực thể loại**, không tự nó chứng minh nguồn gốc AI.
 
@@ -129,7 +129,7 @@ Thiếu một `must_have` là dấu hiệu về **năng lực thể loại**, kh
 
 `lenses[]` ở §3 chỉ được lấy từ danh mục dưới. Danh mục là tài sản của trục 3; hồ sơ thể loại chỉ
 **bật/tắt**, không định nghĩa lăng kính mới. Bản đầy đủ (đầu vào · câu hỏi · bằng chứng cần) sẽ nằm
-ở `skills/03-critique/references/01-lang-kinh.md`; trước khi file đó tồn tại, test giữ danh mục này.
+ở `skills/03-critique/references/01-lenses.md`; trước khi file đó tồn tại, test giữ danh mục này.
 
 | Lăng kính | Soi cái gì |
 |---|---|
@@ -178,8 +178,8 @@ nguồn không lệch nhau, và ghi tên tell trong `normal_signals` để ngư�
 `shared/genres/<slug>.md`. Baseline trỏ tới một thể loại không có hồ sơ thì trục 5 không tìm được §5
 để hạ tín hiệu, và lỗi đó im lặng. `tests/genres/test_genre_schema.py` canh cả hai chiều.
 
-**`research` và `de-cuong-nghien-cuu` là hai slug khác nhau, không phải một chỗ lệch.** `research.md`
+**`research` và `thesis-proposal` là hai slug khác nhau, không phải một chỗ lệch.** `research.md`
 là hồ sơ **viết** (đủ §1–§5, có `structures[].id = de_cuong` cho trục 2);
-`de-cuong-nghien-cuu.md` là hồ sơ **giám định** (`partial`, chỉ §5) và khai riêng thứ đề cương nghiên
+`thesis-proposal.md` là hồ sơ **giám định** (`partial`, chỉ §5) và khai riêng thứ đề cương nghiên
 cứu sinh Việt Nam bắt buộc phải có — khoảng trống nghiên cứu nêu đích danh tác giả đi trước. Trục 5
 đọc hồ sơ `partial` khi bài được khai đúng thể loại đó; trục 1–4 không đọc file `partial` nào.

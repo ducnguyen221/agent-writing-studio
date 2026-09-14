@@ -1,6 +1,6 @@
 # Sổ corpus hiệu chuẩn — datum và kế hoạch
 
-> Chỉ số liệu tổng hợp + `sentence_id`. **Không chép văn bản thật** vào đây (luật `docs/CHAM-DIEM.md` phần II
+> Chỉ số liệu tổng hợp + `sentence_id`. **Không chép văn bản thật** vào đây (luật `docs/SCORING.md` phần II
 > và `fixtures/README.md`). Mỗi datum là một dòng của manifest `fixtures/manifest.schema.json` cộng
 > kết quả Y5 tại thời điểm đo; văn bản nằm ở thư mục ca `$WRITING_STUDIO_DATA/work/<case>/`
 > (fallback `.work/<case>/`) — ngoài git.
@@ -27,7 +27,7 @@ Manifest (theo `fixtures/manifest.schema.json`):
 | `id` | `studio-essay-001-cot-b-ai-baitap` |
 | `provenance` | `ai` |
 | `language` | `vi` |
-| `genre` | `essay` (structure `luan_de_phan_de`, profile `duc-nguyen` trạng thái `draft`) |
+| `genre` | `essay` (structure `luan_de_phan_de`, profile `writer-a` trạng thái `draft`) |
 | `source_date` | `2026-08-30` |
 | `ground_truth_level` | `generated_and_logged` |
 | `generator` | `claude-fable-5` (Claude Code) — Y2 viết, Y4 cùng model sửa 9 nhát / 8 câu |
@@ -99,8 +99,8 @@ Mục tiêu của đợt tối thiểu **không phải** đo FPR (cần ≥ 30 b
 | A2 | `essay` | Y1→Y2→Y3, **không Y4** | tách hiệu ứng Y4: Y4 có xoá tín hiệu Y5 không (datum #1 nghi ngờ ở F2) |
 | A3 | `essay` | Y2 **không** đọc `anti_llm_defaults` (prompt trần, cùng đề) | đối chứng "một danh sách, hai chiều": tell có bắt được máy khi máy không được cảnh báo không |
 | A4 | `research` (structure `phan_tich_chinh_sach`) | Y1→Y2→Y3→Y4 | thể loại có baseline NOMINAL/TEMPLATES rộng nhất → đo Y5 còn nhìn được gì |
-| A5 | `blog` | Y1→Y2→Y3→Y4 | thể loại duy nhất bật `retention`; T04/T18 baseline → đo tell G1 còn lại |
-| A6 *(nếu kịp)* | `bao-cao-thuc-tap` | Y2 viết theo mẫu khoa, **không** có đơn vị thật | thể loại tắt gần hết counter; kiểm "cân bằng" ghi ở `bao-cao-thuc-tap.md` §5: Y5 mù có thấy gì ngoài khung không |
+| A5 | `blog` | Y1→Y2→Y3→Y4 | thể loại duy nhất bật `retention`; T04/T18/T37 baseline → đo tell G1 còn lại |
+| A6 *(nếu kịp)* | `internship-report` | Y2 viết theo mẫu khoa, **không** có đơn vị thật | thể loại tắt gần hết counter; kiểm "cân bằng" ghi ở `internship-report.md` §5: Y5 mù có thấy gì ngoài khung không |
 
 Mỗi bài: `draft.meta.json` đủ span · `sentences.json` bản cuối · Y5 do **model khác** chấm mù qua
 bridge (Codex, hoặc agy) · ghi vào sổ này một bảng như datum #1. Cùng một `prompt_family` (`studio-cot-b`)
@@ -122,7 +122,7 @@ cho A1/A2/A4/A5/A6; A3 là `prompt_family` riêng (`bare-prompt`) — chia split
    vào dưới trạng thái `candidate`, **không** tạo finding.
 3. Chạy `ai` trước, `human` sau, cùng một tuần; ghi mỗi datum ngay sau khi chấm.
 4. Kết quả kỳ vọng để ra quyết định: tell nào NOTE ≥ 2/5 bài máy **và** 0/5 bài người → ứng viên corpus
-   thật (≥ 30 + 30 theo `docs/CHAM-DIEM.md` §8); tell nào NOTE bài người → tắt hoặc chuyển vào
+   thật (≥ 30 + 30 theo `docs/SCORING.md` §8); tell nào NOTE bài người → tắt hoặc chuyển vào
    `genre_baseline`. Ở n=5 không kết luận gì về FPR.
 
 ### 2.4 Ghi số, không ghi văn

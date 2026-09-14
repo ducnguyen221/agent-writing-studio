@@ -16,13 +16,13 @@ thể loại = thêm một file trong `shared/genres/`, không sửa skill này.
 
 1. **Nạp hồ sơ và barem.** Đọc `shared/genres/<genre>.md`, mục `§3`. Có barem thật — đề bài, hướng
    dẫn chấm, phiếu chấm của cơ sở — thì **barem của nhiệm vụ thắng hồ sơ**; ghi vào `rubric_source`.
-   Xem [barem mẫu](references/04-barem-mau.md).
+   Xem [barem mẫu](references/04-rubric-samples.md).
 2. **Chấm mù, bốn bước, đúng thứ tự:** đọc trôi → chấm từng tiêu chí → chạy lăng kính → mở phong bì
    rồi viết `must_fix`. Không xem `draft.meta.json` và không nhận câu hỏi mớm trước khi chấm xong.
    Xem [chấm mù](references/03-blind-referee.md).
 3. **Chạy lăng kính.** Đúng những lăng kính `lenses[]` bật, không hơn không kém; chạy thừa hay thiếu
-   đều ghi vào `limitations[]`. Xem [lăng kính](references/01-lang-kinh.md) và
-   [ngụy biện](references/02-nguy-bien-13-loai-vi.md).
+   đều ghi vào `limitations[]`. Xem [lăng kính](references/01-lenses.md) và
+   [ngụy biện](references/02-fallacies-13-vi.md).
 4. **Xuất file.** `critique.json` theo `shared/schemas/critique.schema.json`.
 
 ## Luật không được đảo
@@ -53,5 +53,5 @@ thể loại = thêm một file trong `shared/genres/`, không sửa skill này.
 ## Bàn giao
 
 `critique.json` là đầu vào của trục 4 khi người viết muốn sửa. Gọi làm trục chuyên môn để chấm bài
-học viên: xem [tích hợp](references/05-tich-hop-project-feedback.md); quy đổi điểm tổng và trọng số
+học viên: xem [tích hợp](references/05-project-feedback-integration.md); quy đổi điểm tổng và trọng số
 là việc của bên gọi.

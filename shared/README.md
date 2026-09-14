@@ -23,4 +23,4 @@ nằm ở **station** riêng ngoài repo, trỏ bằng biến môi trường `WR
 tắc cứng: dữ liệu định danh cá nhân không đi vào git.
 
 Muốn soạn một hồ sơ thể loại mới: [`docs/GENRES.md`](../docs/GENRES.md).
-Muốn hiểu ai đọc dữ liệu của ai: [`docs/KIEN-TRUC.md`](../docs/KIEN-TRUC.md).
+Muốn hiểu ai đọc dữ liệu của ai: [`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md).

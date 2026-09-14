@@ -13,7 +13,7 @@ furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-The bundled Vietnamese idiom dataset in skills/04-humanizer/assets/thanh-ngu.json
+The bundled Vietnamese idiom dataset in skills/04-humanizer/assets/idioms.json
 contains data derived from a third-party MIT-licensed dataset; its required
 copyright and permission notice is preserved inside that file's attribution block.
 

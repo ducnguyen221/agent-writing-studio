@@ -32,4 +32,4 @@ Nên: thêm một thể loại mới = thêm **một file** trong `shared/genres
 
 Bên trong mỗi thư mục skill: `SKILL.md` là bản ngắn agent luôn đọc; `references/` là các tài liệu dài
 chỉ nạp khi cần; `scripts/` và `assets/` là phần máy chạy được. Chi tiết vì sao chia như vậy:
-[`docs/KIEN-TRUC.md`](../docs/KIEN-TRUC.md).
+[`docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md).

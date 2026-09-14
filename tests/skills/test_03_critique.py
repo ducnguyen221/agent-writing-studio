@@ -15,19 +15,19 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 SKILL = ROOT / "skills/03-critique/SKILL.md"
 REFERENCES = ROOT / "skills/03-critique/references"
-LENS_DOC = REFERENCES / "01-lang-kinh.md"
+LENS_DOC = REFERENCES / "01-lenses.md"
 GENRES_DIR = ROOT / "shared/genres"
-SCENARIO = ROOT / "tests/skills/scenarios/03-essay-tron-tru.md"
+SCENARIO = ROOT / "tests/skills/scenarios/03-essay-too-smooth.md"
 
 REQUIRED_REFERENCES = (
-    "01-lang-kinh.md",
-    "02-nguy-bien-13-loai-vi.md",
+    "01-lenses.md",
+    "02-fallacies-13-vi.md",
     "03-blind-referee.md",
-    "04-barem-mau.md",
-    "05-tich-hop-project-feedback.md",
+    "04-rubric-samples.md",
+    "05-project-feedback-integration.md",
 )
 
-# Danh mục lăng kính hợp lệ. Nguồn sự thật là 01-lang-kinh.md; danh sách này chỉ để bắt
+# Danh mục lăng kính hợp lệ. Nguồn sự thật là 01-lenses.md; danh sách này chỉ để bắt
 # trường hợp file reference bị cắt cụt hoặc bị đổi tên lăng kính mà không ai để ý.
 KNOWN_LENSES = {
     "fallacy_scan",
@@ -54,14 +54,14 @@ def skill_text():
 
 
 def documented_lenses():
-    """Lăng kính mà 01-lang-kinh.md thật sự định nghĩa (có tiêu đề riêng)."""
+    """Lăng kính mà 01-lenses.md thật sự định nghĩa (có tiêu đề riêng)."""
     text = LENS_DOC.read_text(encoding="utf-8")
     headings = re.findall(r"(?m)^##\s+\d+\.\s+`([a-z][a-z0-9_]+)`", text)
     return set(headings)
 
 
 def lens_section(name):
-    """Thân của mục lăng kính trong 01-lang-kinh.md, tới tiêu đề `##` kế tiếp."""
+    """Thân của mục lăng kính trong 01-lenses.md, tới tiêu đề `##` kế tiếp."""
     text = LENS_DOC.read_text(encoding="utf-8")
     heads = list(re.finditer(r"(?m)^##\s+\d+\.\s+`([a-z][a-z0-9_]+)`", text))
     for index, head in enumerate(heads):
@@ -69,7 +69,7 @@ def lens_section(name):
             continue
         end = heads[index + 1].start() if index + 1 < len(heads) else len(text)
         return text[head.start(): end]
-    raise AssertionError(f"01-lang-kinh.md không có mục lăng kính `{name}`")
+    raise AssertionError(f"01-lenses.md không có mục lăng kính `{name}`")
 
 
 def genre_lenses():
@@ -144,11 +144,11 @@ class LensCatalogueTests(unittest.TestCase):
         text = LENS_DOC.read_text(encoding="utf-8")
         documented = documented_lenses()
         missing = KNOWN_LENSES - documented
-        self.assertFalse(missing, f"01-lang-kinh.md chưa định nghĩa lăng kính: {sorted(missing)}")
+        self.assertFalse(missing, f"01-lenses.md chưa định nghĩa lăng kính: {sorted(missing)}")
         unknown = documented - KNOWN_LENSES
-        self.assertFalse(unknown, f"01-lang-kinh.md định nghĩa lăng kính lạ: {sorted(unknown)}")
+        self.assertFalse(unknown, f"01-lenses.md định nghĩa lăng kính lạ: {sorted(unknown)}")
         for part in ("**Đầu vào:**", "**Câu hỏi:**", "**Bằng chứng cần:**", "**Đầu ra:**"):
-            self.assertIn(part, text, f"01-lang-kinh.md thiếu phần {part}")
+            self.assertIn(part, text, f"01-lenses.md thiếu phần {part}")
 
     def test_every_genre_lens_is_in_the_catalogue(self):
         documented = documented_lenses()
@@ -159,7 +159,7 @@ class LensCatalogueTests(unittest.TestCase):
                 unknown = set(lenses) - documented
                 self.assertFalse(
                     unknown,
-                    f"{name} §3 bật lăng kính không có trong 01-lang-kinh.md: {sorted(unknown)}",
+                    f"{name} §3 bật lăng kính không có trong 01-lenses.md: {sorted(unknown)}",
                 )
 
     def test_retention_stays_advisory_and_never_reaches_must_fix(self):
@@ -201,7 +201,7 @@ class LensCatalogueTests(unittest.TestCase):
 
 class FallacyReferenceTests(unittest.TestCase):
     def test_thirteen_fallacies_each_have_example_and_counterexample(self):
-        text = (REFERENCES / "02-nguy-bien-13-loai-vi.md").read_text(encoding="utf-8")
+        text = (REFERENCES / "02-fallacies-13-vi.md").read_text(encoding="utf-8")
         entries = re.findall(r"(?m)^##\s+(\d+)\.\s+(.+)$", text)
         self.assertEqual(
             len(entries), 13, f"Phải đúng 13 loại ngụy biện, đang có {len(entries)}"
@@ -219,12 +219,12 @@ class FallacyReferenceTests(unittest.TestCase):
         )
 
     def test_fallacy_reference_separates_fallacy_from_language_error(self):
-        text = (REFERENCES / "02-nguy-bien-13-loai-vi.md").read_text(encoding="utf-8")
+        text = (REFERENCES / "02-fallacies-13-vi.md").read_text(encoding="utf-8")
         self.assertIn("Ngụy biện không phải lỗi ngôn ngữ", text)
 
     def test_fallacy_reference_takes_names_only_and_names_no_source_repo(self):
         """Chỉ mượn TÊN loại; định nghĩa và ví dụ tự biên, và không nêu tên repo nguồn."""
-        text = (REFERENCES / "02-nguy-bien-13-loai-vi.md").read_text(encoding="utf-8")
+        text = (REFERENCES / "02-fallacies-13-vi.md").read_text(encoding="utf-8")
         self.assertIn("tự biên", text)
         self.assertIn("bộ luật của studio", text)
         self.assertIn("sổ xưởng", text)
@@ -248,22 +248,22 @@ class BlindRefereeTests(unittest.TestCase):
 
 class RubricReferenceTests(unittest.TestCase):
     def test_rubric_reference_names_its_three_real_sources(self):
-        text = (REFERENCES / "04-barem-mau.md").read_text(encoding="utf-8")
+        text = (REFERENCES / "04-rubric-samples.md").read_text(encoding="utf-8")
         for source in ("IELTS", "nghị luận xã hội", "23/2021/TT-BGDĐT"):
-            self.assertIn(source, text, f"04-barem-mau.md thiếu nguồn barem thật: {source}")
+            self.assertIn(source, text, f"04-rubric-samples.md thiếu nguồn barem thật: {source}")
 
     def test_rubric_reference_states_task_rubric_wins(self):
-        text = (REFERENCES / "04-barem-mau.md").read_text(encoding="utf-8")
+        text = (REFERENCES / "04-rubric-samples.md").read_text(encoding="utf-8")
         self.assertIn("barem của nhiệm vụ thắng", text)
 
     def test_rubric_reference_records_what_was_not_verified(self):
-        text = (REFERENCES / "04-barem-mau.md").read_text(encoding="utf-8")
+        text = (REFERENCES / "04-rubric-samples.md").read_text(encoding="utf-8")
         self.assertIn("Chưa xác minh", text)
 
 
 class IntegrationReferenceTests(unittest.TestCase):
     def test_integration_reference_covers_the_five_axes_of_project_feedback(self):
-        text = (REFERENCES / "05-tich-hop-project-feedback.md").read_text(encoding="utf-8")
+        text = (REFERENCES / "05-project-feedback-integration.md").read_text(encoding="utf-8")
         for axis in (
             "Đáp ứng yêu cầu",
             "Năng lực kỹ thuật",
@@ -274,14 +274,14 @@ class IntegrationReferenceTests(unittest.TestCase):
             self.assertIn(axis, text, f"Thiếu trục '{axis}' của project-feedback")
 
     def test_integration_is_a_file_contract_not_an_import(self):
-        text = (REFERENCES / "05-tich-hop-project-feedback.md").read_text(encoding="utf-8")
+        text = (REFERENCES / "05-project-feedback-integration.md").read_text(encoding="utf-8")
         self.assertIn("không import", text)
         self.assertIn("critique.json", text)
 
 
 class ScenarioTests(unittest.TestCase):
     def test_smooth_essay_scenario_expects_split_scores(self):
-        self.assertTrue(SCENARIO.is_file(), "Thiếu kịch bản 03-essay-tron-tru.md")
+        self.assertTrue(SCENARIO.is_file(), "Thiếu kịch bản 03-essay-too-smooth.md")
         text = SCENARIO.read_text(encoding="utf-8")
         for token in ("`logic`", "`evidence`", "`language`"):
             self.assertIn(token, text, f"Kịch bản phải nói tới tiêu chí {token}")

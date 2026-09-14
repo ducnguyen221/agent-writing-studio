@@ -100,7 +100,7 @@ tiếng nói*. Bài trượt nặng nhất thường trượt ở lăng kính th
 điều tra có lập trường rõ vẫn là bài cân bằng nếu bên bị nêu tên bất lợi đã được hỏi và câu trả lời
 (hoặc việc họ từ chối, kèm thời điểm) có mặt trong bài. Bên vắng mà việc vắng không đổi nghĩa câu
 nào thì ghi `limitations[]`, không thành finding — đúng luật ở
-`skills/03-critique/references/01-lang-kinh.md` mục 6.
+`skills/03-critique/references/01-lenses.md` mục 6.
 
 Văn báo trơn tru không được cộng điểm cho phần nguồn. Một bài viết chặt, nhịp tốt, nhưng khẳng định
 trung tâm chỉ có một nguồn ẩn danh vẫn là bài chưa đủ đăng.
@@ -219,7 +219,7 @@ finding đáng theo đuổi bằng cách hỏi phóng viên đã gặp ai, ghi �
 
 Cảnh báo báo oan riêng của thể loại: văn báo vốn có khuôn. Câu lead gói bốn thông tin vào một câu,
 cụm quy nguồn lặp lại hàng chục lần, đoạn ngắn một hai câu, cấu trúc tháp ngược giống nhau giữa mọi
-bài của cùng toà soạn — tất cả là chuẩn nghề. Xem `skills/05-forensics/references/03-chong-bao-oan.md`
+bài của cùng toà soạn — tất cả là chuẩn nghề. Xem `skills/05-forensics/references/03-false-positive-guard.md`
 §2 và §6.
 
 ```yaml

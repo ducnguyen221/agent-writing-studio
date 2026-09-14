@@ -58,7 +58,7 @@ class WorkflowAssetTests(unittest.TestCase):
         names = sorted(p.name for p in (ROOT / "skills/05-forensics/references").glob("*.md"))
         self.assertTrue(names)
         self.assertNotIn("06-distill-repo.md", names)
-        for expected in ("01-rubric-5-truc.md", "05-kiem-chung-trich-dan.md", "07-case-study.md"):
+        for expected in ("01-rubric-5-axes.md", "05-citation-verification.md", "07-case-study.md"):
             self.assertIn(expected, names)
 
 

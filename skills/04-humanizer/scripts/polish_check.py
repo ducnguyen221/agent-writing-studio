@@ -60,11 +60,11 @@ COUNTER_BY_TELL = {
 }
 
 # Hai nguồn khai baseline KHÔNG trùng nhau và cả hai đều phải được đọc:
-#   · vi-ai-tells.json khai theo slug thể loại VN (`bao-cao-thuc-tap`, `chinh-luan`…);
+#   · vi-ai-tells.json khai theo slug thể loại VN (`internship-report`, `commentary`…);
 #   · §5 của hồ sơ thể loại khai bằng văn xuôi (`research.md` nói danh từ hoá là bình thường,
 #     nhưng không có mục tell nào liệt kê slug `research`).
 # Bỏ nguồn thứ hai thì bài nghiên cứu bị báo NOMINAL như một chỗ phải sửa — đúng kiểu sửa oan
-# mà references/03-chong-sua-oan.md mục 5 cấm.
+# mà references/03-anti-overcorrection.md mục 5 cấm.
 #
 # Một cột chỉ được dán nhãn baseline khi §5 khai ĐÚNG THỨ CỘT ĐÓ ĐO. Hai đường:
 #   · tường minh — tín hiệu nêu đích danh mã tell (`(T10)`) hoặc tên cột (`TEMPLATES`);

@@ -4,7 +4,7 @@
 counters.py — ĐẾM TẤT ĐỊNH. Chỉ đo, KHÔNG kết luận.
 
 Script này không bao giờ được nói "do AI viết". Nó xuất số; việc diễn giải là của agent
-và của references/02-tin-hieu-tieng-viet.md.
+và của references/02-vietnamese-signals.md.
 
 Chạy SAU khi agent đã niêm phong bản đọc mù (.work/blind_agent.json).
 

@@ -16,7 +16,7 @@ Skill này viết **cùng người**, không viết **thay người**.
 ## Quy trình
 
 1. **Nạp, đúng thứ tự:** `context.json` — luận đề, độc giả, `constraints[]`, `brain_pointers[]`
-   (con trỏ — đọc tài liệu gốc) → `§2` của
+   (con trỏ — đọc tài liệu gốc, tính từ `OPCOS_BRAIN_PATH`) → `§2` của
    `shared/genres/<genre>.md`: `structures[]`, `default_structure`, `anti_llm_defaults[]`,
    `outline_depth`, `outline_layers[]` → writer profile ở `writer_profile_ref` nếu có. Hồ sơ
    `status: draft` (dưới ba bài) vẫn dùng được nhưng chỉ như gợi ý: không ép câu theo
@@ -24,19 +24,19 @@ Skill này viết **cùng người**, không viết **thay người**.
 2. **Dựng outline đủ `outline_depth` tầng.** Skill ép **số** tầng; **nghĩa** từng tầng đọc ở
    `outline_layers[]` của `§2`. Chỗ trống ở tầng cuối là chỗ trống thật: hạ mức khẳng định hoặc
    báo lên, không lấp bằng câu chữ.
-   Xem [outline ba tầng](references/01-outline-ba-tang.md).
+   Xem [outline ba tầng](references/01-three-layer-outline.md).
 3. **Dừng, trình outline, chờ duyệt.** Cổng cứng, không phải lời mời góp ý.
 4. **Viết prose** theo dàn ý đã duyệt, tránh khuôn ngay khi sinh, không đợi trục 4 gỡ. Xem
-   [chống khuôn LLM](references/04-chong-khuon-llm.md).
+   [chống khuôn LLM](references/04-anti-llm-patterns.md).
 5. **Tự kiểm từng đoạn:** `counters.py` cộng một hai lăng kính của `§3`, rồi giữ hay bỏ. Xem
-   [vòng sửa – đánh giá – giữ](references/02-vong-sua-danh-gia-giu.md).
+   [vòng sửa – đánh giá – giữ](references/02-revise-evaluate-keep-loop.md).
 6. **Xuất `draft.md` kèm `draft.meta.json`** theo `shared/schemas/draft.schema.json`. Xem
-   [tự khai nguồn gốc](references/03-tu-khai-nguon-goc.md).
+   [tự khai nguồn gốc](references/03-provenance-self-declaration.md).
 
 ## Luật không được đảo
 
 - **`machine_written_spans[]` là bắt buộc.** Được rỗng — rỗng là một khẳng định, không phải chỗ
-  trống. Studio không tự khai thì mất tư cách nói về liêm chính (`KIEN-TRUC.md` `§2.5`).
+  trống. Studio không tự khai thì mất tư cách nói về liêm chính (`ARCHITECTURE.md` `§2.5`).
 - **Không viết prose trước khi outline được duyệt.** Chưa duyệt mà vẫn cần bản thăm dò thì
   `outline_approved: false`, và bản đó không được nộp.
 - **Không đặt lại luận đề.** `thesis_one_sentence` không phản bác được thì trả về trục 1.

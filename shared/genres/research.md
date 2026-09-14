@@ -235,7 +235,7 @@ phương pháp.
 
 Cảnh báo báo oan riêng của thể loại: bài nghiên cứu trích dẫn dày đặc thì phần lớn văn bản là câu
 trích và cụm quy ước, nên mọi thước đo dựa trên độ dễ đoán của câu chữ đều tụt xuống. Đó là hệ quả
-của mật độ trích dẫn, không phải dấu vết máy — xem `skills/05-forensics/references/03-chong-bao-oan.md`
+của mật độ trích dẫn, không phải dấu vết máy — xem `skills/05-forensics/references/03-false-positive-guard.md`
 mục 4.
 
 ```yaml
