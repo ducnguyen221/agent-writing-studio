@@ -23,7 +23,17 @@ thể loại = thêm một file trong `shared/genres/`, không sửa skill này.
 3. **Chạy lăng kính.** Đúng những lăng kính `lenses[]` bật, không hơn không kém; chạy thừa hay thiếu
    đều ghi vào `limitations[]`. Xem [lăng kính](references/01-lenses.md) và
    [ngụy biện](references/02-fallacies-13-vi.md).
-4. **Xuất file.** `critique.json` theo `shared/schemas/critique.schema.json`.
+4. **Rà dẫn nguồn — bước bắt buộc, không phụ thuộc `lenses[]`.** Liệt kê **mọi** câu gán cho một
+   nguồn ("Theo X…", "X cho biết…", mọi ngoặc kép có chủ thể) rồi đối chiếu từng câu với tư liệu
+   bài dựa vào. Câu nào không tìm thấy trong tư liệu → một `finding` riêng, **trích nguyên văn câu
+   đó**, nêu đích danh nguồn bị gán và nói rõ tư liệu không có ý ấy; xếp mức thiệt hại cao nhất nếu
+   bài sẽ đăng công khai. Đây là thứ đối chiếu được, nên nó là bằng chứng đủ theo luật dưới. Không
+   được cấp tư liệu để đối chiếu thì **không suy đoán** — ghi vào `limitations[]`.
+   ❌ *Theo hãng tin A, đây mới là tuyên bố chứ chưa phải kế hoạch.* — tư liệu chỉ có đường dẫn bài
+   của hãng tin A, không có câu nào như vậy ⇒ nhận định của người viết đang mượn danh nguồn.
+   ✅ *Hãng tin A ghi nhận chưa có ngân sách và lộ trình.* — khớp tư liệu; phần đánh giá đi kèm được
+   khai là của người viết.
+5. **Xuất file.** `critique.json` theo `shared/schemas/critique.schema.json`.
 
 ## Luật không được đảo
 
@@ -46,6 +56,8 @@ thể loại = thêm một file trong `shared/genres/`, không sửa skill này.
 - `criteria_scores[]` phủ hết `criteria[]` của `§3`: điểm riêng, bằng chứng, câu trả lời;
 - `lenses_run[]` khớp `lenses[]` đã bật;
 - `findings[]` có vị trí và phản chứng; bài tốt được phép có 0 finding;
+- **kết quả rà dẫn nguồn được nói ra**: hoặc một `finding` cho mỗi câu gán sai, hoặc một câu khẳng
+  định đã rà hết và không thấy câu nào lệch tư liệu — im lặng không tính là đã rà;
 - `must_fix[]` xếp theo mức thiệt hại, trỏ tới finding chứ không chép lại nó; việc đòi **đổi mức
   mạnh của khẳng định** phải ghi `owner: 02-cowriter` — đó là vòng viết lại, không phải biên tập;
 - `limitations[]` **không rỗng** — nói rõ người chấm đã không thấy được gì.

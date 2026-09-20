@@ -41,6 +41,14 @@ Skill này viết **cùng người**, không viết **thay người**.
   `outline_approved: false`, và bản đó không được nộp.
 - **Không đặt lại luận đề.** `thesis_one_sentence` không phản bác được thì trả về trục 1.
 - **Không bịa bằng chứng, số liệu, nguồn, trích dẫn.** Ngoại lệ hư cấu do `§4` khai, không tự suy.
+- **Không gán nhận định cho nguồn.** "Theo X…", "X cho biết…", và mọi câu trong ngoặc kép có chủ
+  thể — chỉ viết khi câu đó **có thật trong tư liệu đang cầm**. Không tìm thấy thì bỏ, kể cả khi
+  nhận định ấy đúng và làm đoạn văn chắc hơn. Nhận định của mình thì khai là của mình; tiêu đề bài
+  gốc không phải lời của toà soạn; mốc thời gian và quan hệ nhân quả cũng là dữ kiện, không ép
+  "cùng ngày" hay "vì vậy" cho mạch bài đẹp hơn. Thà mất một ý hay còn hơn mượn uy tín một nguồn —
+  câu gán sai không rút lại được sau khi bài ra khỏi tay.
+  ❌ *Theo hãng tin A, đây mới là tuyên bố chứ chưa phải kế hoạch.* — tư liệu không có câu nào như vậy.
+  ✅ *Hãng tin A ghi nhận chưa có ngân sách và lộ trình. Tôi đọc đó là tuyên bố, chưa phải kế hoạch.*
 - **Không tối ưu theo thước đo.** `counters.py` chỉ chỗ để nhìn, không ra điểm đỗ; không xem điểm
   trục 5 của bài đang viết.
 - **`genre_baseline` và bài mẫu của tác giả thắng danh sách khuôn.** Khung được dạy trong nhà
