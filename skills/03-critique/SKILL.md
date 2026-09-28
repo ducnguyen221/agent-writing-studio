@@ -7,15 +7,14 @@ description: Use when a draft needs a rubric-based critique with located evidenc
 
 ## Tổng quan
 
-Chấm chất lượng bài viết theo **hồ sơ thể loại**, không theo trí nhớ về thể loại. Skill này không
-biết bài luận khác bài nghiên cứu ở chỗ nào, và không cần biết: nó đọc mục `§3` của hồ sơ được chỉ
-định, chấm đúng `criteria[]` ghi ở đó, chạy đúng `lenses[]` được bật, rồi xuất `critique.json`. Thêm
-thể loại = thêm một file trong `shared/genres/`, không sửa skill này.
+Chấm chất lượng bài viết theo **hồ sơ thể loại**, không theo trí nhớ về thể loại: đọc mục `§3` của
+hồ sơ được chỉ định, chấm đúng `criteria[]` ghi ở đó, chạy đúng `lenses[]` được bật, rồi xuất
+`critique.json`. Thêm thể loại = thêm một file trong `shared/genres/`, không sửa skill này.
 
 ## Quy trình
 
-1. **Nạp hồ sơ và barem.** Đọc `shared/genres/<genre>.md`, mục `§3`. Có barem thật — đề bài, hướng
-   dẫn chấm, phiếu chấm của cơ sở — thì **barem của nhiệm vụ thắng hồ sơ**; ghi vào `rubric_source`.
+1. **Nạp hồ sơ và barem.** Đọc `shared/genres/<genre>.md`, mục `§3`. Có barem thật của nhiệm vụ thì
+   **barem của nhiệm vụ thắng hồ sơ**; ghi vào `rubric_source`.
    Xem [barem mẫu](references/04-rubric-samples.md).
 2. **Chấm mù, bốn bước, đúng thứ tự:** đọc trôi → chấm từng tiêu chí → chạy lăng kính → mở phong bì
    rồi viết `must_fix`. Không xem `draft.meta.json` và không nhận câu hỏi mớm trước khi chấm xong.
@@ -23,16 +22,8 @@ thể loại = thêm một file trong `shared/genres/`, không sửa skill này.
 3. **Chạy lăng kính.** Đúng những lăng kính `lenses[]` bật, không hơn không kém; chạy thừa hay thiếu
    đều ghi vào `limitations[]`. Xem [lăng kính](references/01-lenses.md) và
    [ngụy biện](references/02-fallacies-13-vi.md).
-4. **Rà dẫn nguồn — bước bắt buộc, không phụ thuộc `lenses[]`.** Liệt kê **mọi** câu gán cho một
-   nguồn ("Theo X…", "X cho biết…", mọi ngoặc kép có chủ thể) rồi đối chiếu từng câu với tư liệu
-   bài dựa vào. Câu nào không tìm thấy trong tư liệu → một `finding` riêng, **trích nguyên văn câu
-   đó**, nêu đích danh nguồn bị gán và nói rõ tư liệu không có ý ấy; xếp mức thiệt hại cao nhất nếu
-   bài sẽ đăng công khai. Đây là thứ đối chiếu được, nên nó là bằng chứng đủ theo luật dưới. Không
-   được cấp tư liệu để đối chiếu thì **không suy đoán** — ghi vào `limitations[]`.
-   ❌ *Theo hãng tin A, đây mới là tuyên bố chứ chưa phải kế hoạch.* — tư liệu chỉ có đường dẫn bài
-   của hãng tin A, không có câu nào như vậy ⇒ nhận định của người viết đang mượn danh nguồn.
-   ✅ *Hãng tin A ghi nhận chưa có ngân sách và lộ trình.* — khớp tư liệu; phần đánh giá đi kèm được
-   khai là của người viết.
+4. **Rà dẫn nguồn — bắt buộc, không phụ thuộc `lenses[]`.** Xem
+   [rà dẫn nguồn](references/06-source-check.md).
 5. **Xuất file.** `critique.json` theo `shared/schemas/critique.schema.json`.
 
 ## Luật không được đảo
@@ -56,8 +47,7 @@ thể loại = thêm một file trong `shared/genres/`, không sửa skill này.
 - `criteria_scores[]` phủ hết `criteria[]` của `§3`: điểm riêng, bằng chứng, câu trả lời;
 - `lenses_run[]` khớp `lenses[]` đã bật;
 - `findings[]` có vị trí và phản chứng; bài tốt được phép có 0 finding;
-- **kết quả rà dẫn nguồn được nói ra**: hoặc một `finding` cho mỗi câu gán sai, hoặc một câu khẳng
-  định đã rà hết và không thấy câu nào lệch tư liệu — im lặng không tính là đã rà;
+- **kết quả rà dẫn nguồn được nói ra** — im lặng không tính là đã rà;
 - `must_fix[]` xếp theo mức thiệt hại, trỏ tới finding chứ không chép lại nó; việc đòi **đổi mức
   mạnh của khẳng định** phải ghi `owner: 02-cowriter` — đó là vòng viết lại, không phải biên tập;
 - `limitations[]` **không rỗng** — nói rõ người chấm đã không thấy được gì.
@@ -65,5 +55,4 @@ thể loại = thêm một file trong `shared/genres/`, không sửa skill này.
 ## Bàn giao
 
 `critique.json` là đầu vào của trục 4 khi người viết muốn sửa. Gọi làm trục chuyên môn để chấm bài
-học viên: xem [tích hợp](references/05-project-feedback-integration.md); quy đổi điểm tổng và trọng số
-là việc của bên gọi.
+học viên: xem [tích hợp](references/05-project-feedback-integration.md).
