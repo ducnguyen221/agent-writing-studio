@@ -538,7 +538,7 @@ python -m pytest tests/ -q
 python -m unittest discover -s tests -t .
 ```
 
-Hai runner phải cho **cùng một con số** (bản v0.2.1: 375 passed — con số đổi mỗi lần thêm luật, cứ
+Hai runner phải cho **cùng một con số** (bản v0.3.0: 438 passed — con số đổi mỗi lần thêm luật, cứ
 chạy để biết số hiện tại). Test không kiểm "văn hay"; nó kiểm những thứ hỏng thì im lặng: skill có
 đúng tên và ≤550 từ không, hồ sơ thể loại có đủ mục không, slug thể loại có khớp hai chiều không,
 liên kết nội bộ có gãy không, nguồn ngoài có bị ghi sai license không. Chi tiết:
