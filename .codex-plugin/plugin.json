@@ -1,0 +1,34 @@
+{
+  "name": "agent-writing-studio",
+  "version": "0.2.1",
+  "description": "A Vietnamese writing studio an AI agent runs from blank page to delivery: context interview, co-writing with self-declared machine spans, per-criterion critique against a genre rubric, voice-preserving edit, and forensic review. Genres are data files; nine profiles included. Skills and shared data run from this repository; case files stay in the ignored .work/ folder or an external WRITING_STUDIO_DATA station.",
+  "author": {
+    "name": "Nguyen Quang Duc",
+    "url": "https://ducnguyen.vn"
+  },
+  "homepage": "https://github.com/ducnguyen221/agent-writing-studio",
+  "repository": "https://github.com/ducnguyen221/agent-writing-studio",
+  "license": "MIT",
+  "keywords": [
+    "writing",
+    "vietnamese",
+    "co-writing",
+    "critique",
+    "editing",
+    "provenance",
+    "academic-integrity",
+    "genre",
+    "forensics"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Writing Studio",
+    "shortDescription": "Vietnamese writing from brief to provenance-audited delivery",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ]
+  }
+}
