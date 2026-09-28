@@ -6,8 +6,8 @@
 
 Repo này không phải một ứng dụng, không có nút bấm và không chạy trên máy chủ nào. Nó là **một bộ
 hướng dẫn cho AI agent** (Claude Code, Codex, Antigravity) — dạng thư mục chứa file văn bản mà agent
-đọc rồi làm theo. Bạn chép các thư mục đó vào chỗ agent tìm được, sau đó nói chuyện với agent bằng
-tiếng Việt bình thường.
+đọc rồi làm theo. Bạn cài nó như một plugin của agent (hoặc mở thẳng thư mục repo), sau đó nói chuyện
+với agent bằng tiếng Việt bình thường.
 
 > **Thuật ngữ ngay từ đầu.** *Agent* = trợ lý AI có thể đọc file trên máy bạn và chạy lệnh, không chỉ
 > chat. *Skill* (kỹ năng) = một thư mục có file `SKILL.md` mô tả cho agent biết **khi nào** dùng và
@@ -116,29 +116,35 @@ Muốn thêm một thể loại? Xem `docs/GENRES.md`.
 
 ### Cài
 
-Chép thư mục `skills/` vào nơi agent tìm skill. Chép **cả cây** — năm thư mục trục, và bốn skill con
-nằm sẵn trong `05-forensics/` — vì các skill gọi lẫn nhau bằng đường tương đối.
+Cách dễ nhất: dán prompt ở cuối [`INSTALL.md`](INSTALL.md#prompt-copy-dán) vào ứng dụng AI bạn đang
+dùng, agent tự làm các bước dưới. Chạy được trên **Windows và macOS** (Linux cũng được, chưa kiểm).
+
+**Claude Code — cài plugin** (terminal nào cũng được):
 
 ```bash
-# Claude Code
-cp -r skills/* ~/.claude/skills/
-
-# Codex
-cp -r skills/* ~/.codex/skills/
+claude plugin marketplace add ducnguyen221/agent-writing-studio
+claude plugin install agent-writing-studio@agent-writing-studio
 ```
 
-```powershell
-# Windows PowerShell — Claude Code
-Copy-Item -Recurse skills\* $HOME\.claude\skills\
+Plugin mang **cả cây repo** — skill, lệnh `/agent-writing-studio:*` và dữ liệu dùng chung ở `shared/`
+(hồ sơ thể loại, quy tắc, schema) — nên không cần chép thư mục nào bằng tay. Codex, Antigravity và
+Claude Desktop: xem [`hosts/`](hosts/README.md).
+
+**Clone để phát triển, hoặc chạy thẳng từ checkout:**
+
+```bash
+git clone https://github.com/ducnguyen221/agent-writing-studio
+cd agent-writing-studio
+python studio.py doctor
 ```
+
+Mở **chính thư mục repo** trong ứng dụng AI; hướng dẫn cho agent nằm ở [`AGENTS.md`](AGENTS.md).
+`studio.py` gồm `doctor` · `install` · `update` · `uninstall`, chạy bằng Python 3.10 trở lên; nó chỉ
+dựng thư mục làm việc và **in** lệnh đăng ký plugin cho host, không tự sửa cấu hình host.
 
 Đến đây là dùng được. Có vài thư viện Python phụ trợ giúp xưởng **đo bằng máy** và **xuất file Word**,
 nhưng chúng đều tuỳ chọn: không cài gì cả thì agent vẫn đọc, vẫn chấm, vẫn báo cáo được — script
 trong repo chỉ là **lớp kiểm chứng**, không phải bộ não. Danh sách và lệnh cài ở [mục 9](#9-thư-viện-phụ-trợ-và-chạy-test).
-
-⚠️ **Repo cần nằm trên máy, không chỉ nằm trong `~/.claude/skills/`.** Các skill đọc dữ liệu dùng
-chung ở `shared/` (hồ sơ thể loại, quy tắc, schema). Hãy nói cho agent biết repo nằm ở đâu, ví dụ:
-*"repo agent-writing-studio ở `C:\Users\...\Code\agent-writing-studio`"*.
 
 ### Gọi từng trục
 
@@ -202,8 +208,9 @@ dựng thành bảng Word** — bài có bảng thì dựng bảng trong Word sa
 ### Chạy trọn chuỗi Y1 → Y5
 
 Năm trục nối với nhau bằng **file**, không bằng trí nhớ hội thoại. Mỗi bài một **thư mục ca**:
-`$WRITING_STUDIO_DATA/work/<tên-ca>/` nếu bạn đã dựng station (mục dưới), còn không thì `.work/<tên-ca>/`
-ngay trong thư mục đang làm việc. Mỗi giai đoạn đọc sản phẩm của giai đoạn trước:
+mặc định là `.work/<tên-ca>/` ngay trong thư mục đang làm việc — mở chính thư mục repo thì đó là
+`<repo>/.work/`, Git bỏ qua toàn bộ; đã dựng station riêng (mục dưới) thì là
+`$WRITING_STUDIO_DATA/work/<tên-ca>/`. Mỗi giai đoạn đọc sản phẩm của giai đoạn trước:
 
 ```
 <thư-mục-ca>/bai-cua-toi/
@@ -219,14 +226,23 @@ ngay trong thư mục đang làm việc. Mỗi giai đoạn đọc sản phẩm 
 └─ report.md                    báo cáo cho người đọc
 ```
 
-**Bài của người thật không nằm trong repo.** Từ 31/08/2026 các ca chạy, bản giao và corpus ở một
-**station** riêng ngoài repo, trỏ bằng biến môi trường `WRITING_STUDIO_DATA`; hồ sơ giọng, bài mẫu và
-chân dung độc giả nên nằm trong kho tri thức cá nhân (mục *Ba tầng, ba chỗ*):
+**Bài của người thật không vào Git.** Không đặt biến nào thì `.work/` là **workspace mặc định** —
+nằm trong thư mục bạn mở, bị `.gitignore` chặn, không phải cấu hình gì. **Tuỳ chọn:** muốn dữ liệu sống
+lâu hơn bản clone (nhiều máy, nhiều checkout) thì dựng một **station** riêng ngoài repo, trỏ bằng biến
+môi trường `WRITING_STUDIO_DATA`; hồ sơ giọng, bài mẫu và chân dung độc giả nên nằm trong kho tri thức
+cá nhân (mục *Ba tầng, ba chỗ*):
 
 ```powershell
 # Windows, đặt một lần cho tài khoản (mở cửa sổ mới sau khi chạy)
 setx WRITING_STUDIO_DATA "$HOME\.writing"
 ```
+
+```bash
+# macOS / Linux — thêm vào ~/.zshrc hoặc ~/.bashrc rồi mở terminal mới
+export WRITING_STUDIO_DATA="$HOME/.writing"
+```
+
+`python studio.py install` dựng sẵn ba thư mục bắt buộc bên dưới, chạy lại không đè gì.
 
 ```
 $WRITING_STUDIO_DATA/
@@ -283,11 +299,19 @@ Ba cổng cứng trong chuỗi, qua được mới đi tiếp:
 ```
 agent-writing-studio/
 ├─ README.md                    file bạn đang đọc — bản triển khai
+├─ INSTALL.md                   hướng dẫn cài dành cho agent + prompt dán
+├─ START-HERE.md                bắt đầu sau khi cài: mở folder, chạy bài mẫu
+├─ AGENTS.md                    hướng dẫn chuẩn cho mọi agent (CLAUDE.md, GEMINI.md là con trỏ)
+├─ studio.py                    doctor · install · update · uninstall (Python 3.10+)
 ├─ LICENSE                      MIT
 ├─ CITATION.cff                 định dạng trích dẫn (nút "Cite this repository" trên GitHub)
 ├─ requirements-dev.txt         thư viện để chạy test
+├─ .claude-plugin/ .codex-plugin/  manifest plugin cho Claude Code và Codex (cùng một phiên bản)
+├─ .github/workflows/           CI: Windows + macOS, Python 3.10 · 3.12 · 3.13
+├─ hosts/                       cài và dùng theo từng ứng dụng AI
+├─ samples/                     một bài mẫu tổng hợp + context/critique kỳ vọng — doctor kiểm offline
 │
-├─ skills/                      NĂM THƯ MỤC, CHÍN SKILL — thứ được chép sang ~/.claude/skills/
+├─ skills/                      NĂM THƯ MỤC, CHÍN SKILL — nguồn duy nhất, plugin nạp từ đây
 │  ├─ 01-context-architect/       Y1 · phỏng vấn bối cảnh, chân dung người viết và độc giả
 │  ├─ 02-cowriter/                Y2 · dàn ý ba tầng → duyệt → viết → tự khai nguồn gốc
 │  ├─ 03-critique/                Y3 · chấm từng tiêu chí, 13 lăng kính, 13 loại ngụy biện
@@ -311,7 +335,7 @@ agent-writing-studio/
 │  ├─ scripts/                    script dùng lại: đo, đối chiếu, dựng hồ sơ, xuất docx
 │  └─ writers/                    CHỈ schema + hướng dẫn; hồ sơ người thật ở kho tri thức hoặc station
 │
-├─ tests/                       375 test — canh cấu trúc skill, hình dạng dữ liệu, liên kết
+├─ tests/                       canh cấu trúc skill, hình dạng dữ liệu, liên kết, ranh giới public
 │  ├─ forensics/                  hành vi trục 5 (có từ bản v1)
 │  ├─ genres/                     hồ sơ thể loại đúng schema, slug khớp hai chiều
 │  ├─ shared/                     schema, quy tắc, hàng rào de-name
@@ -332,8 +356,8 @@ agent-writing-studio/
 
 Mỗi thư mục gốc có `README.md` riêng nói nó chứa gì và dùng khi nào.
 
-Hai thứ **không có trong cây này**: thư mục ca (`work/`) và corpus nằm ở station
-`$WRITING_STUDIO_DATA`, hồ sơ người viết ở kho tri thức hoặc station — đều ngoài repo (xem mục 3); còn nhật ký làm việc của xưởng — spec, danh sách task,
+Hai thứ **không có trong cây này**: thư mục ca và corpus nằm ở workspace `.work/` (Git bỏ qua) hoặc
+station `$WRITING_STUDIO_DATA`, hồ sơ người viết ở kho tri thức hoặc station — đều ngoài Git (xem mục 3); còn nhật ký làm việc của xưởng — spec, danh sách task,
 nhật ký cổng duyệt, sổ đo thô của từng đợt xây — chỉ nằm trên máy tác giả, vì đó là ghi chép quy
 trình chứ không phải tài liệu người dùng. Những kết luận đáng giữ từ đó đã được viết lại vào README
 và `docs/`.

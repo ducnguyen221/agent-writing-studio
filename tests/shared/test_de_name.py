@@ -23,8 +23,10 @@ ROOT = Path(__file__).resolve().parents[2]
 # từ v0.1.2 chúng bị `.gitignore` chặn khỏi repo, nhưng vẫn nằm trên đĩa máy tác giả (và chính
 # chúng ghi lại quá trình de-name, nên có tên nguồn). Loại ra để test đo đúng cây public.
 # `commands/` vào hàng rào từ v0.1.1: nó cũng được clone/cài, nên cũng phải sạch tên nguồn.
-PUBLIC_DIRS = ("skills", "shared", "docs", "commands")
-PUBLIC_FILES = ("README.md",)
+PUBLIC_DIRS = ("skills", "shared", "docs", "commands", "hosts", "samples", ".github",
+               ".claude-plugin", ".codex-plugin")
+PUBLIC_FILES = ("README.md", "AGENTS.md", "CLAUDE.md", "GEMINI.md", "INSTALL.md", "START-HERE.md",
+                "studio.py", "CHANGELOG.md", "CITATION.cff")
 EXCLUDED_PREFIXES = ("docs/plans/", "docs/results/")
 SCANNED_SUFFIXES = {".md", ".json", ".py", ".txt", ".yaml", ".yml"}
 
