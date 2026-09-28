@@ -11,6 +11,7 @@ hiện được nếu vỡ:
    cùng một điều, nếu không thì trục 5 sẽ hạ finding dựa trên một hồ sơ dựng từ hai bài.
 """
 
+import importlib.util
 import json
 import re
 import subprocess
@@ -181,6 +182,22 @@ def run_profile_build(samples_dir, out_path, extra=()):
     return subprocess.run(
         command, capture_output=True, text=True, encoding="utf-8", cwd=str(ROOT)
     )
+
+
+# `underthesea` là thư viện TUỲ CHỌN: thiếu nó, profile_build.py vẫn dựng hồ sơ (đo ở mức âm tiết)
+# nhưng thoát 1 kèm đúng một cảnh báo. Máy trần trên CI không cài nó, nên "dựng sạch" nghĩa là:
+# thoát 0, hoặc thoát 1 khi cảnh báo DUY NHẤT là thiếu tokenizer. Cảnh báo nào khác vẫn là đỏ.
+HAS_TOKENIZER = importlib.util.find_spec("underthesea") is not None
+TOKENIZER_WARNING = "Chưa cài underthesea"
+
+
+def build_is_clean(result):
+    if result.returncode == 0:
+        return True
+    if HAS_TOKENIZER or result.returncode != 1:
+        return False
+    warnings = [line for line in result.stdout.splitlines() if line.startswith("  ! ")]
+    return bool(warnings) and all(TOKENIZER_WARNING in line for line in warnings)
 
 
 class SkillStructureTests(unittest.TestCase):
@@ -399,7 +416,7 @@ class ProfileBuildTests(unittest.TestCase):
             out = tmp_path / "profile.yaml"
 
             result = run_profile_build(samples, out)
-            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertTrue(build_is_clean(result), result.stdout + result.stderr)
             self.assertTrue(out.is_file(), "Không ghi ra profile.yaml")
 
             profile = yaml.safe_load(out.read_text(encoding="utf-8"))
@@ -437,7 +454,7 @@ class ProfileBuildTests(unittest.TestCase):
             self._write_samples(samples, ("a", "b", "c"))
             out = tmp_path / "profile.yaml"
 
-            self.assertEqual(run_profile_build(samples, out).returncode, 0)
+            self.assertTrue(build_is_clean(run_profile_build(samples, out)))
             profile = yaml.safe_load(out.read_text(encoding="utf-8"))
             frames = {item["id"]: item for item in profile["pet_templates"]}
             self.assertIn(
@@ -474,7 +491,7 @@ class ProfileBuildTests(unittest.TestCase):
             self._write_samples(samples, ("a", "b", "c"))
             out = tmp_path / "profile.yaml"
 
-            self.assertEqual(run_profile_build(samples, out).returncode, 0)
+            self.assertTrue(build_is_clean(run_profile_build(samples, out)))
             raw = out.read_text(encoding="utf-8")
             self.assertNotIn("01-bai.txt", raw, "Tên file bài mẫu cũng có thể lộ danh tính")
             for body in SAMPLE_BODY.values():
@@ -510,8 +527,8 @@ class ProfileBuildTests(unittest.TestCase):
                 (fronted / f"{index:02d}-bai.md").write_text(front + body, encoding="utf-8")
 
             out_plain, out_fronted = tmp_path / "plain.yaml", tmp_path / "fronted.yaml"
-            self.assertEqual(run_profile_build(plain, out_plain).returncode, 0)
-            self.assertEqual(run_profile_build(fronted, out_fronted).returncode, 0)
+            self.assertTrue(build_is_clean(run_profile_build(plain, out_plain)))
+            self.assertTrue(build_is_clean(run_profile_build(fronted, out_fronted)))
             a = yaml.safe_load(out_plain.read_text(encoding="utf-8"))["provenance"]["samples"]
             b = yaml.safe_load(out_fronted.read_text(encoding="utf-8"))["provenance"]["samples"]
             for left, right, body in zip(a, b, bodies):
@@ -530,7 +547,7 @@ class ProfileBuildTests(unittest.TestCase):
             samples.mkdir()
             self._write_samples(samples, ("a", "b", "c"))
             out = tmp_path / "profile.yaml"
-            self.assertEqual(run_profile_build(samples, out).returncode, 0)
+            self.assertTrue(build_is_clean(run_profile_build(samples, out)))
 
             profile = yaml.safe_load(out.read_text(encoding="utf-8"))
             profile["voice_notes"] = "Hay kể một buổi tập huấn trước khi nêu ý."
@@ -546,7 +563,7 @@ class ProfileBuildTests(unittest.TestCase):
                            encoding="utf-8")
 
             result = run_profile_build(samples, out, extra=("--keep-manual",))
-            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertTrue(build_is_clean(result), result.stdout + result.stderr)
             rebuilt = yaml.safe_load(out.read_text(encoding="utf-8"))
             Draft202012Validator(load_json(WRITER_SCHEMA)).validate(rebuilt)
             self.assertEqual(rebuilt["voice_notes"], "Hay kể một buổi tập huấn trước khi nêu ý.")
