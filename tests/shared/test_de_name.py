@@ -99,7 +99,7 @@ BANNED_POINTERS = ("vendor-notes/", "upstream.json", "06-distill-repo")
 
 BANNED = tuple(BANNED_SLUGS) + tuple(BANNED_BARE) + tuple(BANNED_PERSONAL) + tuple(BANNED_POINTERS)
 
-# Sổ nguồn phải KHÔNG còn trong repo (đã dời về xưởng OpcOS 31/08/2026).
+# Sổ nguồn phải KHÔNG còn trong repo (đã dời ra khỏi repo 31/08/2026).
 MOVED_OUT = (
     "upstream.json",
     "vendor-notes",

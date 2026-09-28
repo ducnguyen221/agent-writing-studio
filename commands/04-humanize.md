@@ -27,7 +27,7 @@ Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./.work/<slug>/`):
 - `draft.meta.json` — **ranh giới đạo đức**: trục 4 chỉ chạy trên bản thảo đã biết nguồn gốc. Trường
   `profile_used` khác `null` thì nạp hồ sơ giọng theo luật phân giải của
   [cầu Brain](../skills/01-context-architect/references/03-brain-bridge.md): đường tương đối → kho
-  tri thức (`OPCOS_BRAIN_PATH`) → station → repo; slug → `$WRITING_STUDIO_DATA/writers/<slug>/profile.yaml`,
+  tri thức (`WRITING_STUDIO_KNOWLEDGE`) → station → repo; slug → `$WRITING_STUDIO_DATA/writers/<slug>/profile.yaml`,
   fallback `shared/writers/<slug>/`. Đó là hồ sơ giọng của chính tác giả, và `voice_priority` của hồ sơ thể loại cho nó thắng mặc định.
 
 Thiếu văn bản thì dừng và nói rõ. Thiếu `critique.json` thì vẫn sửa được, nhưng nói rõ đang sửa mà

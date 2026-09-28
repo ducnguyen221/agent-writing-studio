@@ -109,7 +109,7 @@ hình**, chỉ so tập hợp và đếm — nên kết quả của chúng tái 
 ### 2.2 Writer profile — hồ sơ vân tay người viết
 
 Hồ sơ nằm **ngoài repo** vì đây là văn bản của người thật, ở một trong ba gốc theo thứ tự phân giải của
-`writer_profile_ref`: (1) kho tri thức cá nhân `OPCOS_BRAIN_PATH` — đường tương đối tuỳ kho; (2) station
+`writer_profile_ref`: (1) kho tri thức cá nhân `WRITING_STUDIO_KNOWLEDGE` — đường tương đối tuỳ kho; (2) station
 `$WRITING_STUDIO_DATA/writers/<slug>/profile.yaml` (+ `samples/`); (3) `shared/writers/<slug>/` trong
 repo, chỗ đó vẫn gitignored. Luật đầy đủ ở `skills/01-context-architect/references/03-brain-bridge.md`.
 

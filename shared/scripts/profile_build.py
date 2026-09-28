@@ -13,7 +13,7 @@ bằng `vi_segment.py` + `counters.py` của trục 5, rồi lấy **trung vị*
 
 `<writers>` = `$WRITING_STUDIO_DATA/writers/` nếu biến môi trường đó có, ngược lại
 `shared/writers/` trong repo. `--samples-dir` / `--out` tường minh luôn thắng cả hai — và đó là
-cách dùng khi hồ sơ giọng, bài mẫu nằm trong kho tri thức cá nhân (`OPCOS_BRAIN_PATH`).
+cách dùng khi hồ sơ giọng, bài mẫu nằm trong kho tri thức cá nhân (`WRITING_STUDIO_KNOWLEDGE`).
 
 Bài mẫu trong kho tri thức thường có frontmatter YAML: khối `---` ĐẦU file `.md`/`.txt` bị bỏ
 trước khi đo (kèm các dòng trống ngay sau nó). Vạch `---` giữa thân bài là câu chữ của tác giả,

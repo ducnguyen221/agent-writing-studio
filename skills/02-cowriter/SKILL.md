@@ -16,7 +16,7 @@ Skill này viết **cùng người**, không viết **thay người**.
 ## Quy trình
 
 1. **Nạp, đúng thứ tự:** `context.json` — luận đề, độc giả, `constraints[]`, `brain_pointers[]`
-   (con trỏ — đọc tài liệu gốc, tính từ `OPCOS_BRAIN_PATH`) → `§2` của
+   (con trỏ — đọc tài liệu gốc, tính từ `WRITING_STUDIO_KNOWLEDGE`) → `§2` của
    `shared/genres/<genre>.md`: `structures[]`, `default_structure`, `anti_llm_defaults[]`,
    `outline_depth`, `outline_layers[]` → writer profile ở `writer_profile_ref` nếu có. Hồ sơ
    `status: draft` (dưới ba bài) vẫn dùng được nhưng chỉ như gợi ý: không ép câu theo

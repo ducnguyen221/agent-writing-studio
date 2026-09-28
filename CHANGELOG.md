@@ -3,6 +3,28 @@
 Chỉ ghi thứ **người dùng repo nhìn thấy**: tên lệnh, tên file, hợp đồng dữ liệu, hành vi mặc định.
 Chi tiết thiết kế và lý do nằm ở tài liệu tương ứng, không chép lại ở đây.
 
+## [Chưa phát hành]
+
+### Luật dẫn nguồn (trục 2 + trục 3)
+
+- `02-cowriter`: **không gán nhận định cho nguồn** — "Theo X…" chỉ viết khi câu ấy có thật trong tư
+  liệu đang cầm. Luật đầy đủ + ví dụ: `skills/02-cowriter/references/05-source-attribution.md`.
+- `03-critique`: bước 4 **rà dẫn nguồn**, bắt buộc, không phụ thuộc `lenses[]`; `critique.json` phải
+  nói ra kết quả rà, im lặng không tính là đã rà. Chi tiết: `skills/03-critique/references/06-source-check.md`.
+
+### Biến kho tri thức đổi tên: `WRITING_STUDIO_KNOWLEDGE`
+
+Gốc kho tri thức cá nhân (bậc 1 khi phân giải `writer_profile_ref`, `brain_pointers[]`) nay đọc từ
+`WRITING_STUDIO_KNOWLEDGE`. Tên cũ `OPCOS_BRAIN_PATH` vẫn được đọc làm **đường lùi** khi tên mới chưa
+đặt, và sẽ bỏ ở 0.4. **Không còn mặc định đoán `~/Brain`**: không đặt biến nào là không có kho tri thức
+— studio vẫn chạy, bài mang giọng mặc định của thể loại.
+
+### Hạ tầng
+
+- CI `.github/workflows/tests.yml`: Windows + macOS, Python 3.10 · 3.12 · 3.13, mọi nhánh, cả hai runner.
+- `.codex-plugin/plugin.json` cho Codex; test khoá một số phiên bản ở bốn chỗ khai.
+- `.gitignore` chặn file bí mật (`.env*` trừ `.env.example`, khoá, credential); test đọc Git index.
+
 ## [0.2.1] — 2026-09-14
 
 ### Hợp đồng `writer_profile_ref` / `profile_used`: ba gốc, không phá vỡ tương thích

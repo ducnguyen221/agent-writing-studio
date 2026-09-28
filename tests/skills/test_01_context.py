@@ -270,7 +270,7 @@ class ReferenceContentTests(unittest.TestCase):
 
     def test_brain_bridge_states_root_variable_limit_and_forbidden_zones(self):
         text = reference_text("03-brain-bridge.md")
-        self.assertIn("OPCOS_BRAIN_PATH", text)
+        self.assertIn("WRITING_STUDIO_KNOWLEDGE", text)
         self.assertIn("300 ký tự", text)
         self.assertIn("không copy", text)
         for zone in ("tài chính", "sức khoẻ", "đời tư"):

@@ -9,7 +9,7 @@ repo nữa**: thư mục này chỉ giữ schema và hướng dẫn.
 Hồ sơ và bài mẫu sống **ngoài repo**, ở một trong hai chỗ dưới đây. Repo chỉ là đường lui cuối cùng khi
 không có cả hai; thứ tự tra đầy đủ ba gốc ở đoạn cuối mục này:
 
-- **kho tri thức cá nhân** (`OPCOS_BRAIN_PATH`, mặc định `~/Brain`) — nên dùng khi có kho, vì hồ sơ
+- **kho tri thức cá nhân** (`WRITING_STUDIO_KNOWLEDGE`) — nên dùng khi có kho, vì hồ sơ
   giọng mang danh tính người viết và dùng lại được ngoài xưởng viết;
 - **station** (`WRITING_STUDIO_DATA`) khi không có kho:
 

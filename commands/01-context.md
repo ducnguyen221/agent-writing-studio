@@ -22,7 +22,7 @@ một slug kebab-case từ đề bài và xác nhận với người dùng trư�
 Lệnh này là **bước đầu chuỗi** — không cần artifact nào có sẵn. Nếu thư mục ca đã có `context.json`,
 **không ghi đè im lặng**: nói rõ đã có, hỏi người dùng muốn bổ sung hay dựng lại từ đầu.
 
-Tuỳ chọn có thì tốt: hồ sơ giọng người viết — trong kho tri thức cá nhân (`OPCOS_BRAIN_PATH`) hoặc
+Tuỳ chọn có thì tốt: hồ sơ giọng người viết — trong kho tri thức cá nhân (`WRITING_STUDIO_KNOWLEDGE`) hoặc
 `$WRITING_STUDIO_DATA/writers/<slug>/profile.yaml`; dựng bằng
 `shared/scripts/profile_build.py --samples-dir … --out …` (cần ≥3 bài chính chủ). Thứ tự tra đủ ba gốc: xem cầu Brain.
 

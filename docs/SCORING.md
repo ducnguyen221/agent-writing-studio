@@ -75,7 +75,7 @@ bất thường mạnh (thực đo: 7 lần/18k ký tự).
 | MATTR-100 | — | **0 điểm, vĩnh viễn** — đã bị bác bỏ thực nghiệm (`references/03` mục 6). Giữ trong JSON để tham khảo, cấm đưa vào điểm |
 
 Cơ sở: AI ≈ 5,8 gloss/1000, người chuyên nghiệp ≈ 0,26/1000 (chênh 22×). ⚠️ **Hiệu chỉnh writer
-profile:** nếu có hồ sơ giọng chính chủ (phân giải `writer_profile_ref`: kho tri thức `OPCOS_BRAIN_PATH`
+profile:** nếu có hồ sơ giọng chính chủ (phân giải `writer_profile_ref`: kho tri thức `WRITING_STUDIO_KNOWLEDGE`
 → station `$WRITING_STUDIO_DATA/writers/` → `shared/writers/`) và gloss baseline chính chủ ≥3/1000 (dân kỹ thuật viết vậy thật), hạ một bậc điểm
 gloss. Nếu khuôn lặp trùng `pet_templates` của chính chủ, hạ một bậc điểm khuôn ở G1. Việc hạ bậc là
 **tất định theo profile**, không tuỳ nghi.

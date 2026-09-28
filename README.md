@@ -243,7 +243,7 @@ Repo này là **một** trong ba tầng. Biết ranh giới thì không ai nhét
 
 1. **Repo** giữ **luật chung cho mọi người**: năm skill, hồ sơ thể loại, schema, script. Đã khử mọi
    tên riêng, và có hàng rào test chặn tên bò ngược vào.
-2. **Kho tri thức cá nhân** (tuỳ chọn, ngoài repo; gốc đọc từ `OPCOS_BRAIN_PATH`, mặc định `~/Brain`)
+2. **Kho tri thức cá nhân** (tuỳ chọn, ngoài repo; gốc đọc từ `WRITING_STUDIO_KNOWLEDGE` — không đặt thì bỏ qua tầng này)
    giữ **giọng và luật riêng của một người viết**: vai được đứng, chất giọng, kho chất liệu, điều cấm
    riêng, khuôn trình bày theo kênh đăng — và khi có kho thì cả hồ sơ giọng đo được, bài mẫu chính
    chủ, chân dung độc giả dạng máy đọc. Trục 1 chỉ **trỏ** vào đó qua `brain_pointers[]` của
@@ -259,7 +259,7 @@ mang danh tính người viết** — giọng, hồ sơ đo được, chân dung
 
 Đường dẫn trong `brain_pointers[].path` tính từ **gốc kho tri thức**, lui về gốc dự án nếu không
 khớp. `writer_profile_ref` (và `profile_used`) là đường **tương đối**, agent tự ghép theo thứ tự:
-(1) gốc kho tri thức `OPCOS_BRAIN_PATH` → (2) gốc station `WRITING_STUDIO_DATA` → (3) gốc repo. Chuỗi
+(1) gốc kho tri thức `WRITING_STUDIO_KNOWLEDGE` → (2) gốc station `WRITING_STUDIO_DATA` → (3) gốc repo. Chuỗi
 **không chứa `/`** là slug: `writers/<slug>/profile.yaml` ở (2), rồi `shared/writers/<slug>/profile.yaml`
 ở (3). `null` = giọng mặc định thể loại. Không bao giờ ghi đường tuyệt đối.
 

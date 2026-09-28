@@ -63,7 +63,7 @@
     },
     "writer_profile_ref": {
       "type": ["string", "null"],
-      "description": "Đường TƯƠNG ĐỐI tới writer profile, agent tự ghép — cùng cơ chế với brain_pointers[].path. Thứ tự phân giải: (1) gốc kho tri thức cá nhân OPCOS_BRAIN_PATH (mặc định ~/Brain) → (2) gốc station WRITING_STUDIO_DATA → (3) gốc repo. Chuỗi KHÔNG chứa '/' là slug: writers/<slug>/profile.yaml ở (2), rồi shared/writers/<slug>/profile.yaml ở (3). Không bao giờ ghi đường tuyệt đối. null = viết theo giọng mặc định của thể loại. KHÔNG nhúng nội dung profile vào đây."
+      "description": "Đường TƯƠNG ĐỐI tới writer profile, agent tự ghép — cùng cơ chế với brain_pointers[].path. Thứ tự phân giải: (1) gốc kho tri thức cá nhân WRITING_STUDIO_KNOWLEDGE (không đặt thì bỏ qua) → (2) gốc station WRITING_STUDIO_DATA → (3) gốc repo. Chuỗi KHÔNG chứa '/' là slug: writers/<slug>/profile.yaml ở (2), rồi shared/writers/<slug>/profile.yaml ở (3). Không bao giờ ghi đường tuyệt đối. null = viết theo giọng mặc định của thể loại. KHÔNG nhúng nội dung profile vào đây."
     },
     "audience": {
       "type": "object",
