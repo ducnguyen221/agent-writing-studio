@@ -21,7 +21,7 @@ Một quy tắc đạo đức chỉ nằm trong README là một lời hứa; n�
 
 ## Chạy thế nào
 
-Cần Python 3 và `pip install -r requirements-dev.txt`, rồi chạy một trong hai lệnh:
+Cần Python 3.10 trở lên và `pip install -r requirements-dev.txt`, rồi chạy một trong hai lệnh:
 
 ```bash
 python -m pytest tests/ -q
@@ -32,3 +32,8 @@ Hai lệnh phải cho **cùng một con số**. Con số đó đổi mỗi lần
 lại số của bản phát hành; muốn biết số hiện tại thì cứ chạy — đừng tin con số chép cứng ở đâu đó.
 Có test đỏ nghĩa là một luật trong tài liệu đã mất chỗ dựa; đọc tên test, nó nói bằng tiếng Việt luật
 nào vừa gãy.
+
+Máy chỉ có `requirements-dev.txt` (không `underthesea`, không `python-docx`) vẫn phải xanh: test cần
+thư viện tuỳ chọn thì tự bỏ qua kèm lý do, và cả hai runner đếm bỏ qua như nhau. CI
+(`.github/workflows/tests.yml`) chạy đúng cấu hình máy trần đó trên Windows và macOS, Python 3.10 ·
+3.12 · 3.13, mọi nhánh, cả hai runner.

@@ -504,7 +504,8 @@ pip install underthesea python-docx pymupdf jsonschema pyyaml
 `underthesea` đáng cài nhất: tiếng Việt không tách từ bằng khoảng trắng, thiếu nó thì các bộ đếm tự
 hạ độ tin cậy của chính mình. `python-docx` là thứ cần cho bước giao bản `.docx`.
 
-Test thì dành cho người sửa repo, không dành cho người dùng:
+Test thì dành cho người sửa repo, không dành cho người dùng. Cần **Python 3.10** trở lên (CI đo 3.10,
+3.12 và 3.13 trên Windows và macOS):
 
 ```bash
 pip install -r requirements-dev.txt
