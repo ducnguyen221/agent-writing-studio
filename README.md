@@ -342,6 +342,7 @@ agent-writing-studio/
 │  └─ skills/                     bốn trục viết + kịch bản nghiệm thu dạng văn bản
 │
 ├─ index.html                   trang giới thiệu tĩnh — mở thẳng bằng trình duyệt
+├─ install/index.html           trang cài đặt (/install/) — cùng prompt với INSTALL.md
 │
 ├─ docs/
 │  ├─ ARCHITECTURE.md                kiến trúc: vì sao 5 skill chứ không 25, ai đọc gì của ai

@@ -5,6 +5,7 @@ nhau), prompt dán dài tới mức người dùng cắt mất nửa, hay `CLAUD
 `AGENTS.md`. Test đọc đúng những chỗ đó.
 """
 
+import html
 import re
 import unittest
 from pathlib import Path
@@ -100,6 +101,29 @@ class HostAndPointerTests(unittest.TestCase):
         for axis in ("01-context-architect", "02-cowriter", "03-critique", "04-humanizer", "05-forensics"):
             with self.subTest(axis=axis):
                 self.assertIn(f"skills/{axis}/SKILL.md", text)
+
+
+class WebInstallTests(unittest.TestCase):
+    """Trang giới thiệu và trang `/install/` nói cùng một đường cài với INSTALL.md."""
+
+    def test_landing_page_does_not_teach_copying_skills(self):
+        page = read("index.html")
+        for banned in ("cp -r", "Copy-Item"):
+            with self.subTest(banned=banned):
+                self.assertNotIn(banned, page)
+        self.assertIn('href="install/"', page)
+
+    def test_install_page_carries_the_same_prompts_as_install_md(self):
+        page = html.unescape(read("install/index.html"))
+        page_text = " ".join(re.sub(r"<[^>]+>", "", page).split())
+        for block in FENCE.findall(section(read("INSTALL.md"), "## Prompt copy-dán")):
+            with self.subTest(prompt=block[:30]):
+                self.assertIn(" ".join(block.split()), page_text)
+
+    def test_install_page_is_static(self):
+        page = read("install/index.html")
+        self.assertNotIn("<script", page)
+        self.assertIn("prefers-color-scheme:dark", page)
 
 
 if __name__ == "__main__":

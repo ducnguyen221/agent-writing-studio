@@ -607,35 +607,35 @@
     <div class="sec-head reveal">
       <span class="eyebrow"><span class="dot"></span>03 · Cài đặt</span>
       <h2>Không có nút bấm, không có máy chủ</h2>
-      <p>Bạn chép thư mục skill vào chỗ agent tìm được, rồi nói chuyện với agent bằng tiếng Việt bình
-        thường. Toàn bộ chạy trên máy bạn.</p>
+      <p>Bạn cài xưởng như một plugin của agent — hoặc mở thẳng thư mục repo — rồi nói chuyện với agent
+        bằng tiếng Việt bình thường. Chạy trên máy bạn, Windows hoặc macOS.
+        <a href="install/">Hướng dẫn cài từng bước →</a></p>
     </div>
 
     <div class="grid-2">
       <div class="reveal">
-        <h3 class="sub" style="margin-top:0">Chép skill</h3>
+        <h3 class="sub" style="margin-top:0">Cài plugin</h3>
         <div class="code-card">
           <div class="code-top">
-            <span class="fn">bash · macOS / Linux</span>
+            <span class="fn">Claude Code · Windows / macOS</span>
             <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="lbl">Sao chép</span></button>
           </div>
-          <div class="code-scroll"><pre><code><span class="pr">cp -r</span> skills/* ~/.claude/skills/     <span class="cm"># Claude Code</span>
-<span class="pr">cp -r</span> skills/* ~/.codex/skills/      <span class="cm"># Codex</span></code></pre></div>
+          <div class="code-scroll"><pre><code><span class="pr">claude plugin marketplace add</span> ducnguyen221/agent-writing-studio
+<span class="pr">claude plugin install</span> agent-writing-studio@agent-writing-studio</code></pre></div>
         </div>
         <div class="code-card">
           <div class="code-top">
-            <span class="fn">PowerShell · Windows</span>
+            <span class="fn">Codex · Antigravity · bản clone</span>
             <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="lbl">Sao chép</span></button>
           </div>
-          <div class="code-scroll"><pre><code><span class="pr">Copy-Item</span> -Recurse skills\* <span class="st">$HOME\.claude\skills\</span></code></pre></div>
+          <div class="code-scroll"><pre><code><span class="pr">git clone</span> https://github.com/ducnguyen221/agent-writing-studio
+<span class="pr">cd</span> agent-writing-studio
+<span class="pr">python</span> studio.py doctor      <span class="cm"># kiểm máy, không sửa gì</span></code></pre></div>
         </div>
-        <p class="prose"><code class="inline">skills/</code> có đúng <strong>năm thư mục — một thư mục
-          một trục</strong>. Bốn skill con của trục 5 (<code class="inline">05a-reading</code>,
-          <code class="inline">05b-scoring</code>, <code class="inline">05c-reporting</code>,
-          <code class="inline">05d-calibration</code>) nằm <strong>bên trong</strong>
-          <code class="inline">05-forensics/</code>, cạnh <code class="inline">references/</code> và
-          <code class="inline">scripts/</code>. Chép cả cây: các skill gọi lẫn nhau bằng đường tương đối,
-          và mọi đường vào trục 5 đều qua router.</p>
+        <p class="prose">Plugin mang <strong>nguyên cây repo</strong> — năm thư mục trục, bốn skill con
+          của trục 5 bên trong <code class="inline">05-forensics/</code>, bảy lệnh và dữ liệu dùng chung ở
+          <code class="inline">shared/</code> — nên không chép thư mục nào bằng tay. Mở bản clone thì agent
+          đọc <code class="inline">AGENTS.md</code> trước rồi tự tìm đúng skill.</p>
       </div>
 
       <div class="reveal" style="--d:90ms">
@@ -660,10 +660,11 @@
       <div class="reveal">
         <div class="code-card" style="margin-top:0">
           <div class="code-top">
-            <span class="fn">station · $WRITING_STUDIO_DATA</span>
+            <span class="fn">station tuỳ chọn · $WRITING_STUDIO_DATA</span>
             <button class="copy-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="lbl">Sao chép</span></button>
           </div>
-          <div class="code-scroll"><pre><code><span class="pr">setx</span> WRITING_STUDIO_DATA <span class="st">"$HOME\.writing"</span>
+          <div class="code-scroll"><pre><code><span class="pr">setx</span> WRITING_STUDIO_DATA <span class="st">"$HOME\.writing"</span>          <span class="cm"># Windows</span>
+<span class="pr">export</span> WRITING_STUDIO_DATA=<span class="st">"$HOME/.writing"</span>      <span class="cm"># macOS, trong ~/.zshrc</span>
 
 $WRITING_STUDIO_DATA/
   work/&lt;slug&gt;/        <span class="cm"># thư mục từng ca chạy</span>
@@ -678,8 +679,10 @@ $WRITING_STUDIO_DATA/
           <strong>không nằm trong repo</strong>. Ca chạy và bản giao ở một thư mục riêng trên máy bạn — gọi là
           <strong>station</strong> — trỏ bằng một biến môi trường. Hồ sơ giọng, bài mẫu và chân dung độc giả
           nên nằm trong kho tri thức cá nhân của bạn; không có kho thì để ở station.</p>
-        <p class="prose">Thứ tự ưu tiên: tham số dòng lệnh → biến môi trường → đường mặc định trong repo.
-          Không đặt biến thì mọi thứ vẫn chạy, chỉ là dữ liệu nằm cạnh mã nguồn.</p>
+        <p class="prose">Thứ tự ưu tiên: tham số dòng lệnh → biến môi trường → workspace
+          <code class="inline">.work/</code> trong thư mục bạn mở. Không đặt biến là dùng workspace đó —
+          Git bỏ qua toàn bộ, không phải cấu hình gì; station chỉ cần khi bạn muốn dữ liệu sống lâu hơn
+          bản clone.</p>
       </div>
     </div>
 
