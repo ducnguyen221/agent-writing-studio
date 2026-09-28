@@ -19,11 +19,30 @@ Gốc kho tri thức cá nhân (bậc 1 khi phân giải `writer_profile_ref`, `
 đặt, và sẽ bỏ ở 0.4. **Không còn mặc định đoán `~/Brain`**: không đặt biến nào là không có kho tri thức
 — studio vẫn chạy, bài mang giọng mặc định của thể loại.
 
+### Cài đặt: không còn chép `skills/` bằng tay
+
+- README và trang giới thiệu bỏ hướng dẫn `cp -r skills/*` / `Copy-Item`. Đường cài: plugin Claude Code
+  (`claude plugin marketplace add` + `install`), hoặc clone rồi mở thẳng thư mục repo (Codex, Antigravity).
+- Mới: `AGENTS.md` (hướng dẫn chuẩn cho mọi agent; `CLAUDE.md`, `GEMINI.md` là con trỏ), `INSTALL.md`
+  cho agent kèm prompt dán tiếng Việt/tiếng Anh, `START-HERE.md`, `hosts/` theo từng ứng dụng, trang
+  `/install/`.
+- Mới: `studio.py doctor · install · update · uninstall` (Python 3.10+, chỉ thư viện chuẩn). `install` chỉ
+  dựng thư mục dữ liệu và **in** lệnh đăng ký host; `uninstall` không xoá dữ liệu.
+- Mới: `samples/` — một ca mẫu tự soạn kèm `critique.json` kỳ vọng; `doctor` kiểm offline.
+
+### Workspace mặc định `.work/`
+
+Không đặt `WRITING_STUDIO_DATA` thì `.work/` trong thư mục đang mở là **workspace mặc định** (Git bỏ
+qua), không còn là "lưới an toàn". Station riêng vẫn dùng như cũ, nay là tuỳ chọn; tài liệu có lệnh cho
+cả Windows (`setx`) và macOS (`export`).
+
 ### Hạ tầng
 
 - CI `.github/workflows/tests.yml`: Windows + macOS, Python 3.10 · 3.12 · 3.13, mọi nhánh, cả hai runner.
 - `.codex-plugin/plugin.json` cho Codex; test khoá một số phiên bản ở bốn chỗ khai.
 - `.gitignore` chặn file bí mật (`.env*` trừ `.env.example`, khoá, credential); test đọc Git index.
+- Test chạy xanh trên máy chỉ có `requirements-dev.txt` (thiếu `underthesea`, `python-docx` thì tự bỏ
+  qua kèm lý do).
 
 ## [0.2.1] — 2026-09-14
 

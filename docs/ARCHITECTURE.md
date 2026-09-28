@@ -146,8 +146,9 @@ Một profile, bốn người dùng:
 
 ### 2.4 Hợp đồng dữ liệu giữa các giai đoạn (thư mục ca)
 
-Mỗi ca một thư mục làm việc — `$WRITING_STUDIO_DATA/work/<case>/`, fallback `.work/<case>/` khi chưa đặt
-biến — mỗi giai đoạn đọc sản phẩm giai đoạn trước, schema đặt tại `shared/schemas/`:
+Mỗi ca một thư mục làm việc — workspace `.work/<case>/` trong thư mục đang mở (mặc định), hoặc
+`$WRITING_STUDIO_DATA/work/<case>/` khi đã đặt station — mỗi giai đoạn đọc sản phẩm giai đoạn trước,
+schema đặt tại `shared/schemas/`:
 
 ```
 <work>/<case>/
@@ -177,8 +178,9 @@ vì tới giờ chỉ trục 5 đọc nó; chuyển sang `shared/` khi có consu
 Y5 **không được tự đếm câu**. Ca `cot-b` đã trả giá cho luật này: ba hệ đánh số khác nhau (43 / 45 /
 46 câu) khiến bản tự khai phải map bằng trích dẫn thay vì bằng ID. `check_spans.py` là cổng kiểm.
 
-Từ 31/08/2026 thư mục ca mặc định nằm ở **station** `$WRITING_STUDIO_DATA/work/`, ngoài repo hẳn —
-chứa văn của người thật. `.work/` vẫn nằm trong `.gitignore` làm lưới an toàn cho ai chạy không có station.
+Thư mục ca chứa văn của người thật, nên **không bao giờ vào Git**: không đặt biến thì nó ở workspace
+`.work/` (Git bỏ qua toàn bộ, `tests/shared/test_repo_gates.py` đọc index để canh); đặt
+`$WRITING_STUDIO_DATA` thì nó ở station ngoài repo — cách cho dữ liệu sống lâu hơn bản clone.
 
 ### 2.5 Luật xung đột lợi ích (mới, bắt buộc)
 
@@ -326,6 +328,6 @@ agent-writing-studio/
 - Không chạy model ML nặng, không GPU — giữ triết lý v1 (tầng model như VietBinoculars ghi nhận
   ở `references/06` là hướng mở rộng, không phải phần thân).
 - Không tự kết luận kỷ luật ai — mọi cổng Y5 giữ nguyên "người quyết định".
-- Không lưu bài của người thật vào git — từ 31/08/2026 chúng nằm hẳn ở station `$WRITING_STUDIO_DATA`
-  ngoài repo; `.work/`, `fixtures/`, `shared/writers/` vẫn gitignored làm lưới an toàn.
+- Không lưu bài của người thật vào git — chúng ở workspace `.work/` (gitignored) hoặc station
+  `$WRITING_STUDIO_DATA` ngoài repo; `fixtures/`, `shared/writers/` gitignored làm lưới an toàn.
 - Không đẻ 25 skill, không đẻ router trước khi 5 skill sống thật.
