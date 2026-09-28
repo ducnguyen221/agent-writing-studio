@@ -28,6 +28,8 @@ LEGACY_ALLOWED = {
     "skills/01-context-architect/references/03-brain-bridge.md": "đường lùi tên biến cũ tới 0.4",
     "CHANGELOG.md": "lịch sử phát hành",
     "index.html": "chờ quyết định P-1 (liên kết trang giới thiệu)",
+    "studio.py": "doctor đọc tên biến cũ làm đường lùi, báo WARN",
+    "tests/shared/test_studio_lifecycle.py": "test đường lùi của doctor",
     THIS: "chính test này",
 }
 HOME_DEFAULT = re.compile(r"~/Brain\b")

@@ -10,7 +10,11 @@ LINK = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 # `docs/plans` và `docs/results` là nhật ký làm việc nội bộ: chúng nằm trên máy tác giả,
 # KHÔNG đi theo repo. Chúng vẫn nằm trên đĩa nên rglob vẫn thấy — loại ra ở đây để một liên
 # kết trong nhật ký cũ không làm đỏ cây public, và để test đo đúng thứ người clone nhận được.
-EXCLUDED_PREFIXES = ("docs/plans/", "docs/results/")
+#
+# `.work/` là workspace mặc định (ca viết của người dùng, Git bỏ qua); `.venv/`, `.git/` và cache
+# công cụ cũng không phải cây public — quét chúng là đo máy người chạy test, không đo repo.
+EXCLUDED_PREFIXES = ("docs/plans/", "docs/results/", ".work/", ".venv/", "venv/", ".git/",
+                     ".pytest_cache/", "node_modules/")
 
 
 class MarkdownLinkTests(unittest.TestCase):

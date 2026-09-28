@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-09-28T09:00:00+07:00",
+  "genre": "essay",
+  "intent": {
+    "task": "Viết một bài luận ngắn (khoảng 250 chữ) cho bản tin nội bộ về thứ tự học phân tích số liệu.",
+    "thesis_one_sentence": "Người mới nên học đọc biểu đồ trước khi học công cụ vẽ biểu đồ, vì công cụ chỉ làm biểu đồ sai trông đẹp hơn.",
+    "answers": [
+      {
+        "question": "Điều gì sẽ bác bỏ luận đề?",
+        "answer": "Nếu nhóm học công cụ trước đọc biểu đồ không kém nhóm học đọc trước thì luận đề sai.",
+        "source": "user"
+      }
+    ],
+    "unresolved": []
+  },
+  "writer_profile_ref": null,
+  "audience": {
+    "vai_tro": "Nhân viên văn phòng mới được giao làm báo cáo số liệu",
+    "tieu_chi_cham": "Đọc xong biết buổi học đầu tiên nên làm gì",
+    "muc_do_quen_chu_de": "Đã xem biểu đồ hằng ngày, chưa từng học đọc biểu đồ",
+    "dinh_kien_co_the_co": "Nghĩ rằng thành thạo phần mềm là đủ"
+  },
+  "brain_pointers": [],
+  "constraints": [
+    {"id": "c1", "statement": "Không quá 300 chữ.", "hard": true},
+    {"id": "c2", "statement": "Không nêu tên phần mềm cụ thể.", "hard": false}
+  ]
+}
