@@ -18,7 +18,7 @@ KHÔNG BỎ CÂU NÀO. Bản trước có ngưỡng `min_chars=15`: câu ngắn 
 `ca-mau-01` (cổng Phase 5) cho thấy đó là lỗi tính đúng chứ không phải phép lọc nhiễu —
 hai câu hỏi tu từ mở đoạn ("Cấm thì sao?", 12 ký tự) biến mất khỏi `sentences.json`, nên bản tự khai
 `machine_written_spans[]` chỉ phủ 45/47 câu mà vẫn "hợp lệ" theo schema; và chính hai câu đó lại là
-một tật máy (docs/results/self-audit-cot-B.md §5 mục 2). Nay mọi câu đều được giữ; câu ngắn chỉ được
+một tật máy (docs/results/self-audit-ca-mau-01.md §5 mục 2). Nay mọi câu đều được giữ; câu ngắn chỉ được
 GẮN CỜ `short: True` để người đọc tự quyết, không bị loại khỏi phép đo.
 """
 import re

@@ -432,12 +432,14 @@ Vậy nên hai luật:
 > *Provenance* = bản tự khai nguồn gốc: câu nào máy viết, câu nào người viết, bài đã qua biên tập máy
 > hay chưa. *Sidecar* = file đi kèm bản giao, nằm cạnh nó, không phải thứ ở lại trong máy người viết.
 
-Vì thế trục 5 có **hai chế độ**, và chọn nhầm chế độ là đọc nhầm kết quả:
+Vì thế trục 5 có **hai chế độ**, và chọn nhầm chế độ là đọc nhầm kết quả. Chế độ không do người
+dùng nhớ mà do thư mục ca quyết: có **cả** `draft.meta.json` lẫn `sentences.json` thì lệnh `05-audit`
+tự chạy `audit`; thiếu bản tự khai (tài liệu từ ngoài) thì chạy `blind`; gõ `--blind` để ép chấm mù.
 
-| Chế độ | Nhìn thấy gì | Dùng khi nào |
-|---|---|---|
-| `blind` (mặc định) | chỉ bản văn và hệ đánh số câu | tài liệu **từ ngoài** vào; hiệu chuẩn; đối chứng độc lập |
-| `audit` | thêm `draft.meta.json` — **sau khi** bản đọc mù đã khoá | văn **từ chính studio**: đối chiếu bản tự khai với văn bản, báo câu máy viết mà chưa khai |
+| Chế độ | Bật khi nào | Nhìn thấy gì | Dùng để làm gì |
+|---|---|---|---|
+| `blind` | không có bản tự khai, hoặc gõ `--blind` | chỉ bản văn và hệ đánh số câu | tài liệu **từ ngoài** vào; hiệu chuẩn; đối chứng độc lập |
+| `audit` | thư mục ca có cả `draft.meta.json` lẫn `sentences.json` | thêm `draft.meta.json` — **sau khi** bản đọc mù đã khoá | văn **từ chính studio**: đối chiếu bản tự khai với văn bản, báo câu máy viết mà chưa khai |
 
 Chế độ `audit` trả về **báo cáo liêm chính**, không trả về điểm. Đó mới là câu hỏi đúng: *bản tự khai
 có khớp với bản văn không*, chứ không phải *máy có đoán ra được không*.

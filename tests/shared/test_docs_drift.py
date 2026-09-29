@@ -10,7 +10,8 @@ Khoá bốn thứ:
    của chuỗi viết.
 3. **Cặp ngôn ngữ:** README và GUIDE mỗi bản trỏ sang bản ngôn ngữ kia.
 4. **Tên workspace:** trang chỉ đường (lệnh, host, START-HERE, GUIDE, web) nói `workspace/`, không còn
-   `.work/`. Tên cũ chỉ được nhắc ở chỗ giải thích việc dời (README, INSTALL, troubleshooting).
+   `.work/`. Tên cũ chỉ được nhắc ở chỗ giải thích việc dời (README, AGENTS, INSTALL,
+   troubleshooting) — và ở đó phải kèm lệnh `studio.py migrate`.
 
 Liên kết tương đối trong mọi file `.md` đã có `tests/forensics/test_markdown_links.py` canh.
 """
@@ -105,7 +106,7 @@ class WorkspaceNameDriftTests(unittest.TestCase):
                 self.assertNotIn(".work/", read(rel), f"{rel} còn chỉ tới workspace tên cũ")
 
     def test_migration_is_explained_where_the_old_name_appears(self):
-        for rel in (*READMES, "INSTALL.md", "docs/troubleshooting.md"):
+        for rel in (*READMES, "AGENTS.md", "INSTALL.md", "docs/troubleshooting.md"):
             text = read(rel)
             with self.subTest(doc=rel):
                 self.assertIn("workspace/", text)

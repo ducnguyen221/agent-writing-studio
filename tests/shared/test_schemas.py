@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_DIR = ROOT / "shared/schemas"
 # Bốn cái đầu sống trong `workspace/<case>/`. `provenance` là cái duy nhất ĐI RA KHỎI thư mục ca: nó đi
 # kèm bản giao, vì phép thử cột B cho thấy sau trục 4 văn bản không mang dấu nào cho biết nó đã qua
-# biên tập máy (docs/results/self-audit-cot-B.md mục 4).
+# biên tập máy (docs/results/self-audit-ca-mau-01.md mục 4).
 NAMES = ("context", "draft", "critique", "polish", "provenance")
 
 

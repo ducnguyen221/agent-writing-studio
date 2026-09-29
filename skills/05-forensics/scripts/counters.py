@@ -57,7 +57,7 @@ TEMPLATES = {
     # Hai khuôn dưới đây thêm sau ca `ca-mau-01` (cổng Phase 5). Trên bài đó, người viết
     # nhận ra cả hai là mặc định của chính mình, người chấm mù bắt được một lượt (đọc thành lỗi lập
     # luận, không thành khuôn lặp), còn `template_repeats` trả về {} — danh mục cũ quá hẹp để tật
-    # thành số. Xem docs/results/self-audit-cot-B.md §5 mục 2 và 3.
+    # thành số. Xem docs/results/self-audit-ca-mau-01.md §5 mục 2 và 3.
     #
     # `(?-i: … )` tắt IGNORECASE cục bộ: `template_repeats` chạy với re.I, mà không tắt thì "AI"
     # khớp \bai\b và mọi câu nhắc tới AI thành ứng viên khuôn phân đôi.

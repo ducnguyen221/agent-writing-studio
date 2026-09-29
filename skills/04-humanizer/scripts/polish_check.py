@@ -22,7 +22,7 @@ Script này ĐO và CHẶN. Nó không bao giờ nói bản nào hay hơn:
      vẫn được in nhưng kèm nhãn "baseline thể loại" và KHÔNG được coi là chỗ phải sửa.
   6. Đòi PROVENANCE ĐI THEO BẢN GIAO: cạnh `--after` phải có sidecar `<tên bản giao>.provenance.json`
      (hoặc footer HTML-comment ngay trong bản giao, nếu người dùng chọn cách đó). Thiếu là cảnh báo,
-     mã thoát 1. Lý do ở docs/results/self-audit-cot-B.md mục 4: sau trục 4, văn bản không mang một
+     mã thoát 1. Lý do ở docs/results/self-audit-ca-mau-01.md mục 4: sau trục 4, văn bản không mang một
      dấu nào cho biết nó đã qua biên tập máy — ranh giới đạo đức chỉ quan sát được từ sidecar, mà
      sidecar thì ở lại trong thư mục ca còn bản giao thì đi.
 
@@ -350,7 +350,7 @@ def check_new_tokens(text_before, text_after):
 
 
 # ---------- provenance đi theo bản giao ----------
-# Nguồn: docs/results/self-audit-cot-B.md mục 4. Người chấm mù đọc `polished.md` không thấy gì cho
+# Nguồn: docs/results/self-audit-ca-mau-01.md mục 4. Người chấm mù đọc `polished.md` không thấy gì cho
 # biết bài đã qua trục 4; `metadata.stylometric_polish: true` nằm trong polish.diff.json, mà file đó
 # không đi cùng bản giao. Sidecar dưới đây là bản tự khai TỐI THIỂU đi theo file văn bản.
 

@@ -47,7 +47,7 @@ class SkillStructureTests(unittest.TestCase):
         """Phép thử cột B: trên sản phẩm của chính studio, chấm mù không trả lời được câu hỏi nào.
 
         Trục 2 tránh đúng danh mục mà trục 5 dùng để soi, nên `low_signal` mù là hằng đẳng thức chứ
-        không phải bằng chứng (docs/results/self-audit-cot-B.md mục 5). Router phải khai đủ hai chế
+        không phải bằng chứng (docs/results/self-audit-ca-mau-01.md mục 5). Router phải khai đủ hai chế
         độ và nói rõ chế độ nào dùng cho việc gì, nếu không thì con số mù sẽ được đọc thành phán xét.
         """
         router = (ROOT / "skills/05-forensics/SKILL.md").read_text(encoding="utf-8")

@@ -194,7 +194,7 @@ Lệnh cấm chỉ có nghĩa khi có cách kiểm được việc học viên �
 
         Hệ quả không phải "thiếu một dòng đẹp": `machine_written_spans[]` phủ 45/47 câu mà vẫn hợp
         lệ theo schema, nên bản tự khai của trục 2 nói sai về chính văn bản nó vừa viết — và hai câu
-        bị nuốt lại đúng là một tật máy (docs/results/self-audit-cot-B.md §5 mục 2).
+        bị nuốt lại đúng là một tật máy (docs/results/self-audit-ca-mau-01.md §5 mục 2).
         """
         text = "Cấm thì sao? Lệnh cấm chỉ có nghĩa khi có cách kiểm được việc học viên đã làm gì."
         for module in (self.extract, self.counters):

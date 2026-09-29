@@ -276,7 +276,7 @@ agent-writing-studio/
 │  ├─ SCORING.md                    # ✅ thang S/C + cách đo + mẫu báo cáo (gộp 3 file cũ, 31/08)
 │  ├─ GENRES.md                       # ✅ cách soạn hồ sơ thể loại mới
 │  ├─ agent-writing-studio.md         # ✅ tầm nhìn gốc của chủ repo
-│  ├─ results/                        # ✅ kết quả đo thật (self-audit-cot-B.md)
+│  ├─ results/                        # ✅ kết quả đo thật (self-audit-ca-mau-01.md)
 │  └─ plans/                          # ✅ spec · tasks · nhật ký cổng từng đợt
 │
 ├─ shared/

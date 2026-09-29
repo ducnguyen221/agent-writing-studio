@@ -41,6 +41,16 @@ Chi tiết thiết kế và lý do nằm ở tài liệu tương ứng, không c
 - Cổng chống rò (`test_public_boundary.py`) đọc thêm **danh sách cấm riêng nằm ngoài repo** qua biến
   `WRITING_STUDIO_LEAK_DENYLIST`; không đặt biến thì bỏ qua kèm lời nhắn, báo lỗi không in lại cụm cấm.
 - Trang giới thiệu bỏ con số test ghi cứng.
+- Provenance giữ luật de-name (31/08/2026): sổ nguồn phương pháp nằm ngoài repo; ngoại lệ có tên nguồn
+  duy nhất là notice MIT bắt buộc trong `skills/04-humanizer/assets/idioms.json` (ghi trong `NOTICE`).
+
+### Tài liệu
+
+- `AGENTS.md`: bảng ranh giới dùng `workspace/`; agent thấy `.work/` đầu phiên thì báo người dùng và chỉ
+  chạy `migrate --yes` khi được đồng ý; nhắc đặt `WRITING_STUDIO_LEAK_DENYLIST` trước khi phát hành.
+- `README.vi.md` mục 5: bảng chế độ trục 5 nói đúng cách chọn — thư mục ca có cả `draft.meta.json` lẫn
+  `sentences.json` thì `05-audit` chạy `audit`, không có bản tự khai (hoặc `--blind`) thì `blind`.
+  Hành vi không đổi.
 
 ### Cài đặt trên macOS
 

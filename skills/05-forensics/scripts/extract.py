@@ -93,7 +93,7 @@ def sentences(text):
     """Tách câu an toàn với viết tắt học thuật (PGS. TS., tr., v.v., 1.1., 3.14).
 
     Giữ MỌI câu, kể cả câu ngắn (`short: true`). Câu bị bỏ là câu không có id, và câu không có id
-    là câu không ai khai được — xem docs/results/self-audit-cot-B.md §2.1.
+    là câu không ai khai được — xem docs/results/self-audit-ca-mau-01.md §2.1.
     """
     raw = _VI_SEGMENT.split_sentences(text)
     out = [{"id": f"s{i+1:04d}", **s,

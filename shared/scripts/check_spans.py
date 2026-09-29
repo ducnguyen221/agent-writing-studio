@@ -14,7 +14,7 @@ Hai đường hỏng đã gặp thật:
      tự khai nhất").
   2. **Bộ tách câu nuốt câu.** Ca `ca-mau-01`: ngưỡng `min_chars=15` bỏ hai câu hỏi tu từ
      ngắn, nên bản tự khai phủ 45/47 câu và con số "45/45 do máy viết" là con số của script chứ không
-     phải của văn bản (docs/results/self-audit-cot-B.md §2.1).
+     phải của văn bản (docs/results/self-audit-ca-mau-01.md §2.1).
 
 Cách chạy:
 
