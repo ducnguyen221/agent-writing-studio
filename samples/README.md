@@ -2,7 +2,7 @@
 
 Thư mục này là **bài thực hành đầu tiên** và là thứ `python studio.py doctor` kiểm offline. Mọi thứ ở
 đây **tự soạn, không của người thật**: bài không có tên người, tên đơn vị hay số liệu lấy từ công việc
-thật. Bài của người thật không bao giờ vào đây — chúng ở workspace `.work/` hoặc station.
+thật. Bài của người thật không bao giờ vào đây — chúng ở `workspace/` hoặc station.
 
 | File | Là gì |
 |---|---|
@@ -15,7 +15,7 @@ thật. Bài của người thật không bao giờ vào đây — chúng ở wo
 Mở thư mục repo trong ứng dụng AI rồi nói:
 
 > *"Chấm `samples/bai-mau.md` theo hồ sơ `essay`, dùng bối cảnh `samples/context.json`. Ghi `critique.json`
-> vào `.work/mau/`. Đừng mở `samples/critique.expected.json` trước khi chấm xong."*
+> vào `workspace/mau/`. Đừng mở `samples/critique.expected.json` trước khi chấm xong."*
 
 Rồi so kết quả với `critique.expected.json`. Điểm từng tiêu chí được phép lệch — người chấm khác nhau cho
 điểm khác nhau. Thứ **không** được lệch: bắt được câu *"Hầu hết người đi làm…"* là chỗ thiếu bằng chứng,

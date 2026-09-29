@@ -19,7 +19,7 @@ Khi đang sửa repo và muốn thử ngay mà không cài lại plugin:
 ```bash
 git clone https://github.com/ducnguyen221/agent-writing-studio
 cd agent-writing-studio
-python studio.py install --host claude     # dựng .work/, in lệnh — không sửa cấu hình Claude
+python studio.py install --host claude     # dựng workspace/, in lệnh — không sửa cấu hình Claude
 claude --plugin-dir .
 ```
 
@@ -34,7 +34,7 @@ python studio.py doctor            # dòng host:claude so phiên bản plugin v�
 claude plugin uninstall agent-writing-studio@agent-writing-studio
 ```
 
-Gỡ plugin **không** xoá `.work/`, station hay kho tri thức của bạn.
+Gỡ plugin **không** xoá `workspace/`, station hay kho tri thức của bạn.
 
 Bản 0.2.0 đổi tên bảy lệnh sang tiếng Anh; ai còn cài 0.1.x thì thấy lệnh cũ (`01-boi-canh`…) cho tới
 khi cập nhật — xem [CHANGELOG](../../CHANGELOG.md).

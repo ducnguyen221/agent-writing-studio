@@ -19,7 +19,7 @@ python shared/scripts/export_docx.py <file.md> --out "<thư-mục-người-dùng
 
 ## Đầu vào
 
-Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./.work/<slug>/`):
+Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./workspace/<slug>/`):
 
 - `polished.md` — bản đã biên tập; chưa có thì dùng `draft.md` và **nói rõ đang giao bản chưa biên
   tập**, kèm lệnh `/agent-writing-studio:04-humanize <slug>`;

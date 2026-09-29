@@ -19,14 +19,14 @@ Quy tắc biên tập của thể loại nằm ở **mục §4** của `shared/g
 
 ## Đầu vào
 
-Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./.work/<slug>/`):
+Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./workspace/<slug>/`):
 
 - văn bản cần sửa — `draft.md`, hoặc file người dùng chỉ định, hoặc đoạn dán thẳng;
 - `sentences.json` — để mỗi nhát sửa neo được vào `sentence_id`;
 - `critique.json` — nên có: `must_fix[]` nào có `owner: 04-humanizer` là việc của lượt này;
 - `draft.meta.json` — **ranh giới đạo đức**: trục 4 chỉ chạy trên bản thảo đã biết nguồn gốc. Trường
   `profile_used` khác `null` thì nạp hồ sơ giọng theo luật phân giải của
-  [cầu Brain](../skills/01-context-architect/references/03-brain-bridge.md): đường tương đối → kho
+  [cầu kho tri thức](../skills/01-context-architect/references/03-knowledge-bridge.md): đường tương đối → kho
   tri thức (`WRITING_STUDIO_KNOWLEDGE`) → station → repo; slug → `$WRITING_STUDIO_DATA/writers/<slug>/profile.yaml`,
   fallback `shared/writers/<slug>/`. Đó là hồ sơ giọng của chính tác giả, và `voice_priority` của hồ sơ thể loại cho nó thắng mặc định.
 

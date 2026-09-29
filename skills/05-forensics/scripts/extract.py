@@ -7,8 +7,9 @@ extract.py — Bước 0: trích văn bản + metadata, gán ID/offset cho từn
 
 Sinh: <ca>/text.txt · <ca>/meta.json · <ca>/sentences.json
 
-Không truyền `--out` thì ghi vào `$WRITING_STUDIO_DATA/work/` nếu biến đó có, ngược lại `./.work`
-trong thư mục đang đứng.
+Không truyền `--out` thì ghi vào `$WRITING_STUDIO_DATA/work/` nếu biến đó có, ngược lại
+`./workspace` trong thư mục đang đứng (còn `./.work` tên cũ mà chưa có `./workspace` thì đọc `./.work`,
+kèm cảnh báo — chạy `python studio.py migrate`).
 
 Phụ thuộc: python-docx (cho .docx), pymupdf (cho .pdf). Cả hai TÙY CHỌN —
 thiếu thì chỉ xử lý được .txt.
@@ -74,7 +75,7 @@ def assert_full_coverage(text, sents):
     """sentences.json phải phủ 100% văn bản.
 
     Bản trước bỏ im lặng câu dưới 15 ký tự, nên `machine_written_spans[]` của trục 2 có thể hợp lệ
-    theo schema mà vẫn không nói gì về hai câu có thật (ca `.work/cot-b-ai-baitap`: 45/47). Phép
+    theo schema mà vẫn không nói gì về hai câu có thật (ca `ca-mau-01`: 45/47). Phép
     kiểm dưới đây là bất biến, không phải cảnh báo: nối `text` của mọi câu, bỏ khoảng trắng, phải
     ra đúng văn bản gốc đã bỏ khoảng trắng.
     """
@@ -92,7 +93,7 @@ def sentences(text):
     """Tách câu an toàn với viết tắt học thuật (PGS. TS., tr., v.v., 1.1., 3.14).
 
     Giữ MỌI câu, kể cả câu ngắn (`short: true`). Câu bị bỏ là câu không có id, và câu không có id
-    là câu không ai khai được — xem docs/results/self-audit-cot-B.md §2.1.
+    là câu không ai khai được — xem docs/results/self-audit-ca-mau-01.md §2.1.
     """
     raw = _VI_SEGMENT.split_sentences(text)
     out = [{"id": f"s{i+1:04d}", **s,
@@ -102,17 +103,24 @@ def sentences(text):
     return out
 
 STATION_ENV = "WRITING_STUDIO_DATA"
-REPO_WORK_DIR = Path(".work")
+REPO_WORK_DIR = Path("workspace")
+# Tên trước 0.4.0: vẫn dùng khi chỉ có nó, kèm cảnh báo, cho tới khi người dùng chạy `studio.py migrate`.
+LEGACY_WORK_DIR = Path(".work")
 
 
 def default_work_dir() -> Path:
-    """Thư mục ca chạy mặc định: station `$WRITING_STUDIO_DATA/work` > `./.work` trong repo.
+    """Thư mục ca chạy mặc định: station `$WRITING_STUDIO_DATA/work` > `./workspace` trong repo.
 
     Đọc env lúc gọi, không phải lúc nạp module (test monkeypatch được). `--out` luôn thắng.
+    Chỉ có `./.work` (tên cũ) mà chưa có `./workspace` thì dùng `./.work` và cảnh báo ra stderr.
     """
     station = (os.environ.get(STATION_ENV) or "").strip()
     if station:
         return Path(station) / "work"
+    if LEGACY_WORK_DIR.is_dir() and not REPO_WORK_DIR.exists():
+        print("CẢNH BÁO: đang dùng ./.work (tên cũ trước 0.4.0) — chạy `python studio.py migrate` "
+              "để đổi sang ./workspace.", file=sys.stderr)
+        return LEGACY_WORK_DIR
     return REPO_WORK_DIR
 
 
@@ -120,7 +128,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("path")
     ap.add_argument("--out", default=None,
-                    help="thư mục ca chạy (mặc định: $WRITING_STUDIO_DATA/work, fallback ./.work)")
+                    help="thư mục ca chạy (mặc định: $WRITING_STUDIO_DATA/work, fallback ./workspace)")
     a = ap.parse_args()
     p = Path(a.path)
     out = Path(a.out) if a.out else default_work_dir()

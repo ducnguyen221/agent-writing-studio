@@ -91,7 +91,7 @@ class WorkflowShapeTests(unittest.TestCase):
 class DeclaredPythonTests(unittest.TestCase):
     def test_readme_and_tests_readme_state_the_same_minimum(self):
         """Hứa 3.10 ở tài liệu mà CI không đo 3.10 (hay ngược lại) là hứa suông."""
-        for rel in ("README.md", "tests/README.md"):
+        for rel in ("README.md", "README.vi.md", "tests/README.md"):
             with self.subTest(file=rel):
                 text = (ROOT / rel).read_text(encoding="utf-8")
                 self.assertIn(f"Python {MIN_PYTHON}", text)

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agent-writing-studio/shared/schemas/context.schema.json",
   "title": "context.json — đầu ra của trục 1 (01-context-architect)",
-  "description": "Bối cảnh đã phỏng vấn xong. Trục 2 từ chối viết nếu file này chưa tồn tại hoặc chưa hợp lệ. Không chứa nguyên văn tài liệu riêng tư: Brain chỉ vào đây bằng CON TRỎ.",
+  "description": "Bối cảnh đã phỏng vấn xong. Trục 2 từ chối viết nếu file này chưa tồn tại hoặc chưa hợp lệ. Không chứa nguyên văn tài liệu riêng tư: kho tri thức cá nhân (WRITING_STUDIO_KNOWLEDGE) chỉ vào đây bằng CON TRỎ.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -84,7 +84,7 @@
           "path": {
             "type": "string",
             "minLength": 1,
-            "description": "Đường dẫn tương đối tính từ gốc Brain hoặc gốc dự án; không phải đường dẫn tuyệt đối chứa tên người dùng."
+            "description": "Đường dẫn tương đối tính từ gốc kho tri thức (WRITING_STUDIO_KNOWLEDGE) hoặc gốc dự án; không phải đường dẫn tuyệt đối chứa tên người dùng."
           },
           "excerpt": {
             "type": "string",

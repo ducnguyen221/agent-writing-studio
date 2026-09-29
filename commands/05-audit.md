@@ -31,7 +31,7 @@ chứng** — trục 2 tránh đúng danh mục mà trục 5 dùng để soi. N�
 
 ## Đầu vào
 
-Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./.work/<slug>/`): văn bản cần đọc (`polished.md`
+Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./workspace/<slug>/`): văn bản cần đọc (`polished.md`
 hoặc `draft.md`, hoặc file người dùng đưa), `sentences.json`, và — cho chế độ `audit` —
 `draft.meta.json`.
 

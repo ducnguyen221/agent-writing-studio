@@ -189,7 +189,7 @@ class TellsRegistryTests(unittest.TestCase):
         """Ba tật máy mà cả người chấm mù lẫn lớp 0-token đều bỏ lọt trong ca cột B.
 
         Chúng vào danh mục ở trạng thái `candidate`: trục 4 được dùng để nhận ra và sửa, trục 5
-        KHÔNG được dùng để tạo finding cho tới khi có corpus. Nguồn: docs/results/self-audit-cot-B.md
+        KHÔNG được dùng để tạo finding cho tới khi có corpus. Nguồn: docs/results/self-audit-ca-mau-01.md
         §5. Test khoá cả ba, vì thứ đắt nhất ở đây là ví dụ và phản chứng tiếng Việt tự soạn.
         """
         by_id = {e["id"]: e for e in entries()}
@@ -212,7 +212,7 @@ class TellsRegistryTests(unittest.TestCase):
                     f"{tell_id}: cả ba đều có thể báo oan một thể loại, phải có cảnh báo",
                 )
                 self.assertTrue(
-                    any("self-audit-cot-B" in source for source in entry["source"]),
+                    any("self-audit-ca-mau-01" in source for source in entry["source"]),
                     f"{tell_id}: phải ghi nguồn là ca đã tìm ra nó",
                 )
 

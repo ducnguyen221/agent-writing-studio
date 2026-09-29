@@ -21,7 +21,7 @@ $WRITING_STUDIO_DATA/writers/<slug>/samples/
 `writer_profile_ref` của `context.json` là đường **tương đối**, phân giải theo thứ tự: (1) gốc kho tri
 thức → (2) gốc station → (3) gốc repo; chuỗi không chứa `/` là slug, tìm `writers/<slug>/profile.yaml`
 ở (2) rồi `shared/writers/<slug>/profile.yaml` ở (3). Luật đầy đủ ở
-`skills/01-context-architect/references/03-brain-bridge.md`.
+`skills/01-context-architect/references/03-knowledge-bridge.md`.
 
 Thứ tự ưu tiên của mọi script: **tham số CLI tường minh** (`--samples-dir`, `--out`) → biến
 `WRITING_STUDIO_DATA` → `shared/writers/<slug>/` trong repo. Vế cuối chỉ là lưới an toàn cho người

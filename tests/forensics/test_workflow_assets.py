@@ -37,9 +37,11 @@ class WorkflowAssetTests(unittest.TestCase):
             self.assertIn(contract, content)
 
     def test_readme_exposes_the_routed_skill_suite(self):
-        readme = self.read("README.md")
-        for skill in ("05a-reading", "05b-scoring", "05c-reporting", "05d-calibration"):
-            self.assertIn(skill, readme)
+        for rel in ("README.md", "README.vi.md"):
+            readme = self.read(rel)
+            for skill in ("05a-reading", "05b-scoring", "05c-reporting", "05d-calibration"):
+                with self.subTest(file=rel, skill=skill):
+                    self.assertIn(skill, readme)
 
     def test_forensics_router_no_longer_points_at_the_distill_log(self):
         """Nhật ký distill đã dời về sổ xưởng: router và mọi reference phải bỏ trỏ."""

@@ -35,7 +35,7 @@ class MeasurementTests(unittest.TestCase):
         self.assertEqual(extracted, counted)
 
     def test_et_al_citation_does_not_break_the_sentence(self):
-        """Ca .work/3c: thiếu `et al.` trong ABBREV làm một câu vỡ làm hai.
+        """Ca ca-mau-02: thiếu `et al.` trong ABBREV làm một câu vỡ làm hai.
 
         Mảnh thứ hai (", 2015; OECD, 2023; UNESCO, 2018, 2024a).") là một sentence_id
         hợp lệ nhưng vô nghĩa: người chấm trỏ finding vào đó thì tác giả không tìm ra
@@ -100,7 +100,7 @@ class MeasurementTests(unittest.TestCase):
         self.assertEqual(self.counters.template_repeats(text), {})
 
     def test_symmetric_dichotomy_template_is_counted(self):
-        """Ca cot-b: cùng dáng câu "ai … thì …; ai … thì …" lặp 3 lần trong 1.000 từ.
+        """Ca ca-mau-01: cùng dáng câu "ai … thì …; ai … thì …" lặp 3 lần trong 1.000 từ.
 
         Người chấm mù bắt được MỘT lượt và đọc nó thành lỗi lập luận, không thành khuôn lặp, vì
         `template_repeats` không có khuôn này. Ba lượt cùng một dáng là tín hiệu trục 3 mạnh nhất
@@ -141,7 +141,7 @@ Lệnh cấm chỉ có nghĩa khi có cách kiểm được việc học viên �
         self.assertEqual(self.counters.template_repeats(text), {})
 
     def test_unnamed_actor_used_as_a_source_is_vague(self):
-        """Ca cot-b: nguồn được quy cho một chủ thể chỉ trỏ bằng "ấy" — không ai kiểm lại được."""
+        """Ca ca-mau-01: nguồn được quy cho một chủ thể chỉ trỏ bằng "ấy" — không ai kiểm lại được."""
         text = (
             "Chính nhà cung cấp công cụ ấy công bố tỷ lệ báo nhầm ở cấp câu vào khoảng bốn phần trăm."
         )
@@ -190,11 +190,11 @@ Lệnh cấm chỉ có nghĩa khi có cách kiểm được việc học viên �
         self.assertEqual(sum(item["n_syllables"] for item in extracted), 12)
 
     def test_short_sentences_are_flagged_never_dropped(self):
-        """Ca `.work/cot-b-ai-baitap`: hai câu hỏi tu từ 12–13 ký tự biến mất khỏi sentences.json.
+        """Ca `ca-mau-01`: hai câu hỏi tu từ 12–13 ký tự biến mất khỏi sentences.json.
 
         Hệ quả không phải "thiếu một dòng đẹp": `machine_written_spans[]` phủ 45/47 câu mà vẫn hợp
         lệ theo schema, nên bản tự khai của trục 2 nói sai về chính văn bản nó vừa viết — và hai câu
-        bị nuốt lại đúng là một tật máy (docs/results/self-audit-cot-B.md §5 mục 2).
+        bị nuốt lại đúng là một tật máy (docs/results/self-audit-ca-mau-01.md §5 mục 2).
         """
         text = "Cấm thì sao? Lệnh cấm chỉ có nghĩa khi có cách kiểm được việc học viên đã làm gì."
         for module in (self.extract, self.counters):

@@ -27,24 +27,42 @@ def section(text, heading):
     return rest[: end.start()] if end else rest
 
 
+# README tiếng Anh (README.md) và tiếng Việt (README.vi.md) — mỗi bản có mục cài của riêng nó.
+README_INSTALL = (("README.md", "## 2. Install", "default workspace"),
+                  ("README.vi.md", "### Cài", "workspace mặc định"))
+
+
 class ReadmeInstallTests(unittest.TestCase):
     def test_install_section_does_not_copy_skills_by_hand(self):
-        install = section(read("README.md"), "### Cài")
-        for banned in ("cp -r", "Copy-Item", "~/.claude/skills", "~/.codex/skills"):
-            with self.subTest(banned=banned):
-                self.assertNotIn(banned, install)
+        for rel, heading, _ in README_INSTALL:
+            install = section(read(rel), heading)
+            for banned in ("cp -r", "Copy-Item", "~/.claude/skills", "~/.codex/skills"):
+                with self.subTest(file=rel, banned=banned):
+                    self.assertNotIn(banned, install)
 
     def test_install_section_names_the_plugin_path_and_the_clone_path(self):
-        install = section(read("README.md"), "### Cài")
-        self.assertIn("claude plugin install agent-writing-studio@agent-writing-studio", install)
-        self.assertIn("git clone", install)
-        self.assertIn("studio.py", install)
+        for rel, heading, _ in README_INSTALL:
+            install = section(read(rel), heading)
+            with self.subTest(file=rel):
+                self.assertIn("claude plugin install agent-writing-studio@agent-writing-studio", install)
+                self.assertIn("git clone", install)
+                self.assertIn("studio.py", install)
+                self.assertIn("python3.12", install, "macOS gọi Python bằng tên có số phiên bản")
 
     def test_station_is_optional_and_shown_for_both_systems(self):
-        readme = read("README.md")
-        self.assertIn("workspace mặc định", readme)
-        self.assertIn("setx WRITING_STUDIO_DATA", readme)
-        self.assertIn("export WRITING_STUDIO_DATA", readme)
+        for rel, _, default_phrase in README_INSTALL:
+            readme = read(rel)
+            with self.subTest(file=rel):
+                self.assertIn(default_phrase, readme)
+                self.assertIn("setx WRITING_STUDIO_DATA", readme)
+                self.assertIn("export WRITING_STUDIO_DATA", readme)
+
+    def test_both_readmes_explain_the_workspace_migration(self):
+        for rel, _, _ in README_INSTALL:
+            readme = read(rel)
+            with self.subTest(file=rel):
+                for needle in ("studio.py migrate", "migrate --yes", "migrate --undo --yes", ".work/"):
+                    self.assertIn(needle, readme)
 
 
 class InstallGuideTests(unittest.TestCase):
@@ -72,6 +90,19 @@ class InstallGuideTests(unittest.TestCase):
         for word in ("Windows", "macOS", "winget", "brew"):
             with self.subTest(word=word):
                 self.assertIn(word, self.text)
+
+    def test_macos_gaps_are_closed(self):
+        """Ba chỗ hổng macOS: tên Python có số phiên bản, kiểm biến qua login shell, plugin vẫn cần clone."""
+        self.assertIn("python3.12", self.text)
+        self.assertIn("zsh -lic", self.text)
+        plugin = section(self.text, "### 3a.")
+        self.assertIn("3b", plugin, "đường plugin phải nói cách có studio.py cho bước doctor")
+        self.assertIn("doctor", plugin)
+
+    def test_error_table_lives_in_troubleshooting(self):
+        self.assertIn("docs/troubleshooting.md", section(self.text, "## Lỗi hay gặp"))
+        self.assertNotIn("| Triệu chứng |", self.text, "bảng lỗi đã dời sang docs/troubleshooting.md")
+        self.assertIn("| Triệu chứng |", read("docs/troubleshooting.md"))
 
     def test_every_documented_flag_exists_in_studio(self):
         source = read("studio.py")

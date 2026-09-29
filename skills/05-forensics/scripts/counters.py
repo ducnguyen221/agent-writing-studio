@@ -6,9 +6,9 @@ counters.py — ĐẾM TẤT ĐỊNH. Chỉ đo, KHÔNG kết luận.
 Script này không bao giờ được nói "do AI viết". Nó xuất số; việc diễn giải là của agent
 và của references/02-vietnamese-signals.md.
 
-Chạy SAU khi agent đã niêm phong bản đọc mù (.work/blind_agent.json).
+Chạy SAU khi agent đã niêm phong bản đọc mù (workspace/blind_agent.json).
 
-    python counters.py .work/text.txt --meta .work/meta.json --out .work/counters.json
+    python counters.py workspace/text.txt --meta workspace/meta.json --out workspace/counters.json
 
 Phụ thuộc: chỉ thư viện chuẩn. `underthesea` là TÙY CHỌN — có thì tách từ đúng,
 không có thì rơi về mức âm tiết và gắn cờ hạ độ tin cậy.
@@ -54,10 +54,10 @@ TEMPLATES = {
     "mot_mat_mat_khac":  r"một mặt[^.?!\n]{1,80}?\bmặt khác\b\s+[^.?!\n]{2,}",
     "khong_don_thuan":   r"không đơn thuần[^.?!\n]{1,70}?\b(mà|đó là)\b\s+[^.?!\n]{2,}",
     "vua_X_vua_Y":       r"\bvừa\b[^.?!\n]{1,60}?\bvừa\b\s+[^.?!\n]{2,}",
-    # Hai khuôn dưới đây thêm sau ca `.work/cot-b-ai-baitap` (cổng Phase 5). Trên bài đó, người viết
+    # Hai khuôn dưới đây thêm sau ca `ca-mau-01` (cổng Phase 5). Trên bài đó, người viết
     # nhận ra cả hai là mặc định của chính mình, người chấm mù bắt được một lượt (đọc thành lỗi lập
     # luận, không thành khuôn lặp), còn `template_repeats` trả về {} — danh mục cũ quá hẹp để tật
-    # thành số. Xem docs/results/self-audit-cot-B.md §5 mục 2 và 3.
+    # thành số. Xem docs/results/self-audit-ca-mau-01.md §5 mục 2 và 3.
     #
     # `(?-i: … )` tắt IGNORECASE cục bộ: `template_repeats` chạy với re.I, mà không tắt thì "AI"
     # khớp \bai\b và mọi câu nhắc tới AI thành ứng viên khuôn phân đôi.
@@ -181,7 +181,7 @@ _ORG_DATASET = (r"\b(TALIS|ICILS|PISA|PIAAC|TIMSS|PIRLS)\s*(19|20)?\d{0,4}"
 SOURCE_NEAR = re.compile(
     r"(theo|nguồn|dẫn theo|báo cáo của|khảo sát của|số liệu của|dữ liệu của|kiểm toán)|"
     + _APA + "|" + _VI_CITE + "|" + _ORG_DATASET, re.I)
-# Chủ thể KHÔNG TÊN chỉ được trỏ bằng "ấy/đó/này" mà vẫn đứng làm nguồn. Ca `.work/cot-b-ai-baitap`:
+# Chủ thể KHÔNG TÊN chỉ được trỏ bằng "ấy/đó/này" mà vẫn đứng làm nguồn. Ca `ca-mau-01`:
 # "Chính nhà cung cấp công cụ ấy công bố tỷ lệ báo nhầm…" — người đọc không có cách nào kiểm.
 # Cố ý HẸP: "công cụ đó" đứng một mình là phép thế hồi chỉ bình thường của tiếng Việt; bắt nó là báo
 # oan. Chỉ tính khi cụm đứng sau "theo", hoặc đi liền một động từ dẫn nguồn.

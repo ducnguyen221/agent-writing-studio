@@ -15,9 +15,9 @@ from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_DIR = ROOT / "shared/schemas"
-# Bốn cái đầu sống trong `.work/<case>/`. `provenance` là cái duy nhất ĐI RA KHỎI thư mục ca: nó đi
+# Bốn cái đầu sống trong `workspace/<case>/`. `provenance` là cái duy nhất ĐI RA KHỎI thư mục ca: nó đi
 # kèm bản giao, vì phép thử cột B cho thấy sau trục 4 văn bản không mang dấu nào cho biết nó đã qua
-# biên tập máy (docs/results/self-audit-cot-B.md mục 4).
+# biên tập máy (docs/results/self-audit-ca-mau-01.md mục 4).
 NAMES = ("context", "draft", "critique", "polish", "provenance")
 
 
@@ -52,7 +52,7 @@ CONTEXT_SAMPLE = {
     },
     "brain_pointers": [
         {
-            "path": "Brain/57-hoc-tap/doc-hieu-du-lieu.md",
+            "path": "ghi-chu/doc-hieu-du-lieu.md",
             "excerpt": "Ba lỗi đọc biểu đồ hay gặp: nhầm trục, nhầm mẫu, nhầm chiều nhân quả.",
             "why": "Cung cấp ba ví dụ cụ thể cho luận điểm thứ hai.",
         }
@@ -65,7 +65,7 @@ CONTEXT_SAMPLE = {
 DRAFT_SAMPLE = {
     "schema_version": "1.0",
     "created_at": "2026-08-30T10:00:00+07:00",
-    "context_ref": ".work/case-01/context.json",
+    "context_ref": "workspace/case-01/context.json",
     "genre": "essay",
     "structure_id": "mo_than_ket",
     "outline_approved": True,
@@ -135,7 +135,7 @@ CRITIQUE_SAMPLE = {
 POLISH_SAMPLE = {
     "schema_version": "1.0",
     "genre": "essay",
-    "source_declared": {"how": "draft_meta", "draft_meta_ref": ".work/case-01/draft.meta.json"},
+    "source_declared": {"how": "draft_meta", "draft_meta_ref": "workspace/case-01/draft.meta.json"},
     "profile_used": None,
     "edits": [
         {
@@ -310,7 +310,7 @@ class SchemaTests(unittest.TestCase):
         sample = deepcopy(CONTEXT_SAMPLE)
         sample["brain_pointers"][0]["excerpt"] = "x" * 301
         errors = list(Draft202012Validator(load("context")).iter_errors(sample))
-        self.assertTrue(errors, "Trích Brain dài hơn 300 ký tự PHẢI bị từ chối")
+        self.assertTrue(errors, "Trích kho tri thức dài hơn 300 ký tự PHẢI bị từ chối")
 
     def test_draft_requires_machine_written_spans_key(self):
         sample = deepcopy(DRAFT_SAMPLE)

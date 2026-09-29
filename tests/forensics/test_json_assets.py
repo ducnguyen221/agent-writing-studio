@@ -7,8 +7,8 @@ from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[2]
 
-# Workspace `.work/` (ca của người dùng), môi trường ảo và cache công cụ không phải cây public.
-EXCLUDED_PREFIXES = (".work/", ".venv/", "venv/", ".git/", ".pytest_cache/", "node_modules/")
+# Workspace `workspace/` (và tên cũ `.work/`) — ca của người dùng —, môi trường ảo và cache công cụ không phải cây public.
+EXCLUDED_PREFIXES = ("workspace/", ".work/", ".venv/", "venv/", ".git/", ".pytest_cache/", "node_modules/")
 
 
 def repo_json(pattern):

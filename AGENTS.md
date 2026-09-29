@@ -11,7 +11,7 @@ vào phần Git theo dõi.**
 | Nơi | Chứa | Không chứa |
 |---|---|---|
 | **Source** (Git theo dõi) | `skills/`, `commands/`, `shared/` (genres · rules · schemas · scripts), `samples/` tự soạn, tài liệu, test | bài, hồ sơ giọng, chân dung độc giả của người thật |
-| **Workspace** `.work/` trong thư mục đang mở | thư mục ca `<slug>/` khi **không** đặt `WRITING_STUDIO_DATA` — Git bỏ qua toàn bộ | bản sao skill hay script |
+| **Workspace** `workspace/` trong thư mục đang mở | thư mục ca `<slug>/` khi **không** đặt `WRITING_STUDIO_DATA` — Git bỏ qua toàn bộ (tên cũ trước 0.4.0: `.work/`, xem §3) | bản sao skill hay script |
 | **Station** `$WRITING_STUDIO_DATA` (tuỳ chọn) | `work/<slug>/`, `out/`, `corpus/`; `writers/`, `audiences/` khi không có kho tri thức | bản sao skill hay script |
 | **Kho tri thức** `$WRITING_STUDIO_KNOWLEDGE` (tuỳ chọn) | hồ sơ giọng, bài mẫu chính chủ, chân dung độc giả — agent chỉ **trỏ** vào, không chép | — |
 
@@ -61,6 +61,11 @@ python studio.py doctor
 Mỗi dòng `PASS` / `WARN` / `FAIL` / `NOT_CHECKED`. Chép nguyên các dòng cho người dùng; chưa kiểm thì
 nói chưa kiểm. `studio.py` không tự sửa cấu hình host — nó in lệnh để người dùng hoặc agent chạy.
 
+**Workspace tên cũ.** Đầu phiên, repo có `.work/` mà chưa có `workspace/` → báo người dùng, chạy
+`python studio.py migrate` (chỉ xem trước) và chỉ chạy `migrate --yes` khi người dùng đồng ý; hoàn
+tác là `migrate --undo --yes`. Có **cả hai** thư mục (`doctor` báo `data FAIL`) → không tự gộp, hỏi
+người dùng giữ ca nào — xem [`docs/troubleshooting.md`](docs/troubleshooting.md).
+
 ## 4. Sửa repo
 
 - Test: `python -m pytest tests -q` **và** `python -m unittest discover -s tests -t .` — hai runner
@@ -70,7 +75,8 @@ nói chưa kiểm. `studio.py` không tự sửa cấu hình host — nó in l�
 - Bump phiên bản đổi **bốn chỗ cùng lúc**: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`,
   `.codex-plugin/plugin.json`, `CITATION.cff` (`tests/shared/test_version_sync.py` canh).
 - Không đưa tên người thật, đường home tuyệt đối hay tên hệ thống riêng vào file track
-  (`tests/shared/test_de_name.py`, `tests/shared/test_public_boundary.py` canh).
+  (`tests/shared/test_de_name.py`, `tests/shared/test_public_boundary.py` canh). Danh sách cấm riêng
+  nằm ngoài repo: đặt `WRITING_STUDIO_LEAK_DENYLIST` trỏ file đó trước khi phát hành.
 - Mã chạy được trên Windows và macOS: đường dẫn qua `pathlib`, tiến trình con nhận danh sách tham số,
   đọc/ghi file ghi rõ `encoding="utf-8"`. CI đo cả hai hệ điều hành.
 

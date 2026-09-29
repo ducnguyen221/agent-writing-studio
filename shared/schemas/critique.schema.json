@@ -151,7 +151,7 @@
           "blocking": { "type": "boolean" },
           "owner": {
             "enum": ["02-cowriter", "04-humanizer", "author"],
-            "description": "Trục nào được phép THI HÀNH việc này; mặc định khi vắng mặt là 04-humanizer. Mọi must_fix đòi ĐỔI MỨC MẠNH CỦA KHẲNG ĐỊNH — hạ 'dẫn tới' xuống 'có liên hệ với', rút một khái quát hoá, thêm điều kiện chưa có trong bài — PHẢI ghi owner: 02-cowriter và đi vòng viết lại, vì đó là đổi ĐIỀU ĐƯỢC NÓI chứ không phải đổi cách nói. Trục 4 gặp loại này thì không thi hành, chỉ ghi warnings[] với route_to: 02-cowriter:round2. Lý do: docs/results/self-audit-cot-B.md mục 6 — một nhát sửa chính đáng theo must_fix loại này đã xoá đúng câu mà người chấm mù lẽ ra gắn NOTE, nên 'tốt cho người đọc' và 'ít bị cờ' trùng nhau ở ranh và diff không tách được hai thứ."
+            "description": "Trục nào được phép THI HÀNH việc này; mặc định khi vắng mặt là 04-humanizer. Mọi must_fix đòi ĐỔI MỨC MẠNH CỦA KHẲNG ĐỊNH — hạ 'dẫn tới' xuống 'có liên hệ với', rút một khái quát hoá, thêm điều kiện chưa có trong bài — PHẢI ghi owner: 02-cowriter và đi vòng viết lại, vì đó là đổi ĐIỀU ĐƯỢC NÓI chứ không phải đổi cách nói. Trục 4 gặp loại này thì không thi hành, chỉ ghi warnings[] với route_to: 02-cowriter:round2. Lý do: docs/results/self-audit-ca-mau-01.md mục 6 — một nhát sửa chính đáng theo must_fix loại này đã xoá đúng câu mà người chấm mù lẽ ra gắn NOTE, nên 'tốt cho người đọc' và 'ít bị cờ' trùng nhau ở ranh và diff không tách được hai thứ."
           }
         }
       }

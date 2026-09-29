@@ -5,7 +5,7 @@
 
 # ✍️ AGENT WRITING STUDIO — THE 2D ARCHITECTURAL MATRIX
 > **The Next-Gen Agentic Workspace for Multi-Archetype Writing, Cognitive Profiling, AI Forensics & Stylometric Polish.**  
-> *Hệ sinh thái AI Agent toàn diện cho chữ viết tiếng Việt: Chuẩn hóa theo Ma trận 2 Chiều (5 Giai đoạn Quy trình × 5 Loại hình Nội dung), tích hợp Hệ thống Profile Tư duy chuyên biệt và Khả năng đồng bộ với Brain.*
+> *Hệ sinh thái AI Agent toàn diện cho chữ viết tiếng Việt: Chuẩn hóa theo Ma trận 2 Chiều (5 Giai đoạn Quy trình × 5 Loại hình Nội dung), tích hợp Hệ thống Profile Tư duy chuyên biệt và Khả năng đồng bộ với kho tri thức cá nhân.*
 
 ---
 
@@ -29,7 +29,7 @@ Hệ thống được thiết kế như một **Ma trận 5 × 5 (25 Giao điể
 │  QUY TRÌNH (Y) \ LOẠI HÌNH (X)       │ A. BLOG & THOUGHT LEAD │ B. BÀI LUẬN & THI CỬ   │ C. NGHIÊN CỨU & BÁO CÁO│ D. BÁO CHÍ & PHÂN TÍCH │ E. TIỂU THUYẾT & NARR. │
 ├──────────────────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┤
 │ 1. INTENT, PERSONA & CONTEXT        │ • Search Intent & Niche│ • Đề bài & Luận đề gốc │ • Khoảng trống (Gap)   │ • Góc nhìn sự kiện     │ • Character 3D Forge   │
-│    (Định vị Tư duy, Profile, Bối cảnh)│ • Chân dung độc giả    │ • Barem thi chuẩn      │ • Khung lý thuyết/Brain│ • Bối cảnh thời sự     │ • World-Building Matrix│
+│    (Định vị Tư duy, Profile, Bối cảnh)│ • Chân dung độc giả    │ • Barem thi chuẩn      │ • Khung lý thuyết/kho  │ • Bối cảnh thời sự     │ • World-Building Matrix│
 ├──────────────────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┼────────────────────────┤
 │ 2. CO-WRITER & DRAFTING              │ • Hook mở đầu lôi cuốn │ • Cấu trúc luận điểm   │ • Phương pháp luận     │ • Cấu trúc Tháp ngược  │ • Cấu trúc 3 Hồi       │
 │    (Đồng sáng tác & Khởi tạo bản thảo)│ • CTA chuyển đổi rõ    │ • Phản đề sắc bén      │ • Phân tích dữ liệu    │ • Trích dẫn nhân chứng │ • Hội thoại có cá tính │
@@ -52,7 +52,7 @@ Hệ thống được thiết kế như một **Ma trận 5 × 5 (25 Giao điể
 ```
                                     LUỒNG VẬN HÀNH TUẦN TỰ 5 BƯỚC
                                     
-  [GIAI ĐOẠN 1: TƯ DUY & BỐI CẢNH] ──► Phân tích Mục tiêu, Chọn Profile Nội dung, Nạp Tri thức Brain
+  [GIAI ĐOẠN 1: TƯ DUY & BỐI CẢNH] ──► Phân tích Mục tiêu, Chọn Profile Nội dung, Nạp kho tri thức cá nhân
                   │
                   ▼
   [GIAI ĐOẠN 2: ĐỒNG SÁNG TÁC]     ──► Sinh bản thảo thô theo cấu trúc chuyên biệt (Anti-AI-bias)
@@ -75,8 +75,8 @@ Hệ thống được thiết kế như một **Ma trận 5 × 5 (25 Giao điể
   2. **Profile Người viết & Chân dung Độc giả (Personas):**
      * Nạp profile phong cách của người viết (Văn phong chuyên gia, hóm hỉnh, hàn lâm, hay sâu lắng).
      * Định vị chân dung người đọc (trình độ chuyên môn, nỗi đau, kỳ vọng).
-  3. **Kết nối Tri thức Brain (Knowledge Layer Integration):**
-     * Tự động trích xuất các ghi chú, kinh nghiệm, tài liệu tham khảo từ `Brain/` hoặc thư mục dự án để làm bối cảnh độc quyền.
+  3. **Kết nối kho tri thức cá nhân (Knowledge Layer Integration):**
+     * Tự động trích xuất các ghi chú, kinh nghiệm, tài liệu tham khảo từ kho tri thức cá nhân hoặc thư mục dự án để làm bối cảnh độc quyền.
 
 ---
 
@@ -122,7 +122,7 @@ Hệ thống được thiết kế như một **Ma trận 5 × 5 (25 Giao điể
 | :--- | :--- | :--- | :--- | :--- |
 | **A. Blog & Thought Leadership** | Focus vào Search Intent, Pain point độc giả, Góc nhìn độc bản (Unique Angle/Hook). | Mở đầu bằng Hook hấp dẫn ➔ Thân bài giải quyết vấn đề ➔ CTA hành động rõ ràng. | Chấm điểm độ giữ chân, tính ứng dụng thực tế, mật độ thông tin. | Giọng đàm thoại gần gũi, văn phong sắc bén, giàu năng lượng. |
 | **B. Bài luận & Thi cử (Essay/Exam)** | Bám sát yêu cầu đề bài, định hình Luận đề trung tâm (Thesis Statement), barem điểm. | Cấu trúc 4–5 đoạn chuẩn mực: Mở bài ➔ 2-3 Đoạn thân bài (PEEL/TEEL) ➔ Kết luận. | Soi lỗi ngụy biện, mâu thuẫn tiền đề, chấm điểm theo Barem Task Response. | Xóa bỏ liên từ sáo rỗng, chuyển ý học thuật tự nhiên, tinh tế. |
-| **C. Nghiên cứu & Báo cáo chuyên sâu** | Tổng quan tài liệu, xác định Research Gap, Khung lý thuyết, kết nối tri thức `Brain/`. | Cấu trúc IMRAD (Introduction - Methodology - Results - Analysis - Discussion). | Kiểm tra độ chặt chẽ của phương pháp luận, độ tin cậy số liệu và trích dẫn. | Thuật ngữ chuẩn xác, diễn đạt khách quan, triệt tiêu cảm xúc chủ quan. |
+| **C. Nghiên cứu & Báo cáo chuyên sâu** | Tổng quan tài liệu, xác định Research Gap, Khung lý thuyết, kết nối tri thức kho tri thức cá nhân. | Cấu trúc IMRAD (Introduction - Methodology - Results - Analysis - Discussion). | Kiểm tra độ chặt chẽ của phương pháp luận, độ tin cậy số liệu và trích dẫn. | Thuật ngữ chuẩn xác, diễn đạt khách quan, triệt tiêu cảm xúc chủ quan. |
 | **D. Báo chí & Phân tích chuyên luận** | Bối cảnh thời sự, góc nhìn đa chiều của các bên liên quan, tính thời điểm (Timeliness). | Cấu trúc Tháp ngược (Inverted Pyramid), trích dẫn phỏng vấn, dữ liệu thực chứng. | Kiểm tra tính khách quan, nguồn tin độc lập, cân bằng quan điểm. | Câu văn đanh thép, ngắn gọn, gãy gọn, loại bỏ tính từ cảm tính. |
 | **E. Tiểu thuyết & Sáng tác văn học** | Character Forge 3D, Ma trận thế giới (World-Building), Xung đột cốt lõi (Core Conflict). | Cấu trúc 3 Hồi (Three-Act Arc), nhịp thắt/mở nút, tương phản đối thoại và độc thoại nội tâm. | Soi Plot Holes, tính nhất quán của nhân vật, nhịp độ dồn dập/chùng lại. | Giàu nhạc tính, câu từ gợi cảm xúc, đậm chất điện ảnh (Show, Don't Tell). |
 

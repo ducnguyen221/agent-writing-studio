@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://agent-writing-studio/shared/schemas/provenance.schema.json",
   "title": "polished.provenance.json — bản tự khai ĐI THEO bản giao",
-  "description": "draft.meta.json khai từng câu và nằm lại trong thư mục ca; polish.diff.json ghi từng nhát sửa và cũng nằm lại. Người nhận bản giao chỉ cầm file văn bản, nên không quan sát được gì về nguồn gốc — phép thử cột B (docs/results/self-audit-cot-B.md mục 4) đo được đúng điều đó: sau trục 4, văn bản không mang một dấu nào cho biết nó đã qua biên tập máy, ranh giới đạo đức chỉ tồn tại trong sidecar mà người chấm không được xem. File này là bản tóm tắt tự khai BẮT BUỘC đi kèm mỗi lần xuất bản đã sửa: đủ để người nhận biết tỷ lệ nguồn gốc và truy ngược về draft.meta.json, không chứa nội dung văn bản.",
+  "description": "draft.meta.json khai từng câu và nằm lại trong thư mục ca; polish.diff.json ghi từng nhát sửa và cũng nằm lại. Người nhận bản giao chỉ cầm file văn bản, nên không quan sát được gì về nguồn gốc — phép thử cột B (docs/results/self-audit-ca-mau-01.md mục 4) đo được đúng điều đó: sau trục 4, văn bản không mang một dấu nào cho biết nó đã qua biên tập máy, ranh giới đạo đức chỉ tồn tại trong sidecar mà người chấm không được xem. File này là bản tóm tắt tự khai BẮT BUỘC đi kèm mỗi lần xuất bản đã sửa: đủ để người nhận biết tỷ lệ nguồn gốc và truy ngược về draft.meta.json, không chứa nội dung văn bản.",
   "type": "object",
   "additionalProperties": false,
   "required": [

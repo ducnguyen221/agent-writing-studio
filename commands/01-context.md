@@ -14,7 +14,7 @@ thể loại người dùng nói; chưa biết thể loại thì hỏi, đừng 
 
 ## Thư mục ca
 
-`$WRITING_STUDIO_DATA/work/<slug>/`, không đặt biến thì `./.work/<slug>/`. Chưa có slug thì đề xuất
+`$WRITING_STUDIO_DATA/work/<slug>/`, không đặt biến thì `./workspace/<slug>/`. Chưa có slug thì đề xuất
 một slug kebab-case từ đề bài và xác nhận với người dùng trước khi tạo thư mục.
 
 ## Đầu vào
@@ -24,7 +24,7 @@ Lệnh này là **bước đầu chuỗi** — không cần artifact nào có s�
 
 Tuỳ chọn có thì tốt: hồ sơ giọng người viết — trong kho tri thức cá nhân (`WRITING_STUDIO_KNOWLEDGE`) hoặc
 `$WRITING_STUDIO_DATA/writers/<slug>/profile.yaml`; dựng bằng
-`shared/scripts/profile_build.py --samples-dir … --out …` (cần ≥3 bài chính chủ). Thứ tự tra đủ ba gốc: xem cầu Brain.
+`shared/scripts/profile_build.py --samples-dir … --out …` (cần ≥3 bài chính chủ). Thứ tự tra đủ ba gốc: xem [cầu kho tri thức](../skills/01-context-architect/references/03-knowledge-bridge.md).
 
 ## Đầu ra
 

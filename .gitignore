@@ -1,8 +1,11 @@
 # DỮ LIỆU BÀI ĐƯỢC GIÁM ĐỊNH — TUYỆT ĐỐI KHÔNG COMMIT
 # Chứa nguyên văn bài của người thật + metadata định danh.
-# `.work/` là WORKSPACE mặc định của repo này: không đặt $WRITING_STUDIO_DATA thì mọi ca chạy
-# nằm ở `<repo>/.work/` — Git bỏ qua toàn bộ. Đặt biến thì dữ liệu ra station ngoài repo.
-.work/
+# `workspace/` là WORKSPACE mặc định của repo này: không đặt $WRITING_STUDIO_DATA thì mọi ca chạy
+# nằm ở `<repo>/workspace/` — Git bỏ qua toàn bộ. Đặt biến thì dữ liệu ra station ngoài repo.
+# `.work/` là tên cũ trước 0.4.0 (`python studio.py migrate` đổi tên) — vẫn chặn.
+# Neo ở gốc (`/`): chỉ chặn thư mục dữ liệu của repo, không chặn thư mục cùng tên nằm sâu trong cây.
+/workspace/
+/.work/
 *.docx
 *.pdf
 evidence.json
@@ -23,7 +26,7 @@ shared/writers/**
 !shared/writers/writer.schema.json
 !shared/writers/audience.schema.json
 
-.venv/
+/.venv/
 __pycache__/
 *.pyc
 
@@ -34,8 +37,7 @@ docs/plans/
 docs/results/
 
 # Bí mật — không commit. Repo không cần secret nào để chạy; các dòng này là lưới an toàn.
-.env
-.env.*
+.env*
 !.env.example
 *.credentials.json
 auth.json

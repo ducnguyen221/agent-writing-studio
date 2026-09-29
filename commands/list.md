@@ -33,7 +33,7 @@ tự nghĩ hộ nội dung.
 - **Mỗi lệnh chạy độc lập được giữa chừng.** Thiếu artifact của bước trước thì lệnh đó nói rõ thiếu
   gì và lệnh nào sinh ra nó — **không** tự chạy lại cả chuỗi.
 - **Chuỗi nối nhau bằng file**, trong thư mục ca `$WRITING_STUDIO_DATA/work/<slug>/` (không đặt biến
-  thì `./.work/<slug>/`), không nối bằng trí nhớ hội thoại.
+  thì `./workspace/<slug>/`), không nối bằng trí nhớ hội thoại.
 - **Bản giao cho người đọc mặc định là `.docx`**, đặt trong thư mục người dùng đang làm việc — station
   `.writing` là xưởng của agent, không phải chỗ người dùng phải vào lấy bài.
 

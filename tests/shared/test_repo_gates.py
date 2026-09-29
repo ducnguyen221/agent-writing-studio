@@ -2,7 +2,8 @@
 
 `.gitignore` không bảo vệ file đã track hay `git add -f`. Nên có hai tầng kiểm:
 
-1. `git check-ignore` — đường dữ liệu mẫu (workspace `.work/`, bí mật, bài học viên, hồ sơ giọng)
+1. `git check-ignore` — đường dữ liệu mẫu (workspace `workspace/` và tên cũ `.work/`, bí mật, bài học
+   viên, hồ sơ giọng)
    phải bị bỏ qua, còn file công khai cùng thư mục (README, schema, `.env.example`) thì không;
 2. `git ls-files` — cây đang track không có file nào dưới vùng dữ liệu, và không có file bí mật.
 
@@ -22,10 +23,19 @@ HAS_GIT = bool(shutil.which("git")) and (ROOT / ".git").exists()
 
 # (đường, có bị bỏ qua không)
 IGNORE_CASES = (
-    (".work/bai-x/draft.md", True),
+    ("workspace/bai-x/draft.md", True),
+    ("workspace/.studio-migrate.json", True),
+    (".work/bai-x/draft.md", True),          # tên cũ trước 0.4.0 — vẫn chặn
     (".work/bai-x/context.json", True),
+    # Neo ở gốc: thư mục trùng tên nằm sâu trong cây là source, không bị chặn.
+    ("skills/02-cowriter/workspace/README.md", False),
+    ("shared/.work/README.md", False),
+    (".venv/Lib/site.py", True),
+    ("docs/plans/2026-09-29/plan.md", True),
+    ("docs/results/do-lan-1.json", True),
     (".env", True),
     (".env.local", True),
+    (".envrc", True),
     (".env.example", False),
     ("auth.json", True),
     ("secrets/ca.pem", True),
@@ -41,7 +51,8 @@ IGNORE_CASES = (
 )
 
 # Mẫu cấm có mặt trong cây đang track (trừ ngoại lệ công khai ghi rõ).
-FORBIDDEN_TRACKED = (".work/*", ".env", ".env.*", "*.pem", "*.key", "auth.json",
+FORBIDDEN_TRACKED = ("workspace/*", ".work/*", ".venv/*", "docs/plans/*", "docs/results/*",
+                     ".env", ".env.*", "*.pem", "*.key", "auth.json",
                      "*.credentials.json", "oauth_creds.json", "*.docx", "*.pdf")
 ALLOWED_TRACKED = {".env.example"}
 DATA_ROOTS = {
@@ -100,9 +111,10 @@ class GitIndexTests(unittest.TestCase):
 
     def test_detector_catches_a_forced_add(self):
         """Đột biến: một danh sách giả có file force-add phải bị bắt."""
-        fake = ["README.md", ".work/bai-x/draft.md", "shared/writers/nguoi-a/profile.yaml", ".env"]
+        fake = ["README.md", "workspace/bai-x/draft.md", ".work/bai-x/draft.md",
+                "skills/x/workspace/README.md", "shared/writers/nguoi-a/profile.yaml", ".env"]
         caught = [p for p in fake if any(fnmatch.fnmatch(p, pat) for pat in FORBIDDEN_TRACKED)]
-        self.assertEqual(caught, [".work/bai-x/draft.md", ".env"])
+        self.assertEqual(caught, ["workspace/bai-x/draft.md", ".work/bai-x/draft.md", ".env"])
         leaked = [p for p in fake if p.startswith("shared/writers/")
                   and p not in DATA_ROOTS["shared/writers/"]]
         self.assertEqual(leaked, ["shared/writers/nguoi-a/profile.yaml"])

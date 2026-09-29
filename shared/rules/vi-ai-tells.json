@@ -577,7 +577,7 @@
       "fix": "KHÔNG xoá ví dụ giả định. Hỏi tác giả một quan sát thật để thay vào, hoặc để nguyên và ghi rõ trong bài rằng đây là tình huống dựng. Không có quan sát nào để thay thì ghi vào warnings[] với tiền tố 'Chỗ cần tác giả bổ sung' — trục 4 tuyệt đối không tự bịa một trải nghiệm.",
       "status": "candidate",
       "source": [
-        "docs/results/self-audit-cot-B.md §5 mục 1"
+        "docs/results/self-audit-ca-mau-01.md §5 mục 1"
       ]
     },
     {
@@ -596,7 +596,7 @@
       "fix": "Giữ lại nhiều nhất một câu hỏi mở đoạn trong bài, ở chỗ câu hỏi thật sự là câu hỏi của người đọc. Các chỗ còn lại: bỏ dấu hỏi, nói thẳng điều câu sau đang nói.",
       "status": "candidate",
       "source": [
-        "docs/results/self-audit-cot-B.md §5 mục 2",
+        "docs/results/self-audit-ca-mau-01.md §5 mục 2",
         "counters.py:TEMPLATES.cau_hoi_tu_tu_mo_doan"
       ],
       "note": "Gộp vào TEMPLATES của counters.py thay vì tạo họ trùng. counters.py đếm; mục này giải thích và nêu cách sửa."
@@ -616,7 +616,7 @@
       "fix": "Đếm số lượt trước đã. Từ ba lượt trở lên trong một bài ngắn thì giữ lượt mạnh nhất, các lượt còn lại viết lại thành câu kể có chủ ngữ. Nếu phân đôi còn che mất trường hợp thứ ba có thật, đó là việc của trục 3 và phải đi qua must_fix, không sửa lặng ở trục 4.",
       "status": "candidate",
       "source": [
-        "docs/results/self-audit-cot-B.md §5 mục 3",
+        "docs/results/self-audit-ca-mau-01.md §5 mục 3",
         "counters.py:TEMPLATES.phan_doi_doi_xung"
       ],
       "note": "Gộp vào TEMPLATES của counters.py thay vì tạo họ trùng. counters.py đếm; mục này giải thích và nêu cách sửa."

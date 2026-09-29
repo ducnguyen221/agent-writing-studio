@@ -15,10 +15,10 @@ Cách làm: che các mẫu trên bằng ký tự thay thế riêng (U+E000, vùn
 tách câu, rồi khôi phục. Offset được giữ nguyên vì thay thế là 1-1 theo ký tự.
 
 KHÔNG BỎ CÂU NÀO. Bản trước có ngưỡng `min_chars=15`: câu ngắn hơn 15 ký tự bị loại im lặng. Ca
-`.work/cot-b-ai-baitap` (cổng Phase 5) cho thấy đó là lỗi tính đúng chứ không phải phép lọc nhiễu —
+`ca-mau-01` (cổng Phase 5) cho thấy đó là lỗi tính đúng chứ không phải phép lọc nhiễu —
 hai câu hỏi tu từ mở đoạn ("Cấm thì sao?", 12 ký tự) biến mất khỏi `sentences.json`, nên bản tự khai
 `machine_written_spans[]` chỉ phủ 45/47 câu mà vẫn "hợp lệ" theo schema; và chính hai câu đó lại là
-một tật máy (docs/results/self-audit-cot-B.md §5 mục 2). Nay mọi câu đều được giữ; câu ngắn chỉ được
+một tật máy (docs/results/self-audit-ca-mau-01.md §5 mục 2). Nay mọi câu đều được giữ; câu ngắn chỉ được
 GẮN CỜ `short: True` để người đọc tự quyết, không bị loại khỏi phép đo.
 """
 import re
@@ -31,7 +31,7 @@ ABBREV = [
     "tr", "Tr", "NXB", "Nxb", "vd", "VD", "v.v", "vv", "St", "Mr", "Mrs",
     "ĐH", "CĐ", "THPT", "THCS", "No", "no",
     # Trích dẫn học thuật: "Bastani et al. (2025) cho thấy…" là MỘT câu.
-    # Ca .work/3c: thiếu mục này làm vỡ câu thành mảnh ", 2015; OECD, 2023; ...)."
+    # Ca ca-mau-02: thiếu mục này làm vỡ câu thành mảnh ", 2015; OECD, 2023; ...)."
     "et al", "và cs",
 ]
 

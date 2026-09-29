@@ -33,7 +33,7 @@ vẫn duy nhất và thứ tự gọi được ghi rõ. Giao điểm (Yi, Xj) = 
 
 | Hàng | Skill | Vai | Trạng thái |
 |---|---|---|---|
-| Y1 | `01-context-architect` | Kiến trúc sư tư duy: intent, persona người viết & độc giả, nạp Brain, xuất context-pack | ✅ chạy thật ca `cot-b-ai-baitap` |
+| Y1 | `01-context-architect` | Kiến trúc sư tư duy: intent, persona người viết & độc giả, nạp kho tri thức, xuất context-pack | ✅ chạy thật ca `ca-mau-01` |
 | Y2 | `02-cowriter` | Đồng sáng tác bản thảo theo cấu trúc thể loại, chống khuôn LLM ngay khi sinh | ✅ chạy thật (bài 994 từ, tự khai 100% máy) |
 | Y3 | `03-critique` | Hội đồng phản biện: chấm barem thể loại, soi ngụy biện, plot holes | ✅ chạy thật trên bài hội thảo 6.307 chữ |
 | Y4 | `04-humanizer` | Biên tập: de-nominalization, bơm nhịp câu, thuần Việt hoá — sửa đúng thứ Y5 đo | ✅ chạy thật (9 nhát / 8 câu, `facts_added=[]`) |
@@ -54,7 +54,7 @@ router trỏ sub-skill bằng đường tương đối nên không phụ thuộc
 |---|---|---|---|---|---|---|
 | A | `blog.md` | Người đọc mang về gì, chỗ họ đang mắc, chất liệu riêng | Hook → giải quyết → CTA; kể chuyện; ba lớp về một công cụ | Thứ mang về, chất liệu riêng, quan điểm, dễ hiểu, độ giữ chân | Giọng đàm thoại, quan điểm, năng lượng | Cliché mạng, cam kết nguyên bản |
 | B | `essay.md` | Đề bài, luận đề, barem | 4–5 đoạn PEEL/TEEL | Barem Task Response, soi ngụy biện | Xoá danh từ hoá, liên từ tự nhiên | Quét dấu hiệu AI theo chuẩn thi cử |
-| C | `research.md` | Research gap, khung lý thuyết, Brain | IMRAD | Phương pháp luận, độ tin cậy trích dẫn | Thuật ngữ chuẩn, khách quan | Liêm chính data, kiểm chứng trích dẫn |
+| C | `research.md` | Research gap, khung lý thuyết, kho tri thức | IMRAD | Phương pháp luận, độ tin cậy trích dẫn | Thuật ngữ chuẩn, khách quan | Liêm chính data, kiểm chứng trích dẫn |
 | D | `journalism.md` | Góc nhìn sự kiện, các bên liên quan | Tháp ngược, nhân chứng | Khách quan, nguồn độc lập | Đanh gọn, xoá sáo rỗng | Kiểm soát trích dẫn, nguồn tin |
 | E | `novel.md` | Character 3D, world-building, xung đột | 3 hồi, thắt/mở nút | Plot holes, nhất quán nhân vật, nhịp | Nhạc tính, show-don't-tell | Giữ dấu ấn tác giả, bản quyền |
 
@@ -111,7 +111,7 @@ hình**, chỉ so tập hợp và đếm — nên kết quả của chúng tái 
 Hồ sơ nằm **ngoài repo** vì đây là văn bản của người thật, ở một trong ba gốc theo thứ tự phân giải của
 `writer_profile_ref`: (1) kho tri thức cá nhân `WRITING_STUDIO_KNOWLEDGE` — đường tương đối tuỳ kho; (2) station
 `$WRITING_STUDIO_DATA/writers/<slug>/profile.yaml` (+ `samples/`); (3) `shared/writers/<slug>/` trong
-repo, chỗ đó vẫn gitignored. Luật đầy đủ ở `skills/01-context-architect/references/03-brain-bridge.md`.
+repo, chỗ đó vẫn gitignored. Luật đầy đủ ở `skills/01-context-architect/references/03-knowledge-bridge.md`.
 
 ```yaml
 name: writer-a
@@ -137,22 +137,23 @@ Một profile, bốn người dùng:
   đúng người này không?" có cơ sở hơn hẳn "có phải AI không?", và `pet_templates` chống báo oan:
   người mê phép đối có hồ sơ chứng minh mình mê phép đối từ trước).
 
-### 2.3 Kết nối `Brain/`
+### 2.3 Kết nối kho tri thức cá nhân (`WRITING_STUDIO_KNOWLEDGE`)
 
-- Y1 **đọc** Brain (và thư mục dự án) để dựng bối cảnh; **không copy nội dung** vào repo — context-pack
+- Y1 **đọc** kho tri thức cá nhân (gốc đặt bằng `WRITING_STUDIO_KNOWLEDGE`, không đặt thì bỏ qua) và
+  thư mục dự án để dựng bối cảnh; **không copy nội dung** vào repo — context-pack
   chỉ ghi **con trỏ** (đường dẫn + đoạn trích ngắn + lý do liên quan), đúng luật "1 fact = 1 nơi canonical".
-- Chiều ngược: kết thúc một ca viết/giám định đáng nhớ, bài học đi về Brain/memory theo quy trình
-  reflection chung của máy — **repo này không tự đẻ kho tri thức thứ hai**.
+- Chiều ngược: kết thúc một ca viết/giám định đáng nhớ, bài học đi về kho tri thức của
+  người dùng — **repo này không tự đẻ kho tri thức thứ hai**.
 
 ### 2.4 Hợp đồng dữ liệu giữa các giai đoạn (thư mục ca)
 
-Mỗi ca một thư mục làm việc — workspace `.work/<case>/` trong thư mục đang mở (mặc định), hoặc
+Mỗi ca một thư mục làm việc — `workspace/<case>/` trong thư mục đang mở (mặc định), hoặc
 `$WRITING_STUDIO_DATA/work/<case>/` khi đã đặt station — mỗi giai đoạn đọc sản phẩm giai đoạn trước,
 schema đặt tại `shared/schemas/`:
 
 ```
 <work>/<case>/
-├─ context.json                Y1 → intent, persona, genre, con trỏ Brain, ràng buộc
+├─ context.json                Y1 → intent, persona, genre, con trỏ kho tri thức, ràng buộc
 │                                   (shared/schemas/context.schema.json)
 ├─ draft.md                    Y2 → bản thảo
 ├─ draft.meta.json             Y2 → tự khai: cấu trúc dùng, các câu agent viết
@@ -175,11 +176,11 @@ những schema có **từ hai consumer trở lên**. `result.schema.json` vẫn 
 vì tới giờ chỉ trục 5 đọc nó; chuyển sang `shared/` khi có consumer thứ hai, không chuyển trước.
 
 **`sentence_id` là hợp đồng, không phải tiện ích.** `sentences.json` do studio sinh một lần; Y3, Y4,
-Y5 **không được tự đếm câu**. Ca `cot-b` đã trả giá cho luật này: ba hệ đánh số khác nhau (43 / 45 /
+Y5 **không được tự đếm câu**. Ca `ca-mau-01` đã trả giá cho luật này: ba hệ đánh số khác nhau (43 / 45 /
 46 câu) khiến bản tự khai phải map bằng trích dẫn thay vì bằng ID. `check_spans.py` là cổng kiểm.
 
 Thư mục ca chứa văn của người thật, nên **không bao giờ vào Git**: không đặt biến thì nó ở workspace
-`.work/` (Git bỏ qua toàn bộ, `tests/shared/test_repo_gates.py` đọc index để canh); đặt
+`workspace/` (Git bỏ qua toàn bộ, `tests/shared/test_repo_gates.py` đọc index để canh); đặt
 `$WRITING_STUDIO_DATA` thì nó ở station ngoài repo — cách cho dữ liệu sống lâu hơn bản clone.
 
 ### 2.5 Luật xung đột lợi ích (mới, bắt buộc)
@@ -239,7 +240,7 @@ mình, và mọi lời hứa "Anti-AI-bias by design" của Y2 là khẩu hiệu
 | 3 | 5 + 4 hồ sơ thể loại `shared/genres/` (viết **§5 trước**, rồi §3) | §5 phục vụ G4 của Y5 đang chạy thật; §3 mở đường Y3 |
 | 4 | `03-critique` (Y3) | Tái dùng scoring engine + §3; khác Y5 ở rubric (chất lượng vs dấu hiệu) chứ không ở máy móc |
 | 5 | `04-humanizer` (Y4) | Nghịch đảo của Y5: mỗi tín hiệu trong `SCORING.md` là một mục sửa; vòng kiểm = chạy lại counters trước/sau, ghi `polish.diff.json` |
-| 6 | `profile_build.py` + `01-context-architect` (Y1) | Writer profile + Brain — cần trước khi cho máy viết |
+| 6 | `profile_build.py` + `01-context-architect` (Y1) | Writer profile + kho tri thức — cần trước khi cho máy viết |
 | 7 | `02-cowriter` (Y2) | Cuối cùng, vì cần đủ: context (Y1), khung (§2), giọng (profile), và cổng ra (Y5) để tự nghiệm thu |
 | 8 | Router `writing-studio` *(tuỳ chọn)* | Chỉ khi 5 skill đã ổn định — đúng thang nâng cấp skill |
 
@@ -268,14 +269,14 @@ agent-writing-studio/
 ├─ README.md                          # ✅ viết lại 30/08 cho người không kỹ thuật
 ├─ LICENSE                            # ✅ MIT — Copyright 2026 Nguyễn Quang Đức
 ├─ index.html                         # ✅ trang giới thiệu tĩnh, mở thẳng bằng trình duyệt
-├─ .gitignore                         # ✅ .work/ · fixtures/** · *.docx · shared/writers/**
+├─ .gitignore                         # ✅ workspace/ · fixtures/** · *.docx · shared/writers/**
 │
 ├─ docs/
 │  ├─ ARCHITECTURE.md                    # ✅ (file này)
 │  ├─ SCORING.md                    # ✅ thang S/C + cách đo + mẫu báo cáo (gộp 3 file cũ, 31/08)
 │  ├─ GENRES.md                       # ✅ cách soạn hồ sơ thể loại mới
 │  ├─ agent-writing-studio.md         # ✅ tầm nhìn gốc của chủ repo
-│  ├─ results/                        # ✅ kết quả đo thật (self-audit-cot-B.md)
+│  ├─ results/                        # ✅ kết quả đo thật (self-audit-ca-mau-01.md)
 │  └─ plans/                          # ✅ spec · tasks · nhật ký cổng từng đợt
 │
 ├─ shared/
@@ -328,6 +329,6 @@ agent-writing-studio/
 - Không chạy model ML nặng, không GPU — giữ triết lý v1 (tầng model như VietBinoculars ghi nhận
   ở `references/06` là hướng mở rộng, không phải phần thân).
 - Không tự kết luận kỷ luật ai — mọi cổng Y5 giữ nguyên "người quyết định".
-- Không lưu bài của người thật vào git — chúng ở workspace `.work/` (gitignored) hoặc station
+- Không lưu bài của người thật vào git — chúng ở `workspace/` (gitignored) hoặc station
   `$WRITING_STUDIO_DATA` ngoài repo; `fixtures/`, `shared/writers/` gitignored làm lưới an toàn.
 - Không đẻ 25 skill, không đẻ router trước khi 5 skill sống thật.

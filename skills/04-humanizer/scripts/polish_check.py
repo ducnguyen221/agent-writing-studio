@@ -22,14 +22,14 @@ Script này ĐO và CHẶN. Nó không bao giờ nói bản nào hay hơn:
      vẫn được in nhưng kèm nhãn "baseline thể loại" và KHÔNG được coi là chỗ phải sửa.
   6. Đòi PROVENANCE ĐI THEO BẢN GIAO: cạnh `--after` phải có sidecar `<tên bản giao>.provenance.json`
      (hoặc footer HTML-comment ngay trong bản giao, nếu người dùng chọn cách đó). Thiếu là cảnh báo,
-     mã thoát 1. Lý do ở docs/results/self-audit-cot-B.md mục 4: sau trục 4, văn bản không mang một
+     mã thoát 1. Lý do ở docs/results/self-audit-ca-mau-01.md mục 4: sau trục 4, văn bản không mang một
      dấu nào cho biết nó đã qua biên tập máy — ranh giới đạo đức chỉ quan sát được từ sidecar, mà
      sidecar thì ở lại trong thư mục ca còn bản giao thì đi.
 
 Cách chạy:
 
     python polish_check.py --before draft.md --after polished.md --genre research \
-        --diff .work/case/polish.diff.json
+        --diff workspace/case/polish.diff.json
 
 Mã thoát: 0 = qua · 1 = có cảnh báo, cần người xem · 2 = FAIL-CLOSED, không được nhận bản sửa.
 """
@@ -70,7 +70,7 @@ COUNTER_BY_TELL = {
 #   · tường minh — tín hiệu nêu đích danh mã tell (`(T10)`) hoặc tên cột (`TEMPLATES`);
 #   · theo hiện tượng — tín hiệu gọi tên đúng hiện tượng cột đó đếm, theo danh sách hẹp dưới đây.
 #
-# BỎ "cụm quy ước" và "cụm chuyển đoạn" khỏi TEMPLATES (cổng Phase 5, ca `.work/cot-b-ai-baitap`):
+# BỎ "cụm quy ước" và "cụm chuyển đoạn" khỏi TEMPLATES (cổng Phase 5, ca `ca-mau-01`):
 # cột TEMPLATES đếm KHUÔN CÂU GHÉP ĐÔI ("không chỉ X mà còn", "một mặt… mặt khác"), nó không đếm cụm
 # chuyển đoạn. `essay.md` §5 khai "cụm chuyển đoạn quy ước ở mật độ vừa phải" là bình thường — đúng,
 # nhưng đó là lời khai về một hiện tượng KHÁC, nên dán nhãn "baseline thể loại" lên cột TEMPLATES của
@@ -86,7 +86,7 @@ _TELL_IN_SIGNAL_RX = re.compile(r"\bT\d{2}\b")
 
 # Ngưỡng nghi "bơm burstiness giả" — chèn câu ngắn rỗng cho biểu đồ độ dài câu trông người hơn.
 # Hai tín hiệu độc lập, chỉ cần một cái vượt ngưỡng là cảnh báo (KHÔNG phải điều kiện AND: trên ca
-# .work/3c, chèn một câu rỗng sau mỗi ba câu đẩy CV 0,763 -> 0,864, tức +0,101 tuyệt đối nhưng chỉ
+# ca-mau-02, chèn một câu rỗng sau mỗi ba câu đẩy CV 0,763 -> 0,864, tức +0,101 tuyệt đối nhưng chỉ
 # +13% tương đối — điều kiện AND sẽ bỏ lọt đúng ca mà nó sinh ra để bắt).
 CV_ABS_JUMP = 0.10
 CV_REL_JUMP = 0.25
@@ -350,7 +350,7 @@ def check_new_tokens(text_before, text_after):
 
 
 # ---------- provenance đi theo bản giao ----------
-# Nguồn: docs/results/self-audit-cot-B.md mục 4. Người chấm mù đọc `polished.md` không thấy gì cho
+# Nguồn: docs/results/self-audit-ca-mau-01.md mục 4. Người chấm mù đọc `polished.md` không thấy gì cho
 # biết bài đã qua trục 4; `metadata.stylometric_polish: true` nằm trong polish.diff.json, mà file đó
 # không đi cùng bản giao. Sidecar dưới đây là bản tự khai TỐI THIỂU đi theo file văn bản.
 

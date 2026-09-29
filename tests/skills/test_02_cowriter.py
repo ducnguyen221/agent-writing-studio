@@ -48,7 +48,7 @@ YAML_BLOCK = re.compile(r"(?ms)^```yaml\r?\n(.*?)^```")
 DRAFT_META_SAMPLE = {
     "schema_version": "1.0",
     "created_at": "2026-08-30",
-    "context_ref": ".work/cot-b-ai-baitap/context.json",
+    "context_ref": "workspace/ca-mau-01/context.json",
     "genre": "essay",
     "structure_id": "luan_de_phan_de",
     "outline_approved": True,

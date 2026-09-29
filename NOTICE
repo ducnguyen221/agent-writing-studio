@@ -1,0 +1,24 @@
+agent-writing-studio
+Copyright (c) 2026 Nguyễn Quang Đức — phát hành theo giấy phép MIT (xem LICENSE).
+
+Repo này KHÔNG vendor và KHÔNG chép code của bên thứ ba. Skill, hồ sơ thể loại, quy tắc và script
+được viết mới bằng tiếng Việt; phương pháp chưng cất từ tài liệu và mã nguồn mở được viết lại, không
+chép nguyên văn. Sổ nguồn phương pháp (lấy gì, không lấy gì, commit đã ghim) giữ ngoài repo — hàng rào
+tests/shared/test_de_name.py canh để tên nguồn không bò vào cây public.
+
+Dữ liệu bên thứ ba ĐI KÈM repo (bundled):
+
+- Danh sách thành ngữ trong skills/04-humanizer/assets/idioms.json — dữ liệu cấp phép MIT. Copyright
+  notice và permission notice của nguồn nằm nguyên văn trong khối "attribution" của chính file đó, cùng
+  commit nguồn đã ghim; KHÔNG được gỡ khi phân phối lại. Chỉ mượn danh sách thành ngữ; cột nghĩa, ngữ
+  cảnh và thể loại do repo này tự soạn.
+
+Thư viện GỌI TỚI lúc chạy — tuỳ chọn, người dùng tự cài, không đi kèm repo; giấy phép của chúng áp
+cho chính chúng:
+
+- jsonschema — MIT. PyYAML — MIT. pytest — MIT (chỉ để chạy test).
+- underthesea — Apache-2.0 (tách từ tiếng Việt cho bộ đếm).
+- python-docx — MIT (giao bản .docx).
+- PyMuPDF — AGPL-3.0 hoặc giấy phép thương mại của Artifex (đọc .pdf ở bước trích văn bản).
+
+Giấy phép kiểm lại ngày 2026-09-29 từ metadata gói đã cài; chi tiết máy đọc được ở provenance.json.

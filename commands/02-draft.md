@@ -13,7 +13,7 @@ Khung viết của thể loại nằm ở **mục §2** của `shared/genres/<th
 
 ## Đầu vào bắt buộc
 
-Từ `$WRITING_STUDIO_DATA/work/<slug>/` (không đặt biến thì `./.work/<slug>/`):
+Từ `$WRITING_STUDIO_DATA/work/<slug>/` (không đặt biến thì `./workspace/<slug>/`):
 
 - `context.json` — đề bài, luận đề, độc giả, thể loại, ràng buộc.
 

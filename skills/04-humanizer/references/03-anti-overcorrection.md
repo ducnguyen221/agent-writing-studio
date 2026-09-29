@@ -60,7 +60,7 @@ và phải viết được lý do đó vào `reason` bằng ngôn ngữ của ng
      (T29/T31).
    - (c) Không rơi vào (a) lẫn (b) → **giữ** và ghi vào `warnings[]` cho tác giả tự quyết. Nghi ngờ
      nghiêng về giữ, vì xoá là không đảo được.
-   Ca kiểm 30/08 trên `.work/3c` mục 5: câu cuối *"Nói cách khác, chúng ta cần xây năng lực của hệ
+   Ca kiểm 30/08 trên `ca-mau-02` mục 5: câu cuối *"Nói cách khác, chúng ta cần xây năng lực của hệ
    thống, không xây một mô hình phụ thuộc vào vài cá nhân tiên phong"* rơi vào (a) — giữ.
 
 5. **Tóm tắt, kết luận, kiến nghị, phần chốt.** Lặp là **chức năng** của các phần đó. Đây là carve-out

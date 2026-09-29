@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""agent-writing-studio — doctor · install · update · uninstall.
+"""agent-writing-studio — doctor · install · update · uninstall · migrate.
 
 Chạy bằng Python 3.10 trở lên, **chỉ thư viện chuẩn**, trên Windows và macOS (Linux cũng được):
 
@@ -7,15 +7,19 @@ Chạy bằng Python 3.10 trở lên, **chỉ thư viện chuẩn**, trên Windo
     python studio.py install [--station PATH] [--host claude] [--dry-run]
     python studio.py update  [--yes]     # git pull --ff-only, từ chối khi checkout có sửa dở
     python studio.py uninstall [--host claude]
+    python studio.py migrate [--undo] [--yes]   # dời `.work/` (tên cũ) → `workspace/`, xem trước mặc định
 
 Repo này không có engine: skill là văn bản agent đọc, script trong `shared/` và `skills/*/scripts/`
 chỉ là lớp kiểm chứng. Vì vậy bộ vòng đời cố ý mỏng:
 
-- **install** chỉ dựng thư mục dữ liệu (workspace `.work/` trong repo, hoặc station ngoài repo khi
+- **install** chỉ dựng thư mục dữ liệu (workspace `workspace/` trong repo, hoặc station ngoài repo khi
   có `WRITING_STUDIO_DATA` / `--station`) rồi **in** lệnh đăng ký plugin cho host. Nó không tự sửa
   cấu hình của Claude, Codex hay Antigravity — người dùng hoặc agent chạy lệnh in ra, sau khi đọc.
-- **uninstall** chỉ in lệnh gỡ plugin. Nó **không bao giờ xoá dữ liệu**: `.work/`, station và kho
+- **uninstall** chỉ in lệnh gỡ plugin. Nó **không bao giờ xoá dữ liệu**: `workspace/`, station và kho
   tri thức là của người dùng.
+- **migrate** đổi tên workspace cũ `.work/` (trước 0.4.0) thành `workspace/` bằng MỘT lần đổi tên thư
+  mục, ghi nhật ký vào `workspace/.studio-migrate.json` để `migrate --undo` trả lại. Không `--yes` thì
+  chỉ in kế hoạch. Có cả hai thư mục thì từ chối — không tự gộp dữ liệu của người dùng.
 - **doctor** báo từng dòng `PASS` / `WARN` / `FAIL` / `NOT_CHECKED`. Thiếu thư viện tuỳ chọn là
   `WARN`, không phải `FAIL`; thứ không kiểm được thì nói `NOT_CHECKED`, không tô xanh.
 
@@ -32,6 +36,7 @@ import os
 import re
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -40,9 +45,12 @@ MIN_PYTHON = (3, 10)
 
 STATION_ENV = "WRITING_STUDIO_DATA"
 KNOWLEDGE_ENV = "WRITING_STUDIO_KNOWLEDGE"
-LEGACY_KNOWLEDGE_ENV = "OPCOS_BRAIN_PATH"  # đường lùi cho máy dựng trước 0.3.0, bỏ ở 0.4
 
-WORKSPACE = ROOT / ".work"
+WORKSPACE = ROOT / "workspace"
+# Tên workspace trước 0.4.0. Còn đọc làm đường lùi (doctor báo WARN) cho tới khi người dùng chạy
+# `migrate`; không bao giờ tự dời hay tự xoá.
+LEGACY_WORKSPACE = ROOT / ".work"
+JOURNAL_NAME = ".studio-migrate.json"
 STATION_DIRS = ("work", "out", "corpus")
 
 AXES = ("01-context-architect", "02-cowriter", "03-critique", "04-humanizer", "05-forensics")
@@ -74,9 +82,21 @@ def env_path(name: str) -> Path | None:
     return Path(value).expanduser() if value else None
 
 
-def resolve_data(station_arg: str | None = None) -> tuple[str, Path]:
-    """(chế độ, gốc dữ liệu). Thứ tự: --station → WRITING_STUDIO_DATA → workspace `.work/` trong repo.
+def workspace_state() -> str:
+    """Trạng thái hai thư mục workspace trong repo: `fresh` · `new` · `legacy` · `both`."""
+    new, old = WORKSPACE.exists(), LEGACY_WORKSPACE.is_dir()
+    if new and old:
+        return "both"
+    if old:
+        return "legacy"
+    return "new" if new else "fresh"
 
+
+def resolve_data(station_arg: str | None = None) -> tuple[str, Path]:
+    """(chế độ, gốc dữ liệu). Thứ tự: --station → WRITING_STUDIO_DATA → workspace trong repo.
+
+    Workspace trong repo là `workspace/`; chỉ khi repo còn `.work/` (tên cũ) mà CHƯA có `workspace/`
+    thì đọc `.work/` — chế độ `legacy`, doctor báo WARN và chỉ lệnh `migrate`.
     Không có mặc định nào đoán trong thư mục home: không đặt gì là workspace trong repo.
     """
     if station_arg:
@@ -84,29 +104,35 @@ def resolve_data(station_arg: str | None = None) -> tuple[str, Path]:
     station = env_path(STATION_ENV)
     if station:
         return "station", station
+    if workspace_state() == "legacy":
+        return "legacy", LEGACY_WORKSPACE
     return "workspace", WORKSPACE
 
 
 def resolve_knowledge() -> tuple[str | None, Path | None]:
-    for name in (KNOWLEDGE_ENV, LEGACY_KNOWLEDGE_ENV):
-        path = env_path(name)
-        if path:
-            return name, path
-    return None, None
+    path = env_path(KNOWLEDGE_ENV)
+    return (KNOWLEDGE_ENV, path) if path else (None, None)
 
 
 def inside_source_tree(path: Path) -> bool:
-    """Đích ghi nằm trong cây source mà không phải workspace `.work/` ⇒ từ chối."""
+    """Đích ghi nằm trong cây source mà không phải workspace (mới hay cũ) ⇒ từ chối."""
     try:
         resolved = path.resolve()
         resolved.relative_to(ROOT)
     except ValueError:
         return False
-    try:
-        resolved.relative_to(WORKSPACE.resolve())
-        return False
-    except ValueError:
-        return True
+    for allowed in (WORKSPACE, LEGACY_WORKSPACE):
+        try:
+            resolved.relative_to(allowed.resolve())
+            return False
+        except ValueError:
+            continue
+    return True
+
+
+MIGRATE_HINT = "chạy `python studio.py migrate` (xem trước) rồi `python studio.py migrate --yes`"
+BOTH_HINT = ("repo có cả `workspace/` lẫn `.work/` (tên cũ) — studio không tự gộp. Hỏi người dùng giữ "
+             "bên nào, chuyển tay các ca cần giữ rồi xoá bên còn lại (xem docs/troubleshooting.md)")
 
 
 # ── doctor ──────────────────────────────────────────────────────────────────────────────
@@ -198,7 +224,11 @@ def check_samples():
 
 
 def check_data():
+    if workspace_state() == "both":
+        return FAIL, "data", BOTH_HINT
     mode, root = resolve_data()
+    if mode == "legacy":
+        return WARN, "data", f"đang đọc {root} (tên cũ trước 0.4.0) — {MIGRATE_HINT}"
     if mode == "workspace":
         return PASS, "data", f"workspace {root} (mặc định; Git bỏ qua) — đặt {STATION_ENV} nếu muốn station riêng"
     if not root.is_dir():
@@ -215,8 +245,6 @@ def check_knowledge():
         return NOT_CHECKED, "knowledge", f"không có kho tri thức (tuỳ chọn; đặt {KNOWLEDGE_ENV} nếu có)"
     if not path.is_dir():
         return WARN, "knowledge", f"{name} trỏ tới thư mục không tồn tại"
-    if name == LEGACY_KNOWLEDGE_ENV:
-        return WARN, "knowledge", f"đang đọc tên biến cũ — đặt {KNOWLEDGE_ENV} (tên cũ bỏ ở 0.4)"
     return PASS, "knowledge", f"{KNOWLEDGE_ENV} đã đặt"
 
 
@@ -305,8 +333,17 @@ def cmd_install(args) -> int:
         print(f"Từ chối: station {root} nằm trong cây source của repo. Chọn thư mục ngoài repo, "
               f"hoặc bỏ --station để dùng workspace {WORKSPACE}.", file=sys.stderr)
         return EXIT_REFUSED
-    targets = [root] if mode == "workspace" else [root / d for d in STATION_DIRS]
-    print(f"Dữ liệu: {mode} {root}")
+    if mode != "station" and workspace_state() == "both":
+        print(f"Từ chối: {BOTH_HINT}.", file=sys.stderr)
+        return EXIT_REFUSED
+    if mode == "legacy":
+        # Không dựng `workspace/` cạnh `.work/`: làm vậy là tự đẻ ra trạng thái hai thư mục.
+        print(f"Dữ liệu: workspace cũ {root} (tên trước 0.4.0) — giữ nguyên, không tạo gì.")
+        print(f"  Đổi sang tên mới `workspace/`: {MIGRATE_HINT}.")
+        targets = []
+    else:
+        targets = [root] if mode == "workspace" else [root / d for d in STATION_DIRS]
+        print(f"Dữ liệu: {mode} {root}")
     for target in targets:
         if target.is_dir():
             print(f"  giữ nguyên  {target}")
@@ -350,6 +387,8 @@ def cmd_update(args) -> int:
     print(pulled.stdout.strip() or pulled.stderr.strip())
     if pulled.returncode != 0:
         return EXIT_FAIL
+    if workspace_state() == "legacy":
+        print(f"Repo còn workspace tên cũ `.work/` — {MIGRATE_HINT}.")
     print("Tiếp theo — cập nhật plugin của host rồi mở phiên mới:")
     for line in host_steps("claude", "update"):
         print(f"  {line}")
@@ -367,19 +406,109 @@ def cmd_uninstall(args) -> int:
     return EXIT_OK
 
 
+def count_files(folder: Path) -> int:
+    return sum(1 for path in folder.rglob("*") if path.is_file())
+
+
+def rename_or_report(source: Path, target: Path) -> bool:
+    try:
+        source.rename(target)
+        return True
+    except OSError as error:
+        print(f"Không đổi tên được ({error}) — không có gì thay đổi. Đóng file đang mở trong thư mục "
+              "rồi chạy lại.", file=sys.stderr)
+        return False
+
+
+def cmd_migrate(args) -> int:
+    """Dời `.work/` → `workspace/` (hoặc ngược lại với --undo) bằng một lần đổi tên thư mục."""
+    journal = WORKSPACE / JOURNAL_NAME
+    if env_path(STATION_ENV):
+        print(f"Ghi chú: {STATION_ENV} đang đặt — migrate chỉ đổi tên thư mục trong repo, không đụng station.")
+    if args.undo:
+        return undo_migrate(args, journal)
+    state = workspace_state()
+    if state == "both":
+        print(f"Từ chối: {BOTH_HINT}.", file=sys.stderr)
+        return EXIT_REFUSED
+    if state != "legacy":
+        print(f"Không có {LEGACY_WORKSPACE} — không có gì để dời.")
+        return EXIT_OK
+    files = count_files(LEGACY_WORKSPACE)
+    cases = sum(1 for p in LEGACY_WORKSPACE.iterdir() if p.is_dir())
+    print(f"Sẽ đổi tên {LEGACY_WORKSPACE} → {WORKSPACE}: {files} file, {cases} thư mục ca. "
+          "Một lần đổi tên thư mục — không chép, không xoá.")
+    if not args.yes:
+        print("Đây là bản xem trước — thêm --yes để chạy thật. Hoàn tác sau đó: "
+              "`python studio.py migrate --undo --yes`.")
+        return EXIT_OK
+    if not rename_or_report(LEGACY_WORKSPACE, WORKSPACE):
+        return EXIT_FAIL
+    version_file = ROOT / VERSION_FILES[0]
+    record = {"schema": 1, "action": "rename", "from": LEGACY_WORKSPACE.name, "to": WORKSPACE.name,
+              "files": files, "cases": cases,
+              "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+              "studio_version": manifest_versions()[VERSION_FILES[0]] if version_file.is_file() else None}
+    try:
+        journal.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    except OSError as error:
+        WORKSPACE.rename(LEGACY_WORKSPACE)
+        print(f"Không ghi được nhật ký ({error}) — đã đổi tên ngược lại, không có gì thay đổi.",
+              file=sys.stderr)
+        return EXIT_FAIL
+    moved = count_files(WORKSPACE) - 1  # trừ chính file nhật ký
+    if moved != files:
+        print(f"Cảnh báo: sau khi dời đếm được {moved} file, trước khi dời là {files}.", file=sys.stderr)
+        return EXIT_FAIL
+    print(f"Đã dời {files} file sang {WORKSPACE}. Nhật ký: {journal}.\n"
+          "Hoàn tác: `python studio.py migrate --undo --yes`.")
+    return EXIT_OK
+
+
+def undo_migrate(args, journal: Path) -> int:
+    if not journal.is_file():
+        print(f"Không có nhật ký {journal} — không có lần migrate nào để hoàn tác.", file=sys.stderr)
+        return EXIT_REFUSED
+    if LEGACY_WORKSPACE.exists():
+        print(f"Từ chối hoàn tác: {LEGACY_WORKSPACE} đã tồn tại.", file=sys.stderr)
+        return EXIT_REFUSED
+    try:
+        record = json.loads(journal.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as error:
+        print(f"Nhật ký hỏng, không hoàn tác: {error}", file=sys.stderr)
+        return EXIT_REFUSED
+    if not isinstance(record, dict) or (record.get("from"), record.get("to")) != (
+            LEGACY_WORKSPACE.name, WORKSPACE.name):
+        print("Nhật ký không phải của lần dời .work/ → workspace/ — không hoàn tác.", file=sys.stderr)
+        return EXIT_REFUSED
+    print(f"Hoàn tác: đổi tên {WORKSPACE} → {LEGACY_WORKSPACE} ({count_files(WORKSPACE) - 1} file; "
+          f"lần dời lúc {record.get('at', '?')}). Ca tạo sau lần dời cũng đi theo.")
+    if not args.yes:
+        print("Đây là bản xem trước — thêm --yes để chạy thật.")
+        return EXIT_OK
+    if not rename_or_report(WORKSPACE, LEGACY_WORKSPACE):
+        return EXIT_FAIL
+    (LEGACY_WORKSPACE / JOURNAL_NAME).unlink()
+    print(f"Đã trả lại {LEGACY_WORKSPACE}. Bản này vẫn đọc được nó; doctor báo WARN cho tới khi migrate lại.")
+    return EXIT_OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="studio.py", description="agent-writing-studio lifecycle")
     sub = parser.add_subparsers(dest="command", required=True)
     doctor = sub.add_parser("doctor", help="kiểm, không sửa gì")
     doctor.add_argument("--json", action="store_true", help="in dạng JSON cho máy đọc")
     install = sub.add_parser("install", help="dựng thư mục dữ liệu + in lệnh đăng ký host")
-    install.add_argument("--station", help=f"station ngoài repo (mặc định: ${STATION_ENV}, rồi .work/)")
+    install.add_argument("--station", help=f"station ngoài repo (mặc định: ${STATION_ENV}, rồi workspace/)")
     install.add_argument("--host", choices=HOSTS, default="claude")
     install.add_argument("--dry-run", action="store_true", help="chỉ in, không tạo gì")
     update = sub.add_parser("update", help="git pull --ff-only khi checkout sạch")
     update.add_argument("--yes", action="store_true", help="chạy thật thay vì chỉ in")
     uninstall = sub.add_parser("uninstall", help="in lệnh gỡ plugin; không xoá dữ liệu")
     uninstall.add_argument("--host", choices=HOSTS, default="claude")
+    migrate = sub.add_parser("migrate", help="dời workspace cũ .work/ → workspace/ (mặc định chỉ xem trước)")
+    migrate.add_argument("--yes", action="store_true", help="chạy thật thay vì chỉ in kế hoạch")
+    migrate.add_argument("--undo", action="store_true", help="hoàn tác theo nhật ký của lần dời trước")
     return parser
 
 
@@ -392,7 +521,7 @@ def main(argv: list[str] | None = None) -> int:
     except SystemExit as exit_:
         return EXIT_REFUSED if exit_.code else EXIT_OK
     return {"doctor": cmd_doctor, "install": cmd_install, "update": cmd_update,
-            "uninstall": cmd_uninstall}[args.command](args)
+            "uninstall": cmd_uninstall, "migrate": cmd_migrate}[args.command](args)
 
 
 if __name__ == "__main__":
