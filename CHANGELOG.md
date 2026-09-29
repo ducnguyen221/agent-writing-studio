@@ -3,6 +3,47 @@
 Chỉ ghi thứ **người dùng repo nhìn thấy**: tên lệnh, tên file, hợp đồng dữ liệu, hành vi mặc định.
 Chi tiết thiết kế và lý do nằm ở tài liệu tương ứng, không chép lại ở đây.
 
+## [0.3.0] — 2026-09-29
+
+### Luật dẫn nguồn (trục 2 + trục 3)
+
+- `02-cowriter`: **không gán nhận định cho nguồn** — "Theo X…" chỉ viết khi câu ấy có thật trong tư
+  liệu đang cầm. Luật đầy đủ + ví dụ: `skills/02-cowriter/references/05-source-attribution.md`.
+- `03-critique`: bước 4 **rà dẫn nguồn**, bắt buộc, không phụ thuộc `lenses[]`; `critique.json` phải
+  nói ra kết quả rà, im lặng không tính là đã rà. Chi tiết: `skills/03-critique/references/06-source-check.md`.
+
+### Biến kho tri thức đổi tên: `WRITING_STUDIO_KNOWLEDGE`
+
+Gốc kho tri thức cá nhân (bậc 1 khi phân giải `writer_profile_ref`, `brain_pointers[]`) nay đọc từ
+`WRITING_STUDIO_KNOWLEDGE`. Tên cũ `OPCOS_BRAIN_PATH` vẫn được đọc làm **đường lùi** khi tên mới chưa
+đặt, và sẽ bỏ ở 0.4. **Không còn mặc định đoán `~/Brain`**: không đặt biến nào là không có kho tri thức
+— studio vẫn chạy, bài mang giọng mặc định của thể loại.
+
+### Cài đặt: không còn chép `skills/` bằng tay
+
+- README và trang giới thiệu bỏ hướng dẫn `cp -r skills/*` / `Copy-Item`. Đường cài: plugin Claude Code
+  (`claude plugin marketplace add` + `install`), hoặc clone rồi mở thẳng thư mục repo (Codex, Antigravity).
+- Mới: `AGENTS.md` (hướng dẫn chuẩn cho mọi agent; `CLAUDE.md`, `GEMINI.md` là con trỏ), `INSTALL.md`
+  cho agent kèm prompt dán tiếng Việt/tiếng Anh, `START-HERE.md`, `hosts/` theo từng ứng dụng, trang
+  `/install/`.
+- Mới: `studio.py doctor · install · update · uninstall` (Python 3.10+, chỉ thư viện chuẩn). `install` chỉ
+  dựng thư mục dữ liệu và **in** lệnh đăng ký host; `uninstall` không xoá dữ liệu.
+- Mới: `samples/` — một ca mẫu tự soạn kèm `critique.json` kỳ vọng; `doctor` kiểm offline.
+
+### Workspace mặc định `.work/`
+
+Không đặt `WRITING_STUDIO_DATA` thì `.work/` trong thư mục đang mở là **workspace mặc định** (Git bỏ
+qua), không còn là "lưới an toàn". Station riêng vẫn dùng như cũ, nay là tuỳ chọn; tài liệu có lệnh cho
+cả Windows (`setx`) và macOS (`export`).
+
+### Hạ tầng
+
+- CI `.github/workflows/tests.yml`: Windows + macOS, Python 3.10 · 3.12 · 3.13, mọi nhánh, cả hai runner.
+- `.codex-plugin/plugin.json` cho Codex; test khoá một số phiên bản ở bốn chỗ khai.
+- `.gitignore` chặn file bí mật (`.env*` trừ `.env.example`, khoá, credential); test đọc Git index.
+- Test chạy xanh trên máy chỉ có `requirements-dev.txt` (thiếu `underthesea`, `python-docx` thì tự bỏ
+  qua kèm lý do).
+
 ## [0.2.1] — 2026-09-14
 
 ### Hợp đồng `writer_profile_ref` / `profile_used`: ba gốc, không phá vỡ tương thích

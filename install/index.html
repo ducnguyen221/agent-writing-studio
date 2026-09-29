@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cài agent-writing-studio — Windows và macOS</title>
+<meta name="description" content="Cài xưởng viết tiếng Việt cho AI agent: dán một prompt cho agent tự cài, hoặc tự cài plugin Claude Code, hay mở thẳng thư mục repo trong Codex và Antigravity.">
+<meta name="theme-color" content="#2f6df6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0f13" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://ducnguyen.vn/agent-writing-studio/install/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232f6df6'/%3E%3Cpath d='M8.6 23.4 19.8 8.2l3.9 2.9L12.5 26.3l-4.9 1.1z' fill='%23fff'/%3E%3Ccircle cx='23.6' cy='23.6' r='4.1' fill='%23c0433a'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#ffffff; --surface:#f7f9fc; --border:#e4e8ef; --text:#14161b; --muted:#565d69;
+    --accent:#2f6df6; --accent-ink:#1b4fd0; --mark:#c0433a;
+    --code-bg:#0f1116; --code-text:#e8ebf1;
+    --font:"Be Vietnam Pro",-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"Cascadia Code",Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0e0f13; --surface:#16181d; --border:#282c34; --text:#e9ebef; --muted:#a4abb6;
+      --accent:#5b8cff; --accent-ink:#8fb0ff; --mark:#f2857a; --code-bg:#0a0c10; --code-text:#e4e8f0;
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 var(--font)}
+  main{max-width:820px;margin:0 auto;padding:40px 16px 64px}
+  a{color:var(--accent-ink)}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+  h1{font-size:clamp(1.7rem,4vw,2.3rem);line-height:1.2;margin:.2em 0 .4em}
+  h2{font-size:1.3rem;margin:2.2em 0 .5em;padding-top:.6em;border-top:1px solid var(--border)}
+  h3{font-size:1.05rem;margin:1.6em 0 .4em}
+  .lead{color:var(--muted);font-size:1.08rem}
+  .back{font-size:.95rem}
+  pre{background:var(--code-bg);color:var(--code-text);padding:14px 16px;border-radius:11px;
+      overflow-x:auto;font:14px/1.55 var(--mono);margin:.6em 0 1em}
+  code{font-family:var(--mono);font-size:.92em}
+  p code, li code, td code{background:var(--surface);border:1px solid var(--border);padding:1px 5px;border-radius:6px}
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:11px}
+  table{border-collapse:collapse;width:100%;min-width:520px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{background:var(--surface);font-weight:600}
+  tr:last-child td{border-bottom:0}
+  .note{border-left:3px solid var(--mark);background:var(--surface);padding:10px 14px;border-radius:0 11px 11px 0}
+  ol li, ul li{margin:.3em 0}
+</style>
+</head>
+<body>
+<main>
+  <p class="back"><a href="../">← agent-writing-studio</a></p>
+  <h1>Cài xưởng viết</h1>
+  <p class="lead">Chạy trên máy bạn, Windows hoặc macOS. Không máy chủ, không tài khoản, không token.
+    Cách dễ nhất: dán một prompt cho ứng dụng AI bạn đang dùng, agent tự làm các bước và hỏi bạn trước
+    khi cài phần mềm hay đặt biến môi trường.</p>
+
+  <h2 id="prompt">1. Dán prompt cho agent</h2>
+  <h3>Tiếng Việt</h3>
+<pre><code>Cài agent-writing-studio cho tôi. Đọc và làm theo đúng
+https://github.com/ducnguyen221/agent-writing-studio/blob/main/INSTALL.md
+Trước khi cài phần mềm, đặt biến môi trường hay clone repo, hãy nói rõ bạn
+sẽ làm gì và chờ tôi đồng ý. Không mở file bí mật. Cài xong, chạy
+`python studio.py doctor`, chép nguyên kết quả, rồi hướng dẫn tôi làm bài mẫu
+trong START-HERE.md.</code></pre>
+  <h3>English</h3>
+<pre><code>Install agent-writing-studio for me. Read and follow exactly
+https://github.com/ducnguyen221/agent-writing-studio/blob/main/INSTALL.md
+Before installing software, setting environment variables or cloning, tell
+me what you will do and wait for my approval. Do not open secret files.
+When done, run `python studio.py doctor`, paste its output verbatim, then walk
+me through the sample in START-HERE.md.</code></pre>
+
+  <h2 id="host">2. Hoặc tự cài theo ứng dụng</h2>
+  <div class="tbl-wrap" role="region" aria-label="Bảng cách cài theo ứng dụng AI" tabindex="0">
+    <table>
+      <thead><tr><th>Ứng dụng</th><th>Cách cài</th><th>Chi tiết</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Code</td><td>plugin</td><td><a href="https://github.com/ducnguyen221/agent-writing-studio/blob/main/hosts/claude/README.md">hosts/claude</a></td></tr>
+        <tr><td>Codex (CLI, desktop)</td><td>mở thư mục repo, hoặc plugin</td><td><a href="https://github.com/ducnguyen221/agent-writing-studio/blob/main/hosts/codex/README.md">hosts/codex</a></td></tr>
+        <tr><td>Google Antigravity</td><td>mở thư mục repo</td><td><a href="https://github.com/ducnguyen221/agent-writing-studio/blob/main/hosts/antigravity/README.md">hosts/antigravity</a></td></tr>
+        <tr><td>Claude Desktop, tab chat</td><td>chưa hỗ trợ</td><td>dùng Claude Code hoặc tab Code</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Claude Code — plugin</h3>
+<pre><code>claude plugin marketplace add ducnguyen221/agent-writing-studio
+claude plugin install agent-writing-studio@agent-writing-studio</code></pre>
+  <p>Plugin mang nguyên cây repo: 9 skill, 7 lệnh <code>/agent-writing-studio:*</code> và dữ liệu dùng chung.
+    Mở phiên mới rồi gõ <code>/agent-writing-studio:list</code>.</p>
+
+  <h3>Codex, Antigravity, hoặc bản clone</h3>
+<pre><code>git clone https://github.com/ducnguyen221/agent-writing-studio
+cd agent-writing-studio
+python studio.py install --host codex     # hoặc antigravity; macOS có thể là python3
+python studio.py doctor</code></pre>
+  <p>Mở <strong>chính thư mục repo</strong> trong ứng dụng AI. Agent đọc <code>AGENTS.md</code> trước rồi tự
+    tìm đúng skill. <code>studio.py</code> cần Python 3.10 trở lên; nó chỉ dựng thư mục làm việc và in lệnh,
+    không sửa cấu hình của ứng dụng AI.</p>
+
+  <h2 id="du-lieu">3. Dữ liệu của bạn nằm đâu</h2>
+  <p>Mặc định: <code>.work/&lt;tên-ca&gt;/</code> trong thư mục bạn mở — Git bỏ qua toàn bộ, không phải cấu hình
+    gì. Muốn dữ liệu sống lâu hơn bản clone (nhiều máy, nhiều checkout) thì đặt một <strong>station</strong>
+    riêng — tuỳ chọn:</p>
+<pre><code>setx WRITING_STUDIO_DATA "$HOME\.writing"                        # Windows, mở terminal mới sau đó
+echo 'export WRITING_STUDIO_DATA="$HOME/.writing"' &gt;&gt; ~/.zshrc   # macOS
+python studio.py install                                          # dựng work/ out/ corpus/</code></pre>
+  <p class="note">Bản giao <code>.docx</code> ghi vào thư mục bạn chỉ định, không nằm lẫn trong workspace hay
+    station.</p>
+
+  <h2 id="kiem">4. Kiểm, cập nhật, gỡ</h2>
+  <ul>
+    <li><code>python studio.py doctor</code> — mỗi dòng <code>PASS</code> / <code>WARN</code> / <code>FAIL</code> /
+      <code>NOT_CHECKED</code>. Không có <code>FAIL</code> là dùng được; <code>WARN</code> ở thư viện là tuỳ chọn.</li>
+    <li>Cập nhật plugin: <code>claude plugin update agent-writing-studio@agent-writing-studio</code>.
+      Bản clone: <code>python studio.py update --yes</code> (chỉ <code>git pull --ff-only</code>, từ chối khi có sửa dở).</li>
+    <li>Gỡ: <code>python studio.py uninstall</code> in lệnh gỡ; không xoá dữ liệu của bạn.</li>
+  </ul>
+  <p>Bài thực hành đầu tiên: <a href="https://github.com/ducnguyen221/agent-writing-studio/blob/main/START-HERE.md">START-HERE.md</a>.</p>
+</main>
+</body>
+</html>

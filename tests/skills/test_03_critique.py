@@ -25,6 +25,7 @@ REQUIRED_REFERENCES = (
     "03-blind-referee.md",
     "04-rubric-samples.md",
     "05-project-feedback-integration.md",
+    "06-source-check.md",
 )
 
 # Danh mục lăng kính hợp lệ. Nguồn sự thật là 01-lenses.md; danh sách này chỉ để bắt

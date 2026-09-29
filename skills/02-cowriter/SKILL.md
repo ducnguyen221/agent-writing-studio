@@ -16,15 +16,14 @@ Skill này viết **cùng người**, không viết **thay người**.
 ## Quy trình
 
 1. **Nạp, đúng thứ tự:** `context.json` — luận đề, độc giả, `constraints[]`, `brain_pointers[]`
-   (con trỏ — đọc tài liệu gốc, tính từ `OPCOS_BRAIN_PATH`) → `§2` của
+   (con trỏ — đọc tài liệu gốc, tính từ `WRITING_STUDIO_KNOWLEDGE`) → `§2` của
    `shared/genres/<genre>.md`: `structures[]`, `default_structure`, `anti_llm_defaults[]`,
    `outline_depth`, `outline_layers[]` → writer profile ở `writer_profile_ref` nếu có. Hồ sơ
    `status: draft` (dưới ba bài) vẫn dùng được nhưng chỉ như gợi ý: không ép câu theo
    `fingerprint` của nó, và `profile_used` khai đúng như vậy.
 2. **Dựng outline đủ `outline_depth` tầng.** Skill ép **số** tầng; **nghĩa** từng tầng đọc ở
-   `outline_layers[]` của `§2`. Chỗ trống ở tầng cuối là chỗ trống thật: hạ mức khẳng định hoặc
-   báo lên, không lấp bằng câu chữ.
-   Xem [outline ba tầng](references/01-three-layer-outline.md).
+   `outline_layers[]` của `§2`; chỗ trống ở tầng cuối là chỗ trống thật
+   ([outline ba tầng](references/01-three-layer-outline.md)).
 3. **Dừng, trình outline, chờ duyệt.** Cổng cứng, không phải lời mời góp ý.
 4. **Viết prose** theo dàn ý đã duyệt, tránh khuôn ngay khi sinh, không đợi trục 4 gỡ. Xem
    [chống khuôn LLM](references/04-anti-llm-patterns.md).
@@ -40,7 +39,8 @@ Skill này viết **cùng người**, không viết **thay người**.
 - **Không viết prose trước khi outline được duyệt.** Chưa duyệt mà vẫn cần bản thăm dò thì
   `outline_approved: false`, và bản đó không được nộp.
 - **Không đặt lại luận đề.** `thesis_one_sentence` không phản bác được thì trả về trục 1.
-- **Không bịa bằng chứng, số liệu, nguồn, trích dẫn.** Ngoại lệ hư cấu do `§4` khai, không tự suy.
+- **Không bịa bằng chứng, số liệu, nguồn, trích dẫn — kể cả gán nhận định cho nguồn**
+  ([dẫn nguồn](references/05-source-attribution.md)). Ngoại lệ hư cấu do `§4` khai, không tự suy.
 - **Không tối ưu theo thước đo.** `counters.py` chỉ chỗ để nhìn, không ra điểm đỗ; không xem điểm
   trục 5 của bài đang viết.
 - **`genre_baseline` và bài mẫu của tác giả thắng danh sách khuôn.** Khung được dạy trong nhà

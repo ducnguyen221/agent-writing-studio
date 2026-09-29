@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-09-28T09:30:00+07:00",
+  "genre": "essay",
+  "rubric_source": "Hồ sơ thể loại essay, mục §3 (không có barem riêng của nhiệm vụ)",
+  "blind_referee": true,
+  "criteria_scores": [
+    {
+      "id": "task_response",
+      "score": 80,
+      "evidence": "Luận đề nằm ở đoạn 1 và đoạn 4; bốn đoạn đều ánh xạ về thứ tự học đọc trước, công cụ sau.",
+      "question": "Đoạn nào không phục vụ luận đề? Không có đoạn nào bỏ đi được mà bài không yếu đi."
+    },
+    {
+      "id": "logic",
+      "score": 70,
+      "evidence": "Chuỗi: công cụ không giúp nhìn ra biểu đồ sai → người không biết đọc kết luận sai → nên học đọc trước.",
+      "question": "Bước nào cần thêm tiền đề? Bước giữa dựa vào một khẳng định về 'hầu hết người đi làm' chưa có gì đỡ."
+    },
+    {
+      "id": "evidence",
+      "score": 40,
+      "evidence": "Hai khẳng định thực chứng: tỷ lệ người đọc sai biểu đồ (không nguồn) và hiệu ứng trục tung không bắt đầu từ số không (kiểm được).",
+      "question": "Khẳng định nào quan trọng nhất mà không có gì đỡ? Câu mở đoạn 2."
+    },
+    {
+      "id": "counterargument",
+      "score": 75,
+      "evidence": "Đoạn 4 nêu phản đề 'học công cụ trước thì ra sản phẩm sớm hơn' và giới hạn nó cho người đã biết đọc.",
+      "question": "Người phản đối mạnh nhất sẽ nói gì? Bài đã trả lời phản đề thường gặp nhất."
+    },
+    {
+      "id": "cohesion",
+      "score": 75,
+      "evidence": "'Vì vậy' ở đoạn 3 nối đúng quan hệ nhân quả với đoạn 2; đảo đoạn 3 và 4 thì mạch vỡ.",
+      "question": "Từ nối đang dùng có mô tả đúng quan hệ giữa hai đoạn không? Có."
+    },
+    {
+      "id": "language",
+      "score": 85,
+      "evidence": "Không thấy lỗi ngữ pháp; không câu nào phải đọc lại lần hai.",
+      "question": "Chỗ nào người đọc phải đọc lại lần hai mới hiểu? Không thấy."
+    }
+  ],
+  "lenses_run": ["task_response", "fallacy_scan", "claim_check"],
+  "findings": [
+    {
+      "id": "F1",
+      "criterion_id": "evidence",
+      "lens": "claim_check",
+      "location": {"section": "Đoạn 2", "paragraph_index": 1, "sentence_id": "s0004"},
+      "quoted_text": "Hầu hết người đi làm không đọc đúng một biểu đồ cột.",
+      "severity": "high",
+      "evidence": "Khẳng định về tỷ lệ ('hầu hết') không có khảo sát, nguồn hay phạm vi quan sát đi kèm; luận điểm của đoạn 3 dựa vào nó.",
+      "counterevidence": "Có thể là quan sát nghề nghiệp của người viết; nếu vậy chỉ cần hạ thành câu kể có phạm vi, luận đề vẫn đứng.",
+      "suggested_fix": "Ghi rõ phạm vi quan sát (ví dụ: trong các buổi học đã dạy), hoặc dẫn một khảo sát cụ thể.",
+      "verification_question": "Chữ 'hầu hết' đến từ đâu, và áp cho nhóm người đi làm nào?"
+    }
+  ],
+  "must_fix": [
+    {
+      "finding_id": "F1",
+      "why_it_matters": "Đây là câu đỡ cho lời khuyên ở đoạn 3; mất nó thì lời khuyên chỉ còn là ý kiến.",
+      "blocking": true,
+      "owner": "02-cowriter"
+    }
+  ],
+  "limitations": [
+    "Rà dẫn nguồn: đã rà hết, bài không có câu nào gán nhận định cho một nguồn, nên không có gì để đối chiếu với tư liệu.",
+    "Người chấm không có số liệu gốc của người viết, nên không kiểm được khẳng định ở đoạn 2 — chỉ ghi nhận nó thiếu chỗ dựa."
+  ]
+}

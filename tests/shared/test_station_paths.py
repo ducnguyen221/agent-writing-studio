@@ -89,14 +89,31 @@ class TestWorkDir(unittest.TestCase):
 
 
 class TestRepoKhongConDuLieuNguoiThat(unittest.TestCase):
-    """Sau khi dời station, repo chỉ còn schema + README ở `shared/writers/`, không còn `.work/`."""
+    """Repo chỉ còn schema + README ở `shared/writers/`.
+
+    `.work/` là workspace mặc định hợp lệ khi KHÔNG đặt station (người dùng public mở thẳng repo) —
+    Git bỏ qua nó, `test_repo_gates` canh index. Nhưng đã đặt `WRITING_STUDIO_DATA` thì dữ liệu phải
+    ra station: khi ấy còn `.work/` trong repo nghĩa là có thứ ghi nhầm chỗ.
+    """
 
     def test_shared_writers_khong_co_thu_muc_slug(self):
         con = sorted(p.name for p in (ROOT / "shared/writers").iterdir() if p.is_dir())
         self.assertEqual(con, [], f"còn thư mục hồ sơ người thật trong repo: {con}")
 
-    def test_khong_con_dot_work_trong_repo(self):
+    @unittest.skipUnless((os.environ.get("WRITING_STUDIO_DATA") or "").strip(),
+                         "chưa đặt station — `.work/` trong repo là workspace hợp lệ")
+    def test_da_co_station_thi_khong_con_dot_work_trong_repo(self):
         self.assertFalse((ROOT / ".work").exists(), "`.work/` phải nằm ở station, không ở repo")
+
+    def test_home_gia_khong_lam_doi_duong_mac_dinh(self):
+        """Không có mặc định nào đoán trong home: HOME giả có sẵn `.writing` vẫn không được chọn."""
+        writers = load_module("home_profile_build", PROFILE_BUILD)
+        work = load_module("home_extract", EXTRACT)
+        env = {k: v for k, v in os.environ.items() if k != "WRITING_STUDIO_DATA"}
+        env.update({"HOME": STATION, "USERPROFILE": STATION})
+        with mock.patch.dict(os.environ, env, clear=True):
+            self.assertEqual(writers.writers_dir(), ROOT / "shared/writers")
+            self.assertEqual(work.default_work_dir(), Path(".work"))
 
 
 if __name__ == "__main__":

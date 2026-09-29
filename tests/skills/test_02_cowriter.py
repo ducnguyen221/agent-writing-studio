@@ -35,6 +35,7 @@ REQUIRED_REFERENCES = (
     "02-revise-evaluate-keep-loop.md",
     "03-provenance-self-declaration.md",
     "04-anti-llm-patterns.md",
+    "05-source-attribution.md",
 )
 
 # Bốn họ tell mô tả CHỖ ĐẶT của một câu chứ không phải cách dùng từ, nên phải chặn lúc sinh.

@@ -18,7 +18,8 @@ chỗ thì chúng sẽ trôi xa nhau, mỗi nơi một kiểu.
 nào — script chỉ là lớp kiểm chứng đứng sau, để những gì agent nói còn có chỗ đối chiếu bằng máy.
 
 **`writers/` không chứa người thật.** Hồ sơ giọng, bài mẫu, các ca chạy, corpus hiệu chuẩn — tất cả
-nằm ở **station** riêng ngoài repo, trỏ bằng biến môi trường `WRITING_STUDIO_DATA`. Trong repo chỉ có
+nằm ngoài Git: kho tri thức cá nhân (`WRITING_STUDIO_KNOWLEDGE`), station riêng (`WRITING_STUDIO_DATA`),
+hoặc workspace `.work/` bị Git bỏ qua. Trong repo chỉ có
 `writer.schema.json`, `audience.schema.json` và [hướng dẫn khai hồ sơ](writers/README.md). Đó là quy
 tắc cứng: dữ liệu định danh cá nhân không đi vào git.
 
