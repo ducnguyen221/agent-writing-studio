@@ -8,7 +8,7 @@ Trang này đưa bạn qua **bài thực hành đầu tiên**, mười phút, kh
 - **Claude Code đã cài plugin:** mở phiên mới ở thư mục bạn muốn làm việc. Gõ `/agent-writing-studio:list`.
 - **Codex, Antigravity, hoặc bản clone:** mở **chính thư mục repo**. Agent đọc `AGENTS.md` trước.
 
-Ca viết của bạn nằm ở `.work/<tên-ca>/` trong thư mục đang mở (Git bỏ qua), hoặc ở station
+Ca viết của bạn nằm ở `workspace/<tên-ca>/` trong thư mục đang mở (Git bỏ qua), hoặc ở station
 `WRITING_STUDIO_DATA` nếu bạn đã đặt.
 
 ## 2. Bài mẫu: chấm một bài luận ngắn
@@ -16,7 +16,7 @@ Ca viết của bạn nằm ở `.work/<tên-ca>/` trong thư mục đang mở (
 [`samples/bai-mau.md`](samples/bai-mau.md) là một bài luận tự soạn, có **một** chỗ yếu cố ý. Nói với agent:
 
 > *"Chấm `samples/bai-mau.md` theo hồ sơ `essay`, dùng bối cảnh `samples/context.json`. Ghi
-> `critique.json` vào `.work/mau/`. Đừng mở `samples/critique.expected.json` trước khi chấm xong."*
+> `critique.json` vào `workspace/mau/`. Đừng mở `samples/critique.expected.json` trước khi chấm xong."*
 
 Chấm xong, mở [`samples/critique.expected.json`](samples/critique.expected.json) mà so. Điểm từng tiêu chí
 được phép lệch. Không được lệch: bắt được câu *"Hầu hết người đi làm…"* thiếu bằng chứng, không có điểm
@@ -39,6 +39,6 @@ Thể loại có sẵn: `essay`, `research`, `blog`, `journalism`, `novel`, `com
 
 ## 4. Khi có trục trặc
 
-Chạy `python studio.py doctor` trong thư mục repo và đọc dòng `FAIL` / `WARN`. Bảng lỗi hay gặp ở cuối
-[`INSTALL.md`](INSTALL.md#lỗi-hay-gặp). Ranh giới đạo đức của xưởng — vì sao không dùng nó để kết tội
-hay "né máy chấm AI" — ở [README mục 5](README.md#5-ranh-giới-đạo-đức--phần-quan-trọng-nhất-của-repo-này).
+Chạy `python studio.py doctor` trong thư mục repo và đọc dòng `FAIL` / `WARN`. Bảng lỗi hay gặp ở
+[`docs/troubleshooting.md`](docs/troubleshooting.md). Ranh giới đạo đức của xưởng — vì sao không dùng nó để kết tội
+hay "né máy chấm AI" — ở [README mục 5](README.vi.md#5-ranh-giới-đạo-đức--phần-quan-trọng-nhất-của-repo-này).

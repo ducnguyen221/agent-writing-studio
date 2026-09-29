@@ -3,7 +3,7 @@
 > Chỉ số liệu tổng hợp + `sentence_id`. **Không chép văn bản thật** vào đây (luật `docs/SCORING.md` phần II
 > và `fixtures/README.md`). Mỗi datum là một dòng của manifest `fixtures/manifest.schema.json` cộng
 > kết quả Y5 tại thời điểm đo; văn bản nằm ở thư mục ca `$WRITING_STUDIO_DATA/work/<case>/`
-> (fallback `.work/<case>/`) — ngoài git.
+> (fallback `workspace/<case>/`) — ngoài git.
 
 ## 0. Cách đọc sổ này
 
@@ -18,21 +18,21 @@
 
 ## 1. Datum
 
-### Datum #1 — `cot-b-ai-baitap` (30/08/2026)
+### Datum #1 — `ca-mau-01` (30/08/2026)
 
 Manifest (theo `fixtures/manifest.schema.json`):
 
 | Khoá | Giá trị |
 |---|---|
-| `id` | `studio-essay-001-cot-b-ai-baitap` |
+| `id` | `studio-essay-001-ca-mau-01` |
 | `provenance` | `ai` |
 | `language` | `vi` |
 | `genre` | `essay` (structure `luan_de_phan_de`, profile `writer-a` trạng thái `draft`) |
 | `source_date` | `2026-08-30` |
 | `ground_truth_level` | `generated_and_logged` |
 | `generator` | `claude-fable-5` (Claude Code) — Y2 viết, Y4 cùng model sửa 9 nhát / 8 câu |
-| `prompt_family` | `studio-cot-b` = Y1 `context.json` → outline 3 tầng → Y2 áp `anti_llm_defaults` của `essay.md` §2 → Y3 → Y4 |
-| `evidence` | `<station>/work/cot-b-ai-baitap/draft.meta.json` (45 span `origin: machine`), `polish.diff.json`, `y5-codex-blind.md` |
+| `prompt_family` | `studio-ca-mau-01` = Y1 `context.json` → outline 3 tầng → Y2 áp `anti_llm_defaults` của `essay.md` §2 → Y3 → Y4 |
+| `evidence` | `<station>/work/ca-mau-01/draft.meta.json` (45 span `origin: machine`), `polish.diff.json`, `y5-codex-blind.md` |
 | `split` | `dev` |
 | Độ dài | 994 từ · 47 câu thật (`sentences.json` chỉ 45 — xem §1.2) |
 
@@ -103,13 +103,13 @@ Mục tiêu của đợt tối thiểu **không phải** đo FPR (cần ≥ 30 b
 | A6 *(nếu kịp)* | `internship-report` | Y2 viết theo mẫu khoa, **không** có đơn vị thật | thể loại tắt gần hết counter; kiểm "cân bằng" ghi ở `internship-report.md` §5: Y5 mù có thấy gì ngoài khung không |
 
 Mỗi bài: `draft.meta.json` đủ span · `sentences.json` bản cuối · Y5 do **model khác** chấm mù qua
-bridge (Codex, hoặc agy) · ghi vào sổ này một bảng như datum #1. Cùng một `prompt_family` (`studio-cot-b`)
+bridge (Codex, hoặc agy) · ghi vào sổ này một bảng như datum #1. Cùng một `prompt_family` (`studio-ca-mau-01`)
 cho A1/A2/A4/A5/A6; A3 là `prompt_family` riêng (`bare-prompt`) — chia split theo họ prompt.
 
 ### 2.2 Nhánh `human` — ≥ 5 bài chính chủ (đối chứng oan)
 
 - 2 bài chủ repo đã chỉ ở cổng Phase 4 (`profile_build.py`, `ground_truth_level: edit_history_verified`)
-  + ≥ 3 bài nữa của chủ repo trước 2022 hoặc có lịch sử sửa (Brain / blog cũ), đa thể loại (`essay`,
+  + ≥ 3 bài nữa của chủ repo trước 2022 hoặc có lịch sử sửa (kho tri thức / blog cũ), đa thể loại (`essay`,
   `blog`, `research`). Không dùng bài học viên.
 - Chấm mù bởi cùng model đã chấm nhánh `ai`, cùng phiên bản rule. Số đo duy nhất có nghĩa ở cỡ này:
   **có câu người nào bị NOTE không, và bởi tell nào** → tell nào NOTE bài người ở n=5 đã là ứng viên tắt.

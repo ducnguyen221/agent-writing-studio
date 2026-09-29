@@ -12,14 +12,14 @@ Hai đường hỏng đã gặp thật:
   1. **Sửa sau khi đã ghi meta.** Người dùng xin đổi hai đoạn, `sentence_id` từ chỗ đó trở đi dịch
      hết. Bản tự khai vẫn "hợp lệ" mà trỏ sai câu (ghi chú thực thi Phase 5, mục "chỗ trục 2 dễ quên
      tự khai nhất").
-  2. **Bộ tách câu nuốt câu.** Ca `.work/cot-b-ai-baitap`: ngưỡng `min_chars=15` bỏ hai câu hỏi tu từ
+  2. **Bộ tách câu nuốt câu.** Ca `ca-mau-01`: ngưỡng `min_chars=15` bỏ hai câu hỏi tu từ
      ngắn, nên bản tự khai phủ 45/47 câu và con số "45/45 do máy viết" là con số của script chứ không
      phải của văn bản (docs/results/self-audit-cot-B.md §2.1).
 
 Cách chạy:
 
-    python check_spans.py --meta .work/case/draft.meta.json --text .work/case/polished.md \
-        [--sentences .work/case/sentences.json] [--strict]
+    python check_spans.py --meta workspace/case/draft.meta.json --text workspace/case/polished.md \
+        [--sentences workspace/case/sentences.json] [--strict]
 
 `--sentences` (tuỳ chọn): so luôn file index trên đĩa với bản sinh lại từ `--text`. Lệch nghĩa là
 index đã cũ, và mọi trục đọc nó đang trỏ sai.
@@ -79,7 +79,7 @@ def _looks_like_a_stale_index(declared_ids, sentences, undeclared):
     """Cảnh báo cho vùng mù: id còn đủ nhưng bản tự khai là của một index CŨ.
 
     Dấu hiệu: id đã khai là đúng khúc ĐẦU của index hiện tại, và mọi câu chưa khai nằm gọn ở khúc
-    CUỐI. Khi bộ tách câu chèn thêm câu ở giữa (ca `.work/cot-b-ai-baitap`: hai câu hỏi tu từ ngắn
+    CUỐI. Khi bộ tách câu chèn thêm câu ở giữa (ca `ca-mau-01`: hai câu hỏi tu từ ngắn
     được trả lại), mọi id từ chỗ chèn trở đi dịch đi — không id nào biến mất, nên phép so tập ID báo
     'khớp' trong khi từng nhãn đã trỏ sang câu bên cạnh.
     """

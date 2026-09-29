@@ -24,7 +24,7 @@ nạp lệnh `commands/` như Claude Code; gọi lệnh bằng cách bảo agent
 
 ## Lưu ý
 
-- Sandbox của Codex có thể chặn ghi ra ngoài thư mục đang mở. Workspace mặc định `.work/` nằm trong
+- Sandbox của Codex có thể chặn ghi ra ngoài thư mục đang mở. Workspace mặc định `workspace/` nằm trong
   thư mục repo nên không vướng; đặt station `WRITING_STUDIO_DATA` ngoài repo thì có thể phải duyệt quyền.
 - Kiểm máy: `python studio.py doctor`. Dòng `host:codex` là `NOT_CHECKED` — doctor không đọc cấu hình
   Codex; kiểm plugin bằng lệnh plugin của Codex.

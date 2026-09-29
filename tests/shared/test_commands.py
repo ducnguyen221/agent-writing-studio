@@ -89,7 +89,7 @@ class HopDongThanBaiTests(unittest.TestCase):
             with self.subTest(lenh=ten):
                 text = doc(ten)
                 self.assertIn("$WRITING_STUDIO_DATA/work/", text)
-                self.assertIn(".work/", text, f"{ten}.md thiếu đường lui khi chưa đặt station")
+                self.assertIn("workspace/", text, f"{ten}.md thiếu đường lui khi chưa đặt station")
 
     def test_lenh_trong_chuoi_deu_co_o_tom_tat_cho_danh_sach(self):
         """`list` đọc đúng khối này; thiếu nó là bảng thủng một dòng."""

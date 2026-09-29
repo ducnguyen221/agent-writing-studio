@@ -13,7 +13,7 @@ Người dùng muốn **phản biện** (trục Y3): **$ARGUMENTS**
 
 ## Đầu vào
 
-Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./.work/<slug>/`):
+Từ `$WRITING_STUDIO_DATA/work/<slug>/` (fallback `./workspace/<slug>/`):
 
 - `draft.md` (hoặc file người dùng đưa thẳng) — **bắt buộc**;
 - `sentences.json` — **bắt buộc** để neo mọi nhận xét vào `sentence_id`;

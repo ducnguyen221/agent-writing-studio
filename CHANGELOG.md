@@ -3,6 +3,50 @@
 Chỉ ghi thứ **người dùng repo nhìn thấy**: tên lệnh, tên file, hợp đồng dữ liệu, hành vi mặc định.
 Chi tiết thiết kế và lý do nằm ở tài liệu tương ứng, không chép lại ở đây.
 
+## [0.4.0] — 2026-09-29
+
+### Breaking / cần làm khi nâng cấp
+
+- **Workspace mặc định đổi tên `.work/` → `workspace/`** (giống các xưởng anh em: không đặt biến là
+  dữ liệu ở `<repo>/workspace/`). Không có gì tự dời, không mất dữ liệu:
+  - chỉ có `.work/` → xưởng **vẫn đọc nó** (script `extract.py` cũng vậy, kèm cảnh báo); `doctor` báo
+    `data WARN`; `install` giữ nguyên, không tạo `workspace/` bên cạnh;
+  - `python studio.py migrate` in kế hoạch (xem trước) · `migrate --yes` đổi tên thư mục một bước, ghi
+    nhật ký `workspace/.studio-migrate.json` · `migrate --undo --yes` trả lại;
+  - có **cả hai** thư mục → `doctor` báo `data FAIL`, `migrate` và `install` từ chối (mã 2) — không tự
+    gộp; cách xử lý ở `docs/troubleshooting.md`;
+  - `WRITING_STUDIO_DATA` vẫn thắng cả hai.
+- **Bỏ tên biến kho tri thức cũ `OPCOS_BRAIN_PATH`** (đã báo trước ở 0.3.0). Chỉ còn
+  `WRITING_STUDIO_KNOWLEDGE`; máy chỉ đặt tên cũ thì `doctor` báo `knowledge NOT_CHECKED` — đặt tên mới.
+- Tài liệu cầu kho tri thức đổi tên: `skills/01-context-architect/references/03-knowledge-bridge.md`.
+  Trường `brain_pointers[]` của `context.json` **giữ nguyên** (không đổi hợp đồng dữ liệu).
+- `README.md` nay là bản **tiếng Anh**; bản tiếng Việt đầy đủ chuyển sang `README.vi.md`.
+
+### Mới
+
+- `studio.py migrate [--undo] [--yes]`.
+- `GUIDE.md` / `GUIDE.vi.md`: một ca đi trọn năm trục. `docs/troubleshooting.md`: bảng lỗi (dời từ
+  `INSTALL.md`), cách dời workspace, cách xử lý khi có cả hai thư mục, mã thoát.
+- `NOTICE` + `provenance.json`: dữ liệu đi kèm (kho thành ngữ MIT, mã băm + commit nguồn đã ghim) và
+  thư viện tuỳ chọn kèm giấy phép; test `tests/shared/test_provenance.py`.
+- Test mới: `test_host_docs.py` (lệnh dạy trong tài liệu host có thật), `test_docs_drift.py` (phiên bản,
+  lệnh, cặp ngôn ngữ, tên workspace), kiểm di trú trong `test_studio_lifecycle.py`.
+
+### Ranh giới public
+
+- `.gitignore` neo gốc `/workspace/`, `/.work/`, `/.venv/`; `.env*` (trừ `.env.example`); test đọc Git
+  index canh thêm `workspace/`, `docs/plans/`, `docs/results/`.
+- Bỏ tên riêng của kho tri thức cá nhân của tác giả và tên ca thật khỏi cây public (tài liệu, schema,
+  lệnh, script, test) — thay bằng "kho tri thức" và ca ví dụ `ca-mau-01` / `ca-mau-02`.
+- Cổng chống rò (`test_public_boundary.py`) đọc thêm **danh sách cấm riêng nằm ngoài repo** qua biến
+  `WRITING_STUDIO_LEAK_DENYLIST`; không đặt biến thì bỏ qua kèm lời nhắn, báo lỗi không in lại cụm cấm.
+- Trang giới thiệu bỏ con số test ghi cứng.
+
+### Cài đặt trên macOS
+
+- `INSTALL.md`: gọi `python3.12` rõ ràng; kiểm biến môi trường bằng `zsh -lic`; đường plugin Claude Code
+  cũng clone repo để chạy được `studio.py doctor` như prompt yêu cầu; đường Codex nói rõ mở thư mục nào.
+
 ## [0.3.0] — 2026-09-29
 
 ### Luật dẫn nguồn (trục 2 + trục 3)
@@ -16,7 +60,7 @@ Chi tiết thiết kế và lý do nằm ở tài liệu tương ứng, không c
 
 Gốc kho tri thức cá nhân (bậc 1 khi phân giải `writer_profile_ref`, `brain_pointers[]`) nay đọc từ
 `WRITING_STUDIO_KNOWLEDGE`. Tên cũ `OPCOS_BRAIN_PATH` vẫn được đọc làm **đường lùi** khi tên mới chưa
-đặt, và sẽ bỏ ở 0.4. **Không còn mặc định đoán `~/Brain`**: không đặt biến nào là không có kho tri thức
+đặt, và sẽ bỏ ở 0.4. **Không còn mặc định đoán một thư mục kho tri thức trong home**: không đặt biến nào là không có kho tri thức
 — studio vẫn chạy, bài mang giọng mặc định của thể loại.
 
 ### Cài đặt: không còn chép `skills/` bằng tay
@@ -52,7 +96,7 @@ Hai trường là đường **tương đối**, agent tự ghép theo thứ tự
 `OPCOS_BRAIN_PATH` → (2) gốc station `WRITING_STUDIO_DATA` → (3) gốc repo. Chuỗi không chứa `/` là slug
 (`writers/<slug>/profile.yaml` ở station, rồi `shared/writers/<slug>/` trong repo). Giá trị cũ dạng
 `writers/<slug>/profile.yaml` hay slug trần vẫn hợp lệ và phân giải như trước. Mô tả cập nhật ở
-`context.schema.json`, `draft.schema.json`, lệnh `01-context`, `04-humanize` và cầu Brain.
+`context.schema.json`, `draft.schema.json`, lệnh `01-context`, `04-humanize` và cầu kho tri thức.
 
 ### `profile_build.py` 1.1
 

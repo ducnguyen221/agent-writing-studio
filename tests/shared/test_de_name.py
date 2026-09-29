@@ -25,7 +25,8 @@ ROOT = Path(__file__).resolve().parents[2]
 # `commands/` vào hàng rào từ v0.1.1: nó cũng được clone/cài, nên cũng phải sạch tên nguồn.
 PUBLIC_DIRS = ("skills", "shared", "docs", "commands", "hosts", "samples", ".github",
                ".claude-plugin", ".codex-plugin")
-PUBLIC_FILES = ("README.md", "AGENTS.md", "CLAUDE.md", "GEMINI.md", "INSTALL.md", "START-HERE.md",
+PUBLIC_FILES = ("README.md", "README.vi.md", "GUIDE.md", "GUIDE.vi.md", "NOTICE", "provenance.json",
+                "AGENTS.md", "CLAUDE.md", "GEMINI.md", "INSTALL.md", "START-HERE.md",
                 "studio.py", "CHANGELOG.md", "CITATION.cff")
 EXCLUDED_PREFIXES = ("docs/plans/", "docs/results/")
 SCANNED_SUFFIXES = {".md", ".json", ".py", ".txt", ".yaml", ".yml"}

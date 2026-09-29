@@ -30,7 +30,7 @@ câu**, không gộp năm câu vào một tin nhắn: người trả lời gộp
 cách hỏi theo góc nhìn — `research.md` dùng lối này — thì hỏi lần lượt từ từng góc, vì
 người phản biện phương pháp và người dùng kết quả không hỏi cùng một câu. Câu trả lời ghi **kết
 luận** của người dùng (≤ 600 ký tự); người dùng dán cả tài liệu vào thì tài liệu ấy thành một con trỏ
-trong `brain_pointers[]`, không nằm trong `answer` — xem [cầu Brain](03-brain-bridge.md) mục "Ba lỗ rò".
+trong `brain_pointers[]`, không nằm trong `answer` — xem [cầu kho tri thức](03-knowledge-bridge.md) mục "Ba lỗ rò".
 
 **Lượt 3 — lõi một câu.** Viết `intent.thesis_one_sentence`. Phép thử **do `§1` của hồ sơ thể loại
 khai, không do skill đặt ra** — hỏi sai phép thử là ép bài vào khuôn của một thể loại khác:
@@ -65,7 +65,7 @@ Hai nhầm lẫn phải tránh:
 
 ## Persona người viết
 
-`writer_profile_ref` trỏ tới hồ sơ giọng theo thứ tự ở [cầu Brain](03-brain-bridge.md): kho tri thức →
+`writer_profile_ref` trỏ tới hồ sơ giọng theo thứ tự ở [cầu kho tri thức](03-knowledge-bridge.md): kho tri thức →
 station → repo, **không nhúng nội dung**. Không có
 hồ sơ thì để `null` và viết theo giọng mặc định của thể loại — không bịa ra một giọng. Hồ sơ
 `status: draft` (dưới 3 bài) chỉ dùng để tham khảo. Cách dựng hồ sơ ở
@@ -78,5 +78,5 @@ hồ sơ thì để `null` và viết theo giọng mặc định của thể lo�
 - `answers[]` phủ hết `intent_questions[]` của `§1`;
 - `unresolved[]` rỗng, hoặc nếu không rỗng thì đã nói thẳng với người dùng rằng bài chưa viết được;
 - mọi `answers[].source: inferred` đã được xác nhận;
-- không nguyên văn tài liệu riêng tư nào lọt vào file — Brain chỉ vào bằng con trỏ, xem
-  [cầu Brain](03-brain-bridge.md).
+- không nguyên văn tài liệu riêng tư nào lọt vào file — kho tri thức chỉ vào bằng con trỏ, xem
+  [cầu kho tri thức](03-knowledge-bridge.md).

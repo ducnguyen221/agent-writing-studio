@@ -1,7 +1,7 @@
 # CHẤM ĐIỂM VÀ ĐÁNH GIÁ — thang S/C, cách đo, mẫu báo cáo
 
 > **Thuật ngữ** (S, C, G1–G4, FLAG/NOTE/SKIP, tell, lăng kính, `genre_baseline`, provenance,
-> `sentence_id`): bảng giải nghĩa đầy đủ ở [README](../README.md) mục 6. Mấy từ của nghề đo dùng ở
+> `sentence_id`): bảng giải nghĩa đầy đủ ở [README](../README.vi.md) mục 6. Mấy từ của nghề đo dùng ở
 > phần II: *FPR* = tỷ lệ báo oan (bài của người bị đẩy lên mức kiểm tra ưu tiên) · *recall* = tỷ lệ
 > bắt được trong số bài AI thật · *precision* = trong số lần báo, bao nhiêu lần báo đúng ·
 > *span* = đoạn văn được đánh dấu · *abstention* = biết từ chối kết luận khi dữ liệu không đủ ·

@@ -1,0 +1,30 @@
+{
+  "_doc": "Nguồn gốc và giấy phép của thứ repo mang theo hoặc gọi tới. Repo không vendor code bên thứ ba. `bundled` = dữ liệu đi kèm repo (mã băm sha256 tính trên nội dung đã chuẩn hoá xuống dòng LF); `runtime_optional` = thư viện người dùng tự cài. Sửa file bundled thì cập nhật sha256 ở đây — tests/shared/test_provenance.py canh. Sổ nguồn phương pháp giữ ngoài repo theo luật de-name.",
+  "schema_version": 1,
+  "checked": "2026-09-29",
+  "bundled": [
+    {
+      "name": "Kho thành ngữ tiếng Việt",
+      "path": "skills/04-humanizer/assets/idioms.json",
+      "license": "MIT",
+      "notice_location": "khối `attribution` trong chính file (copyright_notice + license_notice nguyên văn)",
+      "upstream_commit_field": "attribution.repo_commit",
+      "upstream_blob_field": "attribution.source_file_blob_sha",
+      "sha256": "50be4146dfa53c71119c4c7943b6be52bf02404dbf382a6cad43c494c839e446",
+      "what_is_borrowed": "chỉ danh sách thành ngữ; nghĩa, ngữ cảnh, thể loại do repo tự soạn"
+    }
+  ],
+  "runtime_optional": [
+    {"name": "jsonschema", "license": "MIT", "used_for": "kiểm schema (doctor, test)", "bundled": false},
+    {"name": "PyYAML", "license": "MIT", "used_for": "đọc hồ sơ thể loại, dựng hồ sơ giọng", "bundled": false},
+    {"name": "pytest", "license": "MIT", "used_for": "chạy test", "bundled": false},
+    {"name": "underthesea", "license": "Apache-2.0", "used_for": "tách từ tiếng Việt cho bộ đếm", "bundled": false},
+    {"name": "python-docx", "license": "MIT", "used_for": "giao bản .docx, đọc .docx", "bundled": false},
+    {"name": "PyMuPDF", "license": "AGPL-3.0-or-commercial", "used_for": "đọc .pdf ở bước trích văn bản", "bundled": false}
+  ],
+  "methods_distilled": {
+    "code_copied": false,
+    "ledger": "ngoài repo (sổ xưởng của tác giả)",
+    "fence": "tests/shared/test_de_name.py"
+  }
+}

@@ -8,7 +8,8 @@ Test khoá ba luật, theo đúng thứ tự ưu tiên đã cam kết trong `sha
 
 1. **Có biến** → mặc định trỏ `<station>/writers` và `<station>/work`.
 2. **Không có biến** (hoặc biến rỗng/toàn khoảng trắng) → lui về đường cũ trong repo
-   (`shared/writers/`, `./.work`), để người ngoài clone repo về vẫn chạy được.
+   (`shared/writers/`, `./workspace`), để người ngoài clone repo về vẫn chạy được. Từ 0.4.0, chỉ
+   còn `./.work` (tên cũ) mà chưa có `./workspace` thì dùng `./.work` kèm cảnh báo.
 3. Env được đọc **lúc gọi**, không phải lúc nạp module — nếu ai đó biến nó lại thành hằng số
    module thì test 1 và 2 trong cùng một tiến trình sẽ mâu thuẫn và đỏ.
 
@@ -16,8 +17,11 @@ Dùng `patch.dict` chứ không dùng `monkeypatch` của pytest: bộ test này
 `python -m unittest`.
 """
 
+import contextlib
 import importlib.util
+import io
 import os
+import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -72,10 +76,32 @@ class TestWorkDir(unittest.TestCase):
         with mock.patch.dict(os.environ, {"WRITING_STUDIO_DATA": STATION}):
             self.assertEqual(self.mod.default_work_dir(), Path(STATION) / "work")
 
-    def test_khong_env_lui_ve_dot_work(self):
+    def test_khong_env_lui_ve_workspace(self):
         env = {k: v for k, v in os.environ.items() if k != "WRITING_STUDIO_DATA"}
-        with mock.patch.dict(os.environ, env, clear=True):
-            self.assertEqual(self.mod.default_work_dir(), Path(".work"))
+        with mock.patch.dict(os.environ, env, clear=True), self.in_temp_cwd():
+            self.assertEqual(self.mod.default_work_dir(), Path("workspace"))
+
+    @contextlib.contextmanager
+    def in_temp_cwd(self):
+        old = os.getcwd()
+        with tempfile.TemporaryDirectory() as tmp:
+            os.chdir(tmp)
+            try:
+                yield Path(tmp)
+            finally:
+                os.chdir(old)
+
+    def test_chi_con_dot_work_cu_thi_doc_no_kem_canh_bao(self):
+        env = {k: v for k, v in os.environ.items() if k != "WRITING_STUDIO_DATA"}
+        with mock.patch.dict(os.environ, env, clear=True), self.in_temp_cwd() as tmp:
+            (tmp / ".work").mkdir()
+            err = io.StringIO()
+            with contextlib.redirect_stderr(err):
+                self.assertEqual(self.mod.default_work_dir(), Path(".work"))
+            self.assertIn("studio.py migrate", err.getvalue())
+            (tmp / "workspace").mkdir()
+            self.assertEqual(self.mod.default_work_dir(), Path("workspace"),
+                             "đã có workspace/ thì tên mới thắng")
 
     def test_cli_thang_env(self):
         """`--out` tường minh phải thắng station: parser để default=None để main tự quyết."""
@@ -91,9 +117,9 @@ class TestWorkDir(unittest.TestCase):
 class TestRepoKhongConDuLieuNguoiThat(unittest.TestCase):
     """Repo chỉ còn schema + README ở `shared/writers/`.
 
-    `.work/` là workspace mặc định hợp lệ khi KHÔNG đặt station (người dùng public mở thẳng repo) —
+    `workspace/` là workspace mặc định hợp lệ khi KHÔNG đặt station (người dùng public mở thẳng repo) —
     Git bỏ qua nó, `test_repo_gates` canh index. Nhưng đã đặt `WRITING_STUDIO_DATA` thì dữ liệu phải
-    ra station: khi ấy còn `.work/` trong repo nghĩa là có thứ ghi nhầm chỗ.
+    ra station: khi ấy còn `workspace/` trong repo nghĩa là có thứ ghi nhầm chỗ.
     """
 
     def test_shared_writers_khong_co_thu_muc_slug(self):
@@ -101,9 +127,9 @@ class TestRepoKhongConDuLieuNguoiThat(unittest.TestCase):
         self.assertEqual(con, [], f"còn thư mục hồ sơ người thật trong repo: {con}")
 
     @unittest.skipUnless((os.environ.get("WRITING_STUDIO_DATA") or "").strip(),
-                         "chưa đặt station — `.work/` trong repo là workspace hợp lệ")
-    def test_da_co_station_thi_khong_con_dot_work_trong_repo(self):
-        self.assertFalse((ROOT / ".work").exists(), "`.work/` phải nằm ở station, không ở repo")
+                         "chưa đặt station — `workspace/` trong repo là workspace hợp lệ")
+    def test_da_co_station_thi_khong_con_workspace_trong_repo(self):
+        self.assertFalse((ROOT / "workspace").exists(), "`workspace/` phải nằm ở station, không ở repo")
 
     def test_home_gia_khong_lam_doi_duong_mac_dinh(self):
         """Không có mặc định nào đoán trong home: HOME giả có sẵn `.writing` vẫn không được chọn."""
@@ -113,7 +139,8 @@ class TestRepoKhongConDuLieuNguoiThat(unittest.TestCase):
         env.update({"HOME": STATION, "USERPROFILE": STATION})
         with mock.patch.dict(os.environ, env, clear=True):
             self.assertEqual(writers.writers_dir(), ROOT / "shared/writers")
-            self.assertEqual(work.default_work_dir(), Path(".work"))
+            self.assertIn(work.default_work_dir(), (Path("workspace"), Path(".work")))
+            self.assertFalse(work.default_work_dir().is_absolute(), "không đoán đường trong home")
 
 
 if __name__ == "__main__":

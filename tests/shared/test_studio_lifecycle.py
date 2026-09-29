@@ -60,7 +60,7 @@ class DoctorTests(StudioCase):
     def test_no_hidden_home_default_for_data_or_knowledge(self):
         """HOME giả có sẵn `.writing` và một kho tri thức, nhưng không biến nào đặt ⇒ không đoán."""
         (self.home / ".writing" / "work").mkdir(parents=True)
-        (self.home / "Brain").mkdir()
+        (self.home / "kho-tri-thuc").mkdir()
         _, rows = self.doctor()
         self.assertIn("workspace", rows["data"]["detail"])
         self.assertNotIn(".writing", rows["data"]["detail"])
@@ -72,14 +72,15 @@ class DoctorTests(StudioCase):
         self.assertEqual(rows["data"]["status"], "WARN")
         self.assertEqual(code, 0)
 
-    def test_knowledge_variable_new_name_passes_legacy_name_warns(self):
+    def test_knowledge_variable_passes_and_the_removed_legacy_name_is_ignored(self):
         vault = self.tmp / "kho"
         vault.mkdir()
         _, rows = self.doctor(dict(self.env, WRITING_STUDIO_KNOWLEDGE=str(vault)))
         self.assertEqual(rows["knowledge"]["status"], "PASS")
-        _, rows = self.doctor(dict(self.env, OPCOS_BRAIN_PATH=str(vault)))
-        self.assertEqual(rows["knowledge"]["status"], "WARN")
         self.assertNotIn(str(vault), rows["knowledge"]["detail"], "doctor không in đường kho tri thức")
+        # Tên biến cũ đã bỏ ở 0.4.0 (xem CHANGELOG): đặt riêng nó thì không có kho tri thức.
+        _, rows = self.doctor(dict(self.env, OPCOS_BRAIN_PATH=str(vault)))
+        self.assertEqual(rows["knowledge"]["status"], "NOT_CHECKED")
 
     def test_claude_plugin_ledger_is_read_not_guessed(self):
         _, rows = self.doctor()
@@ -137,10 +138,10 @@ class InstallUninstallTests(StudioCase):
         self.assertIn("sẽ tạo", result.stdout)
         self.assertFalse(station.exists())
 
-    def test_workspace_mode_targets_the_repo_dot_work(self):
+    def test_workspace_mode_targets_the_repo_workspace_folder(self):
         result = self.run_studio("install", "--dry-run")
         self.assertEqual(result.returncode, 0)
-        self.assertIn(str(ROOT / ".work"), result.stdout)
+        self.assertIn(str(ROOT / "workspace"), result.stdout)
 
     def test_install_refuses_a_station_inside_the_source_tree(self):
         target = ROOT / "skills" / "khong-duoc-tao"
@@ -170,6 +171,103 @@ class InstallUninstallTests(StudioCase):
     def test_unknown_arguments_are_refused(self):
         self.assertEqual(self.run_studio("install", "--host", "khong-co").returncode, 2)
         self.assertEqual(self.run_studio("khong-co-lenh").returncode, 2)
+
+
+class MigrationTests(StudioCase):
+    """`.work/` (tên trước 0.4.0) → `workspace/`, chạy trên một REPO GIẢ có bản chép `studio.py`:
+    `studio.py` tính mọi đường từ thư mục của chính nó, nên test không bao giờ đụng repo thật.
+
+    Bốn ca: máy mới · còn `.work/` cũ · có cả hai (doctor FAIL, migrate từ chối) · hoàn tác.
+    Mọi ca giữ một file canary: đổi nội dung hay mất là đỏ.
+    """
+
+    CANARY = "bản nháp của người dùng"
+
+    def setUp(self):
+        super().setUp()
+        self.repo = self.tmp / "repo"
+        self.repo.mkdir()
+        self.script = self.repo / "studio.py"
+        shutil.copyfile(STUDIO, self.script)
+        self.old, self.new = self.repo / ".work", self.repo / "workspace"
+
+    def studio(self, *args):
+        return self.run_studio(*args, script=self.script)
+
+    def data_row(self):
+        result = self.studio("doctor", "--json")
+        rows = {row["check"]: row for row in json.loads(result.stdout)}
+        return result.returncode, rows["data"]
+
+    def make_legacy(self):
+        canary = self.old / "ca-cu" / "draft.md"
+        canary.parent.mkdir(parents=True)
+        canary.write_text(self.CANARY, encoding="utf-8")
+        return canary
+
+    def test_fresh_install_creates_workspace_and_doctor_passes(self):
+        self.assertEqual(self.data_row()[1]["status"], "PASS")
+        self.assertEqual(self.studio("install").returncode, 0)
+        self.assertTrue(self.new.is_dir())
+        self.assertFalse(self.old.exists())
+        self.assertEqual(self.data_row()[1]["status"], "PASS")
+        self.assertIn("không có gì để dời", self.studio("migrate").stdout)
+
+    def test_legacy_folder_is_read_with_a_warning_and_install_does_not_fork_it(self):
+        canary = self.make_legacy()
+        _, row = self.data_row()
+        self.assertEqual(row["status"], "WARN")
+        self.assertIn("studio.py migrate", row["detail"])
+        result = self.studio("install")
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("migrate", result.stdout)
+        self.assertFalse(self.new.exists(), "install không được dựng workspace/ cạnh .work/")
+        self.assertIn("legacy", self.studio("uninstall").stdout)
+        self.assertEqual(canary.read_text(encoding="utf-8"), self.CANARY)
+
+    def test_migrate_is_a_dry_run_until_yes(self):
+        self.make_legacy()
+        result = self.studio("migrate")
+        self.assertEqual(result.returncode, 0)
+        self.assertIn("xem trước", result.stdout)
+        self.assertTrue(self.old.is_dir())
+        self.assertFalse(self.new.exists())
+
+    def test_migrate_yes_moves_everything_and_writes_a_journal(self):
+        self.make_legacy()
+        result = self.studio("migrate", "--yes")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(self.old.exists())
+        self.assertEqual((self.new / "ca-cu" / "draft.md").read_text(encoding="utf-8"), self.CANARY)
+        journal = json.loads((self.new / ".studio-migrate.json").read_text(encoding="utf-8"))
+        self.assertEqual((journal["from"], journal["to"], journal["files"]), (".work", "workspace", 1))
+        self.assertEqual(self.data_row()[1]["status"], "PASS")
+
+    def test_both_folders_fail_doctor_and_migrate_refuses(self):
+        canary = self.make_legacy()
+        (self.new / "ca-moi").mkdir(parents=True)
+        code, row = self.data_row()
+        self.assertEqual((code, row["status"]), (1, "FAIL"))
+        self.assertEqual(self.studio("migrate", "--yes").returncode, 2)
+        self.assertEqual(self.studio("install").returncode, 2)
+        self.assertEqual(canary.read_text(encoding="utf-8"), self.CANARY)
+        self.assertTrue((self.new / "ca-moi").is_dir())
+
+    def test_undo_restores_the_legacy_folder(self):
+        self.make_legacy()
+        self.assertEqual(self.studio("migrate", "--yes").returncode, 0)
+        self.assertEqual(self.studio("migrate", "--undo").returncode, 0)
+        self.assertTrue(self.new.is_dir(), "--undo không có --yes chỉ xem trước")
+        result = self.studio("migrate", "--undo", "--yes")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(self.new.exists())
+        self.assertEqual((self.old / "ca-cu" / "draft.md").read_text(encoding="utf-8"), self.CANARY)
+        self.assertFalse((self.old / ".studio-migrate.json").exists())
+
+    def test_undo_without_a_journal_is_refused(self):
+        (self.new / "ca").mkdir(parents=True)
+        self.assertEqual(self.studio("migrate", "--undo", "--yes").returncode, 2)
+        self.assertTrue((self.new / "ca").is_dir())
 
 
 @unittest.skipUnless(shutil.which("git"), "cần git")

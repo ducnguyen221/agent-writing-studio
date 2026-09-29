@@ -2,7 +2,7 @@
 
 Cổng Phase 5 cho thấy `draft.schema.json` một mình không đủ: nó kiểm hình dạng của
 `machine_written_spans[]`, không kiểm `sentence_id` có tồn tại trong văn bản cuối. Ca
-`.work/cot-b-ai-baitap` đi qua schema với 45 nhãn trên một văn bản 47 câu.
+`ca-mau-01` đi qua schema với 45 nhãn trên một văn bản 47 câu.
 
 Test ở đây khoá bốn thứ:
 1. Khớp thì exit 0, lệch id thì exit 1.
@@ -118,7 +118,7 @@ class CheckSpansTests(unittest.TestCase):
         self.assertEqual(code, self.module.EXIT_DRIFT)
 
     def test_a_declaration_that_stops_short_looks_like_a_stale_index(self):
-        """Ca cot-b: 45 nhãn trên 47 câu, không id nào sai, mà mọi nhãn vẫn có thể trỏ lệch."""
+        """Ca ca-mau-01: 45 nhãn trên 47 câu, không id nào sai, mà mọi nhãn vẫn có thể trỏ lệch."""
         spans = [{"sentence_id": item["id"], "origin": "machine"} for item in self.sentences[:2]]
         code, out = self.run_cli(spans)
         self.assertEqual(code, self.module.EXIT_OK)

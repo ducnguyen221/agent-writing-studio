@@ -44,7 +44,7 @@ Văn bản dán vào không có `sentences.json`: sinh `sentence_id` cho lượt
   đang làm việc hoặc đã chỉ định** — đó là nơi họ đọc và quản lý. Chưa có thư mục nào được chỉ định
   thì hỏi một câu, đừng tự chọn hộ. Toàn bộ **file làm việc** của ca (`polish.diff.json`, meta, bản
   trung gian) vẫn nằm trong thư mục ca ở station (`$WRITING_STUDIO_DATA/work/<slug>/`, fallback
-  `./.work/<slug>/`): station là **xưởng cục bộ của agent**, không phải chỗ người dùng phải mò vào;
+  `./workspace/<slug>/`): station là **xưởng cục bộ của agent**, không phải chỗ người dùng phải mò vào;
   bản trong thư mục người dùng là bản chép để giao. Sửa tiếp thì sửa từ ca trong station rồi giao
   lại, không biến bản chép thành nguồn thứ hai.
 - **Giao thành phẩm thì mặc định là `.docx`.** Khi bản sửa đã là bản cuối cho người đọc (nộp bài,

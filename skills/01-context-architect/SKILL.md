@@ -20,13 +20,13 @@ Câu hỏi không do skill nghĩ ra: skill đọc `§1` của hồ sơ thể lo�
    `intent_questions[]`, `audience_fields[]`, `stop_if_missing[]`.
 2. **Phỏng vấn bốn lượt** — nguyên văn đề bài → từng câu trong `intent_questions[]` → lõi một câu
    → ràng buộc. Xem [phỏng vấn bối cảnh](references/01-brief-interview.md).
-3. **Dựng persona người viết.** `writer_profile_ref` trỏ tới `writers/<slug>/profile.yaml` (xem cầu Brain),
+3. **Dựng persona người viết.** `writer_profile_ref` trỏ tới `writers/<slug>/profile.yaml` (xem cầu nối),
    **không nhúng nội dung**; không có hồ sơ thì `null`. Xem
    [hiệu chỉnh giọng](references/04-voice-calibration.md).
 4. **Dựng chân dung độc giả** theo `audience_fields[]` của `§1`, hình dạng và ý nghĩa từng khoá ở
    `shared/writers/audience.schema.json`.
 5. **Trỏ tài liệu nền.** Đọc kho tri thức và thư mục dự án, ghi `brain_pointers[]`. Xem
-   [cầu Brain](references/03-brain-bridge.md).
+   [cầu nối](references/03-knowledge-bridge.md).
 6. **Thử bằng mắt độc giả** khi đã có dàn ý: [reader testing](references/02-reader-testing.md) trả
    ba câu hỏi họ sẽ hỏi.
 7. **Xuất `context.json`** theo `shared/schemas/context.schema.json`.

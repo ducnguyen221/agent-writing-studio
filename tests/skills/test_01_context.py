@@ -6,7 +6,7 @@ hiện được nếu vỡ:
 1. **Thể loại là dữ liệu, skill là logic** — câu hỏi phỏng vấn đến từ `§1` của hồ sơ thể
    loại, không hard-code trong SKILL.md.
 2. **Con trỏ, không phải bản sao** — `brain_pointers[].excerpt` bị chặn cứng ở 300 ký tự.
-   Nếu ai đó nới trần, riêng tư của kho tri thức cá nhân đi theo `.work/` ra ngoài.
+   Nếu ai đó nới trần, riêng tư của kho tri thức cá nhân đi theo `workspace/` ra ngoài.
 3. **Dưới 3 bài thì hồ sơ là draft** — `profile_build.py` và `writer.schema.json` phải nói
    cùng một điều, nếu không thì trục 5 sẽ hạ finding dựa trên một hồ sơ dựng từ hai bài.
 """
@@ -37,7 +37,7 @@ PROFILE_BUILD = ROOT / "shared/scripts/profile_build.py"
 REQUIRED_REFERENCES = (
     "01-brief-interview.md",
     "02-reader-testing.md",
-    "03-brain-bridge.md",
+    "03-knowledge-bridge.md",
     "04-voice-calibration.md",
 )
 
@@ -269,13 +269,13 @@ class ReferenceContentTests(unittest.TestCase):
         self.assertIn("drop_off_triggers", text)
 
     def test_brain_bridge_states_root_variable_limit_and_forbidden_zones(self):
-        text = reference_text("03-brain-bridge.md")
+        text = reference_text("03-knowledge-bridge.md")
         self.assertIn("WRITING_STUDIO_KNOWLEDGE", text)
         self.assertIn("300 ký tự", text)
         self.assertIn("không copy", text)
         for zone in ("tài chính", "sức khoẻ", "đời tư"):
             with self.subTest(zone=zone):
-                self.assertIn(zone, text, f"03-brain-bridge.md phải nêu vùng cấm: {zone}")
+                self.assertIn(zone, text, f"03-knowledge-bridge.md phải nêu vùng cấm: {zone}")
 
     def test_voice_reference_keeps_stylometry_measuring_only(self):
         text = " ".join(reference_text("04-voice-calibration.md").split())
