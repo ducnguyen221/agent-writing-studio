@@ -3,6 +3,41 @@
 Chỉ ghi thứ **người dùng repo nhìn thấy**: tên lệnh, tên file, hợp đồng dữ liệu, hành vi mặc định.
 Chi tiết thiết kế và lý do nằm ở tài liệu tương ứng, không chép lại ở đây.
 
+## [0.4.2] — 2026-09-30
+
+Bản vệ sinh repo. Hành vi chạy không đổi, trừ việc thêm `workspace/.gitignore` khi tạo workspace.
+Không đổi hợp đồng dữ liệu, không đổi thứ tự phân giải đường dữ liệu.
+
+### Sửa
+
+- **Workspace tự mang `.gitignore`.** `./workspace` tính theo thư mục đang mở, nên mở một dự án riêng
+  thì bài thật rơi vào `<dự án>/workspace/`, nơi `.gitignore` của repo này không với tới. Nay
+  `extract.py` (khi thư mục ca nằm trong `./workspace`) và `studio.py install` (khi dựng `workspace/`
+  mới) ghi `workspace/.gitignore` chứa `*` nếu file đó chưa có. Không bao giờ ghi đè file đã có;
+  station `WRITING_STUDIO_DATA` và `--out` ngoài `workspace/` không bị đụng.
+- `skills/README.md` bỏ câu dạy chép skill sang thư mục của host (trái `hosts/README.md`), thay bằng
+  con trỏ tới `hosts/README.md`.
+- `AGENTS.md`: ghi chú macOS cho lệnh `doctor` và lệnh chạy test (`python3.12`, hoặc Python của venv).
+
+### Repo và CI
+
+- Thêm `.gitattributes` (`* text=auto`, `*.docx binary`): xuống dòng trong Git không còn phụ thuộc
+  `core.autocrlf` của máy commit. Không file nào trong index đổi xuống dòng.
+- `.gitignore` chặn thêm rác hệ điều hành (`.DS_Store`, `._*`, `Thumbs.db`, `desktop.ini`), cấu hình
+  riêng của máy (`/.claude/settings.local.json`, `/.idea/`, `/.vscode/`), `/venv/`, cache công cụ
+  (`.mypy_cache/`, `.ruff_cache/`, `*.egg-info/`) và nháp tạm `/.tmp/`.
+- CI: `actions/checkout` v4.2.2 → v5.1.0, `actions/setup-python` v5.6.0 → v6.3.0 (chạy Node 24), vẫn
+  ghim theo SHA commit.
+
+### Test
+
+- `test_station_paths.py`: `extract.py` tạo workspace thì có `.gitignore`, chạy lại không đổi, file
+  người dùng có sẵn không bị đè, `--out` ngoài workspace không sinh gì, Git thật bỏ qua bài trong đó.
+- `test_studio_lifecycle.py`: `install` dựng workspace mới thì có `.gitignore`, workspace có sẵn thì
+  không thêm gì.
+- `test_install_docs.py` quét cả `skills/README.md`; `test_repo_gates.py` thêm ca cho các dòng
+  `.gitignore` mới.
+
 ## [0.4.1] — 2026-09-30
 
 Bản vá tài liệu cho macOS. Không đổi mã, không đổi hợp đồng dữ liệu, không đổi thứ tự phân giải đường

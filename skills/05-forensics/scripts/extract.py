@@ -124,6 +124,32 @@ def default_work_dir() -> Path:
     return REPO_WORK_DIR
 
 
+# `./workspace` tính theo thư mục đang đứng: người dùng plugin mở dự án riêng thì bài thật rơi vào
+# `<dự án>/workspace/`, nơi `.gitignore` của repo này không với tới. Nên thư mục đó tự mang `.gitignore`.
+WORKSPACE_GITIGNORE = "# agent-writing-studio: bài trong workspace/ là dữ liệu người thật — Git bỏ qua.\n*\n"
+
+
+def ensure_workspace_gitignore(out: Path) -> None:
+    """`out` nằm trong `./workspace` ⇒ ghi `./workspace/.gitignore` nếu chưa có.
+
+    Không bao giờ ghi đè file đã có (mở ở chế độ `x`). Ghi không được thì chỉ cảnh báo, không chặn
+    việc trích — đường đọc/ghi của ca chạy không đổi.
+    """
+    workspace = REPO_WORK_DIR.resolve()
+    try:
+        out.resolve().relative_to(workspace)
+    except ValueError:
+        return
+    try:
+        with (workspace / ".gitignore").open("x", encoding="utf-8") as handle:
+            handle.write(WORKSPACE_GITIGNORE)
+    except FileExistsError:
+        pass
+    except OSError as error:
+        print(f"CẢNH BÁO: không ghi được {workspace / '.gitignore'} ({error}) — nhớ đừng commit "
+              "thư mục workspace/.", file=sys.stderr)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("path")
@@ -133,6 +159,7 @@ def main():
     p = Path(a.path)
     out = Path(a.out) if a.out else default_work_dir()
     out.mkdir(parents=True, exist_ok=True)
+    ensure_workspace_gitignore(out)
     ext = p.suffix.lower()
     if ext == ".docx":
         text, meta = from_docx(p)

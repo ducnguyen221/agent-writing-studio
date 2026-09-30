@@ -40,6 +40,14 @@ class ReadmeInstallTests(unittest.TestCase):
                 with self.subTest(file=rel, banned=banned):
                     self.assertNotIn(banned, install)
 
+    def test_skills_readme_does_not_copy_skills_by_hand(self):
+        """`skills/README.md` từng dạy chép sang `~/.claude/skills/` — trái `hosts/README.md`."""
+        text = read("skills/README.md")
+        for banned in ("cp -r", "Copy-Item", "~/.claude/skills", "~/.codex/skills"):
+            with self.subTest(banned=banned):
+                self.assertNotIn(banned, text)
+        self.assertIn("hosts/README.md", text, "trỏ về hướng dẫn cài theo host")
+
     def test_install_section_names_the_plugin_path_and_the_clone_path(self):
         for rel, heading, _ in README_INSTALL:
             install = section(read(rel), heading)

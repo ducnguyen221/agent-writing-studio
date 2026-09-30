@@ -1,6 +1,7 @@
 # `skills/` — năm trục của xưởng viết
 
-Đây là thứ bạn chép sang chỗ agent tìm skill (`~/.claude/skills/`, `~/.codex/skills/`). Mỗi thư mục
+Host nạp các skill này thẳng từ repo (qua plugin hoặc khi mở thư mục repo) — không chép tay sang thư
+mục của host; cách cài theo từng host: [`hosts/README.md`](../hosts/README.md). Mỗi thư mục
 là **một giai đoạn** của việc viết, và agent tự nạp khi gặp đúng tình huống — bạn không phải gọi tên.
 
 | Thư mục | Trục | Làm gì |

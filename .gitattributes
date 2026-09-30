@@ -1,0 +1,6 @@
+# Chuẩn hoá xuống dòng: file văn bản lưu LF trong Git, bất kể `core.autocrlf` của máy nào commit.
+* text=auto
+
+# Nhị phân — không chuẩn hoá, không diff dòng. Repo không track file .docx (xem .gitignore);
+# dòng này giữ an toàn nếu có ai `git add -f` bản giao.
+*.docx binary
