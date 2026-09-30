@@ -55,7 +55,7 @@ Hướng dẫn cài cho agent: [`INSTALL.md`](INSTALL.md). Sau khi cài: [`START
 Theo từng host: [`hosts/`](hosts/README.md). Kiểm máy bất cứ lúc nào:
 
 ```
-python studio.py doctor
+python studio.py doctor        # macOS: python3.12, không có lệnh đó (Python cài qua uv) thì gọi Python của venv bằng đường đầy đủ
 ```
 
 Mỗi dòng `PASS` / `WARN` / `FAIL` / `NOT_CHECKED`. Chép nguyên các dòng cho người dùng; chưa kiểm thì
@@ -69,7 +69,8 @@ người dùng giữ ca nào — xem [`docs/troubleshooting.md`](docs/troublesho
 ## 4. Sửa repo
 
 - Test: `python -m pytest tests -q` **và** `python -m unittest discover -s tests -t .` — hai runner
-  cùng một con số. Máy chỉ có `requirements-dev.txt` vẫn phải xanh.
+  cùng một con số (macOS: `python3.12`, hoặc đường đầy đủ tới Python của venv khi máy không có lệnh
+  đó). Máy chỉ có `requirements-dev.txt` vẫn phải xanh.
 - `SKILL.md` ≤ 550 từ; kiến thức dài vào `references/` của skill, SKILL.md giữ câu luật + con trỏ.
 - Frontmatter (`name`, `description`) tiếng Anh; thân tiếng Việt.
 - Bump phiên bản đổi **bốn chỗ cùng lúc**: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`,
