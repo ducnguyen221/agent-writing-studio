@@ -15,7 +15,8 @@ repo). Không chép skill bằng tay sang thư mục của host — hai bản s�
 
 **Chọn một đường cho mỗi host.** Đã cài plugin mà vẫn mở thư mục repo thì host có thể thấy cùng một
 skill hai lần (bản plugin và bản đọc qua `AGENTS.md`); không hỏng gì, nhưng dễ gọi nhầm bản cũ khi
-plugin chưa cập nhật. `python studio.py doctor` báo phiên bản plugin Claude Code đang cài.
+plugin chưa cập nhật. `python studio.py doctor` (macOS: `python3.12 studio.py doctor`) báo phiên bản
+plugin Claude Code đang cài.
 
 Dữ liệu các ca viết ở `workspace/` trong thư mục bạn mở (Git bỏ qua), hoặc ở station
 `WRITING_STUDIO_DATA` nếu bạn đặt — như nhau cho mọi host. Chạy được trên Windows và macOS.

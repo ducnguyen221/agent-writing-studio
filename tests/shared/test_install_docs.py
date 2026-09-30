@@ -157,5 +157,42 @@ class WebInstallTests(unittest.TestCase):
         self.assertIn("prefers-color-scheme:dark", page)
 
 
+# Trang người dùng mở ra rồi gõ lệnh theo. Mac: `python` thường không có, `python3` của hệ thống có thể
+# là 3.9 (studio.py cần 3.10+) — trang nào dạy `python studio.py` phải nói tên macOS là `python3.12`.
+ENTRY_PAGES = ("README.md", "README.vi.md", "GUIDE.md", "GUIDE.vi.md", "INSTALL.md", "START-HERE.md",
+               "index.html", "install/index.html", "docs/troubleshooting.md", "hosts/README.md",
+               *[f"hosts/{host}/README.md" for host in HOSTS])
+BARE_PYTHON3 = re.compile(r"\bpython3\b(?![.\d])")
+
+
+def plain(rel):
+    return " ".join(re.sub(r"<[^>]+>", " ", html.unescape(read(rel))).split())
+
+
+class MacPythonTests(unittest.TestCase):
+    def test_every_page_teaching_studio_py_names_python312_for_macos(self):
+        for rel in ENTRY_PAGES:
+            text = plain(rel)
+            if "python studio.py" not in text:
+                continue
+            with self.subTest(page=rel):
+                self.assertIn("python3.12", text, "trang dạy `python studio.py` mà không nói tên lệnh trên macOS")
+
+    def test_bare_python3_is_only_named_as_too_old(self):
+        """`python3` trơn chỉ được nhắc để cảnh báo nó có thể là 3.9 — không bao giờ là lời khuyên gọi nó."""
+        for rel in ENTRY_PAGES:
+            for line in read(rel).splitlines():
+                if BARE_PYTHON3.search(line):
+                    with self.subTest(page=rel, line=line.strip()[:60]):
+                        self.assertIn("3.9", line)
+
+    def test_detector_catches_the_old_install_page_advice(self):
+        """Đột biến: đúng câu `install/index.html` từng ghi trước 0.4.1."""
+        line = "python studio.py install --host codex     # hoặc antigravity; macOS có thể là python3"
+        self.assertTrue(BARE_PYTHON3.search(line))
+        self.assertNotIn("3.9", line)
+        self.assertFalse(BARE_PYTHON3.search("macOS: python3.12 studio.py doctor"))
+
+
 if __name__ == "__main__":
     unittest.main()

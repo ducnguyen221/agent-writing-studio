@@ -1,6 +1,6 @@
 {
   "name": "agent-writing-studio",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A Vietnamese writing studio an AI agent runs from blank page to delivery: context interview, co-writing with self-declared machine spans, per-criterion critique against a genre rubric, voice-preserving edit, and forensic review. Genres are data files; nine profiles included. Skills and shared data run from this repository; case files stay in the ignored workspace/ folder or an external WRITING_STUDIO_DATA station.",
   "author": {
     "name": "Nguyen Quang Duc",

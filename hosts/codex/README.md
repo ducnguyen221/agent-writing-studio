@@ -7,7 +7,7 @@ Codex (CLI và ứng dụng desktop) có hai đường, chọn **một**:
 ```bash
 git clone https://github.com/ducnguyen221/agent-writing-studio
 cd agent-writing-studio
-python studio.py install --host codex
+python studio.py install --host codex     # macOS: python3.12 studio.py …
 ```
 
 Mở thư mục repo trong Codex (desktop: mở làm project và tin cậy thư mục). Codex đọc

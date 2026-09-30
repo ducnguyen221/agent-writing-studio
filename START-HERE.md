@@ -39,6 +39,6 @@ Thể loại có sẵn: `essay`, `research`, `blog`, `journalism`, `novel`, `com
 
 ## 4. Khi có trục trặc
 
-Chạy `python studio.py doctor` trong thư mục repo và đọc dòng `FAIL` / `WARN`. Bảng lỗi hay gặp ở
+Chạy `python studio.py doctor` (macOS: `python3.12 studio.py doctor`) trong thư mục repo và đọc dòng `FAIL` / `WARN`. Bảng lỗi hay gặp ở
 [`docs/troubleshooting.md`](docs/troubleshooting.md). Ranh giới đạo đức của xưởng — vì sao không dùng nó để kết tội
 hay "né máy chấm AI" — ở [README mục 5](README.vi.md#5-ranh-giới-đạo-đức--phần-quan-trọng-nhất-của-repo-này).

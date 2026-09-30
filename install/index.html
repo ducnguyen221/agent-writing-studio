@@ -93,8 +93,10 @@ claude plugin install agent-writing-studio@agent-writing-studio</code></pre>
   <h3>Codex, Antigravity, hoặc bản clone</h3>
 <pre><code>git clone https://github.com/ducnguyen221/agent-writing-studio
 cd agent-writing-studio
-python studio.py install --host codex     # hoặc antigravity; macOS có thể là python3
-python studio.py doctor</code></pre>
+python studio.py install --host codex     # hoặc antigravity
+python studio.py doctor                   # macOS: python3.12 studio.py …</code></pre>
+  <p class="note">macOS: gọi <code>python3.12</code>. <code>python3</code> của hệ thống có thể là bản 3.9 —
+    quá cũ cho <code>studio.py</code> (cần 3.10 trở lên).</p>
   <p>Mở <strong>chính thư mục repo</strong> trong ứng dụng AI. Agent đọc <code>AGENTS.md</code> trước rồi tự
     tìm đúng skill. <code>studio.py</code> cần Python 3.10 trở lên; nó chỉ dựng thư mục làm việc và in lệnh,
     không sửa cấu hình của ứng dụng AI.</p>
