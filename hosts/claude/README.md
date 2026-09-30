@@ -19,7 +19,7 @@ Khi đang sửa repo và muốn thử ngay mà không cài lại plugin:
 ```bash
 git clone https://github.com/ducnguyen221/agent-writing-studio
 cd agent-writing-studio
-python studio.py install --host claude     # dựng workspace/, in lệnh — không sửa cấu hình Claude
+python studio.py install --host claude     # dựng workspace/, in lệnh — không sửa cấu hình Claude; macOS: python3.12
 claude --plugin-dir .
 ```
 

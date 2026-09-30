@@ -5,7 +5,7 @@ Antigravity dùng đường **mở thẳng thư mục repo**:
 ```bash
 git clone https://github.com/ducnguyen221/agent-writing-studio
 cd agent-writing-studio
-python studio.py install --host antigravity
+python studio.py install --host antigravity     # macOS: python3.12 studio.py …
 ```
 
 Mở thư mục repo trong Antigravity. Agent đọc [`GEMINI.md`](../../GEMINI.md) → [`AGENTS.md`](../../AGENTS.md);

@@ -3,6 +3,26 @@
 Chỉ ghi thứ **người dùng repo nhìn thấy**: tên lệnh, tên file, hợp đồng dữ liệu, hành vi mặc định.
 Chi tiết thiết kế và lý do nằm ở tài liệu tương ứng, không chép lại ở đây.
 
+## [0.4.1] — 2026-09-30
+
+Bản vá tài liệu cho macOS. Không đổi mã, không đổi hợp đồng dữ liệu, không đổi thứ tự phân giải đường
+dữ liệu (`--station` → `WRITING_STUDIO_DATA` → `<repo>/workspace/`).
+
+### Sửa
+
+- `install/index.html` bỏ lời khuyên "macOS có thể là `python3`": trên Mac `python3` của hệ thống có
+  thể là 3.9, quá cũ cho `studio.py` (cần 3.10+). Trang nay nói `python3.12`, giống `INSTALL.md`.
+- Thêm ghi chú macOS `python3.12` ở những trang dạy `python studio.py` mà còn thiếu: `index.html`
+  (cả dòng `pip install`), `START-HERE.md`, `hosts/README.md`, `hosts/{claude,codex,antigravity}/README.md`.
+- `docs/ARCHITECTURE.md` bỏ số test ghi cứng đã trôi xa số thật.
+
+### Test
+
+- `test_docs_drift.py`: cổng "không ghi cứng số test" quét **mọi** `.md`/`.html` public (trừ
+  CHANGELOG), không chỉ danh sách trang chỉ đường — danh sách cũ bỏ sót `docs/ARCHITECTURE.md`.
+- `test_install_docs.py` (`MacPythonTests`): trang nào dạy `python studio.py` phải nói `python3.12`;
+  `python3` trơn chỉ được nhắc để cảnh báo bản 3.9.
+
 ## [0.4.0] — 2026-09-29
 
 ### Breaking / cần làm khi nâng cấp

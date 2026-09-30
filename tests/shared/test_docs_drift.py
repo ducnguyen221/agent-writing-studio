@@ -5,7 +5,7 @@ lỗi — họ chỉ thấy một phiên bản cũ, một lệnh thiếu, hay m�
 
 Khoá bốn thứ:
 1. **Phiên bản:** mục đầu của CHANGELOG = phiên bản trong manifest; ngày mục đó = `date-released` của
-   CITATION. Không tài liệu nào ghi cứng số test.
+   CITATION. Không tài liệu nào (mọi `.md`/`.html` public, trừ CHANGELOG) ghi cứng số test.
 2. **Lệnh:** mọi lệnh con của `studio.py` được kể trong cả hai README và INSTALL; GUIDE kể đủ sáu lệnh
    của chuỗi viết.
 3. **Cặp ngôn ngữ:** README và GUIDE mỗi bản trỏ sang bản ngôn ngữ kia.
@@ -33,6 +33,22 @@ NO_LEGACY_WORKSPACE = ["START-HERE.md", *GUIDES, "index.html", "install/index.ht
                        *[str(p.relative_to(ROOT).as_posix()) for p in sorted((ROOT / "commands").glob("*.md"))]]
 PUBLIC_DOCS = [*READMES, *GUIDES, "INSTALL.md", "START-HERE.md", "index.html", "install/index.html",
                "docs/troubleshooting.md", "tests/README.md"]
+# Thư mục KHÔNG thuộc cây public (dữ liệu người dùng, nhật ký nội bộ) — gitignored, có thể có trên máy.
+NOT_PUBLIC = {"workspace", ".work", ".venv", ".git", "fixtures", "node_modules", ".pytest_cache"}
+NOT_PUBLIC_PREFIX = ("docs/plans/", "docs/results/", "shared/writers/")
+# CHANGELOG là lịch sử: nó được phép kể "bản X thêm N test".
+COUNT_EXEMPT = {"CHANGELOG.md"}
+COUNT_RX = re.compile(r"\b\d{2,}\s+(?:passed|test)\b")
+
+
+def every_doc():
+    """Mọi `.md`/`.html` của cây public — không chỉ trang chỉ đường: số test cứng từng nằm ở
+    `docs/ARCHITECTURE.md` (ghi 375 khi bộ test đã gần 480) mà danh sách PUBLIC_DOCS không phủ."""
+    for path in sorted([*ROOT.rglob("*.md"), *ROOT.rglob("*.html")]):
+        rel = path.relative_to(ROOT).as_posix()
+        if NOT_PUBLIC & set(rel.split("/")[:-1]) or rel.startswith(NOT_PUBLIC_PREFIX):
+            continue
+        yield rel
 
 
 def read(rel):
@@ -67,10 +83,13 @@ class VersionDriftTests(unittest.TestCase):
         self.assertEqual(changelog_head()[1], released)
 
     def test_no_document_hardcodes_a_test_count(self):
-        for rel in PUBLIC_DOCS:
+        docs = [rel for rel in every_doc() if rel not in COUNT_EXEMPT]
+        self.assertTrue(set(PUBLIC_DOCS) <= set(docs), "cổng phải phủ ít nhất các trang chỉ đường")
+        self.assertIn("docs/ARCHITECTURE.md", docs)
+        for rel in docs:
             text = re.sub(r"<[^>]+>", " ", read(rel))
             with self.subTest(doc=rel):
-                self.assertEqual(re.findall(r"\b\d{2,}\s+(?:passed|test)\b", text), [],
+                self.assertEqual(COUNT_RX.findall(text), [],
                                  "số test đổi theo từng commit — đừng ghi cứng")
 
 
@@ -115,7 +134,9 @@ class WorkspaceNameDriftTests(unittest.TestCase):
 
     def test_detector_catches_a_stale_count(self):
         """Đột biến: con số test ghi cứng phải bị bắt."""
-        self.assertTrue(re.findall(r"\b\d{2,}\s+(?:passed|test)\b", "bản này: 438 passed"))
+        self.assertTrue(COUNT_RX.findall("bản này: 438 passed"))
+        # Đúng dòng cây thư mục đã trôi ở docs/ARCHITECTURE.md trước 0.4.1.
+        self.assertTrue(COUNT_RX.findall("├─ tests/   # ✅ 375 test: forensics/ · genres/"))
 
 
 if __name__ == "__main__":

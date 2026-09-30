@@ -318,7 +318,7 @@ agent-writing-studio/
 │                                      # ❌ writing-studio/ — router toàn studio (xây cuối, tuỳ chọn)
 │
 ├─ commands/                          # ✅ 7 lệnh chạy lẻ từng bước (v0.1.1; đánh số theo trục v0.1.2)
-├─ tests/                             # ✅ 375 test: forensics/ · genres/ · shared/ · skills/
+├─ tests/                             # ✅ forensics/ · genres/ · shared/ · skills/ (số test: chạy pytest)
 └─ fixtures/                          # ✅ gitignored trừ README; hiện CÒN RỖNG
 ```
 
