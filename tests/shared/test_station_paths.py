@@ -21,6 +21,9 @@ import contextlib
 import importlib.util
 import io
 import os
+import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -112,6 +115,64 @@ class TestWorkDir(unittest.TestCase):
             args = ap.parse_args(["bai.txt", "--out", "ca-rieng"])
             chosen = Path(args.out) if args.out else self.mod.default_work_dir()
             self.assertEqual(chosen, Path("ca-rieng"))
+
+
+class TestWorkspaceTuMangGitignore(unittest.TestCase):
+    """`./workspace` tính theo thư mục đang đứng — mở dự án riêng thì bài thật rơi vào
+    `<dự án>/workspace/`, nơi `.gitignore` của repo này không với tới. `extract.py` tạo workspace thì
+    phải để lại `workspace/.gitignore` (`*`): lần đầu có file, chạy lại không đổi, file người dùng có
+    sẵn không bị đè, `--out` ngoài workspace không sinh gì. Chạy như người dùng chạy (tiến trình con,
+    thư mục tạm), không đụng repo thật.
+    """
+
+    BAI = "Đây là một câu thử. Đây là câu thứ hai của bài thử.\n"
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.tmp = Path(self._tmp.name)
+        (self.tmp / "bai.txt").write_text(self.BAI, encoding="utf-8")
+        self.env = {k: v for k, v in os.environ.items() if k != "WRITING_STUDIO_DATA"}
+        self.env["PYTHONIOENCODING"] = "utf-8"
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def extract(self, *args):
+        result = subprocess.run([sys.executable, str(EXTRACT), "bai.txt", *args], cwd=str(self.tmp),
+                                env=self.env, capture_output=True, text=True, encoding="utf-8")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        return result
+
+    def test_lan_dau_tao_gitignore_chay_lai_khong_doi(self):
+        self.extract()
+        marker = self.tmp / "workspace" / ".gitignore"
+        self.assertTrue((self.tmp / "workspace" / "sentences.json").is_file())
+        self.assertTrue(marker.is_file(), "tạo workspace/ mà không để lại .gitignore")
+        first = marker.read_bytes()
+        self.assertIn("*", first.decode("utf-8").splitlines())
+        self.extract("--out", "workspace/ca-2")
+        self.assertEqual(marker.read_bytes(), first, "chạy lại không được đổi .gitignore")
+
+    def test_gitignore_nguoi_dung_co_san_khong_bi_de(self):
+        marker = self.tmp / "workspace" / ".gitignore"
+        marker.parent.mkdir()
+        marker.write_text("# của người dùng\n!ghi-chu.md\n", encoding="utf-8")
+        self.extract("--out", "workspace/ca-1")
+        self.assertEqual(marker.read_text(encoding="utf-8"), "# của người dùng\n!ghi-chu.md\n")
+
+    def test_out_ngoai_workspace_khong_sinh_gitignore(self):
+        self.extract("--out", "ca-rieng")
+        self.assertFalse((self.tmp / "ca-rieng" / ".gitignore").exists())
+        self.assertFalse((self.tmp / "workspace").exists())
+
+    @unittest.skipUnless(shutil.which("git"), "cần git")
+    def test_git_that_su_bo_qua_bai_trong_workspace(self):
+        subprocess.run(["git", "-C", str(self.tmp), "init", "-q"], check=True, capture_output=True)
+        self.extract()
+        status = subprocess.run(["git", "-C", str(self.tmp), "status", "--porcelain", "--untracked-files=all"],
+                                capture_output=True, text=True, encoding="utf-8", check=True)
+        self.assertNotIn("workspace/", status.stdout)
+        self.assertIn("bai.txt", status.stdout)
 
 
 class TestRepoKhongConDuLieuNguoiThat(unittest.TestCase):

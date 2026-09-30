@@ -48,6 +48,24 @@ IGNORE_CASES = (
     ("shared/writers/writer.schema.json", False),
     ("ban-giao.docx", True),
     ("skills/02-cowriter/SKILL.md", False),
+    # Rác hệ điều hành, cache công cụ, cấu hình riêng của máy, nháp tạm của agent.
+    (".DS_Store", True),
+    ("skills/02-cowriter/.DS_Store", True),
+    ("._README.md", True),
+    ("Thumbs.db", True),
+    ("docs/desktop.ini", True),
+    (".claude/settings.local.json", True),
+    (".idea/workspace.xml", True),
+    (".vscode/settings.json", True),
+    ("venv/Lib/site.py", True),
+    (".mypy_cache/3.12/cache.db", True),
+    (".ruff_cache/CACHEDIR.TAG", True),
+    ("agent_writing_studio.egg-info/PKG-INFO", True),
+    (".tmp/nhap.txt", True),
+    # Neo ở gốc: `.claude/` khác, `venv/` và `.tmp/` nằm sâu trong cây không bị chặn.
+    (".claude/settings.json", False),
+    ("skills/02-cowriter/venv/README.md", False),
+    ("shared/.tmp/README.md", False),
 )
 
 # Mẫu cấm có mặt trong cây đang track (trừ ngoại lệ công khai ghi rõ).

@@ -47,3 +47,19 @@ oauth_creds.json
 
 # Cache công cụ test
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+/venv/
+
+# Rác hệ điều hành và cấu hình riêng của từng máy (editor, quyền Claude Code cục bộ)
+.DS_Store
+._*
+Thumbs.db
+desktop.ini
+/.claude/settings.local.json
+/.idea/
+/.vscode/
+
+# Nháp tạm của agent khi sửa repo — xoá cuối việc, không commit.
+/.tmp/

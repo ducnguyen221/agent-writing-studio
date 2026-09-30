@@ -327,6 +327,22 @@ def host_steps(host: str, action: str) -> list[str]:
     return ["# Claude Desktop (tab chat) không nạp skill từ repo — dùng Claude Code, Codex hoặc Antigravity."]
 
 
+# Workspace tự mang `.gitignore` (`*`): repo khác, hay bản sao không có `.gitignore` gốc, vẫn không
+# commit nhầm bài người thật. Cùng nội dung với `skills/05-forensics/scripts/extract.py`.
+WORKSPACE_GITIGNORE = "# agent-writing-studio: bài trong workspace/ là dữ liệu người thật — Git bỏ qua.\n*\n"
+
+
+def write_workspace_gitignore(folder: Path) -> None:
+    """Ghi `<folder>/.gitignore` nếu chưa có; không bao giờ ghi đè (chế độ `x`)."""
+    try:
+        with (folder / ".gitignore").open("x", encoding="utf-8") as handle:
+            handle.write(WORKSPACE_GITIGNORE)
+    except FileExistsError:
+        pass
+    except OSError as error:
+        print(f"  cảnh báo    không ghi được {folder / '.gitignore'} ({error})", file=sys.stderr)
+
+
 def cmd_install(args) -> int:
     mode, root = resolve_data(args.station)
     if mode == "station" and inside_source_tree(root):
@@ -351,6 +367,8 @@ def cmd_install(args) -> int:
             print(f"  sẽ tạo      {target}")
         else:
             target.mkdir(parents=True, exist_ok=True)
+            if mode == "workspace":
+                write_workspace_gitignore(target)
             print(f"  đã tạo      {target}")
     print(f"\nĐăng ký với {args.host} — chạy các lệnh dưới (installer không tự sửa cấu hình host):")
     for line in host_steps(args.host, "install"):

@@ -213,6 +213,19 @@ class MigrationTests(StudioCase):
         self.assertEqual(self.data_row()[1]["status"], "PASS")
         self.assertIn("không có gì để dời", self.studio("migrate").stdout)
 
+    def test_install_leaves_a_gitignore_in_a_new_workspace_and_never_rewrites_it(self):
+        self.assertEqual(self.studio("install").returncode, 0)
+        marker = self.new / ".gitignore"
+        self.assertIn("*", marker.read_text(encoding="utf-8").splitlines())
+        marker.write_text("# của người dùng\n", encoding="utf-8")
+        self.assertEqual(self.studio("install").returncode, 0)
+        self.assertEqual(marker.read_text(encoding="utf-8"), "# của người dùng\n")
+
+    def test_install_on_an_existing_workspace_adds_nothing(self):
+        (self.new / "ca").mkdir(parents=True)
+        self.assertEqual(self.studio("install").returncode, 0)
+        self.assertFalse((self.new / ".gitignore").exists(), "workspace có sẵn thì install giữ nguyên")
+
     def test_legacy_folder_is_read_with_a_warning_and_install_does_not_fork_it(self):
         canary = self.make_legacy()
         _, row = self.data_row()
