@@ -64,6 +64,8 @@ Plugin mang nguyên cây repo; **dùng** xưởng thì chỉ cần plugin. Nhưn
 khi người dùng đồng ý chỗ clone). Người dùng không muốn clone thì bỏ 3b, báo rõ `doctor` **chưa chạy**,
 và kiểm bằng cách gõ `/agent-writing-studio:list` trong phiên mới.
 
+**MCP `markitdown`:** plugin mang sẵn `.mcp.json` trỏ tới `${OPCOS_RUNTIME}\mcp\markitdown\.venv\Scripts\markitdown-mcp.exe` (cần biến `OPCOS_RUNTIME`). Thiếu biến hoặc venv thì chỉ MCP này không khởi động.
+
 ### 3b. Clone và mở thư mục repo
 
 Mặc định clone vào thư mục người dùng, ví dụ `~/agent-writing-studio`:

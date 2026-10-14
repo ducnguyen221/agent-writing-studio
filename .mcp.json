@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "markitdown": {
+      "command": "${OPCOS_RUNTIME}\\mcp\\markitdown\\.venv\\Scripts\\markitdown-mcp.exe",
+      "args": []
+    }
+  }
+}
