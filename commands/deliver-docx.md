@@ -1,6 +1,6 @@
 ---
 description: Deliver the finished text as a Word .docx in the user own folder, with the provenance sidecar beside it
-argument-hint: [slug ca hoặc file .md] [thư mục người dùng muốn nhận bản giao]
+argument-hint: "[slug ca hoặc file .md] [thư mục người dùng muốn nhận bản giao]"
 ---
 
 Người dùng muốn **giao bản docx**: **$ARGUMENTS**
