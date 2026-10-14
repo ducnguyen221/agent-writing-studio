@@ -185,3 +185,7 @@ MIT — see [`LICENSE`](LICENSE). Third-party data and optional libraries: [`NOT
 [`provenance.json`](provenance.json). The idiom list in `skills/04-humanizer/assets/idioms.json` is
 MIT-licensed data whose copyright and permission notices must stay in that file. How to cite:
 [`CITATION.cff`](CITATION.cff). Author: Nguyễn Quang Đức · [ducnguyen.vn](https://ducnguyen.vn).
+
+## 🤝 ACD Ecosystem Integration
+
+Khai báo vai của repo trong hệ thống nhiều repo ACD (Role, Upstream, Downstream, Bundles, Handoff) tại [ECOSYSTEM.md](ECOSYSTEM.md).
