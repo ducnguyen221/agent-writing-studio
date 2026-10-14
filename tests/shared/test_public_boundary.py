@@ -47,6 +47,8 @@ HOME_DEFAULT = re.compile(r"~/" + VAULT_NAME + r"\b")
 LEGACY_ALLOWED = {
     "CHANGELOG.md": "ghi chú bỏ tên biến cũ ở 0.4.0 — người nâng cấp cần đọc thấy",
     "tests/shared/test_studio_lifecycle.py": "test chứng minh tên biến cũ không còn được đọc",
+    ".mcp.json": "MCP gắn theo plugin: đường runtime lấy từ biến môi trường của hệ điều phối",
+    "INSTALL.md": "tài liệu cài nói rõ biến môi trường mà .mcp.json cần",
 }
 REAL_HOME = re.compile(r"[A-Za-z]:\\Users\\(?![.<])[A-Za-z]|/Users/(?![.<])[A-Za-z]|/home/(?![.<])[a-z]")
 TEXT_SUFFIXES = {".md", ".json", ".py", ".html", ".yml", ".yaml", ".cff", ".txt", ".svg", ".toml",
