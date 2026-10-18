@@ -184,7 +184,13 @@ Tests are for people changing the repository (Python 3.10+; CI runs Windows and 
 MIT — see [`LICENSE`](LICENSE). Third-party data and optional libraries: [`NOTICE`](NOTICE) and
 [`provenance.json`](provenance.json). The idiom list in `skills/04-humanizer/assets/idioms.json` is
 MIT-licensed data whose copyright and permission notices must stay in that file. How to cite:
-[`CITATION.cff`](CITATION.cff). Author: Nguyễn Quang Đức · [ducnguyen.vn](https://ducnguyen.vn).
+[`CITATION.cff`](CITATION.cff).
+
+## Author
+
+**Nguyễn Quang Đức** — founder and CEO of KPIM and co-founder of COMPA Class; Data/AI practitioner and instructor in Vietnam.
+
+Website: https://ducnguyen.vn · GitHub: [@ducnguyen221](https://github.com/ducnguyen221) · Contact: ducnguyen.ams@gmail.com
 
 ## 🤝 ACD Ecosystem Integration
 

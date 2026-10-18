@@ -576,7 +576,9 @@ liên kết nội bộ có gãy không, nguồn ngoài có bị ghi sai license 
 
 ## 10. Tác giả
 
-**Nguyễn Quang Đức** · [ducnguyen.vn](https://ducnguyen.vn) · duc.nguyen@kpim.vn · ducnguyen.ams@gmail.com
+**Nguyễn Quang Đức** — nhà sáng lập, CEO KPIM và đồng sáng lập COMPA Class; chuyên gia Data/AI và giảng viên công nghệ tại Việt Nam.
+
+Website: https://ducnguyen.vn · GitHub: [@ducnguyen221](https://github.com/ducnguyen221) · Liên hệ: ducnguyen.ams@gmail.com
 
 Khai thác hay phát triển tiếp thì xem mục 7, tiểu mục *License & trích dẫn*.
 

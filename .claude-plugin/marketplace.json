@@ -2,7 +2,8 @@
   "name": "agent-writing-studio",
   "description": "A Vietnamese writing studio for AI agents — five axes from blank page to provenance-audited delivery.",
   "owner": {
-    "name": "Nguyen Quang Duc",
+    "name": "Nguyễn Quang Đức",
+    "email": "ducnguyen.ams@gmail.com",
     "url": "https://ducnguyen.vn"
   },
   "plugins": [
@@ -13,7 +14,8 @@
       "source": "./",
       "license": "MIT",
       "author": {
-        "name": "Nguyen Quang Duc",
+        "name": "Nguyễn Quang Đức",
+        "email": "ducnguyen.ams@gmail.com",
         "url": "https://ducnguyen.vn"
       }
     }
