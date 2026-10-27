@@ -3,6 +3,15 @@
 Chỉ ghi thứ **người dùng repo nhìn thấy**: tên lệnh, tên file, hợp đồng dữ liệu, hành vi mặc định.
 Chi tiết thiết kế và lý do nằm ở tài liệu tương ứng, không chép lại ở đây.
 
+## Chưa phát hành
+
+### Thêm
+
+- `01-context-architect`: hai chế độ đầu vào, «ý thô → angle» (chỗ tự suy ghi `inferred`) và «nâng post → blog».
+- `shared/genres/blog.md`: mở rộng một dòng `anti_llm_defaults` (không hô «nóng» thay cho phân tích; bản gom ở `02-cowriter/references/04-anti-llm-patterns.md` đổi theo) và một vế ở
+  `honesty` (bài chiến lược có cơ hội, rủi ro, khuyến nghị).
+- Nguồn: tự viết (chủ repo).
+
 ## [0.4.2] — 2026-09-30
 
 Bản vệ sinh repo. Hành vi chạy không đổi, trừ việc thêm `workspace/.gitignore` khi tạo workspace.

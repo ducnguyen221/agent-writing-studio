@@ -85,7 +85,7 @@ Bản chép ngày 31/08/2026. Chép lại ở đây để đọc một lượt; 
 5. "Danh sách 'X điều bạn cần biết' mà mỗi mục chỉ có một câu định nghĩa"
 6. "Lời mời cuối bài không liên quan tới thứ bài vừa đưa"
 7. "Động viên chung chung kiểu khẩu hiệu, không kèm một việc người đọc làm được ngay"
-8. "Giới thiệu một công cụ hoặc một xu hướng mà chỉ khen: không nói hợp với ai, không hợp với ai, khi nào chưa cần dùng"
+8. "Giới thiệu một công cụ hoặc một xu hướng mà chỉ khen: không nói hợp với ai, không hợp với ai, khi nào chưa cần dùng; hoặc chỉ nói nó 'đang rất nóng' mà không phân tích nó khác công cụ quen thuộc ở đâu"
 9. "Tóm tắt lại thứ đọc được ở nơi khác mà không thêm nhận định nào của người viết"
 10. "Tiêu đề hoặc hook thổi mức khẩn cấp — 'không thể bỏ lỡ', 'ai cũng đang dùng rồi' — mà thân bài không đỡ nổi mức đó"
 

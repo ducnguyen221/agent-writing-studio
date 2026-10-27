@@ -132,7 +132,7 @@ anti_llm_defaults:
   - "Danh sách 'X điều bạn cần biết' mà mỗi mục chỉ có một câu định nghĩa"
   - "Lời mời cuối bài không liên quan tới thứ bài vừa đưa"
   - "Động viên chung chung kiểu khẩu hiệu, không kèm một việc người đọc làm được ngay"
-  - "Giới thiệu một công cụ hoặc một xu hướng mà chỉ khen: không nói hợp với ai, không hợp với ai, khi nào chưa cần dùng"
+  - "Giới thiệu một công cụ hoặc một xu hướng mà chỉ khen: không nói hợp với ai, không hợp với ai, khi nào chưa cần dùng; hoặc chỉ nói nó 'đang rất nóng' mà không phân tích nó khác công cụ quen thuộc ở đâu"
   - "Tóm tắt lại thứ đọc được ở nơi khác mà không thêm nhận định nào của người viết"
   - "Tiêu đề hoặc hook thổi mức khẩn cấp — 'không thể bỏ lỡ', 'ai cũng đang dùng rồi' — mà thân bài không đỡ nổi mức đó"
 outline_depth: 2
@@ -195,7 +195,7 @@ criteria:
     question: "Chỉ đọc tiêu đề các mục thì có nắm được bài nói gì và đứng về phía nào không?"
   - id: honesty
     name: "Giới hạn và chỗ dựa của khẳng định"
-    evidence: "Danh sách lời khuyên và quan điểm kèm điều kiện áp dụng và ít nhất một trường hợp không đúng; kèm mọi số liệu, tính năng và trích dẫn có nguồn hoặc được nói rõ là ý kiến"
+    evidence: "Danh sách lời khuyên và quan điểm kèm điều kiện áp dụng và ít nhất một trường hợp không đúng; kèm mọi số liệu, tính năng và trích dẫn có nguồn hoặc được nói rõ là ý kiến; với bài phân tích hoặc chiến lược, có đủ cơ hội, rủi ro và khuyến nghị của tác giả thay vì chỉ tóm tắt trung tính"
     question: "Lời khuyên hoặc quan điểm nào đang được nói như thể đúng trong mọi hoàn cảnh, và con số nào chưa rõ lấy ở đâu ra?"
   - id: cta_fit
     name: "Lời mời xứng với bài"

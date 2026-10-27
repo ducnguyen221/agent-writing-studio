@@ -7,12 +7,11 @@ description: Use when writing is about to start and the brief is still thin — 
 
 ## Tổng quan
 
-Dựng bối cảnh trước khi có chữ nào. Skill này **không viết bài** — không phác một đoạn "cho dễ
-hình dung". Nó hỏi, dựng chân dung người viết và độc giả, trỏ tới tài liệu nền, rồi xuất
+Dựng bối cảnh trước khi có chữ nào. Skill này **không viết bài**. Nó hỏi, dựng chân dung người viết và độc giả, trỏ tới tài liệu nền, rồi xuất
 `context.json`. Trục 2 từ chối viết khi file này chưa hợp lệ.
 
 Câu hỏi không do skill nghĩ ra: skill đọc `§1` của hồ sơ thể loại trong `shared/genres/` và hỏi đúng
-`intent_questions[]` ghi ở đó. Thêm thể loại là thêm một file, không sửa skill.
+`intent_questions[]` ghi ở đó.
 
 ## Quy trình
 
@@ -31,14 +30,18 @@ Câu hỏi không do skill nghĩ ra: skill đọc `§1` của hồ sơ thể lo�
    ba câu hỏi họ sẽ hỏi.
 7. **Xuất `context.json`** theo `shared/schemas/context.schema.json`.
 
+## Hai chế độ đầu vào
+
+- **Ý thô → angle:** đề xuất angle; chỗ tự suy gắn `inferred`.
+- **Nâng post → blog:** giữ giọng gốc; hỏi chỗ cần sâu hơn, nguồn thêm.
+
 ## Luật không được đảo
 
 - **`stop_if_missing[]` là điều kiện dừng, không phải lời khuyên.** Còn một mục chưa gỡ được thì ghi
   vào `intent.unresolved[]`, nói thẳng với người dùng là bài chưa viết được, và dừng.
 - **Không tự trả lời hộ.** Suy ra đáp án thì `answers[].source` ghi `inferred` và phải được người
   dùng xác nhận trước khi trục 2 dùng.
-- **Con trỏ, không phải bản sao.** `excerpt` tối đa 300 ký tự, đường dẫn tương đối. Đọc mình
-  `context.json` mà dùng được nội dung tài liệu là đã copy quá tay.
+- **Con trỏ, không phải bản sao.** `excerpt` tối đa 300 ký tự, đường dẫn tương đối.
 - **Vùng cấm trong kho tri thức:** tài chính, sức khoẻ, đời tư, bí mật bên thứ ba, file chứa secret —
   không đọc, không trỏ. Nghi ngờ thì hỏi người dùng, đừng tự phân xử.
 - **Lõi một câu, phép thử do `§1` khai:** lập luận đòi luận đề phản bác được (câu ngược lại vẫn
