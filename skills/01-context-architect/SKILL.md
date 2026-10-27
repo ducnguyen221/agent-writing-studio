@@ -7,7 +7,7 @@ description: Use when writing is about to start and the brief is still thin — 
 
 ## Tổng quan
 
-Dựng bối cảnh trước khi có chữ nào. Skill này **không viết bài**. Nó hỏi, dựng chân dung người viết và độc giả, trỏ tới tài liệu nền, rồi xuất
+Skill này **không viết bài**. Nó hỏi, dựng chân dung người viết và độc giả, trỏ tới tài liệu nền, rồi xuất
 `context.json`. Trục 2 từ chối viết khi file này chưa hợp lệ.
 
 Câu hỏi không do skill nghĩ ra: skill đọc `§1` của hồ sơ thể loại trong `shared/genres/` và hỏi đúng
@@ -32,8 +32,8 @@ Câu hỏi không do skill nghĩ ra: skill đọc `§1` của hồ sơ thể lo�
 
 ## Hai chế độ đầu vào
 
-- **Ý thô → angle:** đề xuất angle; chỗ tự suy gắn `inferred`.
-- **Nâng post → blog:** giữ giọng gốc; hỏi chỗ cần sâu hơn, nguồn thêm.
+- **Ý thô → angle:** đề xuất angle (chưa phác đoạn nào); chỗ tự suy gắn `inferred`.
+- **Nâng post → blog:** ghi `constraints[]` giữ giọng gốc; hỏi chỗ cần sâu hơn, nguồn thêm.
 
 ## Luật không được đảo
 
