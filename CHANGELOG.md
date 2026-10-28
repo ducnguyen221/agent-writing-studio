@@ -3,7 +3,7 @@
 Chỉ ghi thứ **người dùng repo nhìn thấy**: tên lệnh, tên file, hợp đồng dữ liệu, hành vi mặc định.
 Chi tiết thiết kế và lý do nằm ở tài liệu tương ứng, không chép lại ở đây.
 
-## Chưa phát hành
+## [0.4.3] — 2026-10-28
 
 ### Thêm
 
