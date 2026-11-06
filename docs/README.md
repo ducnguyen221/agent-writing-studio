@@ -12,8 +12,8 @@ Bốn tài liệu dưới đây đi cùng repo: ai clone hay cài plugin đều 
 ## Hai thư mục không có ở đây
 
 `plans/` và `results/` là **nhật ký làm việc của xưởng**: spec từng đợt, danh sách task, nhật ký cổng
-duyệt, và các kết quả đo thô. Chúng chỉ nằm trên máy tác giả — `.gitignore` chặn chúng khỏi repo
-public.
+duyệt, và các kết quả đo thô. Chúng nằm ở sổ riêng của tác giả, ngoài repo — `.gitignore` vẫn chặn
+hai tên này để chúng không lọt lại vào repo public.
 
 Lý do không phải vì chúng bí mật, mà vì chúng là **ghi chép quy trình**, không phải tài liệu người
 dùng: chúng nói "ngày 30/08 cổng B chưa qua vì thiếu X" chứ không nói repo này dùng thế nào. Những
