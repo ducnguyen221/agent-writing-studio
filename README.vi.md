@@ -322,7 +322,7 @@ agent-writing-studio/
 ├─ GUIDE.md · GUIDE.vi.md       một ca đi trọn năm trục, từng bước
 ├─ INSTALL.md                   hướng dẫn cài dành cho agent + prompt dán
 ├─ START-HERE.md                bắt đầu sau khi cài: mở folder, chạy bài mẫu
-├─ AGENTS.md                    hướng dẫn chuẩn cho mọi agent (CLAUDE.md, GEMINI.md là con trỏ)
+├─ AGENTS.md                    hướng dẫn chuẩn cho mọi agent (.claude/CLAUDE.md, GEMINI.md là con trỏ)
 ├─ studio.py                    doctor · install · update · uninstall · migrate (Python 3.10+)
 ├─ NOTICE · provenance.json     dữ liệu và thư viện bên thứ ba, kèm giấy phép
 ├─ LICENSE                      MIT

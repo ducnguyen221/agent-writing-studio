@@ -316,7 +316,7 @@ agent-writing-studio/
 │     └─ scripts/                      # ✅ extract · vi_segment · counters · report
 │                                      # ❌ writing-studio/ — router toàn studio (xây cuối, tuỳ chọn)
 │
-├─ commands/                          # ✅ 7 lệnh chạy lẻ từng bước (v0.1.1; đánh số theo trục v0.1.2)
+├─ commands/                          # ✅ 7 lệnh chạy lẻ từng bước (v0.1.1; đánh số theo trục v0.1.2); bảng cho người đọc ở docs/commands.md
 ├─ tests/                             # ✅ forensics/ · genres/ · shared/ · skills/ (số test: chạy pytest)
 └─ fixtures/                          # ✅ gitignored trừ README; hiện CÒN RỖNG
 ```

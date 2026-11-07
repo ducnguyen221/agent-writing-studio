@@ -129,11 +129,16 @@ class HostAndPointerTests(unittest.TestCase):
             self.assertIn(f"{host}/README.md", index)
 
     def test_claude_and_gemini_files_only_point_to_agents(self):
-        for name in ("CLAUDE.md", "GEMINI.md"):
+        for name in (".claude/CLAUDE.md", "GEMINI.md"):
             with self.subTest(file=name):
                 text = read(name)
                 self.assertIn("AGENTS.md", text)
                 self.assertLess(len(text.split()), 80, f"{name} là con trỏ, không chứa luật riêng")
+
+    def test_claude_md_lives_in_dot_claude_and_imports_agents_md(self):
+        # `claude plugin validate --strict` đỏ khi có `CLAUDE.md` ở gốc plugin; `@import` tính đường từ file chứa nó.
+        self.assertFalse((ROOT / "CLAUDE.md").exists())
+        self.assertIn("@../AGENTS.md", read(".claude/CLAUDE.md").splitlines())
 
     def test_agents_routes_every_axis_to_its_skill_file(self):
         text = read("AGENTS.md")

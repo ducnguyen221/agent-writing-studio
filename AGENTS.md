@@ -1,7 +1,8 @@
 # AGENTS.md — agent-writing-studio
 
 > File hướng dẫn **chuẩn** cho mọi AI agent (Claude Code · Codex · Antigravity · tool nào đọc
-> `AGENTS.md`). `CLAUDE.md` và `GEMINI.md` chỉ là con trỏ về file này — sửa **ở đây**.
+> `AGENTS.md`). `.claude/CLAUDE.md` (một dòng `@../AGENTS.md`) và `GEMINI.md` chỉ là con trỏ về file
+> này — sửa **ở đây**.
 
 ## 0. Ranh giới source và dữ liệu
 

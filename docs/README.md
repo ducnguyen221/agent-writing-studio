@@ -1,12 +1,13 @@
 # `docs/` — tài liệu của repo
 
-Bốn tài liệu dưới đây đi cùng repo: ai clone hay cài plugin đều có chúng.
+Năm tài liệu dưới đây đi cùng repo: ai clone hay cài plugin đều có chúng.
 
 | File | Trả lời câu hỏi gì |
 |---|---|
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Vì sao là 5 skill × dữ liệu thể loại chứ không phải 25 skill? Skill nào đọc dữ liệu của ai, file nào là nguồn sự thật của cái gì? |
 | [`SCORING.md`](SCORING.md) | Điểm dấu hiệu **S** và độ phủ **C** là gì, đo bằng cách nào, ngưỡng nào ứng với hành động nào, và mẫu báo cáo giám định trông ra sao. |
 | [`GENRES.md`](GENRES.md) | Cách soạn một hồ sơ thể loại mới — năm mục bắt buộc, viết gì trong mỗi mục, kiểm bằng test nào. |
+| [`commands.md`](commands.md) | Bảy lệnh chạy lẻ từng bước trong `commands/` là gì, chạy theo thứ tự nào. |
 | [`agent-writing-studio.md`](agent-writing-studio.md) | Tầm nhìn gốc của chủ repo: ma trận 5 giai đoạn × 5 loại hình, viết trước khi có dòng code nào. |
 
 ## Hai thư mục không có ở đây

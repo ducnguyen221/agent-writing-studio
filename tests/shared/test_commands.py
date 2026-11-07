@@ -41,12 +41,14 @@ def frontmatter(text):
 
 class BoLenhTests(unittest.TestCase):
     def test_dung_bay_lenh_khong_thua_khong_thieu(self):
-        # `README.md` là tài liệu giới thiệu thư mục cho người đọc, không phải một lệnh.
-        tren_dia = {path.stem for path in COMMANDS.glob("*.md") if path.name != "README.md"}
+        # Mọi `*.md` trong `commands/` là một lệnh (Claude Code biến từng file thành `/agent-writing-studio:<tên>`).
+        tren_dia = {path.stem for path in COMMANDS.glob("*.md")}
         self.assertEqual(tren_dia, MONG_DOI)
 
-    def test_thu_muc_co_readme_cho_nguoi_doc(self):
-        self.assertTrue((COMMANDS / "README.md").is_file(), "commands/ thiếu README cho người dùng")
+    def test_bang_lenh_cho_nguoi_doc_nam_ngoai_commands(self):
+        # README trong `commands/` thành lệnh rác `/agent-writing-studio:README` và làm `validate --strict` đỏ.
+        self.assertFalse((COMMANDS / "README.md").exists(), "README trong commands/ bị nạp thành một lệnh")
+        self.assertTrue((COMMANDS.parent / "docs" / "commands.md").is_file(), "thiếu docs/commands.md cho người dùng")
 
 
 class FrontmatterTests(unittest.TestCase):

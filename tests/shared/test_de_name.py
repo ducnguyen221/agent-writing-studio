@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[2]
 PUBLIC_DIRS = ("skills", "shared", "docs", "commands", "hosts", "samples", ".github",
                ".claude-plugin", ".codex-plugin")
 PUBLIC_FILES = ("README.md", "README.vi.md", "GUIDE.md", "GUIDE.vi.md", "NOTICE", "provenance.json",
-                "AGENTS.md", "CLAUDE.md", "GEMINI.md", "INSTALL.md", "START-HERE.md",
+                "AGENTS.md", ".claude/CLAUDE.md", "GEMINI.md", "INSTALL.md", "START-HERE.md",
                 "studio.py", "CHANGELOG.md", "CITATION.cff")
 EXCLUDED_PREFIXES = ("docs/plans/", "docs/results/")
 SCANNED_SUFFIXES = {".md", ".json", ".py", ".txt", ".yaml", ".yml"}

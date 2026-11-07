@@ -3,6 +3,16 @@
 Chỉ ghi thứ **người dùng repo nhìn thấy**: tên lệnh, tên file, hợp đồng dữ liệu, hành vi mặc định.
 Chi tiết thiết kế và lý do nằm ở tài liệu tương ứng, không chép lại ở đây.
 
+## [Chưa phát hành]
+
+### Đổi
+
+- `CLAUDE.md` dời từ gốc sang `.claude/CLAUDE.md` (một dòng `@../AGENTS.md`): `claude plugin validate --strict` đỏ khi
+  plugin có `CLAUDE.md` gốc («not loaded as project context»); `@import` tính đường từ file chứa nó, nên luật `AGENTS.md`
+  nay được nạp thật khi mở repo trong Claude Code.
+- Bảng lệnh cho người đọc dời từ `commands/README.md` sang `docs/commands.md`: mọi file trong `commands/` thành một lệnh,
+  nên README cũ hiện thành lệnh rác `/agent-writing-studio:README` và làm `validate --strict` đỏ.
+
 ## [0.4.3] — 2026-10-28
 
 ### Thêm

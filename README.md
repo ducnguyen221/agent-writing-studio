@@ -161,7 +161,7 @@ agent-writing-studio/
 ├─ GUIDE.md / GUIDE.vi.md     one case through all five axes
 ├─ INSTALL.md                 install guide for agents + copy-paste prompts
 ├─ START-HERE.md              first exercise after installing
-├─ AGENTS.md                  canonical agent instructions (CLAUDE.md, GEMINI.md point here)
+├─ AGENTS.md                  canonical agent instructions (.claude/CLAUDE.md, GEMINI.md point here)
 ├─ studio.py                  doctor · install · update · uninstall · migrate
 ├─ NOTICE · provenance.json   third-party data and libraries, with licenses
 ├─ skills/                    five axes, nine skills — the single source the plugin loads
