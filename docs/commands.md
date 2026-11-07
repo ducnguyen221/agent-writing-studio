@@ -25,5 +25,5 @@ Năm trục nối với nhau bằng **file**, không bằng trí nhớ hội tho
 lệnh sẽ nói thẳng nó thiếu file gì và lệnh nào sinh ra file đó — rồi **dừng**. Nó không tự chạy lại
 cả chuỗi, vì chạy lại nghĩa là phỏng vấn lại bạn từ đầu hoặc tự bịa ra bối cảnh.
 
-Bảng trên là bản chép cho người đọc. **Nguồn thật là bảy file `.md` trong thư mục này** — lệnh
+Bảng trên là bản chép cho người đọc. **Nguồn thật là bảy file `.md` trong [`commands/`](../commands/)** — lệnh
 `list` đọc thẳng từ đó, nên nếu hai chỗ lệch nhau thì tin `list`.
